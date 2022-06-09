@@ -28,7 +28,7 @@ namespace Meyham.Player
         
         private void OnRightButton(bool buttonIsDown)
         {
-            playerMovement.Move(0);
+            playerMovement.Move(-1);
         }
     }
 }

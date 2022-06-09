@@ -31,7 +31,7 @@ namespace Meyham.Player
         {
             if (givenDirection == 0)
             {
-                currentAngle += clockWise ? angleGain : -angleGain;
+                currentAngle += clockWise ? -angleGain : angleGain;
             }
             else
             {
