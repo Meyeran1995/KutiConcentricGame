@@ -1,3 +1,4 @@
+using System.Collections;
 using Meyham.DataObjects;
 using UnityEngine;
 
@@ -19,16 +20,19 @@ namespace Meyham.Player
         
 
         private float currentAngle;
-        private bool clockWise;
+        private bool clockWise, isMoving;
 
         private void Awake()
         {
             currentAngle = startingAngle;
-            playerRigidBody.position = GetCirclePoint(startingAngle);
+            playerRigidBody.position = GetCirclePoint();
+            LookAtCenter();
         }
 
         public void Move(int givenDirection)
         {
+            if (isMoving) return;
+            
             if (givenDirection == 0)
             {
                 currentAngle += clockWise ? -angleGain : angleGain;
@@ -37,15 +41,10 @@ namespace Meyham.Player
             {
                 currentAngle += givenDirection * angleGain;
             }
-            
-            Move();
+
+            StartCoroutine(MoveRoutine());
         }
 
-        private void Move()
-        {
-            playerRigidBody.MovePosition(GetCirclePoint());
-        }
-        
         private Vector2 GetCirclePoint()
         {
             float angleInRad = Mathf.Deg2Rad * currentAngle;
@@ -54,17 +53,28 @@ namespace Meyham.Player
 
             return new Vector2(x, y);
         }
-        
-        private Vector2 GetCirclePoint(float angle)
-        {
-            float angleInRad = Mathf.Deg2Rad * angle;
-            float x = radius * Mathf.Cos(angleInRad);
-            float y = radius * Mathf.Sin(angleInRad);
 
-            return new Vector2(x, y);
+        private void LookAtCenter()
+        {
+            var playerTransform = transform;
+            Vector2 directionToCenter = center.position - playerTransform.position;
+            var lookAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg;
+            
+            playerRigidBody.MoveRotation(lookAngle);
         }
-        
-        #if UNITY_EDITOR
+
+        private IEnumerator MoveRoutine()
+        {
+            isMoving = true;
+            playerRigidBody.MovePosition(GetCirclePoint());
+
+            yield return new WaitForFixedUpdate();
+
+            LookAtCenter();
+            isMoving = false;
+        }
+
+#if UNITY_EDITOR
 
         [Header("Gizmos")]
         [SerializeField] private float gizmoRadius;
@@ -93,6 +103,15 @@ namespace Meyham.Player
             float z = transform.position.z;
             Vector2 startingPos = GetCirclePoint(startingAngle);
             transform.position = new Vector3(startingPos.x, startingPos.y, z);
+        }
+        
+        private Vector2 GetCirclePoint(float angle)
+        {
+            float angleInRad = Mathf.Deg2Rad * angle;
+            float x = radius * Mathf.Cos(angleInRad);
+            float y = radius * Mathf.Sin(angleInRad);
+
+            return new Vector2(x, y);
         }
 
 #endif
