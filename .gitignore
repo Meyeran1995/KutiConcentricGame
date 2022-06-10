@@ -57,6 +57,9 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+# Rider
+/.idea/
+
 # Crashlytics generated file
 crashlytics-build.properties
 
