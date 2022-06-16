@@ -7,8 +7,8 @@ namespace Meyham.Player
     public class RadialPlayerMovement : MonoBehaviour
     {
         [Header("Values")] 
-        [SerializeField] private float startingAngle;
-
+        [SerializeField, Range(0f, 360f)] private float startingAngle;
+        [SerializeField] private bool snapToStartOnAwake, clockwise;
 
         [Header("Circle")]
         [SerializeField] private FloatValue angleGain;
@@ -18,15 +18,18 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private Rigidbody2D playerRigidBody;
         
-
         private float currentAngle;
-        private bool clockWise, isMoving;
+        private bool isMoving;
 
         private void Awake()
         {
             currentAngle = startingAngle;
-            playerRigidBody.position = GetCirclePoint();
-            LookAtCenter();
+            
+            if(!snapToStartOnAwake) return;
+            
+            var startingPosition = GetCirclePoint();
+            playerRigidBody.position = startingPosition;
+            playerRigidBody.rotation = startingAngle;
         }
 
         public void Move(int givenDirection)
@@ -35,11 +38,12 @@ namespace Meyham.Player
             
             if (givenDirection == 0)
             {
-                currentAngle += clockWise ? -angleGain : angleGain;
+                currentAngle += clockwise ? angleGain : -angleGain;
             }
             else
             {
-                currentAngle += givenDirection * angleGain;
+                float directedGain = angleGain * givenDirection;
+                currentAngle += clockwise ? directedGain : -directedGain;
             }
 
             StartCoroutine(MoveRoutine());
@@ -54,23 +58,15 @@ namespace Meyham.Player
             return new Vector2(x, y);
         }
 
-        private void LookAtCenter()
-        {
-            var playerTransform = transform;
-            Vector2 directionToCenter = center.position - playerTransform.position;
-            var lookAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg;
-            
-            playerRigidBody.MoveRotation(lookAngle);
-        }
-
         private IEnumerator MoveRoutine()
         {
             isMoving = true;
-            playerRigidBody.MovePosition(GetCirclePoint());
-
+            var nextPosition = GetCirclePoint();
+            playerRigidBody.MovePosition(nextPosition);
+            playerRigidBody.MoveRotation(currentAngle);
+            
             yield return new WaitForFixedUpdate();
 
-            LookAtCenter();
             isMoving = false;
         }
 
@@ -81,13 +77,9 @@ namespace Meyham.Player
         
         private void OnDrawGizmosSelected()
         {
-            if(!center || !angleGain) return;
-            
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(center.position, radius);
-            
+            if(!angleGain) return;
+
             Gizmos.color = Color.grey;
-            float nextAngle = angleGain;
 
             int numberOfPositions = Mathf.RoundToInt(360f /angleGain);
 
@@ -96,13 +88,26 @@ namespace Meyham.Player
                 Gizmos.DrawSphere(GetCirclePoint(angleGain * p), gizmoRadius);
             }
         }
+        
+        private void OnDrawGizmos()
+        {
+            if(!center) return;
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(center.position, radius);
+        }
 
         
         public void EditorSnapToStartingPosition()
         {
-            float z = transform.position.z;
-            Vector2 startingPos = GetCirclePoint(startingAngle);
-            transform.position = new Vector3(startingPos.x, startingPos.y, z);
+            var playerTransform = transform;
+            
+            float z = playerTransform.position.z;
+            Vector3 startingPos = GetCirclePoint(startingAngle);
+            startingPos.z = z;
+            
+            playerTransform.position = startingPos;
+            playerTransform.rotation = Quaternion.Euler(0f, 0f, startingAngle);
         }
         
         private Vector2 GetCirclePoint(float angle)

@@ -109,6 +109,8 @@ namespace Meyham.Items
         [SerializeField, Min(0)] private int resolution;
         [SerializeField, Min(0f)] private float gizmoSphereRadius;
 
+        private const int stepsToSecond = 50;
+        
         private void OnDrawGizmosSelected()
         {
             if(predictionSteps == 0 || resolution == 0 || gizmoSphereRadius == 0f) return;
@@ -120,7 +122,7 @@ namespace Meyham.Items
             
             bool globalAxis = useGlobalAxis;
 
-            for (int i = 0; i < predictionSteps; i++)
+            for (int i = 0; i <= predictionSteps; i++)
             {
                 angle += rotationGain * Time.fixedDeltaTime;
                 
@@ -136,9 +138,17 @@ namespace Meyham.Items
                 
                 if (axisSwitch != 0 && i % axisSwitch == 0)
                     globalAxis = !globalAxis;
+
+                if (i % stepsToSecond == 0)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawSphere(currentPosition, currentSize * gizmoSphereRadius);
+                    continue;
+                }
                 
                 if(i % resolution != 0) continue;
                 
+                Gizmos.color = Color.white;
                 Gizmos.DrawSphere(currentPosition, currentSize * gizmoSphereRadius);
             }
         }

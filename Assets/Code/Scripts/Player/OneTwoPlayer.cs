@@ -6,7 +6,7 @@ namespace Meyham.Player
     /// <summary>
     /// Class used to represent a player in a context of either one or two players
     /// </summary>
-    public class OneTwoPlayer : MonoBehaviour
+    public class OneTwoPlayer : ACollector
     {
         [Header("Button Events")] 
         [SerializeField] private BoolEventChannelSO leftButton;
@@ -29,6 +29,10 @@ namespace Meyham.Player
         private void OnRightButton(bool buttonIsDown)
         {
             playerMovement.Move(-1);
+        }
+
+        public override void Collect()
+        {
         }
     }
 }
