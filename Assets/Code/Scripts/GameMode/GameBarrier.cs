@@ -1,19 +1,16 @@
+using Meyham.Items;
 using UnityEngine;
 
 namespace Meyham.GameMode
 {
     public class GameBarrier : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        [SerializeField] private CollectibleSpawner spawner;
 
-        // Update is called once per frame
-        void Update()
+        private void OnTriggerEnter2D(Collider2D col)
         {
-        
+            spawner.ReleaseCollectible(col.GetComponent<ACollectible>());
+            col.gameObject.SetActive(false);
         }
     }
 }

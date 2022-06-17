@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e329e28faa638e47b90498f1372f45a, type: 3}
   m_Name: Radius
   m_EditorClassIdentifier: 
-  value: 4
+  baseValue: 4
+  <RuntimeValue>k__BackingField: 4
