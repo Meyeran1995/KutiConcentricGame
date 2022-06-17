@@ -22,9 +22,14 @@ namespace Meyham.Items
 
         private void Awake()
         {
-            movementDirection = GetStartDirection().normalized;
+            movementDirection = GetStartDirection(transform.position).normalized;
             sizeIncrease = new Vector3(sizeGain, sizeGain);
             currentAngle = rotationGain * Time.deltaTime;
+            
+#if UNITY_EDITOR
+            startPosition = transform.position;
+            debugGameIsRunning = true;
+#endif
         }
 
         private void FixedUpdate()
@@ -92,9 +97,9 @@ namespace Meyham.Items
             return nextPosition;
         }
         
-        private Vector3 GetStartDirection()
+        private Vector3 GetStartDirection(Vector2 startingPosition)
         {
-            var currentPosition = transform.position;
+            var currentPosition = startingPosition;
             float angleInRad = Mathf.Deg2Rad * startingAngle;
             float x = Mathf.Cos(angleInRad);
             float y = Mathf.Sin(angleInRad);
@@ -110,13 +115,16 @@ namespace Meyham.Items
         [SerializeField, Min(0f)] private float gizmoSphereRadius;
 
         private const int stepsToSecond = 50;
-        
+
+        private bool debugGameIsRunning;
+        private Vector2 startPosition;
+
         private void OnDrawGizmosSelected()
         {
             if(predictionSteps == 0 || resolution == 0 || gizmoSphereRadius == 0f) return;
             
-            Vector3 direction = GetStartDirection().normalized;
-            Vector3 currentPosition = transform.position;
+            Vector3 currentPosition = debugGameIsRunning ? startPosition : transform.position;
+            Vector3 direction = GetStartDirection(currentPosition).normalized;
             float currentSize = transform.localScale.x;
             float angle = rotationGain * Time.fixedDeltaTime;
             
@@ -152,7 +160,11 @@ namespace Meyham.Items
                 Gizmos.DrawSphere(currentPosition, currentSize * gizmoSphereRadius);
             }
         }
-        
+
+        private void OnApplicationQuit()
+        {
+            debugGameIsRunning = false;
+        }
 #endif
     }
 }
