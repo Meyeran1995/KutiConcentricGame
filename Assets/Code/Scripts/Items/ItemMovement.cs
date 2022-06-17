@@ -29,6 +29,7 @@ namespace Meyham.Items
 #if UNITY_EDITOR
             startPosition = transform.position;
             debugGameIsRunning = true;
+            debugUseGlobal = useGlobalAxis;
 #endif
         }
 
@@ -92,7 +93,7 @@ namespace Meyham.Items
             Vector3 nextPosition = currentRotation * direction;
             nextPosition *= speed * Time.fixedDeltaTime;
             nextPosition += currentPosition;
-            nextPosition.z += sizeGain * Time.fixedDeltaTime;
+            nextPosition.z = 0f;
 
             return nextPosition;
         }
@@ -116,7 +117,7 @@ namespace Meyham.Items
 
         private const int stepsToSecond = 50;
 
-        private bool debugGameIsRunning;
+        private bool debugGameIsRunning, debugUseGlobal;
         private Vector2 startPosition;
 
         private void OnDrawGizmosSelected()
@@ -128,7 +129,7 @@ namespace Meyham.Items
             float currentSize = transform.localScale.x;
             float angle = rotationGain * Time.fixedDeltaTime;
             
-            bool globalAxis = useGlobalAxis;
+            bool globalAxis = debugGameIsRunning ? debugUseGlobal : useGlobalAxis;
 
             for (int i = 0; i <= predictionSteps; i++)
             {
