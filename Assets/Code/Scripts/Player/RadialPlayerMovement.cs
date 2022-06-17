@@ -52,8 +52,8 @@ namespace Meyham.Player
         private Vector2 GetCirclePoint()
         {
             float angleInRad = Mathf.Deg2Rad * currentAngle;
-            float x = radius * Mathf.Cos(angleInRad);
-            float y = radius * Mathf.Sin(angleInRad);
+            float x = radius.BaseValue * Mathf.Cos(angleInRad);
+            float y = radius.BaseValue * Mathf.Sin(angleInRad);
 
             return new Vector2(x, y);
         }
@@ -85,7 +85,7 @@ namespace Meyham.Player
 
             for (int p = 0; p < numberOfPositions; p++)
             {
-                Gizmos.DrawSphere(GetCirclePoint(angleGain * p), gizmoRadius);
+                Gizmos.DrawSphere(GetCirclePoint(angleGain.BaseValue * p), gizmoRadius);
             }
         }
         
@@ -110,13 +110,13 @@ namespace Meyham.Player
             playerTransform.rotation = Quaternion.Euler(0f, 0f, startingAngle);
         }
         
-        private Vector2 GetCirclePoint(float angle)
+        private Vector3 GetCirclePoint(float angle)
         {
             float angleInRad = Mathf.Deg2Rad * angle;
-            float x = radius * Mathf.Cos(angleInRad);
-            float y = radius * Mathf.Sin(angleInRad);
+            float x = radius.BaseValue * Mathf.Cos(angleInRad);
+            float y = radius.BaseValue * Mathf.Sin(angleInRad);
 
-            return new Vector2(x, y);
+            return new Vector3(x, y);
         }
 
 #endif
