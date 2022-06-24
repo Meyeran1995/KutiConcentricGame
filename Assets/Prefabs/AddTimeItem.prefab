@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2291004389240496477}
   - component: {fileID: 2291004389240496479}
+  - component: {fileID: 488864985107758730}
   - component: {fileID: 2291004389240496478}
   - component: {fileID: 2291004389240496464}
   - component: {fileID: 2291004389240496465}
@@ -47,17 +48,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876c0ed889e917e49b89ff00e2bd2235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  sizeGain: 0.1
-  maxSize: 1
-  useGlobalAxis: 0
-  clockWiseRotation: 1
-  rotationGain: 183
-  startingAngle: 180
-  maxAngle: 360
-  axisSwitch: 0
-  predictionSteps: 508
-  resolution: 1
+  <Speed>k__BackingField: 1
+  <SizeGain>k__BackingField: 0.1
+  <MaxSize>k__BackingField: 1
+  <UseGlobalAxis>k__BackingField: 1
+  <ClockwiseRotation>k__BackingField: 0
+  <RotationGain>k__BackingField: 30
+  <StartingAngle>k__BackingField: 45
+  <MaxAngle>k__BackingField: 180
+  <Switch>k__BackingField: 50
+  <TimesToSwitch>k__BackingField: 2
+  <RotationGainModifier>k__BackingField: -5
+  <SpeedModifier>k__BackingField: 1
+  <AxisSwitch>k__BackingField: 0
+  <RotationDirectionSwitch>k__BackingField: 1
+--- !u!114 &488864985107758730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291004389240496474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0035c1491a7e8d7488c3067541d4099a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  predictionSteps: 500
+  resolution: 5
   gizmoSphereRadius: 0.06
 --- !u!212 &2291004389240496478
 SpriteRenderer:
@@ -139,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Spawner: {fileID: 0}
   endTimer: {fileID: 11400000, guid: 13617e1a49e404e49bd1a0feea502119, type: 2}
   collectionEvent: {fileID: 11400000, guid: f2e848441dbbc584ea08db577d2ef0dd, type: 2}
   timeToAdd: 2
