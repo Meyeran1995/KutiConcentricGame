@@ -1,3 +1,4 @@
+using Meyham.DataObjects;
 using Meyham.Items;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -8,6 +9,9 @@ namespace Meyham.GameMode
     {
         [SerializeField] private int minPoolSize, maxPoolSize;
         [SerializeField] private GameObject itemTemplate;
+
+        [SerializeField] private ItemMovementStatsSO[] testStats;
+        
         
         private IObjectPool<GameObject> pool;
 
@@ -19,7 +23,10 @@ namespace Meyham.GameMode
 
         private void Start()
         {
-            pool.Get(out var item);
+            foreach (var stats in testStats)
+            {
+                GetCollectible(stats);
+            }
         }
 
         private GameObject CreatePooledItem()
@@ -53,6 +60,13 @@ namespace Meyham.GameMode
         {
             Debug.Log($"{collectible.name} has touched the border");
             pool.Release(collectible.gameObject);
+        }
+
+        public void GetCollectible(ItemMovementStatsSO itemStats)
+        {
+            pool.Get(out var item);
+            var movement = item.GetComponent<ItemMovement>();
+            movement.SetMovementStats(itemStats);
         }
     }
 }

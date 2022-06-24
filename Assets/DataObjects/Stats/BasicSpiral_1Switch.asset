@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8d4ab8b1daeed4ba0d5542863cea23, type: 3}
+  m_Name: BasicSpiral_1Switch
+  m_EditorClassIdentifier: 
+  <Speed>k__BackingField: 3
+  <UseGlobalAxis>k__BackingField: 1
+  <ClockwiseRotation>k__BackingField: 0
+  <RotationGain>k__BackingField: 112
+  <MaxAngle>k__BackingField: 285
+  <Switch>k__BackingField: 100
+  <TimesToSwitch>k__BackingField: 1
+  <RotationGainModifier>k__BackingField: -20
+  <SpeedModifier>k__BackingField: 1
+  <AxisSwitch>k__BackingField: 0
+  <RotationDirectionSwitch>k__BackingField: 0

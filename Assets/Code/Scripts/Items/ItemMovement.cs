@@ -1,81 +1,125 @@
+using Meyham.DataObjects;
+using Meyham.EditorHelpers;
 using UnityEngine;
 
 namespace Meyham.Items
 {
     public class ItemMovement : MonoBehaviour
     {
-        // Speed
-        [field: Header("Speed"), SerializeField] public float Speed { get; private set; }
-        
-        // Size
-        [field: Header("Size"), SerializeField, Min(0f)] public float SizeGain { get; private set; }
-        [field: SerializeField] public float MaxSize { get; private set; }
-        
-        // Rotation
-        [field: Header("Rotation"), SerializeField] public bool UseGlobalAxis { get; private set; }
-        [field: SerializeField] public bool ClockwiseRotation { get; private set; }
-        [field: SerializeField, Range(0f, 360f)] public float RotationGain { get; private set; }
-        [field: SerializeField, Range(0f, 360f)] public float StartingAngle { get; private set; }
-        [field: SerializeField, Range(0, 360)] public int MaxAngle { get; private set; }
-        
-        // Switch
-        [field: Header("Switch Behaviour"), SerializeField, Min(0)] public int Switch { get; private set; }
-        [field: SerializeField, Min(1)] public int TimesToSwitch { get; private set; }
-        [field: SerializeField, Range(-360f, 360f)] public float RotationGainModifier { get; private set; }
-        [field: SerializeField] public float SpeedModifier { get; private set; }
-        [field: SerializeField] public bool AxisSwitch { get; private set; }
-        [field: SerializeField] public bool RotationDirectionSwitch { get; private set; }
+        [field: SerializeField, Range(0f, 360f)] public float StartingAngle { get; set; }
+        [field: SerializeField] public ItemMovementStatsSO Stats { get; private set; }
 
-        private Vector3 movementDirection, sizeIncrease;
+        #region Stats
+
+        // Speed
+        private float movementSpeed;
+
+        // Rotation
+        private bool useGlobalAxis, clockwiseRotation;
+        private float rotationGain;
+        private int maxAngle;
+        
+        // Switch stats
+        private int switchValue, timesToSwitch;
+        private float rotationGainModifier, speedModifier;
+        private bool axisSwitch, rotationDirectionSwitch;
+
+        #endregion
+        
+        private Vector3 movementDirection;
         private float currentAngle;
         private int stepCounter, switchCounter;
-        private bool maxSizeReached, canSwitch;
+        private bool canSwitch;
+        
+#if UNITY_EDITOR
 
         private void Awake()
         {
+            if(Stats == null) return;
+            
+            SetMovementStats(Stats);
+            ResetFields();
+        }
+
+        private void Start()
+        {
+            if(TryGetComponent(out ItemMovementPrediction prediction))
+                prediction.SetUpPrediction(this);
+        }
+
+#endif
+
+        public void SetMovementStats(ItemMovementStatsSO stats)
+        {
+            Stats = stats;
+            
+            // Speed
+            movementSpeed = stats.Speed;
+            speedModifier = stats.SpeedModifier;
+
+            // Rotation
+            rotationGain = stats.RotationGain;
+            rotationGainModifier = stats.RotationGainModifier;
+            maxAngle = stats.MaxAngle;
+            useGlobalAxis = stats.UseGlobalAxis;
+            clockwiseRotation = stats.ClockwiseRotation;
+
+            // Switch stats
+            switchValue = stats.Switch;
+            timesToSwitch = stats.TimesToSwitch;
+            axisSwitch = stats.AxisSwitch;
+            rotationDirectionSwitch = stats.RotationDirectionSwitch;
+            
+            ResetFields();
+        }
+
+        public void ResetFields()
+        {
             movementDirection = GetStartDirection(transform.position).normalized;
-            sizeIncrease = new Vector3(SizeGain, SizeGain);
-            currentAngle = RotationGain * Time.deltaTime;
-            canSwitch = Switch != 0;
+            currentAngle = 0f;
+            canSwitch = switchValue != 0;
+            stepCounter = 0;
+            switchCounter = 0;
         }
 
         private void FixedUpdate()
         {
-            currentAngle += RotationGain * Time.fixedDeltaTime;
+            currentAngle += rotationGain * Time.fixedDeltaTime;
 
-            if (!maxSizeReached)
+            if ((int)currentAngle > maxAngle)
             {
-                transform.localScale += sizeIncrease * Time.fixedDeltaTime;
-                maxSizeReached = transform.localScale.x >= MaxSize;
-
-                if (maxSizeReached)
-                    transform.localScale = new Vector3(MaxSize, MaxSize, MaxSize);
+                currentAngle = maxAngle;
             }
             
             Move();
+            
+            if ((int)currentAngle == maxAngle)
+            {
+                currentAngle = 0f;
+            }
+            
+            if(!canSwitch) return;
+            
+            EvaluateSwitch();
         }
 
         private void Move()
         {
             Vector3 currentPosition = transform.position;
-            var currentRotation = GetRotation(currentPosition, currentAngle, UseGlobalAxis, ClockwiseRotation);
-            transform.position = GetNextPosition(currentPosition, movementDirection, currentRotation, Speed);
+            var currentRotation = GetRotation(currentPosition, currentAngle, useGlobalAxis, clockwiseRotation);
+            transform.position = GetNextPosition(currentPosition, movementDirection, currentRotation, movementSpeed);
+        }
 
-            if ((int)currentAngle == MaxAngle)
-            {
-                currentAngle = RotationGain * Time.deltaTime;
-            }
-
-            if(!canSwitch) return;
-            
+        private void EvaluateSwitch()
+        {
             stepCounter++;
             
-            if(stepCounter % Switch != 0) return;
+            if(stepCounter % switchValue != 0) return;
 
             switchCounter++;
             
             ApplySwitchModifiers();
-            if (switchCounter == TimesToSwitch)
+            if (switchCounter == timesToSwitch)
                 canSwitch = false;
             
             stepCounter = 0;
@@ -83,14 +127,14 @@ namespace Meyham.Items
 
         private void ApplySwitchModifiers()
         {
-            RotationGain += RotationGainModifier;
-            Speed += SpeedModifier;
+            rotationGain += rotationGainModifier;
+            movementSpeed += speedModifier;
 
-            if (AxisSwitch)
-                UseGlobalAxis = !UseGlobalAxis;
+            if (axisSwitch)
+                useGlobalAxis = !useGlobalAxis;
 
-            if (RotationDirectionSwitch)
-                ClockwiseRotation = !ClockwiseRotation;
+            if (rotationDirectionSwitch)
+                clockwiseRotation = !clockwiseRotation;
         }
 
         public Quaternion GetRotation(Vector3 currentPosition, float angle, bool globalAxisUsage, bool clockWiseRotation)
@@ -131,5 +175,16 @@ namespace Meyham.Items
 
             return new Vector3(x - currentPosition.x, y - currentPosition.y);
         }
+
+#if UNITY_EDITOR
+        
+        private void OnValidate()
+        {
+            if(TryGetComponent(out ItemMovementPrediction prediction))
+                prediction.SetUpPrediction(this);
+        }
+        
+#endif
+        
     }
 }
