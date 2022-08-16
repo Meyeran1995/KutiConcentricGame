@@ -8,26 +8,30 @@ namespace Meyham.Player
     /// </summary>
     public class OneTwoPlayer : ACollector
     {
-        [Header("Button Events")] 
-        [SerializeField] private BoolEventChannelSO leftButton;
-        [SerializeField] private BoolEventChannelSO rightButton;
+        [Header("Input")] 
+        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
+
+        [Range(0,5)] public int LeftButton;
+        [Range(0,5)] public int RightButton;
         
         [Header("References")] 
         [SerializeField] private RadialPlayerMovement playerMovement;
 
         private void Start()
         {
-            leftButton += OnLeftButton;
-            rightButton += OnRightButton;
+            inputEventChannel += OnInputReceived;
         }
 
-        private void OnLeftButton(bool buttonIsDown)
+        private void OnInputReceived(int input)
         {
-            playerMovement.Move(1);
-        }
-        
-        private void OnRightButton(bool buttonIsDown)
-        {
+            if (input == LeftButton)
+            {
+                playerMovement.Move(1);
+                return;
+            }
+
+            if (input != RightButton) return;
+            
             playerMovement.Move(-1);
         }
 

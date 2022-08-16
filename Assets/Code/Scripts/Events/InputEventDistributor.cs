@@ -8,17 +8,19 @@ namespace Meyham.Events
     /// </summary>
     public class InputEventDistributor : MonoBehaviour
     {
-        [Header("P1 Events")] 
-        [SerializeField] private BoolEventChannelSO p1LeftButton;
-        [SerializeField] private BoolEventChannelSO p1MiddleButton, p1RightButton;
+        [Header("Inputs")] 
+        [SerializeField] private IntEventChannel inputEventChannel;
 
-        [Header("P2 Events")] 
-        [SerializeField] private BoolEventChannelSO p2LeftButton;
-        [SerializeField] private BoolEventChannelSO p2MiddleButton, p2RightButton;
+        private const int P1LeftButton = 0;
+        private const int P1MiddleButton = 1;
+        private const int P1RightButton = 2;
+        private const int P2LeftButton = 3;
+        private const int P2MiddleButton = 4;
+        private const int P2RightButton = 5;
 
 #if UNITY_ANDROID
     
-    private Dictionary<EKutiButton, BoolEventChannelSO> bindings;
+    private Dictionary<EKutiButton, int> bindings;
 
     private void Awake()
     {
@@ -42,29 +44,29 @@ namespace Meyham.Events
         {
             if(!KutiInput.GetKutiButtonDown(kutiButton)) continue;
             
-            RaiseInputEvent(keyCode);
+            RaiseInputEvent(kutiButton);
         }
     }
 
-    private void RaiseInputEvent(KeyCode kutiButton)
+    private void RaiseInputEvent(EKutiButton kutiButton)
     {
-        bindings[kutiButton].RaiseEvent(true);
+        inputEventChannel.RaiseEvent(bindings[kutiButton]);
     }
     
 #else
 
-        private Dictionary<KeyCode, BoolEventChannelSO> bindings;
+        private Dictionary<KeyCode, int> bindings;
 
         private void Awake()
         {
-            bindings = new Dictionary<KeyCode, BoolEventChannelSO>
+            bindings = new Dictionary<KeyCode, int>
             {
-                { KeyCode.A, p1LeftButton },
-                { KeyCode.W, p1MiddleButton },
-                { KeyCode.D, p1RightButton },
-                { KeyCode.H, p2LeftButton },
-                { KeyCode.U, p2MiddleButton },
-                { KeyCode.K, p2RightButton }
+                { KeyCode.A, P1LeftButton },
+                { KeyCode.W, P1MiddleButton },
+                { KeyCode.D, P1RightButton },
+                { KeyCode.H, P2LeftButton },
+                { KeyCode.U, P2MiddleButton },
+                { KeyCode.K, P2RightButton }
             };
         }
 
@@ -83,7 +85,7 @@ namespace Meyham.Events
 
         private void RaiseInputEvent(KeyCode keyCode)
         {
-            bindings[keyCode].RaiseEvent(true);
+            inputEventChannel.RaiseEvent(bindings[keyCode]);
         }
     
 #endif
