@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ccc9db54dd9f14dbafd869a6399a4f, type: 3}
-  m_Name: Player1_Left
+  m_Script: {fileID: 11500000, guid: 402d72f178467ff449a1a588b1dc1c8d, type: 3}
+  m_Name: ButtonInputs
   m_EditorClassIdentifier: 

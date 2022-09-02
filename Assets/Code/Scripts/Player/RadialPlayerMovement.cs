@@ -13,7 +13,6 @@ namespace Meyham.Player
         [Header("Circle")]
         [SerializeField] private FloatValue angleGain;
         [SerializeField] private FloatValue radius;
-        [SerializeField] private Transform center;
         
         [Header("References")]
         [SerializeField] private Rigidbody2D playerRigidBody;
@@ -76,7 +75,7 @@ namespace Meyham.Player
 
         [Header("Gizmos")]
         [SerializeField] private float gizmoRadius;
-        
+
         public void EditorSnapToStartingPosition()
         {
             var playerTransform = transform;
@@ -105,10 +104,8 @@ namespace Meyham.Player
         
         private void OnDrawGizmos()
         {
-            if(!center) return;
-            
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(center.position, radius);
+            Gizmos.DrawWireSphere(Vector3.zero, radius);
         }
 
         private Vector3 GetCirclePoint(float angle)

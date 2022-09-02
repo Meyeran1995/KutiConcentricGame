@@ -12,8 +12,8 @@ namespace Meyham.Player
         [Header("Input")] 
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
-        [Range(0,5)] public int LeftButton;
-        [Range(0,5)] public int RightButton;
+        [Range(-1,5)] public int LeftButton;
+        [Range(-1,5)] public int RightButton;
 
         [ReadOnly, SerializeField] private int leftMovement, rightMovement;
 
