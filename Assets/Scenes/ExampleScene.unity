@@ -671,6 +671,7 @@ Transform:
   - {fileID: 148243365}
   - {fileID: 1232454605}
   - {fileID: 2095045852}
+  - {fileID: 1172567239}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -764,6 +765,55 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1172567238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172567239}
+  - component: {fileID: 1172567240}
+  m_Layer: 0
+  m_Name: WaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1172567239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172567238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 784535207}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172567240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172567238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6bbc7b875f401c957150c12632c804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - {fileID: 11400000, guid: 4c752f59c9a51e4428c439e5944e6204, type: 2}
+  - {fileID: 11400000, guid: 91945a54a13bdc740afbc6b92d5b0d7b, type: 2}
+  spawner: {fileID: 1816520460}
+  currentWave: 0
 --- !u!1 &1232454604
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +862,7 @@ MonoBehaviour:
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   playerManager: {fileID: 2095045853}
   numberOfPlayers: 0
+  startButtonActive: 0
 --- !u!1001 &1284215881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1236,10 +1287,6 @@ MonoBehaviour:
   minPoolSize: 5
   maxPoolSize: 20
   itemTemplate: {fileID: 2291004389240496474, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-  testStats:
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: e448c62237140b4409a090a97fd3f55d, type: 2}
-  - {fileID: 11400000, guid: 4a6b8cb36cb5a7841acbcbbb7427d158, type: 2}
 --- !u!1001 &1883333270
 PrefabInstance:
   m_ObjectHideFlags: 0

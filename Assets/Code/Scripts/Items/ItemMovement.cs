@@ -63,6 +63,7 @@ namespace Meyham.Items
             maxAngle = stats.MaxAngle;
             useGlobalAxis = stats.UseGlobalAxis;
             clockwiseRotation = stats.ClockwiseRotation;
+            StartingAngle = stats.GetStartingAngle();
 
             // Switch stats
             switchValue = stats.Switch;

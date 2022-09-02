@@ -9,9 +9,6 @@ namespace Meyham.GameMode
     {
         [SerializeField] private int minPoolSize, maxPoolSize;
         [SerializeField] private GameObject itemTemplate;
-
-        [SerializeField] private ItemMovementStatsSO[] testStats;
-        
         
         private IObjectPool<GameObject> pool;
 
@@ -19,14 +16,6 @@ namespace Meyham.GameMode
         {
             pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject,
                 true, minPoolSize, maxPoolSize);
-        }
-
-        private void Start()
-        {
-            foreach (var stats in testStats)
-            {
-                GetCollectible(stats);
-            }
         }
 
         private GameObject CreatePooledItem()
@@ -41,6 +30,7 @@ namespace Meyham.GameMode
         private void OnReturnedToPool(GameObject item)
         {
             item.SetActive(false);
+            item.transform.position = Vector3.zero;
         }
 
         // Called when an item is taken from the pool using Get

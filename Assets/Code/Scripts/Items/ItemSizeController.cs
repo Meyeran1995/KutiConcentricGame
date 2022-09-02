@@ -9,21 +9,33 @@ namespace Meyham.Items
         [field: SerializeField, Min(0f)] public float TimeToMaxSize{ get; private set; }
 
         private float originalScale;
+        private Tweener tweener;
         
-        private void Start()
-        {
-            originalScale = transform.localScale.x;
-            StartGainingSize();
-        }
-
         public void StartGainingSize()
         {
-            transform.DOScale(new Vector3(MaxSize, MaxSize, MaxSize), TimeToMaxSize);
+            tweener = transform.DOScale(new Vector3(MaxSize, MaxSize, MaxSize), TimeToMaxSize);
         }
 
         public void ResetSize()
         {
             transform.localScale = new Vector3(originalScale, originalScale, originalScale);
+        }
+        
+        private void Awake()
+        {
+            originalScale = transform.localScale.x;
+        }
+
+        private void OnEnable()
+        {
+            StartGainingSize();
+        }
+
+        private void OnDisable()
+        {
+            if(tweener.active)
+                tweener.Kill();
+            ResetSize();
         }
 
 #if UNITY_EDITOR

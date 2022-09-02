@@ -26,12 +26,12 @@ namespace Meyham.Player
             
             if (givenDirection == 0)
             {
-                currentAngle += clockwise ? angleGain : -angleGain;
+                currentAngle += clockwise ? -angleGain : angleGain;
             }
             else
             {
                 float directedGain = angleGain * givenDirection;
-                currentAngle += clockwise ? directedGain : -directedGain;
+                currentAngle += clockwise ? -directedGain : directedGain;
             }
 
             StartCoroutine(MoveRoutine());

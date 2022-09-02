@@ -13,7 +13,9 @@ namespace Meyham.DataObjects
         [field: SerializeField] public bool ClockwiseRotation { get; private set; }
         [field: SerializeField, Range(0f, 360f)] public float RotationGain { get; private set; }
         [field: SerializeField, Range(0, 360)] public int MaxAngle { get; private set; }
-        
+
+        public float GetStartingAngle() => Random.Range(0f, 360f);
+
         // Switch
         [field: Header("Switch Behaviour"), SerializeField, Min(0)] public int Switch { get; private set; }
         [field: SerializeField, Min(1)] public int TimesToSwitch { get; private set; }
