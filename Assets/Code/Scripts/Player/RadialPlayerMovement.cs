@@ -7,8 +7,8 @@ namespace Meyham.Player
     public class RadialPlayerMovement : MonoBehaviour
     {
         [Header("Values")] 
-        [SerializeField, Range(0f, 360f)] private float startingAngle;
-        [SerializeField] private bool snapToStartOnAwake, clockwise;
+        [Range(0f, 360f)] public float StartingAngle;
+        [SerializeField] private bool clockwise;
 
         [Header("Circle")]
         [SerializeField] private FloatValue angleGain;
@@ -20,17 +20,6 @@ namespace Meyham.Player
         
         private float currentAngle;
         private bool isMoving;
-
-        private void Awake()
-        {
-            currentAngle = startingAngle;
-            
-            if(!snapToStartOnAwake) return;
-            
-            var startingPosition = GetCirclePoint();
-            playerRigidBody.position = startingPosition;
-            playerRigidBody.rotation = startingAngle;
-        }
 
         public void Move(int givenDirection)
         {
@@ -49,6 +38,19 @@ namespace Meyham.Player
             StartCoroutine(MoveRoutine());
         }
 
+        private void OnEnable()
+        {
+            SnapToStartingAngle();
+        }
+
+        private void SnapToStartingAngle()
+        {
+            currentAngle = StartingAngle;
+            var startingPosition = GetCirclePoint();
+            playerRigidBody.position = startingPosition;
+            playerRigidBody.rotation = StartingAngle;
+        }
+        
         private Vector2 GetCirclePoint()
         {
             float angleInRad = Mathf.Deg2Rad * currentAngle;
@@ -75,6 +77,18 @@ namespace Meyham.Player
         [Header("Gizmos")]
         [SerializeField] private float gizmoRadius;
         
+        public void EditorSnapToStartingPosition()
+        {
+            var playerTransform = transform;
+            
+            float z = playerTransform.position.z;
+            Vector3 startingPos = GetCirclePoint(StartingAngle);
+            startingPos.z = z;
+            
+            playerTransform.position = startingPos;
+            playerTransform.rotation = Quaternion.Euler(0f, 0f, StartingAngle);
+        }
+        
         private void OnDrawGizmosSelected()
         {
             if(!angleGain) return;
@@ -85,7 +99,7 @@ namespace Meyham.Player
 
             for (int p = 0; p < numberOfPositions; p++)
             {
-                Gizmos.DrawSphere(GetCirclePoint(angleGain.BaseValue * p), gizmoRadius);
+                Gizmos.DrawSphere(GetCirclePoint(StartingAngle + angleGain * p), gizmoRadius);
             }
         }
         
@@ -97,19 +111,6 @@ namespace Meyham.Player
             Gizmos.DrawWireSphere(center.position, radius);
         }
 
-        
-        public void EditorSnapToStartingPosition()
-        {
-            var playerTransform = transform;
-            
-            float z = playerTransform.position.z;
-            Vector3 startingPos = GetCirclePoint(startingAngle);
-            startingPos.z = z;
-            
-            playerTransform.position = startingPos;
-            playerTransform.rotation = Quaternion.Euler(0f, 0f, startingAngle);
-        }
-        
         private Vector3 GetCirclePoint(float angle)
         {
             float angleInRad = Mathf.Deg2Rad * angle;

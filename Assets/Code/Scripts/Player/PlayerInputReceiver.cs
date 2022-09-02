@@ -1,21 +1,36 @@
+using Meyham.EditorHelpers;
 using Meyham.Events;
 using UnityEngine;
 
 namespace Meyham.Player
 {
     /// <summary>
-    /// Class used to represent a player in a context of either one or two players
+    /// Class that receives and evaluates inputevents for a single player
     /// </summary>
-    public class OneTwoPlayer : ACollector
+    public class PlayerInputReceiver : ACollector
     {
         [Header("Input")] 
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
         [Range(0,5)] public int LeftButton;
         [Range(0,5)] public int RightButton;
-        
+
+        [ReadOnly, SerializeField] private int leftMovement, rightMovement;
+
         [Header("References")] 
         [SerializeField] private RadialPlayerMovement playerMovement;
+
+        public void FlipMovementDirection()
+        {
+            leftMovement = rightMovement;
+            rightMovement = -rightMovement;
+        }
+
+        private void Awake()
+        {
+            leftMovement = 1;
+            rightMovement = -leftMovement;
+        }
 
         private void Start()
         {
@@ -26,13 +41,13 @@ namespace Meyham.Player
         {
             if (input == LeftButton)
             {
-                playerMovement.Move(1);
+                playerMovement.Move(leftMovement);
                 return;
             }
 
             if (input != RightButton) return;
             
-            playerMovement.Move(-1);
+            playerMovement.Move(rightMovement);
         }
 
         public override void Collect()
