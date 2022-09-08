@@ -14,6 +14,8 @@ namespace Meyham.Set_Up
 
         private static readonly Dictionary<int, PlayerController> players = new();
 
+        public static int NumberOfActivePlayers => players.Count;
+
         protected override void Start()
         {
             base.Start();

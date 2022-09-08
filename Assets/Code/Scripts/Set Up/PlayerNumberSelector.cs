@@ -2,6 +2,7 @@
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
+using Meyham.UI;
 using UnityEngine;
 
 namespace Meyham.Set_Up
@@ -51,6 +52,7 @@ namespace Meyham.Set_Up
             yield return new WaitForSeconds(startButtonDelay);
 
             startButtonActive = true;
+            Alerts.SendAlert("Zum Starten des Spiels erneut drücken");
         }
 
         private void OnStartButton()
