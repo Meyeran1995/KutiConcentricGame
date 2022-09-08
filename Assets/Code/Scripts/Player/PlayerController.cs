@@ -7,6 +7,19 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
+        [SerializeField] private Collider2D playerCollider;
+
+        public void OnGameEnd()
+        {
+            playerCollider.isTrigger = false;
+            enabled = false;
+        }
+
+        public void OnGameRestart()
+        {
+            playerCollider.isTrigger = true;
+            enabled = true;
+        }
 
         public void SetLeftButton(int button)
         {

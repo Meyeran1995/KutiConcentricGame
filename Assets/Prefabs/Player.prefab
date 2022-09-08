@@ -161,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 3343158596831003080}
   input: {fileID: 3343158596831003086}
+  collider: {fileID: 3343158595621873223}
 --- !u!114 &3343158596831003080
 MonoBehaviour:
   m_ObjectHideFlags: 0

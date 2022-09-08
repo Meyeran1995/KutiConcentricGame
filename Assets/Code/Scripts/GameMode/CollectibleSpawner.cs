@@ -1,4 +1,5 @@
 using Meyham.DataObjects;
+using Meyham.Events;
 using Meyham.Items;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -7,6 +8,10 @@ namespace Meyham.GameMode
 {
     public class CollectibleSpawner : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private VoidEventChannelSO onReleasedEvent;
+        
+        [Header("Pooling")]
         [SerializeField] private int minPoolSize, maxPoolSize;
         [SerializeField] private GameObject itemTemplate;
         
@@ -16,6 +21,21 @@ namespace Meyham.GameMode
         {
             pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject,
                 true, minPoolSize, maxPoolSize);
+        }
+
+        private void Start()
+        {
+            var preSpawnedObjects = new GameObject[minPoolSize];
+            
+            for (int i = 0; i < minPoolSize; i++)
+            {
+                pool.Get(out preSpawnedObjects[i]);
+            }
+            
+            for (int i = 0; i < minPoolSize; i++)
+            {
+                pool.Release(preSpawnedObjects[i]);
+            }
         }
 
         private GameObject CreatePooledItem()
@@ -48,8 +68,8 @@ namespace Meyham.GameMode
         
         public void ReleaseCollectible(ACollectible collectible)
         {
-            Debug.Log($"{collectible.name} has touched the border");
             pool.Release(collectible.gameObject);
+            onReleasedEvent.RaiseEvent();
         }
 
         public void GetCollectible(ItemMovementStatsSO itemStats)

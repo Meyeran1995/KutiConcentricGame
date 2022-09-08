@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Meyham.Player
 {
     /// <summary>
-    /// Class that receives and evaluates inputevents for a single player
+    /// Class that receives and evaluates Input Events for a single player
     /// </summary>
     public class PlayerInputReceiver : ACollector
     {
@@ -32,9 +32,14 @@ namespace Meyham.Player
             rightMovement = -leftMovement;
         }
 
-        private void Start()
+        private void OnEnable()
         {
             inputEventChannel += OnInputReceived;
+        }
+        
+        private void OnDisable()
+        {
+            inputEventChannel -= OnInputReceived;
         }
 
         private void OnInputReceived(int input)

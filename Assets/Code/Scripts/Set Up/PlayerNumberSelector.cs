@@ -13,7 +13,7 @@ namespace Meyham.Set_Up
 
         [Header("References")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
-        [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private GameLoop gameLoop;
         
         [Header("Debug")]
         [ReadOnly, SerializeField] private int numberOfPlayers;
@@ -40,7 +40,6 @@ namespace Meyham.Set_Up
             }
             
             activePlayers[playerNumber] = true;
-            playerManager.OnPlayerJoined(playerNumber);
             
             if(++numberOfPlayers != 1) return;
 
@@ -60,7 +59,7 @@ namespace Meyham.Set_Up
             
             inputEventChannel -= OnPlayerJoined;
             
-            playerManager.OnGameStart(numberOfPlayers);
+            gameLoop.StartGame();
         }
     }
 }
