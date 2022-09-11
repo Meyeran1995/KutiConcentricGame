@@ -7,7 +7,7 @@ namespace Meyham.Player
     /// <summary>
     /// Class that receives and evaluates Input Events for a single player
     /// </summary>
-    public class PlayerInputReceiver : ACollector
+    public class PlayerInputReceiver : MonoBehaviour
     {
         [Header("Input")] 
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
@@ -53,10 +53,6 @@ namespace Meyham.Player
             if (input != RightButton) return;
             
             playerMovement.Move(rightMovement);
-        }
-
-        public override void Collect()
-        {
         }
     }
 }

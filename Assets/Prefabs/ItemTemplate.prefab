@@ -67,7 +67,6 @@ MonoBehaviour:
   predictionSteps: 500
   resolution: 5
   gizmoSphereRadius: 0.06
-  movementStats: {fileID: 0}
 --- !u!212 &2291004389240496478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -149,9 +148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spawner: {fileID: 0}
-  endTimer: {fileID: 11400000, guid: 13617e1a49e404e49bd1a0feea502119, type: 2}
-  collectionEvent: {fileID: 11400000, guid: f2e848441dbbc584ea08db577d2ef0dd, type: 2}
-  timeToAdd: 2
+  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+  score: 10
 --- !u!114 &9063979699556410508
 MonoBehaviour:
   m_ObjectHideFlags: 0

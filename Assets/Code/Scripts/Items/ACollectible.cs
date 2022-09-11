@@ -8,12 +8,14 @@ namespace Meyham.Items
     {
         public CollectibleSpawner Spawner;
 
-        protected abstract void OnCollect();
+        protected abstract void OnCollect(GameObject player);
         
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if(col.gameObject.CompareTag("Player"))
-                OnCollect();
+            GameObject incomingObject = col.gameObject;
+            
+            if(incomingObject.CompareTag("Player"))
+                OnCollect(incomingObject);
             Spawner.ReleaseCollectible(this);
         }
     }

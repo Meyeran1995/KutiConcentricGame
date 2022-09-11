@@ -5,7 +5,7 @@ namespace Meyham.Items
     public class PowerUp : ACollectible
     {
 
-        protected override void OnCollect()
+        protected override void OnCollect(GameObject player)
         {
 
 

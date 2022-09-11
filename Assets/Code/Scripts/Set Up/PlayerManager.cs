@@ -12,9 +12,9 @@ namespace Meyham.Set_Up
         [SerializeField] private GameObject playerTemplate;
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
-        private static readonly Dictionary<int, PlayerController> players = new();
+        private static readonly Dictionary<int, PlayerController> Players = new();
 
-        public static int NumberOfActivePlayers => players.Count;
+        public static int NumberOfActivePlayers => Players.Count;
 
         protected override void Start()
         {
@@ -24,21 +24,22 @@ namespace Meyham.Set_Up
 
         private void OnPlayerJoined(int inputIndex)
         {
-            if(players.ContainsKey(inputIndex)) return;
+            if(Players.ContainsKey(inputIndex)) return;
             
             var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
             newPlayer.enabled = false;
             newPlayer.SetLeftButton(inputIndex);
-            
-            players.Add(inputIndex, newPlayer);
+            newPlayer.SetPlayerNumber(inputIndex);
+
+            Players.Add(inputIndex, newPlayer);
         }
 
         protected override void OnGameStart()
         {
-            float positionGain = 360f / players.Count;
+            float positionGain = 360f / Players.Count;
             float currentAngle = 0f;
 
-            foreach (var player in players.Values)
+            foreach (var player in Players.Values)
             {
                 player.SetStartingPosition(currentAngle);
                 player.enabled = true;
@@ -50,7 +51,7 @@ namespace Meyham.Set_Up
 
         protected override void OnGameEnd()
         {
-            foreach (var player in players.Values)
+            foreach (var player in Players.Values)
             {
                 player.OnGameEnd();
             }
@@ -58,7 +59,7 @@ namespace Meyham.Set_Up
 
         protected override void OnGameRestart()
         {
-            foreach (var player in players.Values)
+            foreach (var player in Players.Values)
             {
                 player.OnGameRestart();
             }

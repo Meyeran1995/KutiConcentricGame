@@ -7,6 +7,7 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
+        [SerializeField] private PlayerScore score;
         [SerializeField] private Collider2D playerCollider;
 
         public void OnGameEnd()
@@ -19,23 +20,17 @@ namespace Meyham.Player
         {
             playerCollider.isTrigger = true;
             enabled = true;
+            score.ResetScore();
         }
 
-        public void SetLeftButton(int button)
-        {
-            input.LeftButton = button;
-        }
-        
-        public void SetRightButton(int button)
-        {
-            input.RightButton = button;
-        }
+        public void SetLeftButton(int button) => input.LeftButton = button;
 
-        public void SetStartingPosition(float angle)
-        {
-            movement.StartingAngle = angle;
-        }
-        
+        public void SetRightButton(int button) => input.RightButton = button;
+
+        public void SetStartingPosition(float angle) => movement.StartingAngle = angle;
+
+        public void SetPlayerNumber(int number) => score.PlayerNumber = number;
+
         private void OnEnable()
         {
             movement.enabled = true;

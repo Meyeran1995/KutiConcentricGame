@@ -8,6 +8,8 @@ namespace Meyham.UI
 {
     public class ScoreboardView : AGameView
     {
+        [Header("References")]
+        [SerializeField] private ScoreUI scoreUI;
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO gameStart;
         [Header("Layout")]
@@ -50,10 +52,12 @@ namespace Meyham.UI
         
         public override void OpenView(int animatorId)
         {
+            gameObject.SetActive(true);
         }
 
         public override void CloseView(int animatorId)
         {
+            scoreUI.ResetScores();
         }
     }
 }
