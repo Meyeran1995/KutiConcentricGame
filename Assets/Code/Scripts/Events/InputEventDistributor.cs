@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Meyham.Events
 {
@@ -8,8 +9,9 @@ namespace Meyham.Events
     /// </summary>
     public class InputEventDistributor : MonoBehaviour
     {
+        [FormerlySerializedAs("inputEventChannel")]
         [Header("Inputs")] 
-        [SerializeField] private IntEventChannel inputEventChannel;
+        [SerializeField] private IntEventChannelSO inputEventChannelSo;
 
         private const int P1LeftButton = 0;
         private const int P1MiddleButton = 1;
@@ -85,7 +87,7 @@ namespace Meyham.Events
 
         private void RaiseInputEvent(KeyCode keyCode)
         {
-            inputEventChannel.RaiseEvent(bindings[keyCode]);
+            inputEventChannelSo.RaiseEvent(bindings[keyCode]);
         }
     
 #endif

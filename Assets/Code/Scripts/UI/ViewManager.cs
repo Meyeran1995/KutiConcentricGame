@@ -17,6 +17,8 @@ namespace Meyham.UI
         private void Awake()
         {
             currentView = 0;
+            gameViews[1].gameObject.SetActive(false);
+            gameViews[2].gameObject.SetActive(false);
         }
 
         protected override void Start()
@@ -27,23 +29,26 @@ namespace Meyham.UI
 
         protected override void OnGameStart()
         {
-            CloseCurrentView();
-            currentView = 1;
+            ChangeToView(1);
         }
 
         protected override void OnGameEnd()
         {
-            currentView = 2;
-            OpenCurrentView();
+            ChangeToView(2);
         }
 
         protected override void OnGameRestart()
         {
-            CloseCurrentView();
-            currentView = 1;
-            OpenCurrentView();
+            ChangeToView(1);
         }
 
+        private void ChangeToView(int view)
+        {
+            CloseCurrentView();
+            currentView = view;
+            OpenCurrentView();
+        }
+        
         private void OpenCurrentView() => gameViews[currentView].OpenView(ViewIsOpenId);
         private void CloseCurrentView() => gameViews[currentView].CloseView(ViewIsOpenId);
     }

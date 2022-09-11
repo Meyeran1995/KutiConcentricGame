@@ -12,17 +12,5 @@ namespace Meyham.Events
         public void InvokeFalse() => RaiseEvent(false);
 
 #endif
-        
-        public static BoolEventChannelSO operator +(BoolEventChannelSO channel, UnityAction<bool> listener)
-        {
-            channel.onEventRaised += listener;
-            return channel;
-        }
-
-        public static BoolEventChannelSO operator -(BoolEventChannelSO channel, UnityAction<bool> listener)
-        {
-            channel.onEventRaised -= listener;
-            return channel;
-        }
     }
 }
