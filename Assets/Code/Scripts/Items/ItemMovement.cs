@@ -12,7 +12,7 @@ namespace Meyham.Items
         #region Stats
 
         // Speed
-        private float movementSpeed;
+        private float sidewaysSpeed, forwardSpeed;
 
         // Rotation
         private bool useGlobalAxis, clockwiseRotation;
@@ -26,7 +26,7 @@ namespace Meyham.Items
 
         #endregion
         
-        private Vector3 movementDirection;
+        private Vector2 movementDirection;
         private float currentAngle;
         private int stepCounter, switchCounter;
         private bool canSwitch;
@@ -38,13 +38,6 @@ namespace Meyham.Items
             if(Stats == null) return;
             
             SetMovementStats(Stats);
-            ResetFields();
-        }
-
-        private void Start()
-        {
-            if(TryGetComponent(out ItemMovementPrediction prediction))
-                prediction.SetUpPrediction(this);
         }
 
 #endif
@@ -54,12 +47,13 @@ namespace Meyham.Items
             Stats = stats;
             
             // Speed
-            movementSpeed = stats.Speed;
-            speedModifier = stats.SpeedModifier;
+            sidewaysSpeed = stats.SidewaysSpeed * Time.fixedDeltaTime;
+            forwardSpeed = stats.ForwardSpeed * Time.fixedDeltaTime;
+            speedModifier = stats.SidewaysSpeedModifier * Time.fixedDeltaTime;
 
             // Rotation
-            rotationGain = stats.RotationGain;
-            rotationGainModifier = stats.RotationGainModifier;
+            rotationGain = stats.RotationGain * Time.fixedDeltaTime;
+            rotationGainModifier = stats.RotationGainModifier * Time.fixedDeltaTime;
             maxAngle = stats.MaxAngle;
             useGlobalAxis = stats.UseGlobalAxis;
             clockwiseRotation = stats.ClockwiseRotation;
@@ -74,18 +68,9 @@ namespace Meyham.Items
             ResetFields();
         }
 
-        public void ResetFields()
-        {
-            movementDirection = GetStartDirection(transform.position).normalized;
-            currentAngle = 0f;
-            canSwitch = switchValue != 0;
-            stepCounter = 0;
-            switchCounter = 0;
-        }
-
         private void FixedUpdate()
         {
-            currentAngle += rotationGain * Time.fixedDeltaTime;
+            currentAngle += rotationGain;
 
             if ((int)currentAngle > maxAngle)
             {
@@ -106,9 +91,7 @@ namespace Meyham.Items
 
         private void Move()
         {
-            Vector3 currentPosition = transform.position;
-            var currentRotation = GetRotation(currentPosition, currentAngle, useGlobalAxis, clockwiseRotation);
-            transform.position = GetNextPosition(currentPosition, movementDirection, currentRotation, movementSpeed);
+            transform.position = GetNextPosition();
         }
 
         private void EvaluateSwitch()
@@ -129,7 +112,7 @@ namespace Meyham.Items
         private void ApplySwitchModifiers()
         {
             rotationGain += rotationGainModifier;
-            movementSpeed += speedModifier;
+            sidewaysSpeed += speedModifier;
 
             if (axisSwitch)
                 useGlobalAxis = !useGlobalAxis;
@@ -138,7 +121,57 @@ namespace Meyham.Items
                 clockwiseRotation = !clockwiseRotation;
         }
 
-        public Quaternion GetRotation(Vector3 currentPosition, float angle, bool globalAxisUsage, bool clockWiseRotation)
+        private Quaternion GetRotation()
+        {
+            Quaternion currentRotation;
+            float rotationAngle = clockwiseRotation ? -currentAngle : currentAngle;
+
+            if (useGlobalAxis)
+            {
+                currentRotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+            }
+            else
+            {
+                var currentRotationAxis = transform.position;
+                currentRotationAxis.z = 1f;
+                currentRotation = Quaternion.AngleAxis(rotationAngle, currentRotationAxis);
+            }
+
+            return currentRotation;
+        }
+
+        private Vector3 GetNextPosition()
+        {
+            Vector3 nextPosition = GetRotation() * movementDirection;
+            nextPosition *= sidewaysSpeed;
+            nextPosition.z += forwardSpeed;
+            nextPosition += transform.position;
+
+            return nextPosition;
+        }
+        
+        private Vector2 GetInitialSidewaysDirection()
+        {
+            var currentPosition = transform.position;
+            float angleInRad = Mathf.Deg2Rad * StartingAngle;
+            float x = Mathf.Cos(angleInRad);
+            float y = Mathf.Sin(angleInRad);
+
+            return new Vector2(x - currentPosition.x, y - currentPosition.y);
+        }
+        
+        private void ResetFields()
+        {
+            movementDirection = GetInitialSidewaysDirection().normalized;
+            currentAngle = 0f;
+            canSwitch = switchValue != 0;
+            stepCounter = 0;
+            switchCounter = 0;
+        }
+
+#if UNITY_EDITOR
+        
+        public static Quaternion GetRotation(Vector3 currentPosition, float angle, bool globalAxisUsage, bool clockWiseRotation)
         {
             Quaternion currentRotation;
             float rotationAngle = clockWiseRotation ? -angle : angle;
@@ -157,34 +190,25 @@ namespace Meyham.Items
             return currentRotation;
         }
 
-        public Vector3 GetNextPosition(Vector3 currentPosition, Vector3 direction, Quaternion currentRotation, float speed)
+        public static Vector3 GetNextPosition(Vector3 currentPosition, Vector3 sidewaysDirection, Quaternion currentRotation, float sideSpeed, float forwardSpeed)
         {
-            Vector3 nextPosition = currentRotation * direction;
-            nextPosition *= speed * Time.fixedDeltaTime;
+            Vector3 nextPosition = currentRotation * sidewaysDirection;
+            nextPosition *= sideSpeed * Time.fixedDeltaTime;
+            nextPosition.z += forwardSpeed * Time.fixedDeltaTime;
             nextPosition += currentPosition;
-            nextPosition.z = 0f;
 
             return nextPosition;
         }
         
-        public Vector3 GetStartDirection(Vector2 startingPosition)
+        public static Vector3 GetInitialSidewaysDirection(Vector2 startingPosition, float startingAngle)
         {
             var currentPosition = startingPosition;
-            float angleInRad = Mathf.Deg2Rad * StartingAngle;
+            float angleInRad = Mathf.Deg2Rad * startingAngle;
             float x = Mathf.Cos(angleInRad);
             float y = Mathf.Sin(angleInRad);
 
             return new Vector3(x - currentPosition.x, y - currentPosition.y);
         }
-
-#if UNITY_EDITOR
-        
-        private void OnValidate()
-        {
-            if(TryGetComponent(out ItemMovementPrediction prediction))
-                prediction.SetUpPrediction(this);
-        }
-        
 #endif
         
     }

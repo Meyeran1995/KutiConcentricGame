@@ -14,7 +14,7 @@ namespace Meyham.Items
         
         protected override void OnCollect(GameObject player)
         {
-            var playerScore = player.GetComponent<PlayerScore>();
+            var playerScore = player.GetComponentInParent<PlayerScore>();
             playerScore.AcquireScore(score);
             
             collectionEvent.RaiseEvent(playerScore);

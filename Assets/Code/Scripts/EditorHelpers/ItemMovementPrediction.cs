@@ -7,7 +7,10 @@ namespace Meyham.EditorHelpers
     public class ItemMovementPrediction : MonoBehaviour
     {
 #if UNITY_EDITOR
-        
+
+        [SerializeField] private ItemMovementStatsSO debugStats;
+        [SerializeField] private float zMovement;
+        [SerializeField, Range(0f, 360f)] private float startingAngle;
         [Header("Gizmos")] 
         [SerializeField] private bool showGizmos = true;
         [SerializeField, Min(0)] private int predictionSteps;
@@ -27,25 +30,27 @@ namespace Meyham.EditorHelpers
         // gizmo fields
         private bool useGlobal, clockwiseRotation, canSwitch;
         private Vector3 currentPosition, direction;
-        private float currentAngle, currentRotationGain, currentSpeed;
+        private float currentAngle, currentRotationGain, currentSidewaysSpeed;
         private int timesSwitched;
 
         private void Start()
         {
-            gameIsRunning = true;
-            useGlobal = movementStats.UseGlobalAxis;
-            clockwiseRotation = movementStats.ClockwiseRotation;
-            
             startPosition = transform.position;
-            
-            currentAngle = currentRotationGain * Time.fixedDeltaTime;
-            direction = movement.GetStartDirection(currentPosition).normalized;
+            gameIsRunning = true;
+            movementStats = movement == null ? debugStats : movement.Stats;
         }
-        
+
+        private void OnEnable()
+        {
+            if(movement == null) return;
+
+            startingAngle = movement.StartingAngle;
+        }
+
         private void ApplySwitchModifiers()
         {
             currentRotationGain += movementStats.RotationGainModifier;
-            currentSpeed += movementStats.SpeedModifier;
+            currentSidewaysSpeed += movementStats.SidewaysSpeedModifier;
 
             if (movementStats.AxisSwitch)
                 useGlobal = !useGlobal;
@@ -59,37 +64,32 @@ namespace Meyham.EditorHelpers
 
         private void OnDrawGizmos()
         {
-            if(!showGizmos) return;
-            if(predictionSteps == 0 || resolution == 0 || gizmoSphereRadius == 0f) return;
+            if (!showGizmos) return;
+            if (predictionSteps == 0 || resolution == 0 || gizmoSphereRadius == 0f) return;
+            if (movementStats == null) return;
 
-            if (movementStats == null)
-                movementStats = movement.Stats;
-            
             InitializeFields();
-
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(currentPosition, gizmoSphereRadius);
             DrawPositions();
         }
         
         private void InitializeFields()
         {
-            if (gameIsRunning)
-            {
-                currentPosition = startPosition;
-            }
-            else
-            {
-                currentPosition = transform.position;
-                direction = movement.GetStartDirection(currentPosition).normalized;
-            }
-            
-            currentRotationGain = movementStats.RotationGain;
-            currentSpeed = movementStats.Speed;
-            currentAngle = 0f;
+            currentPosition = gameIsRunning ? startPosition : transform.position;
+            direction = ItemMovement.GetInitialSidewaysDirection(currentPosition, startingAngle).normalized;
 
-            useGlobal = movementStats.UseGlobalAxis;
-            clockwiseRotation = movementStats.ClockwiseRotation;
+            currentAngle = 0f;
             timesSwitched = 0;
             canSwitch = movementStats.Switch != 0;
+
+            currentRotationGain = movementStats.RotationGain;
+            currentSidewaysSpeed = movementStats.SidewaysSpeed;
+            zMovement = movementStats.ForwardSpeed;
+            
+            useGlobal = movementStats.UseGlobalAxis;
+            clockwiseRotation = movementStats.ClockwiseRotation;
         }
 
         private void DrawPositions()
@@ -103,8 +103,9 @@ namespace Meyham.EditorHelpers
                     currentAngle = movementStats.MaxAngle;
                 }
                 
-                currentPosition = movement.GetNextPosition(currentPosition, direction,
-                    movement.GetRotation(currentPosition, currentAngle, useGlobal, clockwiseRotation), currentSpeed);
+                currentPosition = ItemMovement.GetNextPosition(currentPosition, direction,
+                    ItemMovement.GetRotation(currentPosition, currentAngle, useGlobal,
+                        clockwiseRotation), currentSidewaysSpeed, zMovement);
 
                 if ((int)currentAngle == movementStats.MaxAngle)
                 {
@@ -134,12 +135,18 @@ namespace Meyham.EditorHelpers
         }
 
         private void OnApplicationQuit() => gameIsRunning = false;
-        private void OnValidate() => movement = GetComponent<ItemMovement>();
-
-        public void SetUpPrediction(ItemMovement movement)
+        
+        private void OnValidate()
         {
-            this.movement = movement;
-            movementStats = movement.Stats;
+            if (TryGetComponent(out movement))
+            {
+                movementStats = movement.Stats;
+                startingAngle = movement.StartingAngle;
+            }
+            else
+            {
+                movementStats = debugStats;
+            }
         }
 
 #endif

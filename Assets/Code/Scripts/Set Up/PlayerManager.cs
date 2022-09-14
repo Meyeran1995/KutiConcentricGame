@@ -2,6 +2,7 @@
 using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.Player;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Meyham.Set_Up
@@ -26,10 +27,12 @@ namespace Meyham.Set_Up
         {
             if(Players.ContainsKey(inputIndex)) return;
             
-            var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
+            var newPlayer = Instantiate(playerTemplate, transform.position, quaternion.identity)
+                .GetComponent<PlayerController>();
             newPlayer.enabled = false;
             newPlayer.SetLeftButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
+            newPlayer.SetStartingPosition(0f);
 
             Players.Add(inputIndex, newPlayer);
         }
@@ -64,5 +67,22 @@ namespace Meyham.Set_Up
                 player.OnGameRestart();
             }
         }
+
+#if UNITY_EDITOR
+
+        private RadialPlayerMovement movement;
+        
+        private void OnDrawGizmos()
+        {
+            if (movement == null)
+            {
+                if(!playerTemplate.TryGetComponent(out movement)) return;
+            }
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, movement.Radius);
+        }
+
+#endif
     }
 }

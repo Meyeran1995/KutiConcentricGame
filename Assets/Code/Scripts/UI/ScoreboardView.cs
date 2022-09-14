@@ -58,6 +58,7 @@ namespace Meyham.UI
         public override void CloseView(int animatorId)
         {
             scoreUI.ResetScores();
+            gameObject.SetActive(false);
         }
     }
 }

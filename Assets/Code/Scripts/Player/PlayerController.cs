@@ -8,7 +8,7 @@ namespace Meyham.Player
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
-        [SerializeField] private Collider2D playerCollider;
+        [SerializeField] private Collider playerCollider;
 
         public void OnGameEnd()
         {
@@ -27,7 +27,7 @@ namespace Meyham.Player
 
         public void SetRightButton(int button) => input.RightButton = button;
 
-        public void SetStartingPosition(float angle) => movement.StartingAngle = angle;
+        public void SetStartingPosition(float angle) => movement.SnapToStartingAngle(angle);
 
         public void SetPlayerNumber(int number) => score.PlayerNumber = number;
 
@@ -42,5 +42,14 @@ namespace Meyham.Player
             movement.enabled = false;
             input.enabled = false;
         }
+
+#if UNITY_EDITOR
+
+        private void OnValidate()
+        {
+            playerCollider.isTrigger = true;
+        }
+
+#endif
     }
 }

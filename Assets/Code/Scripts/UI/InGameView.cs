@@ -10,6 +10,7 @@ namespace Meyham.UI
 
         public override void CloseView(int animatorId)
         {
+            gameObject.SetActive(false);
         }
     }
 }

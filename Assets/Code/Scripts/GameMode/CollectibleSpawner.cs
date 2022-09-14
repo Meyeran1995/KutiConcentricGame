@@ -40,10 +40,10 @@ namespace Meyham.GameMode
 
         private GameObject CreatePooledItem()
         {
-            var item = Instantiate(itemTemplate).GetComponent<ACollectible>();
-            item.Spawner = this;
-            
-            return item.gameObject;
+            var item = Instantiate(itemTemplate);
+            item.GetComponentInChildren<ACollectible>().Spawner = this;
+
+            return item;
         }
 
         // Called when an item is returned to the pool using Release
@@ -68,7 +68,7 @@ namespace Meyham.GameMode
         
         public void ReleaseCollectible(ACollectible collectible)
         {
-            pool.Release(collectible.gameObject);
+            pool.Release(collectible.transform.parent.gameObject);
             onReleasedEvent.RaiseEvent();
         }
 
@@ -76,6 +76,7 @@ namespace Meyham.GameMode
         {
             pool.Get(out var item);
             var movement = item.GetComponent<ItemMovement>();
+            movement.transform.position = transform.position;
             movement.SetMovementStats(itemStats);
         }
     }
