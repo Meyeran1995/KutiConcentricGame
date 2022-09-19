@@ -9,8 +9,8 @@ namespace Meyham.Events
 #if UNITY_EDITOR
         public bool HasListeners => onEventRaised != null;
 #endif
-        
-        protected UnityAction<T> onEventRaised;
+
+        private UnityAction<T> onEventRaised;
 
         public void RaiseEvent(T state)
         {

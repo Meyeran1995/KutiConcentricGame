@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseValue: 4
   <RuntimeValue>k__BackingField: 4
+  updateRuntimeValue: 1

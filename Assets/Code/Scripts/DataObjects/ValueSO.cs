@@ -6,7 +6,7 @@ namespace Meyham.DataObjects
     public abstract class ValueSO<T> : ScriptableObject
     {
         [SerializeField] private T baseValue;
-
+        
         public T BaseValue => baseValue;
 
         [field: SerializeField, ReadOnly]
@@ -17,5 +17,18 @@ namespace Meyham.DataObjects
         public void ResetToBaseValue() => RuntimeValue = baseValue;
 
         public static implicit operator T(ValueSO<T> valueSO) => valueSO.RuntimeValue;
+
+#if UNITY_EDITOR
+
+        [SerializeField] private bool updateRuntimeValue = true;
+
+        private void OnValidate()
+        {
+            if(!updateRuntimeValue) return;
+
+            RuntimeValue = baseValue;
+        }
+
+#endif
     }
 }
