@@ -13,15 +13,6 @@ MonoBehaviour:
   m_Name: Medium
   m_EditorClassIdentifier: 
   itemTypes:
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: 4a6b8cb36cb5a7841acbcbbb7427d158, type: 2}
-  contents: 0000000000000000000000000100000000000000000000000000000001000000
-  <Wave>k__BackingField:
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: 4a6b8cb36cb5a7841acbcbbb7427d158, type: 2}
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: edf94eb14f88c674485ccc2dae4e771c, type: 2}
-  - {fileID: 11400000, guid: 4a6b8cb36cb5a7841acbcbbb7427d158, type: 2}
+  - {fileID: 5841842007433814734, guid: 2adf508ebc9ebdd44adb495abaea932a, type: 3}
+  - {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}
+  contents: 0100000000000000010000000000000000000000010000000000000001000000

@@ -1,24 +1,30 @@
-﻿using Meyham.EditorHelpers;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Splines;
 
 namespace Meyham.DataObjects
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/StatObjects/ItemWave")]
     public class CollectibleWave : ScriptableObject
     {
-        [SerializeField] private ItemMovementStatsSO[] itemTypes;
+        [SerializeField] private GameObject[] itemTypes;
         [SerializeField] private int[] contents;
         
-        [field: Header("Debug"), ReadOnly, SerializeField] 
-        public ItemMovementStatsSO[] Wave { get; private set; }
+        public BezierKnot[][] Wave { get; private set; }
 
         private void OnEnable()
         {
-            Wave = new ItemMovementStatsSO[contents.Length];
+            Wave = new BezierKnot[contents.Length][];
+
+            var splines = new SplineContainer[itemTypes.Length];
+
+            for (int i = 0; i < itemTypes.Length; i++)
+            {
+                splines[i] = itemTypes[i].GetComponent<SplineContainer>();
+            }
             
             for (int i = 0; i < contents.Length; i++)
             {
-                Wave[i] = itemTypes[contents[i]];
+                Wave[i] = splines[contents[i]].Spline.ToArray();
             }
         }
 

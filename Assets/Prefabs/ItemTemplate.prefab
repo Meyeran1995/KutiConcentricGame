@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2291004389240496477}
   - component: {fileID: 2291004389240496479}
-  - component: {fileID: 488864985107758730}
   - component: {fileID: 2291004389240496478}
+  - component: {fileID: 5044837721625355024}
   m_Layer: 0
   m_Name: ItemTemplate
   m_TagString: Untagged
@@ -47,27 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876c0ed889e917e49b89ff00e2bd2235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <StartingAngle>k__BackingField: 0
-  <Stats>k__BackingField: {fileID: 0}
---- !u!114 &488864985107758730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2291004389240496474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0035c1491a7e8d7488c3067541d4099a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugStats: {fileID: 0}
-  zMovement: 0
-  startingAngle: 0
-  showGizmos: 0
-  predictionSteps: 487
-  resolution: 5
-  gizmoSphereRadius: 0.06
+  speed: {fileID: 11400000, guid: e4710aa251f56c140aa7937c73800bd6, type: 2}
+  splineFollower: {fileID: 5044837721625355024}
 --- !u!212 &2291004389240496478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -120,6 +101,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5044837721625355024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291004389240496474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_LoopMode: 0
+  m_Method: 1
+  m_Duration: 1
+  m_MaxSpeed: 10
+  m_EasingMode: 0
+  m_AlignmentMode: 0
+  m_ObjectForwardAxis: 2
+  m_ObjectUpAxis: 1
 --- !u!1 &9139025135300890692
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,8 +168,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!114 &3131184015726496390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 0}
   collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
   score: 10
 --- !u!114 &7354168802038879022

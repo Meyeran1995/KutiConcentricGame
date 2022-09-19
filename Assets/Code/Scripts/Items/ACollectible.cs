@@ -6,25 +6,24 @@ namespace Meyham.Items
     [RequireComponent(typeof(Collider))]
     public abstract class ACollectible : MonoBehaviour
     {
-        public CollectibleSpawner Spawner;
+        private static CollectibleSpawner spawner;
 
-        protected abstract void OnCollect(GameObject player);
-        
+        private void Awake()
+        {
+            if (spawner) return;
+
+            spawner = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            GameObject incomingObject = other.gameObject;
+            var incomingObject = other.gameObject;
 
-            if (incomingObject.CompareTag("Player"))
-            {
-                OnCollect(incomingObject);
-            }
-            
-            Spawner.ReleaseCollectible(this);
+            if (incomingObject.CompareTag("Player")) OnCollect(incomingObject);
+
+            spawner.ReleaseCollectible(this);
         }
 
-        private void OnBecameInvisible()
-        {
-            Spawner.ReleaseCollectible(this);
-        }
+        protected abstract void OnCollect(GameObject player);
     }
 }
