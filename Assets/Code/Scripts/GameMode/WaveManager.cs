@@ -14,18 +14,20 @@ namespace Meyham.GameMode
 
         [Header("References")] 
         [SerializeField] private CollectibleSpawner spawner;
-        [SerializeField] private VoidEventChannelSO onReleasedEvent;
+        [SerializeField] private VoidEventChannelSO onReleasedEvent, endOfSpawningEvent, lastItemVanishedEvent;
         
         [Header("Debug")] 
         [ReadOnly, SerializeField] private int currentWave;
         [ReadOnly, SerializeField] private int spawnCount;
 
-        private bool isSpawning;
+        private bool isSpawning, shouldSpawn;
 
         protected override void OnGameStart()
         {
+            shouldSpawn = true;
             SpawnWave();
             onReleasedEvent += OnCollectibleReleased;
+            endOfSpawningEvent += OnEndOfSpawns;
         }
 
         protected override void OnGameEnd()
@@ -35,13 +37,25 @@ namespace Meyham.GameMode
 
         protected override void OnGameRestart()
         {
+            isSpawning = false;
+            shouldSpawn = true;
             SpawnWave();
             onReleasedEvent += OnCollectibleReleased;
         }
 
+        private void OnEndOfSpawns()
+        {
+            shouldSpawn = false;
+            StopAllCoroutines();
+
+            if(spawnCount != 0) return;
+            
+            lastItemVanishedEvent.RaiseEvent();
+        }
+
         private void SpawnWave()
         {
-            if(isSpawning) return;
+            if(isSpawning || !shouldSpawn) return;
             
             currentWave = ++currentWave % waves.Length;
             isSpawning = true;
@@ -62,7 +76,15 @@ namespace Meyham.GameMode
 
         private void OnCollectibleReleased()
         {
-            if(--spawnCount != 0) return;
+            spawnCount--;
+
+            if (!shouldSpawn && spawnCount == 0)
+            {
+                lastItemVanishedEvent.RaiseEvent();
+                return;
+            }
+            
+            if(spawnCount != 0) return;
             
             SpawnWave();
         }

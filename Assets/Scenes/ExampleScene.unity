@@ -1097,9 +1097,13 @@ MonoBehaviour:
   gameStartEvent: {fileID: 11400000, guid: 8ee696ada2708de4897129a4e1ede5e6, type: 2}
   gameEndEvent: {fileID: 11400000, guid: 5ef136010c9c8504a9694932ba5d579c, type: 2}
   gameRestartEvent: {fileID: 11400000, guid: 2c25a27b30b5b0947a13f161f26f2a9e, type: 2}
+  endSpawningEvent: {fileID: 11400000, guid: 0e5a00ff2d9fdff43a31dbe5600a32c5, type: 2}
+  lastItemVanishedEvent: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   currentTime: {fileID: 11400000, guid: 13617e1a49e404e49bd1a0feea502119, type: 2}
   timeUnit: 1
+  restartButtonDelay: 2
+  endOfGameDelay: 3
 --- !u!1 &597836760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1603,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 91945a54a13bdc740afbc6b92d5b0d7b, type: 2}
   spawner: {fileID: 1816520460}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
+  endOfSpawningEvent: {fileID: 11400000, guid: 0e5a00ff2d9fdff43a31dbe5600a32c5, type: 2}
+  lastItemVanishedEvent: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   currentWave: 0
   spawnCount: 0
 --- !u!1 &1232454604
