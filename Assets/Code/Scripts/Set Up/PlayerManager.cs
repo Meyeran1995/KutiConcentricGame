@@ -17,6 +17,19 @@ namespace Meyham.Set_Up
 
         public static int NumberOfActivePlayers => Players.Count;
 
+        public static PlayerScore[] GetPlayers()
+        {
+            var playerScores = new PlayerScore[Players.Count];
+            int i = 0;
+
+            foreach (var controller in Players.Values)
+            {
+                playerScores[i++] = controller.Score;
+            }
+
+            return playerScores;
+        }
+        
         protected override void Start()
         {
             base.Start();

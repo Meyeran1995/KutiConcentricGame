@@ -10,6 +10,8 @@ namespace Meyham.Player
         [SerializeField] private PlayerScore score;
         [SerializeField] private Collider playerCollider;
 
+        public PlayerScore Score => score;
+
         public void OnGameEnd()
         {
             playerCollider.isTrigger = false;

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using Meyham.EditorHelpers;
 using Meyham.Events;
+using Meyham.GameMode;
 using Meyham.Set_Up;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,8 +10,6 @@ namespace Meyham.UI
 {
     public class ScoreboardView : AGameView
     {
-        [Header("References")]
-        [SerializeField] private ScoreUI scoreUI;
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO gameStart;
         [Header("Layout")]
@@ -18,17 +18,31 @@ namespace Meyham.UI
         [Header("Template")]
         [SerializeField] private GameObject boardTemplate;
         [SerializeField] private float templateWidth;
+        [Header("Debug")]
+        [ReadOnly, SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
+        
+        public override void OpenView(int animatorId)
+        {
+            ShowScores();
+            base.OpenView(animatorId);
+        }
+
+        // public override void CloseView(int animatorId)
+        // {
+        //     base.CloseView(animatorId);
+        // }
         
         private void Start()
         {
-            gameStart += OnGameStart;
+            gameStart += OnPlayerSelectionFinished;
         }
 
-        private void OnGameStart()
+        private void OnPlayerSelectionFinished()
         {
-            gameStart -= OnGameStart;
+            gameStart -= OnPlayerSelectionFinished;
 
             int numberOfPlayers = PlayerManager.NumberOfActivePlayers;
+            scoreBoardEntries = new ScoreBoardEntry[numberOfPlayers];
 
             StartCoroutine(SpawnEntries(numberOfPlayers));
             CenterScoreboardEntries(numberOfPlayers);
@@ -43,22 +57,26 @@ namespace Meyham.UI
 
         private IEnumerator SpawnEntries(int numberOfPlayers)
         {
+            var root = transform.GetChild(0);
+            
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                Instantiate(boardTemplate, transform).SetActive(false);
+                var entry = Instantiate(boardTemplate, transform).GetComponent<ScoreBoardEntry>();
+                entry.SetPlayerName(i);
+                entry.transform.SetParent(root);
+                scoreBoardEntries[i] = entry;
                 yield return null;
             }
         }
         
-        public override void OpenView(int animatorId)
+        private void ShowScores()
         {
-            gameObject.SetActive(true);
-        }
+            var playerScores = ScoreKeeper.GetScores();
 
-        public override void CloseView(int animatorId)
-        {
-            scoreUI.ResetScores();
-            gameObject.SetActive(false);
+            for (int i = 0; i < playerScores.Length; i++)
+            {
+                scoreBoardEntries[i].SetScore(playerScores[i].ToString());
+            }
         }
     }
 }
