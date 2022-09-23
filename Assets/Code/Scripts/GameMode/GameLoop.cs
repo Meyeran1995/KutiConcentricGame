@@ -63,9 +63,9 @@ namespace Meyham.GameMode
             currentTime.RuntimeValue -= timeUnit;
 
             if (currentTime.RuntimeValue == 0f)
-            {
-                endSpawningEvent.RaiseEvent();
+            {                
                 lastItemVanishedEvent += OnLastItemVanished;
+                endSpawningEvent.RaiseEvent();
                 yield break;
             }
 
