@@ -6,8 +6,12 @@ namespace Meyham.UI
     {
         [Header("Animator")]
         [SerializeField] private Animator animator;
-        
-        
+
+        protected virtual void Awake()
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+
         public virtual void OpenView(int animatorId)
         {
             animator.SetBool(animatorId, true);

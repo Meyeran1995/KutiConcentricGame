@@ -13,12 +13,9 @@ namespace Meyham.UI
 
         private static readonly int ViewIsOpenId = Animator.StringToHash("IsOpen");
         
-        
         private void Awake()
         {
             currentView = 0;
-            gameViews[1].gameObject.SetActive(false);
-            gameViews[2].gameObject.SetActive(false);
         }
 
         protected override void Start()

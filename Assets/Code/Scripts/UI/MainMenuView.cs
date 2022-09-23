@@ -26,12 +26,14 @@ namespace Meyham.UI
             playerText.text = $"Spieler {++numberOfPlayers}";
         }
         
-        public override void OpenView(int animatorId)
-        {
-        }
+        // public override void OpenView(int animatorId)
+        // {
+        //     base.OpenView(animatorId);
+        // }
 
         public override void CloseView(int animatorId)
         {
+            base.CloseView(animatorId);
             onPlayerJoined -= OnPlayerJoin;
             Alerts.ClearAlert();
         }
