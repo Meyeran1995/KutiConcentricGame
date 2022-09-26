@@ -16,6 +16,7 @@ namespace Meyham.UI
         public override void CloseView(int animatorId)
         {
             ResetScores();
+            base.CloseView(animatorId);
         }
         
         [SerializeField] private TextMeshProUGUI[] scoreTexts;
