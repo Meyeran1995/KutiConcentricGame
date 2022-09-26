@@ -12,17 +12,7 @@ namespace Meyham.GameMode
         
         private static readonly List<PlayerScore> Scores = new();
 
-        public static float[] GetScores()
-        {
-            float[] playerScores = new float[Scores.Count];
-
-            for (int i = 0; i < Scores.Count; i++)
-            {
-                playerScores[i] = Scores[i].GetScore();
-            }
-
-            return playerScores;
-        }
+        public static List<PlayerScore> GetScores() => Scores;
         
         private void Start()
         {
@@ -37,8 +27,6 @@ namespace Meyham.GameMode
             {
                 Scores.Add(playerScore);
             }
-            
-            Scores.Sort();
         }
     }
 }

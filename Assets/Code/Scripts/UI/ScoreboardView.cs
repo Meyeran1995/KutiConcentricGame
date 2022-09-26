@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using Meyham.EditorHelpers;
+﻿using System;
 using Meyham.Events;
 using Meyham.GameMode;
-using Meyham.Set_Up;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +14,10 @@ namespace Meyham.UI
         [SerializeField] private float screenWidth;
         [SerializeField] private HorizontalLayoutGroup layoutGroup;
         [Header("Template")]
-        [SerializeField] private GameObject boardTemplate;
         [SerializeField] private float templateWidth;
-        [Header("Debug")]
-        [ReadOnly, SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
         
+        private ScoreBoardEntry[] scoreBoardEntries;
+
         public override void OpenView(int animatorId)
         {
             ShowScores();
@@ -32,6 +29,23 @@ namespace Meyham.UI
         //     base.CloseView(animatorId);
         // }
         
+        public override void SetTextColor(int playerId, Color color)
+        {
+            var entry = scoreBoardEntries[playerId];
+            entry.gameObject.SetActive(true);
+            entry.SetEntryColor(color);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            scoreBoardEntries = transform.GetChild(0).GetComponentsInChildren<ScoreBoardEntry>();
+            foreach (var entry in scoreBoardEntries)
+            {
+                entry.gameObject.SetActive(false);
+            }
+        }
+
         private void Start()
         {
             gameStart += OnPlayerSelectionFinished;
@@ -41,41 +55,35 @@ namespace Meyham.UI
         {
             gameStart -= OnPlayerSelectionFinished;
 
-            int numberOfPlayers = PlayerManager.NumberOfActivePlayers;
-            scoreBoardEntries = new ScoreBoardEntry[numberOfPlayers];
-
-            StartCoroutine(SpawnEntries(numberOfPlayers));
-            CenterScoreboardEntries(numberOfPlayers);
+            PrepareEntries();
+            CenterScoreboardEntries();
         }
 
-        private void CenterScoreboardEntries(int numberOfPlayers)
+        private void CenterScoreboardEntries()
         {
             float spacedWidth = templateWidth + layoutGroup.spacing;
-            float scoreBoardWidth = (numberOfPlayers - 1) * spacedWidth + templateWidth;
+            float scoreBoardWidth = (scoreBoardEntries.Length - 1) * spacedWidth + templateWidth;
             layoutGroup.padding.left = (int)(screenWidth - scoreBoardWidth) / 2;
         }
 
-        private IEnumerator SpawnEntries(int numberOfPlayers)
+        private void PrepareEntries()
         {
             var root = transform.GetChild(0);
             
-            for (int i = 0; i < numberOfPlayers; i++)
+            for (int i = 0; i < scoreBoardEntries.Length; i++)
             {
-                var entry = Instantiate(boardTemplate, transform).GetComponent<ScoreBoardEntry>();
+                var entry = scoreBoardEntries[i];
                 entry.SetPlayerName(i);
                 entry.transform.SetParent(root);
                 scoreBoardEntries[i] = entry;
-                yield return null;
             }
         }
         
         private void ShowScores()
         {
-            var playerScores = ScoreKeeper.GetScores();
-
-            for (int i = 0; i < playerScores.Length; i++)
+            foreach (var playerScore in ScoreKeeper.GetScores())
             {
-                scoreBoardEntries[i].SetScore(playerScores[i].ToString());
+                scoreBoardEntries[playerScore.PlayerNumber].SetScore(playerScore.GetScoreText());
             }
         }
     }

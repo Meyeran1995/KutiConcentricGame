@@ -1,5 +1,7 @@
 ﻿using Meyham.EditorHelpers;
+using Meyham.Events;
 using Meyham.GameMode;
+using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.UI
@@ -8,10 +10,15 @@ namespace Meyham.UI
     {
         [Header("References")]
         [SerializeField] private AGameView[] gameViews;
+        [SerializeField] private PlayerColors playerColors;
+        [SerializeField] private GenericEventChannelSO<int> playerJoined;
+        
         [Header("Debug")]
         [ReadOnly, SerializeField] private int currentView;
 
         private static readonly int ViewIsOpenId = Animator.StringToHash("IsOpen");
+
+        private ViewColorProvider viewColorProvider;
         
         private void Awake()
         {
@@ -21,12 +28,19 @@ namespace Meyham.UI
         protected override void Start()
         {
             base.Start();
+            viewColorProvider = new ViewColorProvider(gameViews, playerColors);
+            viewColorProvider.SubscribeToEvent(playerJoined);
             OpenCurrentView();
         }
 
         protected override void OnGameStart()
         {
             ChangeToView(1);
+            
+            if(viewColorProvider == null) return;
+            
+            viewColorProvider.UnSubscribeFromEvent(playerJoined);
+            viewColorProvider = null;
         }
 
         protected override void OnGameEnd()

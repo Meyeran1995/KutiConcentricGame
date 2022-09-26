@@ -19,6 +19,14 @@ namespace Meyham.UI
             texts[0].text = $"Spieler {playerNumber}";
             texts[2].text = $"Spieler {playerNumber}";
         }
+
+        public void SetEntryColor(Color color)
+        {
+            foreach (var text in texts)
+            {
+                text.color = color;
+            }
+        }
         
         private void Awake()
         {

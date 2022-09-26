@@ -21,5 +21,7 @@ namespace Meyham.UI
         {
             animator.SetBool(animatorId, false);
         }
+
+        public abstract void SetTextColor(int playerId, Color color);
     }
 }

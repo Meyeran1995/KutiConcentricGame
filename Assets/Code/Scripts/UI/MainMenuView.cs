@@ -37,5 +37,10 @@ namespace Meyham.UI
             onPlayerJoined -= OnPlayerJoin;
             Alerts.ClearAlert();
         }
+
+        public override void SetTextColor(int playerId, Color color)
+        {
+            playerJoinTexts[playerId].color = color;
+        }
     }
 }

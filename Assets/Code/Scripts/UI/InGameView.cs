@@ -8,6 +8,13 @@ namespace Meyham.UI
 {
     public class InGameView : AGameView
     {
+        [SerializeField] private TextMeshProUGUI[] scoreTexts;
+        [SerializeField] private GenericEventChannelSO<PlayerScore> scoreEvent;
+        [SerializeField] private GenericEventChannelSO<int> playerJoinedEvent;
+        [SerializeField] private VoidEventChannelSO gameStartEvent;
+
+        private readonly List<int> activePlayers = new();
+        
         // public override void OpenView(int animatorId)
         // {
         //     base.OpenView(animatorId);
@@ -18,13 +25,11 @@ namespace Meyham.UI
             ResetScores();
             base.CloseView(animatorId);
         }
-        
-        [SerializeField] private TextMeshProUGUI[] scoreTexts;
-        [SerializeField] private GenericEventChannelSO<PlayerScore> scoreEvent;
-        [SerializeField] private GenericEventChannelSO<int> playerJoinedEvent;
-        [SerializeField] private VoidEventChannelSO gameStartEvent;
 
-        private readonly List<int> activePlayers = new();
+        public override void SetTextColor(int playerId, Color color)
+        {
+            scoreTexts[playerId].color = color;
+        }
 
         protected override void Awake()
         {

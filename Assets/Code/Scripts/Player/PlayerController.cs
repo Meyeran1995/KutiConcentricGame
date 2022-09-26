@@ -9,8 +9,13 @@ namespace Meyham.Player
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
         [SerializeField] private Collider playerCollider;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+
+        public Color PlayerColor { get; private set; }
 
         public PlayerScore Score => score;
+        
+        private static readonly int ColorId = Shader.PropertyToID("_Color");
 
         public void OnGameEnd()
         {
@@ -33,6 +38,15 @@ namespace Meyham.Player
 
         public void SetPlayerNumber(int number) => score.PlayerNumber = number;
 
+        public void SetPlayerColor(Color playerColor)
+        {
+            PlayerColor = playerColor;
+            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            spriteRenderer.GetPropertyBlock(propertyBlock);
+            propertyBlock.SetColor(ColorId, PlayerColor);
+            spriteRenderer.SetPropertyBlock(propertyBlock);
+        }
+        
         private void OnEnable()
         {
             movement.enabled = true;

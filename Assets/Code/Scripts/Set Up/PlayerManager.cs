@@ -4,6 +4,7 @@ using Meyham.GameMode;
 using Meyham.Player;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Meyham.Set_Up
 {
@@ -11,6 +12,7 @@ namespace Meyham.Set_Up
     {
         [Header("References")]
         [SerializeField] private GameObject playerTemplate;
+        [SerializeField] private PlayerColors playerColors;
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
         private float[] startingPositions;
@@ -48,6 +50,7 @@ namespace Meyham.Set_Up
             newPlayer.SetLeftButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
             newPlayer.SetStartingPosition(0f);
+            newPlayer.SetPlayerColor(playerColors.GetColor(inputIndex));
 
             Players.Add(inputIndex, newPlayer);
         }
@@ -55,7 +58,7 @@ namespace Meyham.Set_Up
         protected override void OnGameStart()
         {
             GetStartingPositions();
-            
+
             int i = 0;
             foreach (var player in Players.Values)
             {
@@ -76,8 +79,9 @@ namespace Meyham.Set_Up
 
         protected override void OnGameRestart()
         {
+            RotateStartPositions();
+            
             int i = 0;
-
             foreach (var player in Players.Values)
             {
                 player.SetStartingPosition(startingPositions[i++]);
@@ -96,6 +100,19 @@ namespace Meyham.Set_Up
             {
                 startingPositions[i] = currentAngle;
                 currentAngle += positionGain;
+            }
+        }
+
+        private void RotateStartPositions()
+        {
+            float rotation = Random.Range(10f, 350f);
+
+            for (int i = 0; i < startingPositions.Length; i++)
+            {
+                float position = startingPositions[i];
+                position += rotation;
+                position %= 360f;
+                startingPositions[i] = position;
             }
         }
 
