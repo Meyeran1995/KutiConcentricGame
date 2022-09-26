@@ -1,4 +1,3 @@
-using Meyham.DataObjects;
 using Meyham.GameMode;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -7,20 +6,15 @@ namespace Meyham.Items
 {
     public class ItemMovement : MonoBehaviour
     {
-        [Header("Properties")]
-        [SerializeField] private FloatValue speed;
-        
         [Header("References")]
-        [SerializeField] private SplineAnimate splineFollower;
+        [SerializeField] private SplineFollower splineFollower;
         
-        public SplineContainer Spline => splineFollower.splineContainer;
+        public SplineContainer Spline => splineFollower.SplineContainer;
 
         private static CollectibleSpawner spawner;
 
         private void Awake()
         {
-            splineFollower.maxSpeed = speed.BaseValue;
-            
             if(spawner) return;
 
             spawner = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
@@ -28,18 +22,18 @@ namespace Meyham.Items
 
         public void SetSpline(SplineContainer spline)
         {
-            splineFollower.splineContainer = spline;
+            splineFollower.SplineContainer = spline;
+            splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }
 
         public void RestartMovement()
         {
             splineFollower.Restart(true);
         }
-        
-        private void FixedUpdate()
+
+        private void OnEndOfSplineReached()
         {
-            if(splineFollower.isPlaying) return;
-            
+            splineFollower.EndOfSplineReached -= OnEndOfSplineReached;
             spawner.ReleaseCollectible(gameObject);
         }
     }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e329e28faa638e47b90498f1372f45a, type: 3}
   m_Name: AngleGain
   m_EditorClassIdentifier: 
-  baseValue: 5
-  <RuntimeValue>k__BackingField: 5
+  baseValue: 22.5
+  <RuntimeValue>k__BackingField: 22.5
   updateRuntimeValue: 1

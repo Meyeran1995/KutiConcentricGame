@@ -28,6 +28,7 @@ namespace Meyham.GameMode
             pool.Get(out var item);
             var movement = item.GetComponent<ItemMovement>();
             movement.SetSpline(splineProvider.GetSpline(splineKnots));
+            movement.RestartMovement();
         }
     }
 }

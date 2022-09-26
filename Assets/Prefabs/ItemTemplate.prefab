@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2291004389240496477}
   - component: {fileID: 2291004389240496479}
   - component: {fileID: 2291004389240496478}
-  - component: {fileID: 5044837721625355024}
+  - component: {fileID: 7777015892368765881}
   m_Layer: 0
   m_Name: ItemTemplate
   m_TagString: Untagged
@@ -47,8 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876c0ed889e917e49b89ff00e2bd2235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {fileID: 11400000, guid: e4710aa251f56c140aa7937c73800bd6, type: 2}
-  splineFollower: {fileID: 5044837721625355024}
+  splineFollower: {fileID: 7777015892368765881}
 --- !u!212 &2291004389240496478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,7 +100,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5044837721625355024
+--- !u!114 &7777015892368765881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,19 +109,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2291004389240496474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Script: {fileID: 11500000, guid: a86243a031a047569d2c13053c8fe4df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_LoopMode: 0
-  m_Method: 1
-  m_Duration: 1
-  m_MaxSpeed: 10
-  m_EasingMode: 0
-  m_AlignmentMode: 0
-  m_ObjectForwardAxis: 2
-  m_ObjectUpAxis: 1
+  SplineContainer: {fileID: 0}
+  speed: {fileID: 11400000, guid: e4710aa251f56c140aa7937c73800bd6, type: 2}
+  <IsPlaying>k__BackingField: 0
 --- !u!1 &9139025135300890692
 GameObject:
   m_ObjectHideFlags: 0

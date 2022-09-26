@@ -19,8 +19,7 @@ namespace Meyham.GameMode
         [Header("Debug")] 
         [ReadOnly, SerializeField] private int currentWave;
         [ReadOnly, SerializeField] private int spawnCount;
-
-        private bool isSpawning, shouldSpawn;
+        [ReadOnly, SerializeField] private bool isSpawning, shouldSpawn;
 
         protected override void OnGameStart()
         {
