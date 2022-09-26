@@ -35,7 +35,12 @@ namespace Meyham.Items
         {
             IsPlaying = false;
         }
-        
+
+        private void OnDisable()
+        {
+            EndOfSplineReached = null;
+        }
+
         private void Start()
         {
             progressIncrement = Time.fixedDeltaTime / speed;

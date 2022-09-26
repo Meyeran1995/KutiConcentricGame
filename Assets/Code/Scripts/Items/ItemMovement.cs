@@ -33,7 +33,6 @@ namespace Meyham.Items
 
         private void OnEndOfSplineReached()
         {
-            splineFollower.EndOfSplineReached -= OnEndOfSplineReached;
             spawner.ReleaseCollectible(gameObject);
         }
     }
