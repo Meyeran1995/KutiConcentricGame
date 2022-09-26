@@ -13,6 +13,8 @@ namespace Meyham.Set_Up
         [SerializeField] private GameObject playerTemplate;
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
+        private float[] startingPositions;
+        
         private static readonly Dictionary<int, PlayerController> Players = new();
 
         public static int NumberOfActivePlayers => Players.Count;
@@ -52,14 +54,13 @@ namespace Meyham.Set_Up
 
         protected override void OnGameStart()
         {
-            float positionGain = 360f / Players.Count;
-            float currentAngle = 0f;
-
+            GetStartingPositions();
+            
+            int i = 0;
             foreach (var player in Players.Values)
             {
-                player.SetStartingPosition(currentAngle);
+                player.SetStartingPosition(startingPositions[i++]);
                 player.enabled = true;
-                currentAngle += positionGain;
             }
 
             inputEventChannel -= OnPlayerJoined;
@@ -75,9 +76,26 @@ namespace Meyham.Set_Up
 
         protected override void OnGameRestart()
         {
+            int i = 0;
+
             foreach (var player in Players.Values)
             {
+                player.SetStartingPosition(startingPositions[i++]);
                 player.OnGameRestart();
+            }
+        }
+
+        private void GetStartingPositions()
+        {
+            int playerCount = Players.Count;
+            float positionGain = 360f / playerCount;
+            float currentAngle = 0f;
+            startingPositions = new float[playerCount];
+
+            for (int i = 0; i < playerCount; i++)
+            {
+                startingPositions[i] = currentAngle;
+                currentAngle += positionGain;
             }
         }
 
