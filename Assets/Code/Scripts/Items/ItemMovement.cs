@@ -29,6 +29,10 @@ namespace Meyham.Items
         public void SetSpline(SplineContainer spline)
         {
             splineFollower.splineContainer = spline;
+        }
+
+        public void RestartMovement()
+        {
             splineFollower.Restart(true);
         }
         
