@@ -19,7 +19,8 @@ namespace Meyham.Items
         {
             var incomingObject = other.gameObject;
 
-            if (incomingObject.CompareTag("Player")) OnCollect(incomingObject);
+            if (incomingObject.CompareTag("Player")) 
+                OnCollect(incomingObject);
 
             spawner.ReleaseCollectible(this);
         }
