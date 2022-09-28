@@ -5,12 +5,12 @@ namespace Meyham.Items
 {
     public class PowerUp : ACollectible
     {
-        [SerializeField] private APowerUpEffect effect;
+        public APowerUpEffect Effect;
         
         protected override void OnCollect(GameObject player)
         {
             var playerScore = player.GetComponent<PlayerPowerUpReceiver>();
-            playerScore.Receive(effect);
+            playerScore.Receive(Effect);
         }
     }
 }

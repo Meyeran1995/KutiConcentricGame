@@ -9,13 +9,12 @@ namespace Meyham.Items
         [Header("References")]
         [SerializeField] private PlayerScoreEventChannelSO collectionEvent;
         
-        [Header("Values")]
-        [SerializeField] private float score;
+        [field: Header("Values"), SerializeField] public float Score;
         
         protected override void OnCollect(GameObject player)
         {
             var playerScore = player.GetComponentInParent<PlayerScore>();
-            playerScore.AcquireScore(score);
+            playerScore.AcquireScore(Score);
             
             collectionEvent.RaiseEvent(playerScore);
         }

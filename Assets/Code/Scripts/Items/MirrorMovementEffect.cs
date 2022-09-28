@@ -7,12 +7,6 @@ namespace Meyham.Items
     [CreateAssetMenu(menuName = "ScriptableObjects/PowerUps/Mirror Movement")]
     public class MirrorMovementEffect : APowerUpEffect
     {
-        [field: SerializeField]
-        public bool HasSingleTarget { get; private set; }
-        
-        [field: SerializeField]
-        public float Duration { get; private set; }
-
         private static readonly Dictionary<GameObject, PlayerInputReceiver> receiverCache = new();
 
         public override void Apply(GameObject player)

@@ -60,7 +60,7 @@ namespace Meyham.GameMode
         /// If the pool capacity is reached then any items returned will be destroyed.
         /// </summary>
         /// <param name="item"></param>
-        private void OnDestroyPoolObject(GameObject item)
+        protected virtual void OnDestroyPoolObject(GameObject item)
         {
             Destroy(item);
         }

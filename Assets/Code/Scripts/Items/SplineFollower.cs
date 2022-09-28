@@ -8,9 +8,9 @@ namespace Meyham.Items
 {
     public class SplineFollower : MonoBehaviour
     {
-        [NonSerialized] public SplineContainer SplineContainer;
         [SerializeField] private FloatValue speed;
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
+        [ReadOnly] public SplineContainer SplineContainer;
 
         public event Action EndOfSplineReached;
         
@@ -19,7 +19,7 @@ namespace Meyham.Items
         public void Restart(bool autoPlay)
         {
             progress = 0f;
-            UpdatePosition(0f);
+            SetPosition(0f);
             
             if(!autoPlay) return;
             
@@ -48,21 +48,28 @@ namespace Meyham.Items
 
         private void FixedUpdate () 
         {
+            if(!IsPlaying) return;
+            
             progress += progressIncrement;
             
             if (progress > 1f)
             {
                 IsPlaying = false;
-                UpdatePosition(1f);
+                SetPosition(1f);
                 EndOfSplineReached?.Invoke();
                 return;
             }
-            UpdatePosition(progress);
+            UpdatePosition();
         }
 
-        private void UpdatePosition(float progress)
+        private void UpdatePosition()
         {
             transform.localPosition = SplineContainer.EvaluatePosition(progress);
+        }
+        
+        private void SetPosition(float splineProgress)
+        {
+            transform.localPosition = SplineContainer.EvaluatePosition(splineProgress);
         }
     }
 }

@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2291004389240496474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.039411735, y: 0.04595623, z: 21.998367}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 9e16a78fedef4ed49af17bdab8200a72, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -113,7 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {fileID: 11400000, guid: e4710aa251f56c140aa7937c73800bd6, type: 2}
-  <IsPlaying>k__BackingField: 0
+  <IsPlaying>k__BackingField: 1
+  SplineContainer: {fileID: 0}
 --- !u!1 &9139025135300890692
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +126,7 @@ GameObject:
   - component: {fileID: 8898222251216607450}
   - component: {fileID: 2510469800630276338}
   - component: {fileID: 7354168802038879022}
+  - component: {fileID: 6695891813884275298}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
@@ -172,3 +174,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac0ba407146424cb119345e4561fcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6695891813884275298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139025135300890692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+  Score: 0
