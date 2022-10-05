@@ -1,5 +1,6 @@
 using Meyham.GameMode;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Splines;
 
 namespace Meyham.Items
@@ -9,8 +10,6 @@ namespace Meyham.Items
         [Header("References")]
         [SerializeField] private SplineFollower splineFollower;
         
-        public SplineContainer Spline => splineFollower.SplineContainer;
-
         private static CollectibleSpawner spawner;
 
         private void Awake()
@@ -22,6 +21,8 @@ namespace Meyham.Items
 
         public void SetSpline(SplineContainer spline)
         {
+            Assert.IsNotNull(spline, "spline == null");
+            
             splineFollower.SplineContainer = spline;
             splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }

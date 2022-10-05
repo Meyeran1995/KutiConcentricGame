@@ -79,8 +79,8 @@ namespace Meyham.GameMode
         protected override GameObject CreatePooledItem()
         {
             var item = Instantiate(poolTemplate);
-            var cache = new CollectibleReferenceCache(poolTemplate.GetComponentInChildren<AddScoreCollectible>(),
-                poolTemplate.GetComponent<ItemMovement>(), poolTemplate.GetComponent<SpriteRenderer>());
+            var cache = new CollectibleReferenceCache(item.GetComponentInChildren<AddScoreCollectible>(),
+                item.GetComponent<ItemMovement>(), item.GetComponent<SpriteRenderer>());
             
             ReferenceCache.Add(item, cache);
             

@@ -2,6 +2,7 @@
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Splines;
 
 namespace Meyham.Items
@@ -13,9 +14,10 @@ namespace Meyham.Items
         [ReadOnly] public SplineContainer SplineContainer;
 
         public event Action EndOfSplineReached;
-        
-        private float progress, progressIncrement;
 
+        [SerializeField, ReadOnly] private float progress;
+        private float progressIncrement;
+        
         public void Restart(bool autoPlay)
         {
             progress = 0f;
@@ -28,6 +30,8 @@ namespace Meyham.Items
 
         public void Play()
         {
+            Assert.IsNotNull(SplineContainer, $"SplineContainer == null while performing Play on Follower: {name}");
+            
             IsPlaying = true;
         }
 

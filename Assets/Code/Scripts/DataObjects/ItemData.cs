@@ -27,8 +27,6 @@ namespace Meyham.DataObjects
 
         private void OnEnable()
         {
-            if(ScoreData != 0f) return;
-            
             GetDataFromTemplates();
         }
 

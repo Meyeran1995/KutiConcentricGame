@@ -17,17 +17,17 @@ namespace Meyham.GameMode
 
         public void ReleaseSpline(GameObject collectible)
         {
-            var spline = collectible.GetComponent<ItemMovement>().Spline;
+            var spline = collectible.GetComponent<SplineFollower>().SplineContainer;
             spline.Spline.Clear();
             pool.Release(spline.gameObject);
         }
 
         public SplineContainer GetSpline(BezierKnot[] knots)
         {
-            pool.Get(out var item);
-            item.transform.rotation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
+            pool.Get(out var splineHolder);
+            splineHolder.transform.rotation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
             
-            var splineContainer = item.GetComponent<SplineContainer>();
+            var splineContainer = splineHolder.GetComponent<SplineContainer>();
             var spline = splineContainer.Spline;
             
             foreach (var knot in knots)
