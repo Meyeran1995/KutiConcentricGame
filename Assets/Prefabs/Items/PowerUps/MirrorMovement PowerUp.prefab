@@ -17,34 +17,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -58,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_Color.b
-      value: 0.24250005
+      value: 0.32941177
       objectReference: {fileID: 0}
     - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_Color.g
-      value: 0.582
+      value: 0.6313726
       objectReference: {fileID: 0}
     - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_Color.r
@@ -92,4 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d07096213e4d943833cdc433fbb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 11400000, guid: aa692c52c42149c44bf8d96ed92a5ef3, type: 2}
+  Effect: {fileID: 11400000, guid: aa692c52c42149c44bf8d96ed92a5ef3, type: 2}

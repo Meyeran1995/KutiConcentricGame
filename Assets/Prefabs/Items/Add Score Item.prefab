@@ -17,34 +17,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496477, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -56,17 +28,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.b
-      value: 0
+    - target: {fileID: 6695891813884275298, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
+      propertyPath: Score
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291004389240496478, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.r
-      value: 1
+    - target: {fileID: 7777015892368765881, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
+      propertyPath: SplineContainer
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
