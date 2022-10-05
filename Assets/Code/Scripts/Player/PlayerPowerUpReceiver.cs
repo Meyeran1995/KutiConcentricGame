@@ -8,6 +8,8 @@ namespace Meyham.Player
     public class PlayerPowerUpReceiver : MonoBehaviour
     {
         [SerializeField] private GenericEventChannelSO<APowerUpEffect> negativePowerUpEvent;
+        [SerializeField] private GameObject target;
+        
 
         private APowerUpEffect lastAPowerUpReceived;
         
@@ -22,7 +24,7 @@ namespace Meyham.Player
             
             if (effect.HasSingleTarget)
             {
-                effect.Apply(gameObject);
+                effect.Apply(target);
                 return;
             }
             
@@ -42,7 +44,7 @@ namespace Meyham.Player
 
         private void ApplyPowerUpEffect(APowerUpEffect effect)
         {
-            effect.Apply(gameObject);
+            effect.Apply(target);
             StartCoroutine(PowerUpEffectDuration(effect));
         }
 
@@ -52,7 +54,7 @@ namespace Meyham.Player
 
             yield return new WaitForSeconds(duration);
             
-            effect.Remove(gameObject);
+            effect.Remove(target);
         }
     }
 }
