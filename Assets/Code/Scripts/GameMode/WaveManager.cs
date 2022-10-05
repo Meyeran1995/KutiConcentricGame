@@ -56,7 +56,6 @@ namespace Meyham.GameMode
         {
             if(isSpawning || !shouldSpawn) return;
             
-            currentWave = ++currentWave % waves.Length;
             isSpawning = true;
             StartCoroutine(SpawnRoutine());
         }
@@ -71,6 +70,7 @@ namespace Meyham.GameMode
             }
 
             isSpawning = false;
+            currentWave = ++currentWave % waves.Length;
         }
 
         private void OnCollectibleReleased()
