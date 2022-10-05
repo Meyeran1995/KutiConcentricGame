@@ -105,7 +105,7 @@ namespace Meyham.Player
             float x = radius.BaseValue * Mathf.Cos(angleInRad);
             float y = radius.BaseValue * Mathf.Sin(angleInRad);
 
-            return new Vector3(x, y);
+            return new Vector3(x, y, transform.position.z);
         }
 
 #endif
