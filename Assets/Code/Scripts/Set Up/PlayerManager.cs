@@ -13,9 +13,10 @@ namespace Meyham.Set_Up
         [Header("References")]
         [SerializeField] private GameObject playerTemplate;
         [SerializeField] private PlayerColors playerColors;
+        [SerializeField] private PlayerPositionTracker positionTracker;
+        
+        [Header("Events")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
-
-        private float[] startingPositions;
         
         private static readonly Dictionary<int, PlayerController> Players = new();
 
@@ -49,7 +50,7 @@ namespace Meyham.Set_Up
             newPlayer.enabled = false;
             newPlayer.SetLeftButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
-            newPlayer.SetStartingPosition(0f);
+            newPlayer.SetStartingPosition(0, 0f);
             newPlayer.SetPlayerColor(playerColors.GetColor(inputIndex));
 
             Players.Add(inputIndex, newPlayer);
@@ -57,12 +58,13 @@ namespace Meyham.Set_Up
 
         protected override void OnGameStart()
         {
-            GetStartingPositions();
+            positionTracker.InitStartingPositions(Players.Count);
 
             int i = 0;
             foreach (var player in Players.Values)
             {
-                player.SetStartingPosition(startingPositions[i++]);
+                positionTracker.GetStartingPosition(player, i);
+                i++;
                 player.enabled = true;
             }
 
@@ -79,40 +81,14 @@ namespace Meyham.Set_Up
 
         protected override void OnGameRestart()
         {
-            RotateStartPositions();
+            positionTracker.RotateStartingPositions();
             
+            float[] startingPositions = positionTracker.StartingPositions;
             int i = 0;
             foreach (var player in Players.Values)
             {
-                player.SetStartingPosition(startingPositions[i++]);
+                player.SetStartingPosition(i, startingPositions[i++]);
                 player.OnGameRestart();
-            }
-        }
-
-        private void GetStartingPositions()
-        {
-            int playerCount = Players.Count;
-            float positionGain = 360f / playerCount;
-            float currentAngle = 0f;
-            startingPositions = new float[playerCount];
-
-            for (int i = 0; i < playerCount; i++)
-            {
-                startingPositions[i] = currentAngle;
-                currentAngle += positionGain;
-            }
-        }
-
-        private void RotateStartPositions()
-        {
-            float rotation = Random.Range(10f, 350f);
-
-            for (int i = 0; i < startingPositions.Length; i++)
-            {
-                float position = startingPositions[i];
-                position += rotation;
-                position %= 360f;
-                startingPositions[i] = position;
             }
         }
 

@@ -3836,8 +3836,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2095045852}
   - component: {fileID: 2095045853}
+  - component: {fileID: 2095045854}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: PlayerManagement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3875,7 +3876,21 @@ MonoBehaviour:
   gameRestartEvent: {fileID: 11400000, guid: 2c25a27b30b5b0947a13f161f26f2a9e, type: 2}
   playerTemplate: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
   playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
+  positionTracker: {fileID: 2095045854}
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
+--- !u!114 &2095045854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095045851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7392a012361c4f76826b2d30b89f65f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleGain: {fileID: 11400000, guid: 2a6d9ebda9e1b4d4e91d79e180212021, type: 2}
 --- !u!1001 &1073271011059574672
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 using System.Collections;
 using Meyham.DataObjects;
+using Meyham.EditorHelpers;
+using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -8,7 +10,6 @@ namespace Meyham.Player
     {
         [Header("Values")] 
         [SerializeField, Range(0f, 360f)] private float startingAngle;
-        [SerializeField] private bool clockwise;
         
         [Header("Circle")]
         [SerializeField] private FloatValue angleGain;
@@ -17,24 +18,20 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private Rigidbody playerRigidBody;
         
+        [Header("Debug")]
+        [ReadOnly] public int Order;
+        [ReadOnly] public int PositionIndex;
+
         private float currentAngle;
         private bool isMoving;
-
+        
         public void Move(int givenDirection)
         {
             if (isMoving) return;
             
-            if (givenDirection == 0)
-            {
-                currentAngle += clockwise ? -angleGain : angleGain;
-            }
-            else
-            {
-                float directedGain = angleGain * givenDirection;
-                currentAngle += clockwise ? -directedGain : directedGain;
-            }
+            currentAngle += angleGain * givenDirection;
 
-            StartCoroutine(MoveRoutine());
+            StartCoroutine(MoveRoutine(givenDirection));
         }
         
         public void SnapToStartingAngle(float angle)
@@ -54,7 +51,7 @@ namespace Meyham.Player
             return new Vector3(x, y, transform.position.z);
         }
 
-        private IEnumerator MoveRoutine()
+        private IEnumerator MoveRoutine(int direction)
         {
             isMoving = true;
             var nextPosition = GetCirclePoint();
@@ -65,6 +62,7 @@ namespace Meyham.Player
             playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
             
             isMoving = false;
+            PlayerPositionTracker.MovePosition(this, direction);
         }
 
 #if UNITY_EDITOR

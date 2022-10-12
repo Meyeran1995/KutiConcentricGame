@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Meyham.GameMode;
+using UnityEngine;
 
 namespace Meyham.Player
 {
@@ -8,12 +10,14 @@ namespace Meyham.Player
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
+        [SerializeField] private PlayerOrder playerOrder;
         [SerializeField] private Collider playerCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
         public Color PlayerColor { get; private set; }
 
         public PlayerScore Score => score;
+        public RadialPlayerMovement Movement => movement;
         
         private static readonly int ColorId = Shader.PropertyToID("_Color");
 
@@ -34,7 +38,11 @@ namespace Meyham.Player
 
         public void SetRightButton(int button) => input.RightButton = button;
 
-        public void SetStartingPosition(float angle) => movement.SnapToStartingAngle(angle);
+        public void SetStartingPosition(int index, float angle)
+        {
+            movement.PositionIndex = index;
+            movement.SnapToStartingAngle(angle);
+        }
 
         public void SetPlayerNumber(int number) => score.PlayerNumber = number;
 
@@ -46,13 +54,25 @@ namespace Meyham.Player
             propertyBlock.SetColor(ColorId, PlayerColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
-        
+
+        public void ChangeOrder(int order)
+        {
+            spriteRenderer.sortingOrder = order;
+            movement.Order = order;
+            playerOrder.OrderPlayer(order);
+        }
+
         private void OnEnable()
         {
             movement.enabled = true;
             input.enabled = true;
         }
-        
+
+        private void Start()
+        {
+            PlayerPositionTracker.Register(this);
+        }
+
         private void OnDisable()
         {
             movement.enabled = false;
