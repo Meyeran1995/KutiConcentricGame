@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Meyham.EditorHelpers;
 using Meyham.GameMode;
 using UnityEngine;
 
@@ -49,10 +49,7 @@ namespace Meyham.Player
         public void SetPlayerColor(Color playerColor)
         {
             PlayerColor = playerColor;
-            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-            spriteRenderer.GetPropertyBlock(propertyBlock);
-            propertyBlock.SetColor(ColorId, PlayerColor);
-            spriteRenderer.SetPropertyBlock(propertyBlock);
+            spriteRenderer.color = playerColor;
         }
 
         public void ChangeOrder(int order)
