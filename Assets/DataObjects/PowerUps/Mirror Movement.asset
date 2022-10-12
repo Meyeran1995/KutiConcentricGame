@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32fb3ac63d746b38a0082cfe5af5403, type: 3}
+  m_Script: {fileID: 11500000, guid: 14329ee0fbf940f1b02f2562f7bebf85, type: 3}
   m_Name: Mirror Movement
   m_EditorClassIdentifier: 
-  <Effect>k__BackingField:
-    rid: -2
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  <HasSingleTarget>k__BackingField: 1
+  <Duration>k__BackingField: 3

@@ -12,5 +12,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
   m_Name: Mirror5
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 0}
-  movementTemplate: {fileID: 0}
+  itemTemplate: {fileID: 4892753419869984575, guid: 4a5a1f8248a72b148bab29e24d41c64c, type: 3}
+  movementTemplate: {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}
+  <Color>k__BackingField: {r: 0, g: 0.582, b: 0.24250005, a: 1}
+  <MovementData>k__BackingField:
+  - Position:
+      x: 0.06054139
+      y: 0
+      z: 0.37836742
+    TangentIn:
+      x: 0
+      y: 0
+      z: 0
+    TangentOut:
+      x: 0
+      y: 0
+      z: 0
+    Rotation:
+      value:
+        x: 0
+        y: 0.2512081
+        z: 0
+        w: 0.9679332
+  - Position:
+      x: -0.31865737
+      y: -0.16842395
+      z: -12.022495
+    TangentIn:
+      x: -0
+      y: -0
+      z: -2.7548556
+    TangentOut:
+      x: 0
+      y: 0
+      z: 2.7548556
+    Rotation:
+      value:
+        x: 0
+        y: -0.757207
+        z: 0
+        w: 0.6531752
+  - Position:
+      x: 0.0016844646
+      y: 3.8315961
+      z: -16.818539
+    TangentIn:
+      x: 0
+      y: 0
+      z: 0
+    TangentOut:
+      x: 0
+      y: 0
+      z: 0
+    Rotation:
+      value:
+        x: 0
+        y: 0.99518824
+        z: 0
+        w: -0.09798197
+  - Position:
+      x: 1.1199993
+      y: 5.8315954
+      z: -16.818539
+    TangentIn:
+      x: 0
+      y: 0
+      z: 0
+    TangentOut:
+      x: 0
+      y: 0
+      z: 0
+    Rotation:
+      value:
+        x: 0
+        y: 0.9947174
+        z: 0
+        w: -0.102651134
+  <ScoreData>k__BackingField: 0
+  <PowerUpData>k__BackingField: {fileID: 0}
+  <IsPowerUp>k__BackingField: 1
