@@ -12,7 +12,7 @@ namespace Meyham.GameMode
 
         private static readonly Dictionary<RadialPlayerMovement, PlayerController> Players = new ();
 
-        private static int maxPosition;
+        public static int MaxPosition;
         
         public float[] StartingPositions { get; private set; }
 
@@ -23,27 +23,24 @@ namespace Meyham.GameMode
 
         public static void MovePosition(RadialPlayerMovement player, int direction)
         {
-            int lastPosition = player.PositionIndex;
-            int nextPosition = Mathf.Clamp(lastPosition + direction, 0, maxPosition);
+            var controller = Players[player];
+            int lastPosition = controller.PositionIndex;
+            int lastOrder = controller.Order;
+            int nextPosition = lastPosition + direction;
 
-            player.PositionIndex = nextPosition;
-            Players[player].ChangeOrder(GetOrder(nextPosition));
-            
-            DecrementPlayerOrderAtPosition(lastPosition);
-        }
-
-        public void InitStartingPositions(int playerCount)
-        {
-            //TODO: Es muss einen weg geben nen index zu bekommen, vlt n fest stratindex pro spieler?
-            float positionGain = (float)maxPosition / playerCount * angleGain;
-            float currentAngle = 0f;
-            StartingPositions = new float[playerCount];
-
-            for (int i = 0; i < playerCount; i++)
+            if (nextPosition < 0)
             {
-                StartingPositions[i] = currentAngle;
-                currentAngle += positionGain;
+                nextPosition = MaxPosition - 1;
             }
+            else if (nextPosition == MaxPosition)
+            {
+                nextPosition = 0;
+            }
+
+            controller.ChangeOrder(GetOrder(nextPosition));
+            controller.PositionIndex = nextPosition;
+            
+            DecrementPlayerOrderAtPosition(lastPosition, lastOrder);
         }
 
         public void RotateStartingPositions()
@@ -59,29 +56,30 @@ namespace Meyham.GameMode
             }
         }
 
-        public void GetStartingPosition(PlayerController player, int index)
+        public float GetStartingPosition(int index)
         {
-            float startingAngle = StartingPositions[index];
-
-            if (index == 0)
-            {
-                player.SetStartingPosition(0, startingAngle);
-                return;
-            }
-            
-            player.SetStartingPosition(1, startingAngle);
+            return StartingPositions[index];
         }
 
         private void Start()
         {
-            maxPosition = Mathf.RoundToInt(360f / angleGain.BaseValue);
+            MaxPosition = Mathf.RoundToInt(360f / angleGain.BaseValue);
+            
+            float currentAngle = 0f;
+            StartingPositions = new float[MaxPosition];
+
+            for (int i = 0; i < MaxPosition; i++)
+            {
+                StartingPositions[i] = currentAngle;
+                currentAngle += angleGain;
+            }
         }
 
         private static int GetOrder(int position)
         {
             int order = 0;
 
-            foreach (var playerPosition in Players.Keys)
+            foreach (var playerPosition in Players.Values)
             {
                 if(playerPosition.PositionIndex != position) continue;
                 order++;
@@ -90,14 +88,17 @@ namespace Meyham.GameMode
             return order;
         }
 
-        private static void DecrementPlayerOrderAtPosition(int position)
+        private static void DecrementPlayerOrderAtPosition(int position, int leavingOrder)
         {
             foreach (var playerPosition in Players.Values)
             {
-                var movement = playerPosition.Movement;
-                if(movement.PositionIndex != position) continue;
-
-                int order = movement.Order - 1;
+                if(playerPosition.PositionIndex != position) continue;
+                
+                int order = playerPosition.Order;
+                
+                if(order < leavingOrder) continue;
+                
+                order--;
 
                 if (order < 0)
                     order = 0;

@@ -13,14 +13,19 @@ namespace Meyham.Player
         [SerializeField] private PlayerOrder playerOrder;
         [SerializeField] private Collider playerCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
+        
+        [ReadOnly] public int PositionIndex;
 
+        public int Order
+        {
+            get => spriteRenderer.sortingOrder;
+            set => spriteRenderer.sortingOrder = value;
+        }
         public Color PlayerColor { get; private set; }
 
         public PlayerScore Score => score;
         public RadialPlayerMovement Movement => movement;
         
-        private static readonly int ColorId = Shader.PropertyToID("_Color");
-
         public void OnGameEnd()
         {
             playerCollider.isTrigger = false;
@@ -40,7 +45,7 @@ namespace Meyham.Player
 
         public void SetStartingPosition(int index, float angle)
         {
-            movement.PositionIndex = index;
+            PositionIndex = index;
             movement.SnapToStartingAngle(angle);
         }
 
@@ -55,8 +60,9 @@ namespace Meyham.Player
         public void ChangeOrder(int order)
         {
             spriteRenderer.sortingOrder = order;
-            movement.Order = order;
+            Order = order;
             playerOrder.OrderPlayer(order);
+            playerCollider.isTrigger = order == 0;
         }
 
         private void OnEnable()

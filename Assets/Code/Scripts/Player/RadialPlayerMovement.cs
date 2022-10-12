@@ -19,8 +19,7 @@ namespace Meyham.Player
         [SerializeField] private Rigidbody playerRigidBody;
         
         [Header("Debug")]
-        [ReadOnly] public int Order;
-        [ReadOnly] public int PositionIndex;
+
 
         private float currentAngle;
         private bool isMoving;

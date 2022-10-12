@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.Player;
@@ -19,6 +20,8 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         
         private static readonly Dictionary<int, PlayerController> Players = new();
+
+        private PlayerController[] playersAsArray;
 
         public static int NumberOfActivePlayers => Players.Count;
 
@@ -58,17 +61,35 @@ namespace Meyham.Set_Up
 
         protected override void OnGameStart()
         {
-            positionTracker.InitStartingPositions(Players.Count);
-
             int i = 0;
-            foreach (var player in Players.Values)
+            
+            if (indexGain == 0)
             {
-                positionTracker.GetStartingPosition(player, i);
-                i++;
-                player.enabled = true;
+                inputEventChannel -= OnPlayerJoined;
+                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / Players.Count );
             }
 
-            inputEventChannel -= OnPlayerJoined;
+            if (Players.Count > 1)
+            {
+                foreach (var player in Players.Values)
+                {
+                    player.SetStartingPosition(i,positionTracker.GetStartingPosition(i));
+                    i += indexGain;
+                    player.enabled = true;
+                }
+                return;                
+            }
+
+            playersAsArray ??= Players.Values.ToArray();
+            
+            ShufflePlayers();
+
+            foreach (var player in playersAsArray)
+            {
+                player.SetStartingPosition(i,positionTracker.GetStartingPosition(i));
+                i += indexGain;
+                player.enabled = true;
+            }
         }
 
         protected override void OnGameEnd()
@@ -92,10 +113,24 @@ namespace Meyham.Set_Up
             }
         }
 
+        private void ShufflePlayers()
+        {
+            int n = playersAsArray.Length;
+            
+            for (int i = 0; i < n - 1; i++)
+            {
+                int r = i + Random.Range(0, n - i);
+                var t = playersAsArray[r];
+                playersAsArray[r] = playersAsArray[i];
+                playersAsArray[i] = t;
+            }
+        }
+
 #if UNITY_EDITOR
 
         private RadialPlayerMovement movement;
-        
+        private int indexGain;
+
         private void OnDrawGizmos()
         {
             if (movement == null)

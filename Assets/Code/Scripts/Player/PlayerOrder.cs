@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.DataObjects;
+﻿using Meyham.DataObjects;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -8,7 +7,7 @@ namespace Meyham.Player
     {
         [SerializeField] private FloatValue sizeFactor;
 
-        private Vector3 startingScale;
+        private static Vector3 startingScale;
         
         public void OrderPlayer(int order)
         {
@@ -18,13 +17,18 @@ namespace Meyham.Player
                 return;
             }
 
-            float scale = sizeFactor * order;
+            float scalePercentage = 1f - sizeFactor * order;
+            Vector3 newScale = startingScale;
+            newScale.x *= scalePercentage;
+            newScale.y *= scalePercentage;
             
-            transform.localScale = startingScale - new Vector3(scale, scale, 0f);
+            transform.localScale = newScale;
         }
 
         private void Awake()
         {
+            if(startingScale != Vector3.zero) return;
+            
             startingScale = transform.localScale;
         }
     }
