@@ -231,6 +231,7 @@ MonoBehaviour:
   angleGain: {fileID: 11400000, guid: 2a6d9ebda9e1b4d4e91d79e180212021, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   playerRigidBody: {fileID: -2749120600095461162}
+  collisionHelper: {fileID: 4482897550129903512}
   gizmoRadius: 0.5
   centerTransform: {fileID: 0}
 --- !u!114 &3343158596831003086

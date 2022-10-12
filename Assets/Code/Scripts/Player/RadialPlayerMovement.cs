@@ -17,10 +17,8 @@ namespace Meyham.Player
         
         [Header("References")]
         [SerializeField] private Rigidbody playerRigidBody;
-        
-        [Header("Debug")]
-
-
+        [SerializeField] private PlayerCollisionHelper collisionHelper;
+    
         private float currentAngle;
         private bool isMoving;
         
@@ -39,6 +37,7 @@ namespace Meyham.Player
             currentAngle = startingAngle;
             playerRigidBody.position = GetCirclePoint();
             playerRigidBody.rotation = Quaternion.AngleAxis(startingAngle, Vector3.forward);
+            collisionHelper.FaceSpawn();
         }
         
         private Vector3 GetCirclePoint()
