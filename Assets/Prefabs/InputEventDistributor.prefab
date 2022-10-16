@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4773283862314096134
 MonoBehaviour:
@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
+  inputCanceledEventChannel: {fileID: 11400000, guid: 33fd5d7e24992b841b49a95c7870409d, type: 2}

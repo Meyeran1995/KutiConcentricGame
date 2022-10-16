@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 6551916424300729374}
   - component: {fileID: -2749120600095461162}
   - component: {fileID: 3111601392694829479}
+  - component: {fileID: 5346232853266400848}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -232,6 +233,7 @@ MonoBehaviour:
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   playerRigidBody: {fileID: -2749120600095461162}
   collisionHelper: {fileID: 4482897550129903512}
+  velocityCalculator: {fileID: 5346232853266400848}
   gizmoRadius: 0.5
   centerTransform: {fileID: 0}
 --- !u!114 &3343158596831003086
@@ -246,11 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03523b4253e8974f93fa24a0586adbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RightButton: 1
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
-  LeftButton: 0
-  RightButton: -1
-  leftMovement: 0
-  rightMovement: 0
+  inputCanceledEventChannel: {fileID: 11400000, guid: 33fd5d7e24992b841b49a95c7870409d, type: 2}
   playerMovement: {fileID: 3343158596831003080}
 --- !u!114 &6551916424300729374
 MonoBehaviour:
@@ -295,3 +295,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sizeFactor: {fileID: 11400000, guid: 80613f842352acd4ea723e02b7aa5be8, type: 2}
+--- !u!114 &5346232853266400848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343158596831003082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa7f5ba9cab495282df19f82b3e59c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3
+      value: 1
+      inSlope: 1.1326586
+      outSlope: 1.1326586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06763784
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  brake:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2
+      outSlope: -2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: -2
+      outSlope: -2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocityTime: 0
+  timeToMaxVelocity: 0
+  timeToMinVelocity: 0
+  velocityState: 0

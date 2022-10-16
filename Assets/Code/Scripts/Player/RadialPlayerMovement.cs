@@ -1,4 +1,3 @@
-using System.Collections;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.GameMode;
@@ -18,19 +17,34 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private Rigidbody playerRigidBody;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
+        [SerializeField] private PlayerVelocityCalculator velocityCalculator;
     
         private float currentAngle;
-        private bool isMoving;
-        
-        public void Move(int givenDirection)
-        {
-            if (isMoving) return;
-            
-            currentAngle += angleGain * givenDirection;
+        private MovementStates movementState;
 
-            StartCoroutine(MoveRoutine(givenDirection));
+        private enum MovementStates
+        {
+            None,
+            Moving,
+            Brake
         }
         
+        [ReadOnly] public int movementDirection;
+
+        public void StartMovement()
+        {
+            if(movementState is MovementStates.Moving) return;
+
+            movementState = MovementStates.Moving;
+            velocityCalculator.StartMovement();
+        }
+
+        public void Brake()
+        {
+            movementState = MovementStates.Brake;
+            velocityCalculator.StartBrake();
+        }
+
         public void SnapToStartingAngle(float angle)
         {
             startingAngle = angle;
@@ -38,6 +52,32 @@ namespace Meyham.Player
             playerRigidBody.position = GetCirclePoint();
             playerRigidBody.rotation = Quaternion.AngleAxis(startingAngle, Vector3.forward);
             collisionHelper.FaceSpawn();
+        }
+
+        private void FixedUpdate()
+        {
+            if(movementState is MovementStates.None) return;
+            Move();
+        }
+
+        private void Move()
+        {
+            float currentVelocity = velocityCalculator.GetVelocity();
+
+            if (movementState is MovementStates.Brake && currentVelocity <= 0f)
+            {
+                movementState = MovementStates.None;
+                return;
+            }
+            
+            currentAngle += currentVelocity * angleGain * movementDirection;
+
+            var nextPosition = GetCirclePoint();
+            
+            playerRigidBody.MovePosition(nextPosition);
+            playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
+            
+            PlayerPositionTracker.MovePosition(this, movementDirection);
         }
         
         private Vector3 GetCirclePoint()
@@ -47,20 +87,6 @@ namespace Meyham.Player
             float y = radius.BaseValue * Mathf.Sin(angleInRad);
 
             return new Vector3(x, y, transform.position.z);
-        }
-
-        private IEnumerator MoveRoutine(int direction)
-        {
-            isMoving = true;
-            var nextPosition = GetCirclePoint();
-            
-            yield return new WaitForFixedUpdate();
-
-            playerRigidBody.MovePosition(nextPosition);
-            playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
-            
-            isMoving = false;
-            PlayerPositionTracker.MovePosition(this, direction);
         }
 
 #if UNITY_EDITOR

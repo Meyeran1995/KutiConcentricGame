@@ -1,4 +1,3 @@
-using Meyham.EditorHelpers;
 using Meyham.Events;
 using UnityEngine;
 
@@ -10,49 +9,49 @@ namespace Meyham.Player
     public class PlayerInputReceiver : MonoBehaviour
     {
         [Header("Input")] 
-        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
-
-        [Range(-1,5)] public int LeftButton;
-        [Range(-1,5)] public int RightButton;
-
-        [ReadOnly, SerializeField] private int leftMovement, rightMovement;
+        [Range(0,6)] public int RightButton;
+        [SerializeField] private GenericEventChannelSO<int> inputEventChannel, inputCanceledEventChannel;
 
         [Header("References")] 
         [SerializeField] private RadialPlayerMovement playerMovement;
 
+        private int movementDirection;
+
         public void FlipMovementDirection()
         {
-            leftMovement = rightMovement;
-            rightMovement = -rightMovement;
+            movementDirection = -movementDirection;
+            playerMovement.movementDirection = movementDirection;
+            //TODO: do not flip direction when braking
         }
 
         private void Awake()
         {
-            leftMovement = 1;
-            rightMovement = -leftMovement;
+            movementDirection = -1;
         }
 
         private void OnEnable()
         {
             inputEventChannel += OnInputReceived;
+            inputCanceledEventChannel += OnInputCanceled;
         }
         
         private void OnDisable()
         {
             inputEventChannel -= OnInputReceived;
+            inputCanceledEventChannel -= OnInputCanceled;
         }
 
         private void OnInputReceived(int input)
         {
-            if (input == LeftButton)
-            {
-                playerMovement.Move(leftMovement);
-                return;
-            }
-
             if (input != RightButton) return;
-            
-            playerMovement.Move(rightMovement);
+            playerMovement.movementDirection = movementDirection;
+            playerMovement.StartMovement();
+        }
+        
+        private void OnInputCanceled(int input)
+        {
+            if (input != RightButton) return;
+            playerMovement.Brake();
         }
     }
 }

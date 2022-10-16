@@ -21,6 +21,7 @@ namespace Meyham.Player
             get => spriteRenderer.sortingOrder;
             set => spriteRenderer.sortingOrder = value;
         }
+        
         public Color PlayerColor { get; private set; }
 
         public PlayerScore Score => score;
@@ -39,9 +40,7 @@ namespace Meyham.Player
             score.ResetScore();
         }
 
-        public void SetLeftButton(int button) => input.LeftButton = button;
-
-        public void SetRightButton(int button) => input.RightButton = button;
+        public void SetButton(int button) => input.RightButton = button;
 
         public void SetStartingPosition(int index, float angle)
         {

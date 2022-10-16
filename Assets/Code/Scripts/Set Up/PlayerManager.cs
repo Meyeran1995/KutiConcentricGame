@@ -51,7 +51,7 @@ namespace Meyham.Set_Up
             var newPlayer = Instantiate(playerTemplate, transform.position, quaternion.identity)
                 .GetComponent<PlayerController>();
             newPlayer.enabled = false;
-            newPlayer.SetLeftButton(inputIndex);
+            newPlayer.SetButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
             newPlayer.SetStartingPosition(0, 0f);
             newPlayer.SetPlayerColor(playerColors.GetColor(inputIndex));
