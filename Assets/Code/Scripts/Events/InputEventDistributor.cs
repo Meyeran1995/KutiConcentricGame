@@ -9,9 +9,8 @@ namespace Meyham.Events
     /// </summary>
     public class InputEventDistributor : MonoBehaviour
     {
-        [FormerlySerializedAs("inputEventChannel")]
         [Header("Inputs")] 
-        [SerializeField] private IntEventChannelSO inputEventChannelSo;
+        [SerializeField] private IntEventChannelSO inputEventChannel;
 
         private const int P1LeftButton = 0;
         private const int P1MiddleButton = 1;
@@ -26,14 +25,14 @@ namespace Meyham.Events
 
     private void Awake()
     {
-        bindings = new Dictionary<EKutiButton, BoolEventChannelSO>
+        bindings = new Dictionary<EKutiButton, int>
         {
-            { EKutiButton.P1_LEFT, p1LeftButton },
-            { EKutiButton.P1_MID, p1MiddleButton },
-            { EKutiButton.P1_RIGHT, p1RightButton },
-            { EKutiButton.P2_LEFT, p2LeftButton },
-            { EKutiButton.P2_MID, p2MiddleButton },
-            { EKutiButton.P2_RIGHT, p2RightButton }
+            { EKutiButton.P1_LEFT, P1LeftButton },
+            { EKutiButton.P1_MID, P1MiddleButton },
+            { EKutiButton.P1_RIGHT, P1RightButton },
+            { EKutiButton.P2_LEFT, P2LeftButton },
+            { EKutiButton.P2_MID, P2MiddleButton },
+            { EKutiButton.P2_RIGHT, P2RightButton }
         };
     }
 
@@ -42,7 +41,7 @@ namespace Meyham.Events
     {
         if(!Input.anyKeyDown) return;
         
-        foreach (var kutiButton in bindings.keys)
+        foreach (var kutiButton in bindings.Keys)
         {
             if(!KutiInput.GetKutiButtonDown(kutiButton)) continue;
             
