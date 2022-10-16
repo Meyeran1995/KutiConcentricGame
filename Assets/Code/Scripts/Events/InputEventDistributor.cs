@@ -86,7 +86,7 @@ namespace Meyham.Events
 
         private void RaiseInputEvent(KeyCode keyCode)
         {
-            inputEventChannelSo.RaiseEvent(bindings[keyCode]);
+            inputEventChannel.RaiseEvent(bindings[keyCode]);
         }
     
 #endif
