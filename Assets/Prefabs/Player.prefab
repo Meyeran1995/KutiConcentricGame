@@ -234,6 +234,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: -2749120600095461162}
   collisionHelper: {fileID: 4482897550129903512}
   velocityCalculator: {fileID: 5346232853266400848}
+  movementDirection: 0
   gizmoRadius: 0.5
   centerTransform: {fileID: 0}
 --- !u!114 &3343158596831003086
@@ -315,19 +316,19 @@ MonoBehaviour:
       value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 136
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 3
       value: 1
-      inSlope: 1.1326586
-      outSlope: 1.1326586
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
-      inWeight: 0.06763784
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
