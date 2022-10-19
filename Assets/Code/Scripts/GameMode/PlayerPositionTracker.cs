@@ -8,39 +8,29 @@ namespace Meyham.GameMode
 {
     public class PlayerPositionTracker : MonoBehaviour
     {
-        [SerializeField] private FloatValue angleGain;
+        [SerializeField] private FloatValue angleGain, collisionThresh;
 
-        private static readonly Dictionary<RadialPlayerMovement, PlayerController> Players = new ();
+        private static readonly List<PlayerController> Players = new();
+        private static List<PlayerController> pendingMovements, collisions;
 
         public static int MaxPosition;
         
         public float[] StartingPositions { get; private set; }
 
+        public static void InitializeLists(int playerCount)
+        {
+            pendingMovements = new List<PlayerController>(playerCount);
+            collisions = new List<PlayerController>(playerCount - 1);
+        }
+        
         public static void Register(PlayerController player)
         {
-            Players.Add(player.Movement, player);
+            Players.Add(player);
         }
 
-        public static void MovePosition(RadialPlayerMovement player, int direction)
+        public static void MovePosition(PlayerController player)
         {
-            var controller = Players[player];
-            int lastPosition = controller.PositionIndex;
-            int lastOrder = controller.Order;
-            int nextPosition = lastPosition + direction;
-
-            if (nextPosition < 0)
-            {
-                nextPosition = MaxPosition - 1;
-            }
-            else if (nextPosition == MaxPosition)
-            {
-                nextPosition = 0;
-            }
-
-            controller.ChangeOrder(GetOrder(nextPosition));
-            controller.PositionIndex = nextPosition;
-            
-            DecrementPlayerOrderAtPosition(lastPosition, lastOrder);
+            pendingMovements.Add(player);
         }
 
         public void RotateStartingPositions()
@@ -75,36 +65,49 @@ namespace Meyham.GameMode
             }
         }
 
-        private static int GetOrder(int position)
+        private void LateUpdate()
         {
-            int order = 0;
-
-            foreach (var playerPosition in Players.Values)
+            if (pendingMovements.Count == 0) return;
+            
+            for (int i = pendingMovements.Count - 1; i >= 0; i--)
             {
-                if(playerPosition.PositionIndex != position) continue;
-                order++;
+                MovePlayer(pendingMovements[i]);
             }
-
-            return order;
+            
+            pendingMovements.Clear();
         }
 
-        private static void DecrementPlayerOrderAtPosition(int position, int leavingOrder)
+        private void MovePlayer(PlayerController player)
         {
-            foreach (var playerPosition in Players.Values)
+            player.ChangeOrder(0);
+
+            foreach (var playerController in GetCollisions(player, player.Movement.LastPosition))
             {
-                if(playerPosition.PositionIndex != position) continue;
-                
-                int order = playerPosition.Order;
-                
-                if(order < leavingOrder) continue;
-                
-                order--;
-
-                if (order < 0)
-                    order = 0;
-
-                playerPosition.ChangeOrder(order);
+                playerController.DecrementOrder();
             }
+            
+            foreach (var playerController in GetCollisions(player, player.transform.position))
+            {
+                playerController.IncrementOrder();
+            }
+        }
+
+        private IEnumerable<PlayerController> GetCollisions(PlayerController player, Vector3 playerPosition)
+        {
+            collisions.Clear();
+            
+            foreach (var playerController in Players)
+            {
+                if(playerController == player) continue;
+                
+                float distance = Vector2.Distance(playerPosition, playerController.transform.position);
+
+                if(distance > collisionThresh) continue;
+                
+                collisions.Add(playerController);
+            }
+
+            return collisions;
         }
     }
 }

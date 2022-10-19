@@ -21,7 +21,6 @@ namespace Meyham.Player
         {
             movementDirection = -movementDirection;
             playerMovement.movementDirection = movementDirection;
-            //TODO: do not flip direction when braking
         }
 
         private void Awake()

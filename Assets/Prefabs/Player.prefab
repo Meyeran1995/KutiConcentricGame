@@ -215,7 +215,6 @@ MonoBehaviour:
   playerOrder: {fileID: 3111601392694829479}
   playerCollider: {fileID: 1535747449777228908}
   spriteRenderer: {fileID: 3343158595621873216}
-  PositionIndex: 0
 --- !u!114 &3343158596831003080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,12 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingAngle: 0
-  angleGain: {fileID: 11400000, guid: 2a6d9ebda9e1b4d4e91d79e180212021, type: 2}
+  angleGain: {fileID: 11400000, guid: bdfffb84182ca7d45a8225c236eada06, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   playerRigidBody: {fileID: -2749120600095461162}
   collisionHelper: {fileID: 4482897550129903512}
   velocityCalculator: {fileID: 5346232853266400848}
+  controller: {fileID: -3059452512064107555}
   movementDirection: 0
+  brakeDirection: 0
   gizmoRadius: 0.5
   centerTransform: {fileID: 0}
 --- !u!114 &3343158596831003086

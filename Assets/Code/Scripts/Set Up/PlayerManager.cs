@@ -24,9 +24,7 @@ namespace Meyham.Set_Up
 
         private PlayerController[] playersAsArray;
         private int indexGain;
-
-        public static int NumberOfActivePlayers => Players.Count;
-
+        
         public static PlayerScore[] GetPlayers()
         {
             var playerScores = new PlayerScore[Players.Count];
@@ -64,14 +62,16 @@ namespace Meyham.Set_Up
         protected override void OnGameStart()
         {
             int i = 0;
+            int playerCount = Players.Count;
+            PlayerPositionTracker.InitializeLists(playerCount);
             
             if (indexGain == 0)
             {
                 inputEventChannel -= OnPlayerJoined;
-                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / Players.Count );
+                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / playerCount );
             }
-
-            if (Players.Count > 1)
+            
+            if (playerCount > 1)
             {
                 foreach (var player in Players.Values)
                 {

@@ -1,5 +1,4 @@
-﻿using Meyham.EditorHelpers;
-using Meyham.GameMode;
+﻿using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -13,8 +12,6 @@ namespace Meyham.Player
         [SerializeField] private PlayerOrder playerOrder;
         [SerializeField] private Collider playerCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        
-        [ReadOnly] public int PositionIndex;
 
         public int Order
         {
@@ -44,7 +41,6 @@ namespace Meyham.Player
 
         public void SetStartingPosition(int index, float angle)
         {
-            PositionIndex = index;
             movement.SnapToStartingAngle(angle);
         }
 
@@ -56,9 +52,12 @@ namespace Meyham.Player
             spriteRenderer.color = playerColor;
         }
 
+        public void IncrementOrder() => ChangeOrder(++Order);
+        
+        public void DecrementOrder() => ChangeOrder(--Order);
+        
         public void ChangeOrder(int order)
         {
-            spriteRenderer.sortingOrder = order;
             Order = order;
             playerOrder.OrderPlayer(order);
             playerCollider.isTrigger = order == 0;

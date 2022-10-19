@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e329e28faa638e47b90498f1372f45a, type: 3}
-  m_Name: AngleGain
+  m_Name: PlayerSpeed
   m_EditorClassIdentifier: 
-  baseValue: 30
-  <RuntimeValue>k__BackingField: 30
+  baseValue: 5
+  <RuntimeValue>k__BackingField: 5
   updateRuntimeValue: 1
