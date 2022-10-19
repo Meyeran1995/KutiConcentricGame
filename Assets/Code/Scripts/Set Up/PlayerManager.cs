@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Meyham.DataObjects;
 using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.Player;
@@ -22,6 +23,7 @@ namespace Meyham.Set_Up
         private static readonly Dictionary<int, PlayerController> Players = new();
 
         private PlayerController[] playersAsArray;
+        private int indexGain;
 
         public static int NumberOfActivePlayers => Players.Count;
 
@@ -128,18 +130,12 @@ namespace Meyham.Set_Up
 
 #if UNITY_EDITOR
 
-        private RadialPlayerMovement movement;
-        private int indexGain;
+        [Header("Debug"), SerializeField] private FloatValue radius;
 
         private void OnDrawGizmos()
         {
-            if (movement == null)
-            {
-                if(!playerTemplate.TryGetComponent(out movement)) return;
-            }
-            
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, movement.Radius);
+            Gizmos.DrawWireSphere(transform.position, radius);
         }
 
 #endif
