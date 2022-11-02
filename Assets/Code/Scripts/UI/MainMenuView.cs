@@ -1,5 +1,4 @@
 ﻿using Meyham.Events;
-using TMPro;
 using UnityEngine;
 
 namespace Meyham.UI
@@ -8,7 +7,7 @@ namespace Meyham.UI
     {
         [Header("Players")]
         [SerializeField] private GenericEventChannelSO<int> onPlayerJoined;
-        [SerializeField] private TextMeshProUGUI[] playerJoinTexts;
+        [SerializeField] private Toggle[] playerToggles;
         
         private int numberOfPlayers;
         
@@ -19,11 +18,7 @@ namespace Meyham.UI
 
         private void OnPlayerJoin(int playerIndex)
         {
-            var playerText = playerJoinTexts[playerIndex];
-            
-            if(playerText.text[0] == 'S') return;
-
-            playerText.text = $"Spieler {++numberOfPlayers}";
+            playerToggles[playerIndex].ToggleImage();
         }
         
         // public override void OpenView(int animatorId)
@@ -40,7 +35,6 @@ namespace Meyham.UI
 
         public override void SetTextColor(int playerId, Color color)
         {
-            playerJoinTexts[playerId].color = color;
         }
     }
 }
