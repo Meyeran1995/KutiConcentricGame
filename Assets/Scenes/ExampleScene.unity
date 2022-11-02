@@ -567,7 +567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Warte auf Spieler...
+  m_text: "W\xE4hlt Eure Farben."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1763,11 +1763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee903cf801dc44ac89c32168f06e1afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButtonDelay: 1
+  startDelay: 5
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   gameLoop: {fileID: 567227204}
   numberOfPlayers: 0
-  startButtonActive: 0
 --- !u!1 &1268009118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Warte auf Spieler...
+  m_text: "W\xE4hlt Eure Farben."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
@@ -1992,7 +1991,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2669,6 +2668,7 @@ GameObject:
   - component: {fileID: 2035711503}
   - component: {fileID: 2035711505}
   - component: {fileID: 2035711504}
+  - component: {fileID: 2035711507}
   m_Layer: 5
   m_Name: Alerts
   m_TagString: Untagged
@@ -2693,10 +2693,10 @@ RectTransform:
   m_Father: {fileID: 1912174595}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 426.66666, y: 0}
+  m_SizeDelta: {x: 853.3334, y: 426.6667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2035711504
 MonoBehaviour:
@@ -2736,6 +2736,28 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!223 &2035711507
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035711502}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &2095045851
 GameObject:
   m_ObjectHideFlags: 0
