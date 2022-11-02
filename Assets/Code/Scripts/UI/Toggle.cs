@@ -5,26 +5,22 @@ namespace Meyham.UI
 {
     public class Toggle : MonoBehaviour
     {
+        [SerializeField] private Image imageRenderer;
+        
         [SerializeField] private Sprite toggled;
 
         private Sprite unToggled;
-        private Image imageRenderer;
-        
+
         private bool isToggled;
         
-        public bool IsToggled
+        public void ToggleImage()
         {
-            get => isToggled;
-            set
-            {
-                isToggled = value;
-                imageRenderer.sprite = isToggled ? toggled : unToggled;
-            }
+            isToggled = !isToggled;
+            imageRenderer.sprite = isToggled ? toggled : unToggled;
         }
 
         private void Awake()
         {
-            imageRenderer = GetComponent<Image>();
             unToggled = imageRenderer.sprite;
         }
     }

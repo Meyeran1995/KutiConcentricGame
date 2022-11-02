@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cda68e871f8f6b438f7a7638476bfda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageRenderer: {fileID: 6248575504315651327}
   toggled: {fileID: 0}
 --- !u!1 &6564470090894262387
 GameObject:
