@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Meyham.DataObjects;
 using Meyham.Player;
 using UnityEngine;
@@ -67,7 +68,7 @@ namespace Meyham.GameMode
 
         private void LateUpdate()
         {
-            if (pendingMovements.Count == 0) return;
+            if (pendingMovements == null || pendingMovements.Count == 0) return;
             
             for (int i = pendingMovements.Count - 1; i >= 0; i--)
             {
