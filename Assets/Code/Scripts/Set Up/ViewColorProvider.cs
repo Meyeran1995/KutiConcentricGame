@@ -7,7 +7,6 @@ namespace Meyham.Set_Up
     {
         private AGameView[] views;
         private PlayerColors playerColors;
-        private GenericEventChannelSO<int> playerJoined;
 
         public ViewColorProvider(AGameView[] views, PlayerColors playerColors)
         {

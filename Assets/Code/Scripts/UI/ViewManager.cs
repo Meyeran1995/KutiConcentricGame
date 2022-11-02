@@ -28,7 +28,7 @@ namespace Meyham.UI
         protected override void Start()
         {
             base.Start();
-            viewColorProvider = new ViewColorProvider(gameViews, playerColors);
+            viewColorProvider = new ViewColorProvider(new []{gameViews[1], gameViews[2]}, playerColors);
             viewColorProvider.SubscribeToEvent(playerJoined);
             OpenCurrentView();
         }
