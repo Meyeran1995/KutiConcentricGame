@@ -10,7 +10,7 @@ namespace Meyham.Set_Up
     public class PlayerNumberSelector : MonoBehaviour
     {
         [Header("Properties")] 
-        [SerializeField] private float startButtonDelay;
+        [SerializeField] private int startDelay;
 
         [Header("References")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
@@ -18,9 +18,9 @@ namespace Meyham.Set_Up
         
         [Header("Debug")]
         [ReadOnly, SerializeField] private int numberOfPlayers;
-        [ReadOnly, SerializeField] private bool startButtonActive;
 
         private bool[] activePlayers;
+        private Coroutine delayedStartRoutine;
 
         private void Awake()
         {
@@ -36,32 +36,63 @@ namespace Meyham.Set_Up
         {
             if (activePlayers[playerNumber])
             {
-                OnStartButton();
+                --numberOfPlayers;
+                OnPlayerLeft(playerNumber);
                 return;
             }
             
             activePlayers[playerNumber] = true;
-            
-            if(++numberOfPlayers != 1) return;
+            ++numberOfPlayers;
 
-            StartCoroutine(DelayedStartButtonRegistration());
+            switch (numberOfPlayers)
+            {
+                case 1:
+                    if(delayedStartRoutine != null) return;
+                    delayedStartRoutine = StartCoroutine(DelayedStart());
+                    return;
+                case 6:
+                    StartGame();
+                    return;
+                default:
+                    return;
+            }
         }
 
-        private IEnumerator DelayedStartButtonRegistration()
+        private void OnPlayerLeft(int playerNumber)
         {
-            yield return new WaitForSeconds(startButtonDelay);
-
-            startButtonActive = true;
-            Alerts.SendAlert("Zum Starten des Spiels erneut drücken");
+            activePlayers[playerNumber] = false;
+            
+            if(numberOfPlayers > 0 && delayedStartRoutine != null) return;
+            
+            StopCoroutine(delayedStartRoutine);
+            Alerts.SendAlert("Wählt Eure Farben aus.");
         }
 
-        private void OnStartButton()
+        private IEnumerator DelayedStart()
         {
-            if(!startButtonActive) return;
-            
+            var alertPrefix = Alerts.GetCurrentAlert();
+
+            for (int i = startDelay; i > 0; i--)
+            {
+                Alerts.SendAlert($"{alertPrefix}\nNoch {i} Sekunden...");
+                yield return new WaitForSeconds(1f);
+            }
+
+            StartGame();
+            delayedStartRoutine = null;
+        }
+
+        private void StartGame()
+        {
             inputEventChannel -= OnPlayerJoined;
             
+            Alerts.ClearAlert();
+
             gameLoop.StartGame();
+            
+            if(delayedStartRoutine == null) return;
+            
+            StopCoroutine(delayedStartRoutine);
         }
     }
 }

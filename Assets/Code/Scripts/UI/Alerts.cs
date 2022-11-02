@@ -18,6 +18,11 @@ namespace Meyham.UI
             upperAlertTxt.text = "";
             lowerAlertTxt.text = "";
         }
+
+        public static string GetCurrentAlert()
+        {
+            return upperAlertTxt.text;
+        }
         
         private void Awake()
         {

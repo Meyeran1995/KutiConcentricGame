@@ -46,8 +46,18 @@ namespace Meyham.Set_Up
 
         private void OnPlayerJoined(int inputIndex)
         {
-            if(Players.ContainsKey(inputIndex)) return;
+            if (Players.TryGetValue(inputIndex, out var player))
+            {
+                var playerObject = player.gameObject;
+                playerObject.SetActive(!playerObject.activeSelf);
+                return;
+            }
             
+            CreateNewPlayer(inputIndex);
+        }
+
+        private void CreateNewPlayer(int inputIndex)
+        {
             var newPlayer = Instantiate(playerTemplate, transform.position, quaternion.identity)
                 .GetComponent<PlayerController>();
             newPlayer.enabled = false;
@@ -59,17 +69,34 @@ namespace Meyham.Set_Up
             Players.Add(inputIndex, newPlayer);
         }
 
+        private void RemoveInactivePlayers()
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                if(!Players.TryGetValue(i, out var player)) continue;
+                
+                var playerObject = player.gameObject;
+                if(playerObject.activeSelf) continue;
+
+                Players.Remove(i);
+                Destroy(playerObject);
+            }
+        }
+
         protected override void OnGameStart()
         {
             int i = 0;
-            int playerCount = Players.Count;
-            PlayerPositionTracker.InitializeLists(playerCount);
             
             if (indexGain == 0)
             {
+                RemoveInactivePlayers();
                 inputEventChannel -= OnPlayerJoined;
-                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / playerCount );
+                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / Players.Count );
             }
+
+            int playerCount = Players.Count;
+            
+            PlayerPositionTracker.InitializeLists(playerCount);
             
             if (playerCount > 1)
             {

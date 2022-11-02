@@ -9,8 +9,6 @@ namespace Meyham.UI
         [SerializeField] private GenericEventChannelSO<int> onPlayerJoined;
         [SerializeField] private Toggle[] playerToggles;
         
-        private int numberOfPlayers;
-        
         private void Start()
         {
             onPlayerJoined += OnPlayerJoin;
@@ -18,7 +16,8 @@ namespace Meyham.UI
 
         private void OnPlayerJoin(int playerIndex)
         {
-            playerToggles[playerIndex].ToggleImage();
+            var toggle = playerToggles[playerIndex];
+            toggle.ToggleImage();
         }
         
         // public override void OpenView(int animatorId)

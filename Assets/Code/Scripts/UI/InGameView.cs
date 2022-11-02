@@ -55,8 +55,17 @@ namespace Meyham.UI
 
         private void OnPlayerJoined(int playerNumber)
         {
+            var scoreTextGameObject = scoreTexts[playerNumber].gameObject;
+            
+            if (activePlayers.Contains(playerNumber))
+            {
+                scoreTextGameObject.SetActive(!scoreTextGameObject.activeSelf);
+                activePlayers.Remove(playerNumber);
+                return;
+            }
+            
             activePlayers.Add(playerNumber);
-            scoreTexts[playerNumber].gameObject.SetActive(true);
+            scoreTextGameObject.SetActive(true);
         }
 
         private void OnScoreAcquired(PlayerScore scoringPlayer)
