@@ -4,14 +4,12 @@ using Meyham.DataObjects;
 using Meyham.Events;
 using Meyham.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Meyham.GameMode
 {
     public class GameLoop : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Image timerUI;
         [SerializeField] private VoidEventChannelSO gameStartEvent, gameEndEvent, gameRestartEvent;
         [SerializeField] private VoidEventChannelSO endSpawningEvent, lastItemVanishedEvent;
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
@@ -19,11 +17,17 @@ namespace Meyham.GameMode
         [Header("Timer Values")]
         [SerializeField] private FloatValue currentTime;
         [SerializeField] private float timeUnit;
-        private float lastTime, fillPerTimeUnit;
 
         [Header("Delays")]
         [SerializeField] private float restartButtonDelay;
         [SerializeField] private float endOfGameDelay;
+
+        private static TimerUi timerUi;
+
+        public static void RegisterTimer(TimerUi timer)
+        {
+            timerUi = timer;
+        }
         
         public void StartGame()
         {
@@ -37,16 +41,11 @@ namespace Meyham.GameMode
             inputEventChannel += OnRestartPressed;
         }
 
-        private void Awake()
-        {
-            fillPerTimeUnit = timeUnit / currentTime.BaseValue;
-        }
-
         private void OnRestartPressed(int input)
         {
             gameRestartEvent.RaiseEvent();
             
-            timerUI.fillAmount = 100f;
+            timerUi.ResetTimer();
             currentTime.ResetToBaseValue();
             
             Alerts.ClearAlert();
@@ -59,7 +58,7 @@ namespace Meyham.GameMode
         {
             yield return new WaitForSeconds(timeUnit);
 
-            timerUI.fillAmount -= fillPerTimeUnit;
+            timerUi.DepleteTime();
             currentTime.RuntimeValue -= timeUnit;
 
             if (currentTime.RuntimeValue == 0f)
