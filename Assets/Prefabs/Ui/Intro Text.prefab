@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Space Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8586b9577765506428f97f8e9ce70a3c, type: 2}
+  m_sharedMaterial: {fileID: 2824959725692166552, guid: 8586b9577765506428f97f8e9ce70a3c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -241,8 +241,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Design Ralf Hebecker\nProgrammierung Andr\xE9 Meyer"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
+  m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -374,12 +374,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '2023 Kuti UG
+  m_text: '\u00A9 2023 Kuti UG
 
     Alle Rechte vorbehalten...'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
+  m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
