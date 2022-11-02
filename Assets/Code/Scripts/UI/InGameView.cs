@@ -8,7 +8,9 @@ namespace Meyham.UI
 {
     public class InGameView : AGameView
     {
+        [Header("Texts")]
         [SerializeField] private TextMeshProUGUI[] scoreTexts;
+        [Header("Events")]
         [SerializeField] private GenericEventChannelSO<PlayerScore> scoreEvent;
         [SerializeField] private GenericEventChannelSO<int> playerJoinedEvent;
         [SerializeField] private VoidEventChannelSO gameStartEvent;
