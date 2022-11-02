@@ -1511,7 +1511,7 @@ MonoBehaviour:
   gameEndEvent: {fileID: 11400000, guid: 5ef136010c9c8504a9694932ba5d579c, type: 2}
   gameRestartEvent: {fileID: 11400000, guid: 2c25a27b30b5b0947a13f161f26f2a9e, type: 2}
   gameViews:
-  - {fileID: 0}
+  - {fileID: 1986757956}
   - {fileID: 1073271011059574674}
   - {fileID: 413870093}
   playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
@@ -2647,6 +2647,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8723341292005039369, guid: 238acc6cdd655714a9f761a9e42bdf9c, type: 3}
   m_PrefabInstance: {fileID: 1986757954}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1986757956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1886553089, guid: 238acc6cdd655714a9f761a9e42bdf9c, type: 3}
+  m_PrefabInstance: {fileID: 1986757954}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5281254eedf414d8b5f7b83a7426266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035711502
 GameObject:
   m_ObjectHideFlags: 0
