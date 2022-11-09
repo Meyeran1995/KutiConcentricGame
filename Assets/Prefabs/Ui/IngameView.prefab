@@ -525,8 +525,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerUiRight: {fileID: 1139660261725818941}
   timerUiLeft: {fileID: 1882603211201278444}
-  fillPerUnit: 0.00945
+  fillPerUnit: {fileID: 11400000, guid: 13617e1a49e404e49bd1a0feea502119, type: 2}
   startingCircleOffset: 8
+  startAmount: 0.9244
 --- !u!1001 &3355944035568448199
 PrefabInstance:
   m_ObjectHideFlags: 0
