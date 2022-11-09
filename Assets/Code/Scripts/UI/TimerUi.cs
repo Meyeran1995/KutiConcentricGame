@@ -19,7 +19,7 @@ namespace Meyham.UI
         [Header("Debug")]
         [ReadOnly, SerializeField] private float startAmount;
 
-        public const int numberOfDots = 37;
+        public const int NumberOfDots = 37;
         
         public void ResetTimer()
         {

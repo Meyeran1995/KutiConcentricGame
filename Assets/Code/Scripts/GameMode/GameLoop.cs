@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Meyham.DataObjects;
+using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.UI;
 using UnityEngine;
@@ -16,12 +17,13 @@ namespace Meyham.GameMode
 
         [Header("Timer Values")]
         [SerializeField] private FloatValue timeUnit;
+        [SerializeField, ReadOnly] private float currentTime;
 
         [Header("Delays")]
         [SerializeField] private float restartButtonDelay;
         [SerializeField] private float endOfGameDelay;
 
-        private float currentTime, startingTime;
+        private float startingTime;
         
         private static TimerUi timerUi;
 
@@ -38,7 +40,7 @@ namespace Meyham.GameMode
 
         private void Awake()
         {
-            startingTime = TimerUi.numberOfDots * timeUnit;
+            startingTime = TimerUi.NumberOfDots * timeUnit;
             currentTime = startingTime;
         }
 
