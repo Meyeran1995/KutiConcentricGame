@@ -59,6 +59,7 @@ namespace Meyham.Set_Up
         private void CreateNewPlayer(int inputIndex)
         {
             var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
+            newPlayer.name = $"Player{inputIndex}";
             newPlayer.transform.position = transform.position;
             newPlayer.enabled = false;
             newPlayer.SetButton(inputIndex);
