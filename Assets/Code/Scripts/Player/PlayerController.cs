@@ -39,7 +39,7 @@ namespace Meyham.Player
 
         public void SetButton(int button) => input.RightButton = button;
 
-        public void SetStartingPosition(int index, float angle)
+        public void SetStartingPosition(float angle)
         {
             movement.SnapToStartingAngle(angle);
         }

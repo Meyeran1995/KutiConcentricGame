@@ -84,7 +84,6 @@ namespace Meyham.Player
             }
 
             LastPosition = playerRigidBody.position;
-            // ClampAngle();
             var nextPosition = GetCirclePoint();
             
             playerRigidBody.MovePosition(nextPosition);
@@ -93,19 +92,6 @@ namespace Meyham.Player
             PlayerPositionTracker.MovePosition(controller);
         }
 
-        // private void ClampAngle()
-        // {
-        //     if (currentAngle < 0f)
-        //     {
-        //         currentAngle += 360f;
-        //         return;
-        //     }
-        //     
-        //     if(currentAngle <= 360f) return;
-        //
-        //     currentAngle -= 360f;
-        // }
-        
         private Vector3 GetCirclePoint()
         {
             float angleInRad = Mathf.Deg2Rad * currentAngle;
