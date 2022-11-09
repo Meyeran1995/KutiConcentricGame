@@ -6,30 +6,16 @@ namespace Meyham.Player
     public class PlayerOrder : MonoBehaviour
     {
         [SerializeField] private FloatValue sizeFactor;
+        [SerializeField] private PlayerModelProvider modelProvider;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private PlayerCollisionHelper collisionHelper;
 
-        private static Vector3 startingScale;
-        
+
         public void OrderPlayer(int order)
         {
-            if (order == 0)
-            {
-                transform.localScale = startingScale;
-                return;
-            }
-
-            float scalePercentage = 1f - sizeFactor * order;
-            Vector3 newScale = startingScale;
-            newScale.x *= scalePercentage;
-            newScale.y *= scalePercentage;
+            spriteRenderer.sprite = modelProvider.GetModel(order);
             
-            transform.localScale = newScale;
-        }
-
-        private void Awake()
-        {
-            if(startingScale != Vector3.zero) return;
-            
-            startingScale = transform.localScale;
+            collisionHelper.ModifyCollisionSize(sizeFactor.RuntimeValue, order);            
         }
     }
 }

@@ -60,7 +60,6 @@ namespace Meyham.Player
         {
             Order = order;
             playerOrder.OrderPlayer(order);
-            playerCollider.isTrigger = order == 0;
         }
 
         private void OnEnable()
