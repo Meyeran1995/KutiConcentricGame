@@ -58,12 +58,12 @@ namespace Meyham.Set_Up
 
         private void CreateNewPlayer(int inputIndex)
         {
-            var newPlayer = Instantiate(playerTemplate, transform.position, quaternion.identity)
-                .GetComponent<PlayerController>();
+            var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
+            newPlayer.transform.position = transform.position;
             newPlayer.enabled = false;
             newPlayer.SetButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
-            newPlayer.SetStartingPosition(0, 0f);
+            newPlayer.SetStartingPosition(0f);
             newPlayer.SetPlayerColor(playerColors.GetColor(inputIndex));
 
             Players.Add(inputIndex, newPlayer);
@@ -102,7 +102,7 @@ namespace Meyham.Set_Up
             {
                 foreach (var player in Players.Values)
                 {
-                    player.SetStartingPosition(i,positionTracker.GetStartingPosition(i));
+                    player.SetStartingPosition(positionTracker.GetStartingPosition(i));
                     i += indexGain;
                     player.enabled = true;
                 }
@@ -115,7 +115,7 @@ namespace Meyham.Set_Up
 
             foreach (var player in playersAsArray)
             {
-                player.SetStartingPosition(i,positionTracker.GetStartingPosition(i));
+                player.SetStartingPosition(positionTracker.GetStartingPosition(i));
                 i += indexGain;
                 player.enabled = true;
             }
@@ -137,7 +137,7 @@ namespace Meyham.Set_Up
             int i = 0;
             foreach (var player in Players.Values)
             {
-                player.SetStartingPosition(i, startingPositions[i++]);
+                player.SetStartingPosition(startingPositions[i++]);
                 player.OnGameRestart();
             }
         }

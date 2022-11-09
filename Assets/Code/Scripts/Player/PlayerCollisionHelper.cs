@@ -14,7 +14,7 @@ namespace Meyham.Player
             direction.Normalize();
             
             var angle = Vector3.SignedAngle(collisionTransform.forward, direction, Vector3.up);
-            transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+            transform.localRotation = Quaternion.Euler(0f, angle, 90f);
         }
 
         public void ModifyCollisionSize(float sizeFactor, int order)
