@@ -65,17 +65,17 @@ namespace Meyham.GameMode
             }
         }
 
-        private void LateUpdate()
-        {
-            if (pendingMovements == null || pendingMovements.Count == 0) return;
-            
-            for (int i = pendingMovements.Count - 1; i >= 0; i--)
-            {
-                MovePlayer(pendingMovements[i]);
-            }
-            
-            pendingMovements.Clear();
-        }
+        // private void LateUpdate()
+        // {
+        //     if (pendingMovements == null || pendingMovements.Count == 0) return;
+        //     
+        //     for (int i = pendingMovements.Count - 1; i >= 0; i--)
+        //     {
+        //         MovePlayer(pendingMovements[i]);
+        //     }
+        //     
+        //     pendingMovements.Clear();
+        // }
 
         private void MovePlayer(PlayerController player)
         {

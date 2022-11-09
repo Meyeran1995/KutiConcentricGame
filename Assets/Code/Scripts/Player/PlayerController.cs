@@ -1,4 +1,5 @@
-﻿using Meyham.GameMode;
+﻿using System;
+using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -10,15 +11,9 @@ namespace Meyham.Player
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
         [SerializeField] private PlayerOrder playerOrder;
-        [SerializeField] private Collider playerCollider;
+        [SerializeField] private Collider itemCollider, playerCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        public int Order
-        {
-            get => spriteRenderer.sortingOrder;
-            set => spriteRenderer.sortingOrder = value;
-        }
-        
         public Color PlayerColor { get; private set; }
 
         public PlayerScore Score => score;
@@ -26,13 +21,11 @@ namespace Meyham.Player
         
         public void OnGameEnd()
         {
-            playerCollider.isTrigger = false;
             enabled = false;
         }
 
         public void OnGameRestart()
         {
-            playerCollider.isTrigger = true;
             enabled = true;
             score.ResetScore();
         }
@@ -52,13 +45,12 @@ namespace Meyham.Player
             spriteRenderer.color = playerColor;
         }
 
-        public void IncrementOrder() => ChangeOrder(++Order);
+        public void IncrementOrder() => ChangeOrder(1);
         
-        public void DecrementOrder() => ChangeOrder(--Order);
+        public void DecrementOrder() => ChangeOrder(0);
         
         public void ChangeOrder(int order)
         {
-            Order = order;
             playerOrder.OrderPlayer(order);
         }
 
@@ -66,6 +58,8 @@ namespace Meyham.Player
         {
             movement.enabled = true;
             input.enabled = true;
+            itemCollider.isTrigger = true;
+            playerCollider.isTrigger = true;
         }
 
         private void Start()
@@ -77,15 +71,8 @@ namespace Meyham.Player
         {
             movement.enabled = false;
             input.enabled = false;
+            itemCollider.isTrigger = false;
+            playerCollider.isTrigger = false;
         }
-
-#if UNITY_EDITOR
-
-        private void OnValidate()
-        {
-            playerCollider.isTrigger = true;
-        }
-
-#endif
     }
 }

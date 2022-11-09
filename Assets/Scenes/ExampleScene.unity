@@ -2646,6 +2646,7 @@ GameObject:
   - component: {fileID: 2095045852}
   - component: {fileID: 2095045853}
   - component: {fileID: 2095045854}
+  - component: {fileID: 2095045855}
   m_Layer: 0
   m_Name: PlayerManagement
   m_TagString: Untagged
@@ -2702,6 +2703,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleGain: {fileID: 11400000, guid: 2a6d9ebda9e1b4d4e91d79e180212021, type: 2}
   collisionThresh: {fileID: 11400000, guid: 13ecf7f5f0bb4254fae983fd305dbf11, type: 2}
+--- !u!114 &2095045855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095045851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe1274a53284492bb700ed58604ea9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1073271011059574674 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1073271011059574674, guid: cb3aedbc18f7eee449c5e4e5d50f487c, type: 3}
