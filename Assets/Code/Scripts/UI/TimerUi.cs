@@ -1,4 +1,5 @@
-﻿using Meyham.EditorHelpers;
+﻿using Meyham.DataObjects;
+using Meyham.EditorHelpers;
 using Meyham.GameMode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +13,13 @@ namespace Meyham.UI
         [SerializeField] private Image timerUiLeft;
 
         [Header("Properties")]
-        [SerializeField] private float fillPerUnit;
+        [SerializeField] private FloatValue fillPerUnit;
         [SerializeField] private int startingCircleOffset = 1;
         
         [Header("Debug")]
         [ReadOnly, SerializeField] private float startAmount;
+
+        public const int numberOfDots = 37;
         
         public void ResetTimer()
         {

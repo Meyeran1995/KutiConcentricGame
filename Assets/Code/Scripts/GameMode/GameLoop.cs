@@ -15,13 +15,14 @@ namespace Meyham.GameMode
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
         [Header("Timer Values")]
-        [SerializeField] private FloatValue currentTime;
-        [SerializeField] private float timeUnit;
+        [SerializeField] private FloatValue timeUnit;
 
         [Header("Delays")]
         [SerializeField] private float restartButtonDelay;
         [SerializeField] private float endOfGameDelay;
 
+        private float currentTime, startingTime;
+        
         private static TimerUi timerUi;
 
         public static void RegisterTimer(TimerUi timer)
@@ -35,6 +36,12 @@ namespace Meyham.GameMode
             StartCoroutine(TimerRoutine());
         }
 
+        private void Awake()
+        {
+            startingTime = TimerUi.numberOfDots * timeUnit;
+            currentTime = startingTime;
+        }
+
         private void AllowRestart()
         {
             Alerts.SendAlert("Drücken für Neustart");
@@ -46,7 +53,7 @@ namespace Meyham.GameMode
             gameRestartEvent.RaiseEvent();
             
             timerUi.ResetTimer();
-            currentTime.ResetToBaseValue();
+            currentTime = startingTime;
             
             Alerts.ClearAlert();
             inputEventChannel -= OnRestartPressed;
@@ -59,9 +66,9 @@ namespace Meyham.GameMode
             yield return new WaitForSeconds(timeUnit);
 
             timerUi.DepleteTime();
-            currentTime.RuntimeValue -= timeUnit;
+            currentTime -= timeUnit;
 
-            if (currentTime.RuntimeValue == 0f)
+            if (currentTime <= 0f)
             {                
                 lastItemVanishedEvent += OnLastItemVanished;
                 endSpawningEvent.RaiseEvent();
