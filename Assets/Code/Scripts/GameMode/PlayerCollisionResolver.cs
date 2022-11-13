@@ -46,7 +46,15 @@ namespace Meyham.GameMode
             
             for (int i = collisionCount - 1; i >= 0; i--)
             {
-                pendingCollisions[i].Item1.IncrementOrder();
+                var player1 = pendingCollisions[i].Item1;
+                var player2 = pendingCollisions[i].Item2;
+
+                if (player1.PlayerVelocity >= player2.PlayerVelocity)
+                {
+                    player2.IncrementOrder();
+                    continue;
+                }
+                player1.IncrementOrder();
             }
             
             pendingCollisions.Clear();

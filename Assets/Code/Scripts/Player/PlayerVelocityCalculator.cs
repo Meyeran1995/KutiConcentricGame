@@ -15,8 +15,10 @@ namespace Meyham.Player
         [ReadOnly, SerializeField] private float timeToMaxVelocity, timeToMinVelocity;
         [ReadOnly, SerializeField] private VelocityStates velocityState;
 
-        private float maxVelocity, lastVelocity;
-        
+        private float maxVelocity;
+
+        public float LastVelocity { get; private set; }
+
         private enum VelocityStates
         {
             None,
@@ -28,14 +30,14 @@ namespace Meyham.Player
         public void StartMovement()
         {
             velocityState = VelocityStates.Accelerating;
-            lastVelocity = 0f;
+            LastVelocity = 0f;
             velocityTime = 0f;
         }
 
         public void StartBrake()
         {
             velocityState = VelocityStates.Braking;
-            velocityTime = 0f;
+            velocityTime = 1f - velocityTime * brake[brake.length - 1].time;
         }
         
         public float GetVelocity()
@@ -45,10 +47,11 @@ namespace Meyham.Player
                 case VelocityStates.Max:
                     return maxVelocity;
                 case VelocityStates.Braking:
-                    return brake.Evaluate(velocityTime);
+                    LastVelocity = brake.Evaluate(velocityTime);
+                    return LastVelocity;
                 case VelocityStates.Accelerating:
-                    lastVelocity = acceleration.Evaluate(velocityTime);
-                    return lastVelocity;
+                    LastVelocity = acceleration.Evaluate(velocityTime);
+                    return LastVelocity;
                 default:
                     return 0f;
             }
@@ -76,7 +79,7 @@ namespace Meyham.Player
                     {
                         velocityTime = timeToMaxVelocity;
                         velocityState = VelocityStates.Max;
-                        lastVelocity = maxVelocity;
+                        LastVelocity = maxVelocity;
                     }
                     break;
                 case VelocityStates.Braking:

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.GameMode;
@@ -9,18 +8,24 @@ namespace Meyham.Player
 {
     public class PlayerOrder : MonoBehaviour
     {
+        [Header("Properties")]
         [SerializeField] private FloatValue sizeFactor;
-        [SerializeField] private PlayerModelProvider modelProvider;
+        [Header("References")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Transform playerModel;
         [SerializeField] private Collider playerCollider;
+        [Header("Player references")]
+        [SerializeField] private PlayerModelProvider modelProvider;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
-
+        [SerializeField] private PlayerVelocityCalculator velocityCalculator;
+        
         private const float OrderDisplacementAmount = 32f / 100f;
 
         [field: SerializeField, ReadOnly]
         public int Order { get; private set; }
 
+        public float PlayerVelocity => velocityCalculator.LastVelocity;
+        
         private bool wasModified;
         private List<Collider> collisions;
 

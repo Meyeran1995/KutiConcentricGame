@@ -439,9 +439,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sizeFactor: {fileID: 11400000, guid: 80613f842352acd4ea723e02b7aa5be8, type: 2}
-  modelProvider: {fileID: 11400000, guid: 330129723766c1d47843ee46babac6fd, type: 2}
   spriteRenderer: {fileID: 3343158595621873216}
   playerModel: {fileID: 3343158595621873217}
   playerCollider: {fileID: 4021234758648694564}
+  modelProvider: {fileID: 11400000, guid: 330129723766c1d47843ee46babac6fd, type: 2}
   collisionHelper: {fileID: 3823075636171546819}
+  velocityCalculator: {fileID: 5346232853266400848}
   <Order>k__BackingField: 0
