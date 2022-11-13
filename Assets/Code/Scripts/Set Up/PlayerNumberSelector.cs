@@ -65,6 +65,7 @@ namespace Meyham.Set_Up
             if(numberOfPlayers > 0 && delayedStartRoutine != null) return;
             
             StopCoroutine(delayedStartRoutine);
+            delayedStartRoutine = null;
             Alerts.SendAlert("Wählt Eure Farben aus.");
         }
 
