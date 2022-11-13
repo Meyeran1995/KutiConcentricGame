@@ -6,7 +6,6 @@ namespace Meyham.Input
     {
         private readonly Dictionary<EKutiButton, int> bindings;
         private readonly List<int> keysDown, keysUp;
-        private bool keysUpPopulated;
 
         public KutiInputReader()
         {
@@ -28,10 +27,7 @@ namespace Meyham.Input
 
         public bool AnyKeyUp()
         {
-            if (!keysUpPopulated)
-            {
-                PopulateKeysUp();
-            }
+            PopulateKeysUp();
             
             return keysUp.Count > 0;
         }
@@ -52,20 +48,11 @@ namespace Meyham.Input
 
         public IEnumerable<int> GetKeysUp()
         {
-            if (keysUpPopulated)
-            {
-                keysUpPopulated = false;
-                return keysUp;
-            }
-
-            PopulateKeysUp();
-
             return keysUp;
         }
 
         private void PopulateKeysUp()
         {
-            keysUpPopulated = true;
             keysUp.Clear();
 
             foreach (var kutiButton in bindings.Keys)

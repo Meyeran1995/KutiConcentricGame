@@ -7,7 +7,6 @@ namespace Meyham.Input
     {
         private readonly Dictionary<KeyCode, int> bindings;
         private readonly List<int> keysDown, keysUp;
-        private bool keysUpPopulated;
 
         public EditorInputReader()
         {
@@ -29,10 +28,7 @@ namespace Meyham.Input
 
         public bool AnyKeyUp()
         {
-            if (!keysUpPopulated)
-            {
-                PopulateKeysUp();
-            }
+            PopulateKeysUp();
             
             return keysUp.Count > 0;
         }
@@ -53,20 +49,11 @@ namespace Meyham.Input
 
         public IEnumerable<int> GetKeysUp()
         {
-            if (keysUpPopulated)
-            {
-                keysUpPopulated = false;
-                return keysUp;
-            }
-
-            PopulateKeysUp();
-
             return keysUp;
         }
 
         private void PopulateKeysUp()
         {
-            keysUpPopulated = true;
             keysUp.Clear();
 
             foreach (var key in bindings.Keys)
