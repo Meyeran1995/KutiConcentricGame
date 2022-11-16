@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Meyham.Player;
 using UnityEngine;
 
-namespace Meyham.GameMode
+namespace Meyham.Collision
 {
     public class PlayerCollisionResolver : MonoBehaviour
     {
