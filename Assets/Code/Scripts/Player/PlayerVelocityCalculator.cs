@@ -17,15 +17,17 @@ namespace Meyham.Player
 
         private float maxVelocity;
 
-        public float LastVelocity { get; private set; }
-
         private enum VelocityStates
         {
             None,
+            Braking,
             Accelerating,
-            Max,
-            Braking
+            Max
         }
+        
+        public float LastVelocity { get; private set; }
+
+        public int VelocityOrder => (int)velocityState;
 
         public void StartMovement()
         {
