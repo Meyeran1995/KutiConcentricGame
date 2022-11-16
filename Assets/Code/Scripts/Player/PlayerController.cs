@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.GameMode;
+﻿using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -11,7 +10,7 @@ namespace Meyham.Player
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
         [SerializeField] private PlayerOrder playerOrder;
-        [SerializeField] private Collider itemCollider, playerCollider;
+        [SerializeField] private Collider itemCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
         public Color PlayerColor { get; private set; }
@@ -58,8 +57,9 @@ namespace Meyham.Player
         {
             movement.enabled = true;
             input.enabled = true;
-            itemCollider.isTrigger = true;
-            playerCollider.isTrigger = true;
+            itemCollider.transform.parent.gameObject.SetActive(true);
+            // itemCollider.isTrigger = true;
+            // playerCollider.isTrigger = true;
         }
 
         private void Start()
@@ -71,8 +71,9 @@ namespace Meyham.Player
         {
             movement.enabled = false;
             input.enabled = false;
-            itemCollider.isTrigger = false;
-            playerCollider.isTrigger = false;
+            // itemCollider.isTrigger = false;
+            // playerCollider.isTrigger = false;
+            itemCollider.transform.parent.gameObject.SetActive(false);
         }
     }
 }

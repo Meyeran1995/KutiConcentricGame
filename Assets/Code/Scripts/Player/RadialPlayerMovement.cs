@@ -1,3 +1,4 @@
+using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.GameMode;
@@ -15,7 +16,7 @@ namespace Meyham.Player
         [SerializeField] private FloatValue radius;
         
         [Header("References")]
-        [SerializeField] private Rigidbody playerRigidBody;
+        //[SerializeField] private Rigidbody playerRigidBody;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
         [SerializeField] private PlayerController controller;
@@ -53,8 +54,9 @@ namespace Meyham.Player
         {
             startingAngle = angle;
             currentAngle = startingAngle;
-            playerRigidBody.position = GetCirclePoint();
-            playerRigidBody.rotation = Quaternion.AngleAxis(startingAngle, Vector3.forward);
+            transform.SetPositionAndRotation(GetCirclePoint(), Quaternion.AngleAxis(startingAngle, Vector3.forward));
+            // playerRigidBody.position = GetCirclePoint();
+            // playerRigidBody.rotation = Quaternion.AngleAxis(startingAngle, Vector3.forward);
             collisionHelper.FaceSpawn();
         }
 
@@ -83,11 +85,14 @@ namespace Meyham.Player
                 currentAngle += currentVelocity * angleGain * movementDirection;
             }
 
-            LastPosition = playerRigidBody.position;
+            LastPosition = transform.position;
+            //LastPosition = playerRigidBody.position;
             var nextPosition = GetCirclePoint();
             
-            playerRigidBody.MovePosition(nextPosition);
-            playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
+            // playerRigidBody.MovePosition(nextPosition);
+            // playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
+            
+            transform.SetPositionAndRotation(nextPosition, Quaternion.AngleAxis(currentAngle, Vector3.forward));
             
             PlayerPositionTracker.MovePosition(controller);
         }
