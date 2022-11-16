@@ -21,6 +21,7 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         
         private static readonly Dictionary<int, PlayerController> Players = new();
+        public static int PlayerCount;
 
         private PlayerController[] playersAsArray;
         private int indexGain;
@@ -82,6 +83,8 @@ namespace Meyham.Set_Up
                 Players.Remove(i);
                 Destroy(playerObject);
             }
+
+            PlayerCount = Players.Count;
         }
 
         protected override void OnGameStart()
