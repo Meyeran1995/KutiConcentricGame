@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Origin
   layers:
   - Default
   - TransparentFX
@@ -11,12 +12,12 @@ TagManager:
   - 
   - Water
   - UI
-  - PlayerCollision
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PC 0
+  - PC 1
+  - PC 2
+  - PC 3
+  - PC 4
+  - PC 5
   - 
   - 
   - 

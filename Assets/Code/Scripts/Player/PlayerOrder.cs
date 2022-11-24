@@ -1,4 +1,5 @@
-﻿using Meyham.Collision;
+﻿using System.Collections;
+using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
@@ -16,14 +17,19 @@ namespace Meyham.Player
         [SerializeField] private PlayerModelProvider modelProvider;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
+        [SerializeField] private PlayerCollision playerCollision;
+        
         
         private const float OrderDisplacementAmount = 32f / 100f;
 
-        [field: SerializeField, ReadOnly]
+        [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
 
+        [field: SerializeField, ReadOnly]
+        public bool TransitionLocked { get; private set; }
+
         public float PlayerVelocity => velocityCalculator.LastVelocity;
-        
+
         private bool wasModified;
 
         public void IncrementOrder()
@@ -36,55 +42,68 @@ namespace Meyham.Player
             Order = 5;
         }
 
-        public void DecrementOrder()
-        {
-            --Order;
-            wasModified = true;
-
-            if (Order >= 0) return;
-            
-            Order = 0;
-        }
-
         public void OrderPlayer(int order)
         {
             Order = order;
             wasModified = true;
         }
+
+        public void UpdatePlayerOrder()
+        {
+            if(!wasModified || TransitionLocked) return;
+            OrderPlayer();
+            wasModified = false;
+        }
         
         private void OrderPlayer()
         {
+            TransitionLocked = true;
+            StartCoroutine(OrderTransition());
             spriteRenderer.sprite = modelProvider.GetModel(Order);
             var modelTransform = transform;
-            
+
             if (Order == 0)
             {
                 modelTransform.localPosition = Vector3.zero;
-                
-                playerRigidbody.MovePosition(modelTransform.position);
+                playerRigidbody.position = modelTransform.position;
                 collisionHelper.ModifyCollisionSize(1f, 0);
+                playerCollision.OnOrderChanged(0);
                 return;
             }
 
             var displacement = new Vector3(-Order * OrderDisplacementAmount, 0f, 0f);
             modelTransform.localPosition = displacement;
             
-            playerRigidbody.MovePosition(modelTransform.position);
+            playerRigidbody.position = modelTransform.position;
             collisionHelper.ModifyCollisionSize(sizeFactor.RuntimeValue, Order);
+            playerCollision.OnOrderChanged(Order);
         }
 
         private void OnEnable()
         {
             if(Order == 0) return;
-            OrderPlayer(0);
+            spriteRenderer.sprite = modelProvider.GetModel(Order);
+            
+            var modelTransform = transform;
+            modelTransform.localPosition = Vector3.zero;
+            
+            playerRigidbody.position = modelTransform.position;
+            
+            collisionHelper.ModifyCollisionSize(1f, 0);
+            
+            playerCollision.OnOrderChanged(0);
+        }
+        
+        private void OnDisable()
+        {
+            TransitionLocked = false;
+            StopAllCoroutines();
         }
 
-        private void FixedUpdate()
+        private IEnumerator OrderTransition()
         {
-            if(!wasModified) return;
-            
-            OrderPlayer();
-            wasModified = false;
+            yield return new WaitForFixedUpdate();
+            TransitionLocked = false;
         }
     }
 }
