@@ -1,7 +1,6 @@
 using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
-using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -16,10 +15,8 @@ namespace Meyham.Player
         [SerializeField] private FloatValue radius;
         
         [Header("References")]
-        //[SerializeField] private Rigidbody playerRigidBody;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
-        [SerializeField] private PlayerController controller;
     
         private float currentAngle;
         private MovementStates movementState;
@@ -55,8 +52,6 @@ namespace Meyham.Player
             startingAngle = angle;
             currentAngle = startingAngle;
             transform.SetPositionAndRotation(GetCirclePoint(), Quaternion.AngleAxis(startingAngle, Vector3.forward));
-            // playerRigidBody.position = GetCirclePoint();
-            // playerRigidBody.rotation = Quaternion.AngleAxis(startingAngle, Vector3.forward);
             collisionHelper.FaceSpawn();
         }
 
@@ -86,15 +81,9 @@ namespace Meyham.Player
             }
 
             LastPosition = transform.position;
-            //LastPosition = playerRigidBody.position;
             var nextPosition = GetCirclePoint();
             
-            // playerRigidBody.MovePosition(nextPosition);
-            // playerRigidBody.MoveRotation(Quaternion.AngleAxis(currentAngle, Vector3.forward));
-            
             transform.SetPositionAndRotation(nextPosition, Quaternion.AngleAxis(currentAngle, Vector3.forward));
-            
-            PlayerPositionTracker.MovePosition(controller);
         }
 
         private Vector3 GetCirclePoint()

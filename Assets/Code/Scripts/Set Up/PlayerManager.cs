@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Meyham.DataObjects;
 using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.Player;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,8 +15,6 @@ namespace Meyham.Set_Up
         [Header("References")]
         [SerializeField] private GameObject playerTemplate;
         [SerializeField] private PlayerColors playerColors;
-        [SerializeField] private PlayerPositionTracker positionTracker;
-        
         [Header("Events")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         
@@ -24,7 +22,7 @@ namespace Meyham.Set_Up
         public static int PlayerCount;
 
         private PlayerController[] playersAsArray;
-        private int indexGain;
+        private PlayerStartingPositionProvider startingPositionProvider;
         
         public static PlayerScore[] GetPlayers()
         {
@@ -37,12 +35,6 @@ namespace Meyham.Set_Up
             }
 
             return playerScores;
-        }
-        
-        protected override void Start()
-        {
-            base.Start();
-            inputEventChannel += OnPlayerJoined;
         }
 
         private void OnPlayerJoined(int inputIndex)
@@ -63,17 +55,18 @@ namespace Meyham.Set_Up
             newPlayer.name = $"Player{inputIndex}";
             newPlayer.transform.position = transform.position;
             newPlayer.enabled = false;
+            newPlayer.PlayerColor = playerColors.GetColor(inputIndex);
+            
             newPlayer.SetButton(inputIndex);
             newPlayer.SetPlayerNumber(inputIndex);
             newPlayer.SetStartingPosition(0f);
-            newPlayer.SetPlayerColor(playerColors.GetColor(inputIndex));
 
             Players.Add(inputIndex, newPlayer);
         }
 
         private void RemoveInactivePlayers()
         {
-            for (int i = 0; i < Players.Count; i++)
+            for (int i = 0; i < 6; i++)
             {
                 if(!Players.TryGetValue(i, out var player)) continue;
                 
@@ -85,44 +78,45 @@ namespace Meyham.Set_Up
             }
 
             PlayerCount = Players.Count;
+            Debug.Log(PlayerCount);
+        }
+        
+        private void ShufflePlayers()
+        {
+            int n = PlayerCount;
+            
+            for (int i = 0; i < n - 1; i++)
+            {
+                int r = i + Random.Range(0, n - i);
+                var t = playersAsArray[r];
+                playersAsArray[r] = playersAsArray[i];
+                playersAsArray[i] = t;
+            }
+        }
+
+        private void StartPlayers()
+        {
+            for (int i = 0; i < PlayerCount; i++)
+            {
+                var player = playersAsArray[i];
+                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
+                player.enabled = true;
+            }
         }
 
         protected override void OnGameStart()
         {
-            int i = 0;
-            
-            if (indexGain == 0)
+            if (startingPositionProvider != null)
             {
-                RemoveInactivePlayers();
-                inputEventChannel -= OnPlayerJoined;
-                indexGain = Mathf.FloorToInt((float)PlayerPositionTracker.MaxPosition / Players.Count );
+                ShufflePlayers();
+                return;
             }
 
-            int playerCount = Players.Count;
-            
-            PlayerPositionTracker.InitializeLists(playerCount);
-            
-            if (playerCount > 1)
-            {
-                foreach (var player in Players.Values)
-                {
-                    player.SetStartingPosition(positionTracker.GetStartingPosition(i));
-                    i += indexGain;
-                    player.enabled = true;
-                }
-                return;                
-            }
-
+            RemoveInactivePlayers();
+            inputEventChannel -= OnPlayerJoined;
+            startingPositionProvider = new PlayerStartingPositionProvider(PlayerCount);
             playersAsArray ??= Players.Values.ToArray();
-            
-            ShufflePlayers();
-
-            foreach (var player in playersAsArray)
-            {
-                player.SetStartingPosition(positionTracker.GetStartingPosition(i));
-                i += indexGain;
-                player.enabled = true;
-            }
+            StartPlayers();
         }
 
         protected override void OnGameEnd()
@@ -135,28 +129,13 @@ namespace Meyham.Set_Up
 
         protected override void OnGameRestart()
         {
-            positionTracker.RotateStartingPositions();
-            
-            float[] startingPositions = positionTracker.StartingPositions;
-            int i = 0;
-            foreach (var player in Players.Values)
-            {
-                player.SetStartingPosition(startingPositions[i++]);
-                player.OnGameRestart();
-            }
+            startingPositionProvider.RotateStartingPositions();
+            StartPlayers();
         }
 
-        private void ShufflePlayers()
+        private void Awake()
         {
-            int n = playersAsArray.Length;
-            
-            for (int i = 0; i < n - 1; i++)
-            {
-                int r = i + Random.Range(0, n - i);
-                var t = playersAsArray[r];
-                playersAsArray[r] = playersAsArray[i];
-                playersAsArray[i] = t;
-            }
+            inputEventChannel += OnPlayerJoined;
         }
 
 #if UNITY_EDITOR
