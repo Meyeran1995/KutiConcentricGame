@@ -119,7 +119,7 @@ namespace Meyham.Set_Up
 
         protected override void OnGameEnd()
         {
-            foreach (var player in Players.Values)
+            foreach (var player in playersAsArray)
             {
                 player.OnGameEnd();
             }
@@ -128,6 +128,12 @@ namespace Meyham.Set_Up
         protected override void OnGameRestart()
         {
             startingPositionProvider.RotateStartingPositions();
+            
+            foreach (var player in playersAsArray)
+            {
+                player.OnGameRestart();
+            }
+            
             StartPlayers();
         }
 
