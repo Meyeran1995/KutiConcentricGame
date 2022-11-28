@@ -67,6 +67,13 @@ namespace Meyham.Player
             maxVelocity = acceleration.Evaluate(timeToMaxVelocity);
         }
 
+        private void OnDisable()
+        {
+            velocityState = VelocityStates.None;
+            LastVelocity = 0f;
+            velocityTime = 0f;
+        }
+
         private void FixedUpdate()
         {
             switch (velocityState)

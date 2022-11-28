@@ -1,3 +1,4 @@
+using System;
 using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
@@ -59,6 +60,16 @@ namespace Meyham.Player
         {
             if(movementState is MovementStates.None) return;
             Move();
+        }
+
+        private void OnEnable()
+        {
+            velocityCalculator.enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            velocityCalculator.enabled = false;
         }
 
         private void Move()
