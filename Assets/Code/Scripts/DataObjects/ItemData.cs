@@ -39,7 +39,7 @@ namespace Meyham.DataObjects
 
         private void GetDataFromTemplates()
         {
-            Color = itemTemplate.GetComponent<SpriteRenderer>().color;
+            Color = itemTemplate.transform.GetChild(2).GetComponent<SpriteRenderer>().color;
             
             var collisionTransform = itemTemplate.transform.GetChild(0);
 
