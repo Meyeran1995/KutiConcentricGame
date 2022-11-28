@@ -1599,6 +1599,7 @@ MonoBehaviour:
   waves:
   - {fileID: 11400000, guid: 4c752f59c9a51e4428c439e5944e6204, type: 2}
   - {fileID: 11400000, guid: 91945a54a13bdc740afbc6b92d5b0d7b, type: 2}
+  - {fileID: 11400000, guid: a28437bdba744eb4796b15fcf63d998c, type: 2}
   spawner: {fileID: 1816520460}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
   endOfSpawningEvent: {fileID: 11400000, guid: 0e5a00ff2d9fdff43a31dbe5600a32c5, type: 2}

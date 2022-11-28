@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
-  m_Name: Plus10
+  m_Name: Six
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 4307856844363242477, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
+  itemTemplate: {fileID: 2859383707417604489, guid: 56bf7da2446c8584ba33306df32f90f4, type: 3}
   movementTemplate: {fileID: 5841842007433814734, guid: 2adf508ebc9ebdd44adb495abaea932a, type: 3}
-  <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+  <Color>k__BackingField: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 0c80aaac926f0304d9730a4c2d6622e6, type: 3}
   <MovementData>k__BackingField:
   - Position:
       x: 0.06054139
@@ -88,6 +89,5 @@ MonoBehaviour:
         y: 0.94434255
         z: 0
         w: 0.3289639
-  <ScoreData>k__BackingField: 10
   <PowerUpData>k__BackingField: {fileID: 0}
   <IsPowerUp>k__BackingField: 0

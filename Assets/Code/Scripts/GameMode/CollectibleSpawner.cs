@@ -16,15 +16,17 @@ namespace Meyham.GameMode
         {
             public readonly AddScoreCollectible AddScoreCollectible;
             public readonly ItemMovement Movement;
-            public readonly SpriteRenderer Renderer;
+            public readonly ItemSpriteController SpriteController;
             public PowerUp PowerUp { get; private set; }
             public bool HasPowerUp { get; private set; }
 
-            public CollectibleReferenceCache(AddScoreCollectible addScoreCollectible, ItemMovement movement, SpriteRenderer renderer)
+            public CollectibleReferenceCache(AddScoreCollectible addScoreCollectible,
+                ItemMovement movement,
+                ItemSpriteController spriteController)
             {
                 AddScoreCollectible = addScoreCollectible;
                 Movement = movement;
-                Renderer = renderer;
+                SpriteController = spriteController;
                 PowerUp = null;
                 HasPowerUp = false;
             }
@@ -49,18 +51,20 @@ namespace Meyham.GameMode
             pool.Get(out var item);
             var cache = ReferenceCache[item];
 
-            cache.AddScoreCollectible.Score = itemData.ScoreData;
-            cache.Renderer.color = itemData.Color;
+            cache.SpriteController.SetSprite(itemData.Sprite);
 
             var movement = cache.Movement;
             movement.SetSpline(splineProvider.GetSpline(itemData.MovementData));
             movement.RestartMovement();
 
-            if (!itemData.IsPowerUp) return;
+            if (itemData.IsPowerUp)
+            {
+                var powerUp = item.transform.GetChild(0).gameObject.AddComponent<PowerUp>();
+                powerUp.Effect = itemData.PowerUpData;
+                cache.AddPowerUp(powerUp);
+            }
             
-            var powerUp = item.transform.GetChild(0).gameObject.AddComponent<PowerUp>();
-            powerUp.Effect = itemData.PowerUpData;
-            cache.AddPowerUp(powerUp);
+            item.SetActive(true);
         }
         
         public void ReleaseCollectible(GameObject collectible)
@@ -76,11 +80,16 @@ namespace Meyham.GameMode
         {
             var item = Instantiate(poolTemplate);
             var cache = new CollectibleReferenceCache(item.GetComponentInChildren<AddScoreCollectible>(),
-                item.GetComponent<ItemMovement>(), item.transform.GetChild(2).GetComponent<SpriteRenderer>());
+                item.GetComponent<ItemMovement>(), item.GetComponent<ItemSpriteController>());
             
             ReferenceCache.Add(item, cache);
             
             return item;
+        }
+
+        protected override void OnTakeFromPool(GameObject item)
+        {
+            //Prevent activation before data is applied
         }
 
         protected override void OnReturnedToPool(GameObject item)

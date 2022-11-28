@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
-  m_Name: Mirror5
+  m_Name: P_Mirror
   m_EditorClassIdentifier: 
   itemTemplate: {fileID: 4892753419869984575, guid: 4a5a1f8248a72b148bab29e24d41c64c, type: 3}
   movementTemplate: {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}

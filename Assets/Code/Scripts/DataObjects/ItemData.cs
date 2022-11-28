@@ -8,16 +8,14 @@ namespace Meyham.DataObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/ItemData")]
     public class ItemData : ScriptableObject
     {
+        [Header("Templates")]
         [SerializeField] private GameObject itemTemplate, movementTemplate;
 
         [field: Header("Debug"), SerializeField, ReadOnly]
-        public Color Color { get; private set; }
+        public Sprite Sprite { get; private set; }
 
         [field: SerializeField, ReadOnly]
         public BezierKnot[] MovementData { get; private set; }
-        
-        [field: SerializeField, ReadOnly]
-        public float ScoreData { get; private set; }
 
         [field: SerializeField, ReadOnly]
         public APowerUpEffect PowerUpData { get; private set; }
@@ -39,12 +37,12 @@ namespace Meyham.DataObjects
 
         private void GetDataFromTemplates()
         {
-            Color = itemTemplate.transform.GetChild(2).GetComponent<SpriteRenderer>().color;
+            var renderer = itemTemplate.transform.GetChild(2).GetComponent<SpriteRenderer>();
+            Sprite = renderer.sprite;
             
             var collisionTransform = itemTemplate.transform.GetChild(0);
 
             MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
-            ScoreData = collisionTransform.GetComponent<AddScoreCollectible>().Score;
 
             if (!collisionTransform.TryGetComponent(out PowerUp powerUp)) return;
             
