@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Meyham.DataObjects;
 using Meyham.Events;
@@ -78,7 +77,6 @@ namespace Meyham.Set_Up
             }
 
             PlayerCount = Players.Count;
-            Debug.Log(PlayerCount);
         }
         
         private void ShufflePlayers()

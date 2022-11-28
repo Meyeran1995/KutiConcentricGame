@@ -10,19 +10,17 @@ namespace Meyham.Items
 
         private void Awake()
         {
-            if (spawner) return;
-
-            spawner = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+            spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             var incomingObject = other.gameObject;
 
-            if (incomingObject.CompareTag("Player")) 
-                OnCollect(incomingObject);
+            if (!incomingObject.CompareTag("Player")) return;
 
-            spawner.ReleaseCollectible(this);
+            OnCollect(incomingObject);
+            spawner.ReleaseCollectible(transform.parent.gameObject);
         }
 
         protected abstract void OnCollect(GameObject player);

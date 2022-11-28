@@ -43,19 +43,7 @@ namespace Meyham.GameMode
         }
 
         private static readonly Dictionary<GameObject, CollectibleReferenceCache> ReferenceCache = new();
-
-        public void ReleaseCollectible(GameObject collectible)
-        {
-            splineProvider.ReleaseSpline(collectible);
-            pool.Release(collectible);
-            onReleasedEvent.RaiseEvent();
-        }
         
-        public void ReleaseCollectible(ACollectible collectible)
-        {
-            ReleaseCollectible(collectible.transform.parent.gameObject);
-        }
-
         public void GetCollectible(ItemData itemData)
         {
             pool.Get(out var item);
@@ -64,16 +52,24 @@ namespace Meyham.GameMode
             cache.AddScoreCollectible.Score = itemData.ScoreData;
             cache.Renderer.color = itemData.Color;
 
-            if (itemData.IsPowerUp)
-            {
-                var powerUp = item.transform.GetChild(0).gameObject.AddComponent<PowerUp>();
-                powerUp.Effect = itemData.PowerUpData;
-                cache.AddPowerUp(powerUp);
-            }
-            
             var movement = cache.Movement;
             movement.SetSpline(splineProvider.GetSpline(itemData.MovementData));
             movement.RestartMovement();
+
+            if (!itemData.IsPowerUp) return;
+            
+            var powerUp = item.transform.GetChild(0).gameObject.AddComponent<PowerUp>();
+            powerUp.Effect = itemData.PowerUpData;
+            cache.AddPowerUp(powerUp);
+        }
+        
+        public void ReleaseCollectible(GameObject collectible)
+        {
+            if(!collectible.activeSelf) return; // hack against invalid operation exception, when collectibles somehow end up releasing twice
+            
+            splineProvider.ReleaseSpline(collectible);
+            pool.Release(collectible);
+            onReleasedEvent.RaiseEvent();
         }
         
         protected override GameObject CreatePooledItem()
