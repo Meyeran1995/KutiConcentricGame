@@ -9,7 +9,7 @@ namespace Meyham.Items
 {
     public class SplineFollower : MonoBehaviour
     {
-        [SerializeField] private FloatValue speed;
+        [HideInInspector] public float Speed;
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
         [ReadOnly] public SplineContainer SplineContainer;
 
@@ -47,7 +47,7 @@ namespace Meyham.Items
 
         private void Start()
         {
-            progressIncrement = Time.fixedDeltaTime / speed;
+            progressIncrement = Time.fixedDeltaTime / Speed;
         }
 
         private void FixedUpdate () 
@@ -56,10 +56,9 @@ namespace Meyham.Items
             
             progress += progressIncrement;
             
-            if (progress > 1f)
+            if (progress >= 1f)
             {
                 IsPlaying = false;
-                SetPosition(1f);
                 EndOfSplineReached?.Invoke();
                 return;
             }
@@ -75,5 +74,15 @@ namespace Meyham.Items
         {
             transform.localPosition = SplineContainer.EvaluatePosition(splineProgress);
         }
+
+#if UNITY_EDITOR
+        
+        //Keep updating in case of speed value being modified
+        private void Update()
+        {
+            progressIncrement = Time.fixedDeltaTime / Speed;
+        }
+        
+#endif
     }
 }

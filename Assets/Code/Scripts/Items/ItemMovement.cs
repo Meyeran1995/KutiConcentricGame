@@ -1,3 +1,4 @@
+using Meyham.DataObjects;
 using Meyham.GameMode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,6 +8,9 @@ namespace Meyham.Items
 {
     public class ItemMovement : MonoBehaviour
     {
+        [Header("Properties")]
+        [SerializeField] private FloatValue speed;
+        
         [Header("References")]
         [SerializeField] private SplineFollower splineFollower;
         
@@ -14,9 +18,8 @@ namespace Meyham.Items
 
         private void Awake()
         {
-            if(spawner) return;
-
-            spawner = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+            spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+            splineFollower.Speed = speed;
         }
 
         public void SetSpline(SplineContainer spline)
@@ -36,5 +39,15 @@ namespace Meyham.Items
         {
             spawner.ReleaseCollectible(gameObject);
         }
+        
+#if UNITY_EDITOR
+        
+        //Keep updating in case of speed value being modified
+        private void Update()
+        {
+            splineFollower.Speed = speed;
+        }
+        
+#endif
     }
 }
