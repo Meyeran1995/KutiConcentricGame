@@ -9,11 +9,7 @@ namespace Meyham.Collision
 
         public void FaceSpawn()
         {
-            var direction = spawnTransform.position - transform.position;
-            direction.Normalize();
-            
-            var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-            transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+            transform.LookAt(spawnTransform);
         }
 
         public void ModifyCollisionSize(float sizeFactor, int order)
@@ -32,9 +28,8 @@ namespace Meyham.Collision
         }
 
         private void Awake()
-        {
-            if (!spawnTransform)
-                spawnTransform = GameObject.FindGameObjectWithTag("Respawn").transform;
+        { 
+            spawnTransform ??= GameObject.FindGameObjectWithTag("Respawn").transform;
             
             if(startingScale != Vector3.zero) return;
             
