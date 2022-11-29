@@ -1,4 +1,3 @@
-using System;
 using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
@@ -31,8 +30,6 @@ namespace Meyham.Player
         
         [ReadOnly] public int movementDirection, brakeDirection;
 
-        public Vector3 LastPosition { get; private set; }
-        
         public void StartMovement()
         {
             if(movementState is MovementStates.Moving) return;
@@ -56,7 +53,7 @@ namespace Meyham.Player
             collisionHelper.FaceSpawn();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if(movementState is MovementStates.None) return;
             Move();
@@ -91,7 +88,6 @@ namespace Meyham.Player
                 currentAngle += currentVelocity * angleGain * movementDirection;
             }
 
-            LastPosition = transform.position;
             var nextPosition = GetCirclePoint();
             
             transform.SetPositionAndRotation(nextPosition, Quaternion.AngleAxis(currentAngle, Vector3.forward));

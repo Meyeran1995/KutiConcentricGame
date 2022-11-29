@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
+using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Collision
 {
-    public class PlayerCollisionResolver : MonoBehaviour
+    public class PlayerCollisionResolver : AGameLoopSystem
     {
         private RaycastHit[] hits;
-        private bool fixedRan;
         
         public static readonly List<PlayerCollision> PlayerCollisions = new();
-
+        
         private void Awake()
         {
             hits = new RaycastHit[5];
@@ -17,14 +17,6 @@ namespace Meyham.Collision
 
         private void FixedUpdate()
         {
-            fixedRan = true;
-        }
-
-        private void LateUpdate()
-        {
-            if(!fixedRan) return;
-
-            fixedRan = false;
             PlayerCollisions.Sort();
 
             foreach (var collision in PlayerCollisions)
@@ -44,6 +36,28 @@ namespace Meyham.Collision
             {
                 collision.PlayerOrder.UpdatePlayerOrder();
             }
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            enabled = false;
+        }
+
+        protected override void OnGameStart()
+        {
+            enabled = true;
+        }
+
+        protected override void OnGameEnd()
+        {
+            enabled = false;
+        }
+
+        protected override void OnGameRestart()
+        {
+            hits = new RaycastHit[5];
+            enabled = true;
         }
     }
 }

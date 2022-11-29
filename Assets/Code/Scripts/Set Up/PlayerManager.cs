@@ -114,7 +114,13 @@ namespace Meyham.Set_Up
             inputEventChannel -= OnPlayerJoined;
             startingPositionProvider = new PlayerStartingPositionProvider(PlayerCount);
             playersAsArray ??= Players.Values.ToArray();
-            StartPlayers();
+            
+            for (int i = 0; i < PlayerCount; i++)
+            {
+                var player = playersAsArray[i];
+                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
+                player.enabled = true;
+            }
         }
 
         protected override void OnGameEnd()
@@ -129,12 +135,12 @@ namespace Meyham.Set_Up
         {
             startingPositionProvider.RotateStartingPositions();
             
-            foreach (var player in playersAsArray)
+            for (int i = 0; i < PlayerCount; i++)
             {
+                var player = playersAsArray[i];
+                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
                 player.OnGameRestart();
             }
-            
-            StartPlayers();
         }
 
         private void Awake()

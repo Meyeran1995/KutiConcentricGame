@@ -2700,6 +2700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe1274a53284492bb700ed58604ea9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStartEvent: {fileID: 11400000, guid: 8ee696ada2708de4897129a4e1ede5e6, type: 2}
+  gameEndEvent: {fileID: 11400000, guid: 5ef136010c9c8504a9694932ba5d579c, type: 2}
+  gameRestartEvent: {fileID: 11400000, guid: 2c25a27b30b5b0947a13f161f26f2a9e, type: 2}
 --- !u!114 &1073271011059574674 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1073271011059574674, guid: cb3aedbc18f7eee449c5e4e5d50f487c, type: 3}

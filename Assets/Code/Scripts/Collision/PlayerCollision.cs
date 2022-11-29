@@ -131,6 +131,7 @@ namespace Meyham.Collision
 
         private IEnumerator TransitionDelay()
         {
+            AllowRaycast = false;
             playerCollider.isTrigger = false;
             yield return new WaitWhile(() => PlayerOrder.TransitionLocked);
             AllowRaycast = PlayerOrder.Order > 0;

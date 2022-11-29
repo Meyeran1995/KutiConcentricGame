@@ -11,7 +11,7 @@
             masks = new int[5];
             
             masks[0] = 1 << layer_offset;
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < masks.Length; i++)
             {
                 int targetLayer = 1 << i + layer_offset;
                 masks[i] = masks[i - 1] | targetLayer;

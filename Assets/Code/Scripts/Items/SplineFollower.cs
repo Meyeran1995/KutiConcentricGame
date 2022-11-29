@@ -15,7 +15,6 @@ namespace Meyham.Items
         public event Action EndOfSplineReached;
 
         [SerializeField, ReadOnly] private float progress;
-        private float progressIncrement;
         
         public void Restart(bool autoPlay)
         {
@@ -44,16 +43,11 @@ namespace Meyham.Items
             EndOfSplineReached = null;
         }
 
-        private void Start()
-        {
-            progressIncrement = Time.fixedDeltaTime / Speed;
-        }
-
-        private void FixedUpdate () 
+        private void Update() 
         {
             if(!IsPlaying) return;
             
-            progress += progressIncrement;
+            progress += Time.deltaTime / Speed;
             
             if (progress >= 1f)
             {
@@ -73,15 +67,5 @@ namespace Meyham.Items
         {
             transform.localPosition = SplineContainer.EvaluatePosition(splineProgress);
         }
-
-#if UNITY_EDITOR
-        
-        //Keep updating in case of speed value being modified
-        private void Update()
-        {
-            progressIncrement = Time.fixedDeltaTime / Speed;
-        }
-        
-#endif
     }
 }

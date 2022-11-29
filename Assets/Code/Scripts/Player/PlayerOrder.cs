@@ -16,21 +16,17 @@ namespace Meyham.Player
         [Header("Player references")]
         [SerializeField] private PlayerModelProvider modelProvider;
         [SerializeField] private PlayerCollisionHelper collisionHelper;
-        [SerializeField] private PlayerVelocityCalculator velocityCalculator;
         [SerializeField] private PlayerCollision playerCollision;
-        
-        
-        private const float OrderDisplacementAmount = 32f / 100f;
 
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
 
         [field: SerializeField, ReadOnly]
         public bool TransitionLocked { get; private set; }
-
-        public float PlayerVelocity => velocityCalculator.LastVelocity;
-
+        
         private bool wasModified;
+        
+        private const float order_displacement_amount = 32f / 100f;
 
         public void IncrementOrder()
         {
@@ -57,7 +53,6 @@ namespace Meyham.Player
         
         private void OrderPlayer()
         {
-            TransitionLocked = true;
             StartCoroutine(OrderTransition());
             spriteRenderer.sprite = modelProvider.GetModel(Order);
             var modelTransform = transform;
@@ -65,16 +60,16 @@ namespace Meyham.Player
             if (Order == 0)
             {
                 modelTransform.localPosition = Vector3.zero;
-                playerRigidbody.position = modelTransform.position;
+                playerRigidbody.transform.position = modelTransform.position;
                 collisionHelper.ModifyCollisionSize(1f, 0);
                 playerCollision.OnOrderChanged(0);
-                return;
+               return;
             }
 
-            var displacement = new Vector3(-Order * OrderDisplacementAmount, 0f, 0f);
+            var displacement = new Vector3(-Order * order_displacement_amount, 0f, 0f);
             modelTransform.localPosition = displacement;
             
-            playerRigidbody.position = modelTransform.position;
+            playerRigidbody.transform.position = modelTransform.position;
             collisionHelper.ModifyCollisionSize(sizeFactor.RuntimeValue, Order);
             playerCollision.OnOrderChanged(Order);
         }
@@ -82,18 +77,11 @@ namespace Meyham.Player
         private void OnEnable()
         {
             if(Order == 0) return;
-            spriteRenderer.sprite = modelProvider.GetModel(Order);
             
-            var modelTransform = transform;
-            modelTransform.localPosition = Vector3.zero;
-            
-            playerRigidbody.position = modelTransform.position;
-            
-            collisionHelper.ModifyCollisionSize(1f, 0);
-            
-            playerCollision.OnOrderChanged(0);
+            Order = 0;
+            OrderPlayer();
         }
-        
+
         private void OnDisable()
         {
             TransitionLocked = false;
@@ -102,7 +90,8 @@ namespace Meyham.Player
 
         private IEnumerator OrderTransition()
         {
-            yield return new WaitForFixedUpdate();
+            TransitionLocked = true;
+            yield return new WaitForEndOfFrame();
             TransitionLocked = false;
         }
     }

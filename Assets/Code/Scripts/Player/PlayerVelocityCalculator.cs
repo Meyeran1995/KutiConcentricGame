@@ -74,7 +74,7 @@ namespace Meyham.Player
             velocityTime = 0f;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             switch (velocityState)
             {
@@ -83,7 +83,7 @@ namespace Meyham.Player
                 case VelocityStates.Max:
                     return;
                 case VelocityStates.Accelerating:
-                    velocityTime += Time.fixedDeltaTime;
+                    velocityTime += Time.deltaTime;
                     if (velocityTime >= timeToMaxVelocity)
                     {
                         velocityTime = timeToMaxVelocity;
@@ -92,7 +92,7 @@ namespace Meyham.Player
                     }
                     break;
                 case VelocityStates.Braking:
-                    velocityTime += Time.fixedDeltaTime;
+                    velocityTime += Time.deltaTime;
                     if (velocityTime >= timeToMinVelocity)
                     {
                         velocityState = VelocityStates.None;
