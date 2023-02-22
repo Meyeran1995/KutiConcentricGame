@@ -21,7 +21,7 @@ namespace Meyham.DataObjects
         public APowerUpEffect PowerUpData { get; private set; }
 
         [field: SerializeField, ReadOnly]
-        public bool IsPowerUp { get; private set; }
+        public bool HasPowerUp { get; private set; }
 
         private void OnEnable()
         {
@@ -40,13 +40,14 @@ namespace Meyham.DataObjects
             var renderer = itemTemplate.transform.GetChild(2).GetComponent<SpriteRenderer>();
             Sprite = renderer.sprite;
             
-            var collisionTransform = itemTemplate.transform.GetChild(0);
-
             MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
-
-            if (!collisionTransform.TryGetComponent(out PowerUp powerUp)) return;
             
-            IsPowerUp = true;
+            var collectiblesRoot = itemTemplate.transform.GetChild(3);
+            
+            HasPowerUp = collectiblesRoot.TryGetComponent(out PowerUp powerUp) && powerUp.Effect != null;
+            
+            if(!HasPowerUp) return;
+            
             PowerUpData = powerUp.Effect;
         }
     }
