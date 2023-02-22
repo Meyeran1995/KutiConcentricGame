@@ -12,12 +12,14 @@ namespace Meyham.GameMode
         [SerializeField] private VoidEventChannelSO onReleasedEvent;
         [SerializeField] private SplineProvider splineProvider;
 
-        private struct CollectibleReferenceCache
+        private Dictionary<GameObject, CollectibleReferenceCache> referenceCaches;
+
+        private readonly struct CollectibleReferenceCache
         {
             public readonly ItemMovement Movement;
             public readonly ItemSpriteController SpriteController;
-            public PowerUp PowerUp { get; private set; }
-            public bool HasPowerUp { get; private set; }
+            
+            public bool HasPowerUp => collision.HasPowerUp;
 
             private readonly ItemCollision collision;
             
@@ -29,31 +31,23 @@ namespace Meyham.GameMode
                 
                 Movement = movement;
                 SpriteController = spriteController;
-                PowerUp = null;
-                HasPowerUp = false;
             }
 
-            public void AddPowerUp(PowerUp powerUp)
+            public void AddPowerUp(APowerUpEffect powerUpEffect)
             {
-                collision.SetPowerUpCollectible(powerUp);
-                PowerUp = powerUp;
-                HasPowerUp = true;
+                collision.SetPowerUpEffect(powerUpEffect);
             }
             
             public void RemovePowerUp()
             {
-                collision.SetPowerUpCollectible(null);
-                PowerUp = null;
-                HasPowerUp = false;
+                collision.RemovePowerUpEffect();
             }
         }
-
-        private static readonly Dictionary<GameObject, CollectibleReferenceCache> ReferenceCache = new();
         
         public void GetCollectible(ItemData itemData)
         {
             pool.Get(out var item);
-            var cache = ReferenceCache[item];
+            var cache = referenceCaches[item];
 
             cache.SpriteController.SetSprite(itemData.Sprite);
 
@@ -61,14 +55,11 @@ namespace Meyham.GameMode
             movement.SetSpline(splineProvider.GetSpline(itemData.MovementData));
             movement.RestartMovement();
 
-            if (itemData.IsPowerUp)
-            {
-                var powerUp = item.transform.GetChild(3).gameObject.AddComponent<PowerUp>();
-                powerUp.Effect = itemData.PowerUpData;
-                cache.AddPowerUp(powerUp);
-            }
-            
             item.SetActive(true);
+            
+            if (!itemData.HasPowerUp) return;
+            
+            cache.AddPowerUp(itemData.PowerUpData);
         }
         
         public void ReleaseCollectible(GameObject collectible)
@@ -84,7 +75,7 @@ namespace Meyham.GameMode
             var cache = new CollectibleReferenceCache(item.GetComponentInChildren<ItemCollision>(),
                 item.GetComponent<ItemMovement>(), item.GetComponent<ItemSpriteController>());
             
-            ReferenceCache.Add(item, cache);
+            referenceCaches.Add(item, cache);
             
             return item;
         }
@@ -93,18 +84,23 @@ namespace Meyham.GameMode
         {
             item.SetActive(false);
 
-            var cache = ReferenceCache[item];
+            var cache = referenceCaches[item];
             
             if (!cache.HasPowerUp) return;
             
-            Destroy(cache.PowerUp);
             cache.RemovePowerUp();
         }
 
         protected override void OnDestroyPoolObject(GameObject item)
         {
-            ReferenceCache.Remove(item);
+            referenceCaches.Remove(item);
             Destroy(item);
+        }
+
+        protected override void Awake()
+        {
+            referenceCaches = new Dictionary<GameObject, CollectibleReferenceCache>(minPoolSize);
+            base.Awake();
         }
     }
 }
