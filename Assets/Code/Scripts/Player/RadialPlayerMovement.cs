@@ -2,6 +2,7 @@ using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Meyham.Player
 {
@@ -14,8 +15,9 @@ namespace Meyham.Player
         [SerializeField] private FloatValue angleGain;
         [SerializeField] private FloatValue radius;
         
+        [FormerlySerializedAs("collisionHelper")]
         [Header("References")]
-        [SerializeField] private PlayerCollisionHelper collisionHelper;
+        [SerializeField] private PlayerColliderUpdater colliderUpdater;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
     
         private float currentAngle;
@@ -50,7 +52,7 @@ namespace Meyham.Player
             startingAngle = angle;
             currentAngle = startingAngle;
             transform.SetPositionAndRotation(GetCirclePoint(), Quaternion.AngleAxis(startingAngle, Vector3.forward));
-            collisionHelper.FaceSpawn();
+            colliderUpdater.FaceSpawn();
         }
 
         private void Update()

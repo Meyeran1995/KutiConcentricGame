@@ -15,7 +15,7 @@ namespace Meyham.Player
         [SerializeField] private Rigidbody playerRigidbody;
         [Header("Player references")]
         [SerializeField] private PlayerModelProvider modelProvider;
-        [SerializeField] private PlayerCollisionHelper collisionHelper;
+        [SerializeField] private PlayerColliderUpdater colliderUpdater;
         [SerializeField] private PlayerCollision playerCollision;
 
         [field: Header("Debug"), SerializeField, ReadOnly]
@@ -61,7 +61,7 @@ namespace Meyham.Player
             {
                 modelTransform.localPosition = Vector3.zero;
                 playerRigidbody.transform.position = modelTransform.position;
-                collisionHelper.ModifyCollisionSize(1f, 0);
+                colliderUpdater.ModifyCollisionSize(1f, 0);
                 playerCollision.OnOrderChanged(0);
                return;
             }
@@ -70,7 +70,7 @@ namespace Meyham.Player
             modelTransform.localPosition = displacement;
             
             playerRigidbody.transform.position = modelTransform.position;
-            collisionHelper.ModifyCollisionSize(sizeFactor.RuntimeValue, Order);
+            colliderUpdater.ModifyCollisionSize(sizeFactor.RuntimeValue, Order);
             playerCollision.OnOrderChanged(Order);
         }
 

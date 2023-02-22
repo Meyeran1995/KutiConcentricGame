@@ -8,7 +8,7 @@ namespace Meyham.Collision
         private RaycastHit[] hits;
         
         private PlayerCollision[] playerCollisions;
-        
+
         private void Awake()
         {
             hits = new RaycastHit[5];
@@ -49,7 +49,7 @@ namespace Meyham.Collision
 
             foreach (var collision in playerCollisions)
             {
-                collision.PlayerOrder.UpdatePlayerOrder();
+                collision.UpdateOrder();
             }
         }
     }

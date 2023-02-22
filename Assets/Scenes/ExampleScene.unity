@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14274500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14274501}
+  - component: {fileID: 14274503}
+  - component: {fileID: 14274502}
+  m_Layer: 0
+  m_Name: PlayerCollisionManagement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14274501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14274500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 784535207}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &14274502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14274500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577cfc326a2540bf96c8d1e2f1d0f402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &14274503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14274500}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe1274a53284492bb700ed58604ea9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &48597915
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +493,7 @@ Transform:
   - {fileID: 2095045852}
   - {fileID: 1172567239}
   - {fileID: 567227203}
+  - {fileID: 14274501}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1694,9 +1752,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2095045852}
   - component: {fileID: 2095045853}
-  - component: {fileID: 2095045855}
   m_Layer: 0
-  m_Name: PlayerManagement
+  m_Name: PlayerManager
   m_TagString: Origin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1732,18 +1789,6 @@ MonoBehaviour:
   playerTemplate: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
   playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
---- !u!114 &2095045855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095045851}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfe1274a53284492bb700ed58604ea9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1739299102976626843
 PrefabInstance:
   m_ObjectHideFlags: 0

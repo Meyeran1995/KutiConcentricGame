@@ -41,10 +41,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21176729701189190}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -92,9 +103,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566106488942533806}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &9036680657733790180
@@ -224,8 +243,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3343158595621873216}
   playerRigidbody: {fileID: 5963414438623310424}
   modelProvider: {fileID: 11400000, guid: 330129723766c1d47843ee46babac6fd, type: 2}
-  collisionHelper: {fileID: 1393740820513245191}
-  velocityCalculator: {fileID: 5346232853266400848}
+  colliderUpdater: {fileID: 1393740820513245191}
   playerCollision: {fileID: 3731849146304716601}
   <Order>k__BackingField: 0
   <TransitionLocked>k__BackingField: 0
@@ -300,7 +318,7 @@ MonoBehaviour:
   startingAngle: 0
   angleGain: {fileID: 11400000, guid: bdfffb84182ca7d45a8225c236eada06, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
-  collisionHelper: {fileID: 1393740820513245191}
+  colliderUpdater: {fileID: 1393740820513245191}
   velocityCalculator: {fileID: 5346232853266400848}
   movementDirection: 0
   brakeDirection: 0
@@ -513,8 +531,9 @@ MonoBehaviour:
   localRaycastOriginRight: {fileID: 8286625528460377849}
   playerCollider: {fileID: 324411737580283261}
   velocityCalculator: {fileID: 5346232853266400848}
-  <PlayerOrder>k__BackingField: {fileID: 7474950231064833239}
+  playerOrder: {fileID: 7474950231064833239}
   <AllowRaycast>k__BackingField: 0
+  <TriggerCollision>k__BackingField: 0
 --- !u!136 &324411737580283261
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -523,8 +542,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7125840770204028365}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 0

@@ -1,39 +1,45 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Meyham.Collision
 {
     public class PlayerCollisionHelper : MonoBehaviour
     {
-        private static Transform spawnTransform;
-        private static Vector3 startingScale;
+        private static Transform origin;
+        
+        private static LayerMaskProvider maskProvider;
+        
+        private static readonly Dictionary<Collider, PlayerCollision> ColliderToPlayer = new(6);
 
-        public void FaceSpawn()
+        public static Vector3 GetOriginPos()
         {
-            transform.LookAt(spawnTransform);
+            return origin.position;
         }
 
-        public void ModifyCollisionSize(float sizeFactor, int order)
+        public static int GetMask(int playerOrder)
         {
-            if (order == 0)
-            {
-                transform.localScale = startingScale;
-                return;
-            }
-
-            float scalePercentage = 1f - sizeFactor * order;
-            Vector3 newScale = startingScale;
-            newScale.x *= scalePercentage;
-            
-            transform.localScale = newScale;
+            return maskProvider.GetMask(playerOrder);
+        }
+        
+        public static int GetLayer(int playerOrder)
+        {
+            return maskProvider.GetLayer(playerOrder);
         }
 
+        public static void Register(Collider playerCollider, PlayerCollision playerCollision)
+        {
+            ColliderToPlayer.Add(playerCollider, playerCollision);
+        }
+
+        public static PlayerCollision GetPlayerByCollider(Collider playerCollider)
+        {
+            return ColliderToPlayer[playerCollider];
+        }
+        
         private void Awake()
-        { 
-            spawnTransform ??= GameObject.FindGameObjectWithTag("Respawn").transform;
-            
-            if(startingScale != Vector3.zero) return;
-            
-            startingScale = transform.localScale;
+        {
+            maskProvider = new LayerMaskProvider();
+            origin = GameObject.FindGameObjectWithTag("Origin").transform;
         }
     }
 }

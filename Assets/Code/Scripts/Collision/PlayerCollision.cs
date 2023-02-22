@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Meyham.DataObjects;
+using Meyham.EditorHelpers;
 using Meyham.Player;
 using UnityEngine;
 
@@ -16,37 +16,33 @@ namespace Meyham.Collision
         [Header("References")]
         [SerializeField] private Collider playerCollider;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
-        
-        [field: SerializeField] 
-        public PlayerOrder PlayerOrder { get; private set; }
+        [SerializeField] private PlayerOrder playerOrder;
 
-        [field: SerializeField]
+        [field: Header("Debug"), SerializeField, ReadOnly]
         public bool AllowRaycast { get; private set; }
         
+        [field: SerializeField, ReadOnly]
         public bool TriggerCollision { get; private set; }
 
         private float Velocity => velocityCalculator.LastVelocity;
+        
         private int VelocityOrder => velocityCalculator.VelocityOrder;
 
-        private static readonly Dictionary<Collider, PlayerCollision> ColliderToPlayer = new();
-        private static Transform origin;
-        private static LayerMaskProvider maskProvider;
-        
         public void OnTriggerCollision()
         {
-            PlayerOrder.IncrementOrder();
+            playerOrder.IncrementOrder();
             TriggerCollision = false;
             StartCoroutine(TransitionDelay());
         }
         
         public void FireCollisionRaycasts(RaycastHit[] hits)
         {
-            if(PlayerOrder.TransitionLocked)
+            if(playerOrder.TransitionLocked)
             {
                 return;
             }
             
-            Vector3 originPos = origin.position;
+            Vector3 originPos = PlayerCollisionHelper.GetOriginPos();
 
             Vector3 raycastOrigin = localRaycastOriginLeft.position;
             int leftOrder = ComputeOrder(raycastOrigin, raycastOrigin - originPos, hits, Color.red);
@@ -56,7 +52,7 @@ namespace Meyham.Collision
             
             int newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
             
-            if (newOrder == PlayerOrder.Order)
+            if (newOrder == playerOrder.Order)
             {
                 return;
             }
@@ -66,13 +62,13 @@ namespace Meyham.Collision
             
             newOrder = Mathf.Max(newOrder, middleOrder + 1);
             
-            PlayerOrder.OrderPlayer(newOrder);
+            playerOrder.OrderPlayer(newOrder);
             StartCoroutine(TransitionDelay());
         }
 
         public void OnOrderChanged(int order)
         {
-            gameObject.layer = maskProvider.GetLayer(order);
+            gameObject.layer = PlayerCollisionHelper.GetLayer(order);
             var currentScale = transform.localScale;
             
             if (order == 0)
@@ -83,10 +79,15 @@ namespace Meyham.Collision
 
             transform.localScale = new Vector3(1f - collisionSizeFactor * order, currentScale.y, currentScale.z);
         }
-        
+
+        public void UpdateOrder()
+        {
+            playerOrder.UpdatePlayerOrder();
+        }
+
         private int FireRaycast(Vector3 raycastOrigin, Vector3 raycastDirection, RaycastHit[] hits)
         {
-            int mask = maskProvider.GetMask(PlayerOrder.Order);
+            int mask = PlayerCollisionHelper.GetMask(playerOrder.Order);
             // returns size of buffer as in number of hits
             return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, radius, mask);
         }
@@ -97,8 +98,8 @@ namespace Meyham.Collision
 
             for (int i = 0; i < length; i++)
             {
-                var collision = ColliderToPlayer[hits[i].collider];
-                int hitOrder = collision.PlayerOrder.Order;
+                var collision = PlayerCollisionHelper.GetPlayerByCollider(hits[i].collider);
+                int hitOrder = collision.playerOrder.Order;
 
                 if (hitOrder <= order) continue;
 
@@ -133,24 +134,21 @@ namespace Meyham.Collision
         {
             AllowRaycast = false;
             playerCollider.isTrigger = false;
-            yield return new WaitWhile(() => PlayerOrder.TransitionLocked);
-            AllowRaycast = PlayerOrder.Order > 0;
+            yield return new WaitWhile(() => playerOrder.TransitionLocked);
+            AllowRaycast = playerOrder.Order > 0;
             playerCollider.isTrigger = true;
         }
         
         private void Awake()
         {
-            ColliderToPlayer.Add(playerCollider, this);
-
-            maskProvider ??= new LayerMaskProvider();
-            origin ??= GameObject.FindGameObjectWithTag("Origin").transform;
+            PlayerCollisionHelper.Register(playerCollider, this);
         }
         
         private void OnTriggerEnter(Collider other)
         {
             if(TriggerCollision) return;
-            
-            var playerCollision = ColliderToPlayer[other];
+
+            var playerCollision = PlayerCollisionHelper.GetPlayerByCollider(other);
             
             int collisionVelocityOrder = playerCollision.VelocityOrder;
 
@@ -170,7 +168,7 @@ namespace Meyham.Collision
 
         public int CompareTo(PlayerCollision other)
         {
-            return PlayerOrder.Order.CompareTo(other.PlayerOrder.Order);
+            return playerOrder.Order.CompareTo(other.playerOrder.Order);
         }
     }
 }
