@@ -2,6 +2,7 @@ using System;
 using Meyham.EditorHelpers;
 using Meyham.Set_Up;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Meyham.GameMode
 {
@@ -16,6 +17,7 @@ namespace Meyham.GameMode
         
         private void Awake()
         {
+            Random.InitState(DateTime.Now.Second);
             currentStep = GameSteps.Select;
             
             foreach (var step in steps)

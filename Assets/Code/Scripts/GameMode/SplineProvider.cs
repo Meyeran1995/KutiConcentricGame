@@ -1,7 +1,6 @@
 ﻿using Meyham.Items;
 using UnityEngine;
 using UnityEngine.Splines;
-using Random = UnityEngine.Random;
 
 namespace Meyham.GameMode
 {
@@ -37,21 +36,6 @@ namespace Meyham.GameMode
             }
 
             return splineContainer;
-        }
-        
-        public SplineContainer GetSpline()
-        {
-            pool.Get(out var item);
-            
-            var splineContainer = item.GetComponent<SplineContainer>();
-
-            return splineContainer;
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            Random.InitState(System.DateTime.Now.Second);
         }
     }
 }
