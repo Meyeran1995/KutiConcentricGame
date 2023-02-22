@@ -62,6 +62,15 @@ namespace Meyham.Player
             collisionParent.SetActive(false);
         }
 
+        private void Awake()
+        {
+            enabled = false;
+            movement.enabled = false;
+            input.enabled = false;
+            playerOrder.enabled = false;
+            collisionParent.SetActive(false);
+        }
+
 #if UNITY_EDITOR
         
         private void OnValidate()
