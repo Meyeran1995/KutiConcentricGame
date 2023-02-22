@@ -3,30 +3,15 @@ using UnityEngine;
 
 namespace Meyham.Player
 {
-    /// <summary>
-    /// Class that receives and evaluates Input Events for a single player
-    /// </summary>
     public class PlayerInputReceiver : MonoBehaviour
     {
-        [Header("Input")] 
-        [Range(0,6)] public int RightButton;
-        [SerializeField] private GenericEventChannelSO<int> inputEventChannel, inputCanceledEventChannel;
-
+        [Header("Input")]
+        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
+        [SerializeField] private GenericEventChannelSO<int> inputCanceledEventChannel;
+        
         [Header("References")] 
         [SerializeField] private RadialPlayerMovement playerMovement;
-
-        private int movementDirection;
-
-        public void FlipMovementDirection()
-        {
-            movementDirection = -movementDirection;
-            playerMovement.movementDirection = movementDirection;
-        }
-
-        private void Awake()
-        {
-            movementDirection = -1;
-        }
+        [SerializeField] private PlayerController controller;
 
         private void OnEnable()
         {
@@ -42,14 +27,13 @@ namespace Meyham.Player
 
         private void OnInputReceived(int input)
         {
-            if (input != RightButton) return;
-            playerMovement.movementDirection = movementDirection;
+            if (input != (int)controller.Designation) return;
             playerMovement.StartMovement();
         }
         
         private void OnInputCanceled(int input)
         {
-            if (input != RightButton) return;
+            if (input != (int)controller.Designation) return;
             playerMovement.Brake();
         }
     }

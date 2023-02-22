@@ -7,14 +7,14 @@ namespace Meyham.Items
     [CreateAssetMenu(menuName = "ScriptableObjects/PowerUps/Mirror Movement")]
     public class MirrorMovementEffect : APowerUpEffect
     {
-        private static readonly Dictionary<GameObject, PlayerInputReceiver> receiverCache = new();
+        private static readonly Dictionary<GameObject, RadialPlayerMovement> ReceiverCache = new();
 
         public override void Apply(GameObject player)
         {
-            if (!receiverCache.TryGetValue(player, out var receiver))
+            if (!ReceiverCache.TryGetValue(player, out var receiver))
             {
-                receiver = player.transform.GetComponent<PlayerInputReceiver>();
-                receiverCache.Add(player, receiver);
+                receiver = player.transform.GetComponent<RadialPlayerMovement>();
+                ReceiverCache.Add(player, receiver);
             }
 
             receiver.FlipMovementDirection();
@@ -22,7 +22,7 @@ namespace Meyham.Items
 
         public override void Remove(GameObject player)
         {
-            receiverCache[player].FlipMovementDirection();
+            ReceiverCache[player].ResetMovementDirection();
         }
     }
 }

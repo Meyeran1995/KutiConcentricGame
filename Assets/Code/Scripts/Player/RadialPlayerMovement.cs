@@ -2,26 +2,29 @@ using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Meyham.Player
 {
     public class RadialPlayerMovement : MonoBehaviour
     {
-        [Header("Values")] 
-        [SerializeField, Range(0f, 360f)] private float startingAngle;
-        
         [Header("Circle")]
         [SerializeField] private FloatValue angleGain;
         [SerializeField] private FloatValue radius;
         
-        [FormerlySerializedAs("collisionHelper")]
         [Header("References")]
         [SerializeField] private PlayerColliderUpdater colliderUpdater;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
     
-        private float currentAngle;
-        private MovementStates movementState;
+        [Header("Debug")]
+        [SerializeField, ReadOnly] private float startingAngle;
+        [Space]
+        [SerializeField, ReadOnly] private int movementDirection;
+        [SerializeField, ReadOnly] private int brakeDirection;
+        [Space]
+        [SerializeField, ReadOnly] private float currentAngle;
+        [SerializeField, ReadOnly] private MovementStates movementState;
+
+        private const int BaseMovementDirection = -1;
 
         private enum MovementStates
         {
@@ -29,9 +32,17 @@ namespace Meyham.Player
             Moving,
             Brake
         }
-        
-        [ReadOnly] public int movementDirection, brakeDirection;
 
+        public void FlipMovementDirection()
+        {
+            movementDirection = -movementDirection;
+        }
+
+        public void ResetMovementDirection()
+        {
+            movementDirection = BaseMovementDirection;
+        }
+        
         public void StartMovement()
         {
             if(movementState is MovementStates.Moving) return;
@@ -63,6 +74,8 @@ namespace Meyham.Player
 
         private void OnEnable()
         {
+            movementDirection = BaseMovementDirection;
+            movementState = MovementStates.None;
             velocityCalculator.enabled = true;
         }
 
