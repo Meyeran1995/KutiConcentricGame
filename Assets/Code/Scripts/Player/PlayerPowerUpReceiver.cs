@@ -10,7 +10,6 @@ namespace Meyham.Player
         [SerializeField] private GenericEventChannelSO<APowerUpEffect> negativePowerUpEvent;
         [SerializeField] private GameObject target;
         
-
         private APowerUpEffect lastAPowerUpReceived;
         
         private void Start()

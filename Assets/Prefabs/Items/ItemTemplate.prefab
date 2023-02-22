@@ -34,6 +34,7 @@ Transform:
   - {fileID: 8898222251216607450}
   - {fileID: 333315121422227493}
   - {fileID: 3531844089078837481}
+  - {fileID: 2223541532909414547}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,7 +83,7 @@ MonoBehaviour:
   spriteOutline: {fileID: 4509728875765757733}
   spriteFill: {fileID: 894932826824173693}
   toScore: {fileID: 11400000, guid: 7bc197e9b0a6d574fba305fc3435c2a4, type: 2}
-  scoring: {fileID: 6695891813884275298}
+  scoring: {fileID: 4181914751566992395}
 --- !u!1 &3395559192917456297
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +267,65 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7795132169553167224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2223541532909414547}
+  - component: {fileID: 4181914751566992395}
+  - component: {fileID: 5616454385434641653}
+  m_Layer: 0
+  m_Name: Collectibles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2223541532909414547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795132169553167224}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2291004389240496477}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4181914751566992395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795132169553167224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+--- !u!114 &5616454385434641653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795132169553167224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d07096213e4d943833cdc433fbb00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Effect: {fileID: 0}
 --- !u!1 &9139025135300890692
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8898222251216607450}
   - component: {fileID: 2510469800630276338}
-  - component: {fileID: 6695891813884275298}
+  - component: {fileID: 6496887129728881450}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
@@ -307,12 +367,20 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9139025135300890692}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 1}
---- !u!114 &6695891813884275298
+--- !u!114 &6496887129728881450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +389,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9139025135300890692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
+  m_Script: {fileID: 11500000, guid: d902c8e969b141d4ba86dbd969214630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+  itemCollider: {fileID: 2510469800630276338}
+  score: {fileID: 4181914751566992395}
+  powerUp: {fileID: 5616454385434641653}
+  <HasPowerUp>k__BackingField: 1

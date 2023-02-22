@@ -15,8 +15,8 @@ namespace Meyham.Items
         {
             score = newScore;
         }
-        
-        protected override void OnCollect(GameObject player)
+
+        public override void Collect(GameObject player)
         {
             var playerScore = player.GetComponentInParent<PlayerScore>();
             playerScore.AcquireScore(score);

@@ -14,17 +14,19 @@ namespace Meyham.GameMode
 
         private struct CollectibleReferenceCache
         {
-            public readonly AddScoreCollectible AddScoreCollectible;
             public readonly ItemMovement Movement;
             public readonly ItemSpriteController SpriteController;
             public PowerUp PowerUp { get; private set; }
             public bool HasPowerUp { get; private set; }
 
-            public CollectibleReferenceCache(AddScoreCollectible addScoreCollectible,
+            private readonly ItemCollision collision;
+            
+            public CollectibleReferenceCache(ItemCollision collision,
                 ItemMovement movement,
                 ItemSpriteController spriteController)
             {
-                AddScoreCollectible = addScoreCollectible;
+                this.collision = collision;
+                
                 Movement = movement;
                 SpriteController = spriteController;
                 PowerUp = null;
@@ -33,12 +35,14 @@ namespace Meyham.GameMode
 
             public void AddPowerUp(PowerUp powerUp)
             {
+                collision.SetPowerUpCollectible(powerUp);
                 PowerUp = powerUp;
                 HasPowerUp = true;
             }
             
             public void RemovePowerUp()
             {
+                collision.SetPowerUpCollectible(null);
                 PowerUp = null;
                 HasPowerUp = false;
             }
@@ -59,7 +63,7 @@ namespace Meyham.GameMode
 
             if (itemData.IsPowerUp)
             {
-                var powerUp = item.transform.GetChild(0).gameObject.AddComponent<PowerUp>();
+                var powerUp = item.transform.GetChild(3).gameObject.AddComponent<PowerUp>();
                 powerUp.Effect = itemData.PowerUpData;
                 cache.AddPowerUp(powerUp);
             }
@@ -69,8 +73,6 @@ namespace Meyham.GameMode
         
         public void ReleaseCollectible(GameObject collectible)
         {
-            if(!collectible.activeSelf) return; // hack against invalid operation exception, when collectibles somehow end up releasing twice
-            
             splineProvider.ReleaseSpline(collectible);
             pool.Release(collectible);
             onReleasedEvent.RaiseEvent();
@@ -79,17 +81,12 @@ namespace Meyham.GameMode
         protected override GameObject CreatePooledItem()
         {
             var item = Instantiate(poolTemplate);
-            var cache = new CollectibleReferenceCache(item.GetComponentInChildren<AddScoreCollectible>(),
+            var cache = new CollectibleReferenceCache(item.GetComponentInChildren<ItemCollision>(),
                 item.GetComponent<ItemMovement>(), item.GetComponent<ItemSpriteController>());
             
             ReferenceCache.Add(item, cache);
             
             return item;
-        }
-
-        protected override void OnTakeFromPool(GameObject item)
-        {
-            //Prevent activation before data is applied
         }
 
         protected override void OnReturnedToPool(GameObject item)

@@ -6,11 +6,11 @@ namespace Meyham.Items
     public class PowerUp : ACollectible
     {
         public APowerUpEffect Effect;
-        
-        protected override void OnCollect(GameObject player)
+
+        public override void Collect(GameObject player)
         {
-            var playerScore = player.GetComponent<PlayerPowerUpReceiver>();
-            playerScore.Receive(Effect);
+            var playerPowerUpReceiver = player.GetComponent<PlayerPowerUpReceiver>();
+            playerPowerUpReceiver.Receive(Effect);
         }
     }
 }
