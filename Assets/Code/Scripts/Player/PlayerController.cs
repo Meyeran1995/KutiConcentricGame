@@ -62,9 +62,13 @@ namespace Meyham.Player
             collisionParent.SetActive(false);
         }
 
-        private void Awake()
+#if UNITY_EDITOR
+        
+        private void OnValidate()
         {
-            gameObject.name = Designation.ToString();
+            gameObject.name = $"Player {Designation}";
         }
+        
+#endif
     }
 }

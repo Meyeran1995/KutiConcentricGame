@@ -1,4 +1,5 @@
-﻿using Meyham.DataObjects;
+﻿using System;
+using Meyham.DataObjects;
 using Meyham.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -106,6 +107,19 @@ namespace Meyham.Set_Up
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
+        }
+
+        private void OnValidate()
+        {
+            if (players == null) return;
+
+            float originZ = transform.position.z;
+            
+            foreach (var player in players)
+            {
+                if (Mathf.Abs(player.transform.position.z - originZ) <= 0.0001f) continue;
+                Debug.LogError($"Player {player.name} is not aligned to origin z position");
+            }
         }
 
 #endif

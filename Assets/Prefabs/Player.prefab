@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 6551916424300729374}
   - component: {fileID: 5346232853266400848}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
   score: {fileID: 6551916424300729374}
   playerOrder: {fileID: 7474950231064833239}
   <Designation>k__BackingField: 0
-  IsActive: 0
+  <IsActive>k__BackingField: 0
 --- !u!114 &3343158596831003080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,13 +317,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff4b4fd56555414c937a945c04c8230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingAngle: 0
   angleGain: {fileID: 11400000, guid: bdfffb84182ca7d45a8225c236eada06, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   colliderUpdater: {fileID: 1393740820513245191}
   velocityCalculator: {fileID: 5346232853266400848}
+  startingAngle: 0
   movementDirection: 0
   brakeDirection: 0
+  currentAngle: 0
+  movementState: 0
 --- !u!114 &3343158596831003086
 MonoBehaviour:
   m_ObjectHideFlags: 0
