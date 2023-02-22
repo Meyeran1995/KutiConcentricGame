@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3952843535414663135}
   - component: {fileID: 3449922172200498181}
   m_Layer: 5
-  m_Name: PlayerScoreTxt (1)
+  m_Name: ScoreUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4016935373193586171}
   m_Layer: 5
-  m_Name: ScoreEntry_down
+  m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1467245834458608367}
   m_Layer: 5
-  m_Name: ScoreEntry_up
+  m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7712857663120345635}
   - component: {fileID: 7712857663120345634}
   m_Layer: 5
-  m_Name: PlayerScoreTxt
+  m_Name: ScoreDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 7712857663128911027}
   - component: {fileID: 7712857663128911026}
   m_Layer: 5
-  m_Name: PlayerNameTxt
+  m_Name: NameDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -559,11 +559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4b17b4ad0a4f8a9400375bc980ba30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texts:
-  - {fileID: 8028103646932685143}
-  - {fileID: 3449922172200498181}
-  - {fileID: 7712857663128911026}
-  - {fileID: 7712857663120345634}
+  nameUp: {fileID: 8028103646932685143}
+  nameDown: {fileID: 7712857663128911026}
+  scoreUp: {fileID: 3449922172200498181}
+  scoreDown: {fileID: 7712857663120345634}
 --- !u!1 &8024882913583613898
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +575,7 @@ GameObject:
   - component: {fileID: 7439188234476829682}
   - component: {fileID: 8028103646932685143}
   m_Layer: 5
-  m_Name: PlayerNameTxt (1)
+  m_Name: NameUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

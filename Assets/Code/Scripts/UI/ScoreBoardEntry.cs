@@ -5,27 +5,37 @@ namespace Meyham.UI
 {
     public class ScoreBoardEntry : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI[] texts;
+        [Header("Names")]
+        [SerializeField] private TextMeshProUGUI nameUp;
+        [SerializeField] private TextMeshProUGUI nameDown;
 
+        [Header("Scores")]
+        [SerializeField] private TextMeshProUGUI scoreUp;
+        [SerializeField] private TextMeshProUGUI scoreDown;
+        
         public void SetScore(string scoreText)
         {
-            texts[1].text = scoreText;
-            texts[3].text = scoreText;
+            scoreUp.text = scoreText;
+            scoreDown.text = scoreText;
         }
-
-        public void SetPlayerName(int playerNumber)
-        {
-            playerNumber++;
-            texts[0].text = $"Spieler {playerNumber}";
-            texts[2].text = $"Spieler {playerNumber}";
-        }
-
+        
         public void SetEntryColor(Color color)
         {
-            foreach (var text in texts)
-            {
-                text.color = color;
-            }
+            nameUp.color = color;
+            nameDown.color = color;
+
+            scoreUp.color = color;
+            scoreDown.color = color;
         }
+
+#if UNITY_EDITOR
+        
+        public void SetPlayerName(string playerName)
+        {
+            nameUp.text = playerName;
+            nameDown.text = playerName;
+        }
+        
+#endif
     }
 }

@@ -24,7 +24,6 @@ namespace Meyham.Set_Up
         private Coroutine delayedStartRoutine;
 
         private MainMenuView mainMenu;
-        private ScoreboardView scoreboard;
 
         private IColoredText[] coloredTexts;
         private IPlayerNumberDependable[] playerNumberDependables;
@@ -34,7 +33,6 @@ namespace Meyham.Set_Up
         public override void SeTup()
         {
             mainMenu = FindAnyObjectByType<MainMenuView>();
-            scoreboard = FindAnyObjectByType<ScoreboardView>();
             
             coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);
 
@@ -56,7 +54,6 @@ namespace Meyham.Set_Up
         public override void Deactivate()
         {
             mainMenu.CloseView();
-            scoreboard.OnPlayerSelectionFinished();
             
             playerManager.UpdatePlayerCount();
             playerManager.UpdatePlayerColors();
