@@ -10,7 +10,7 @@ namespace Meyham.Input
         protected const int P1RightButton = (int)PlayerDesignation.Purple;
         protected const int P2LeftButton = (int)PlayerDesignation.Yellow;
         protected const int P2MiddleButton = (int)PlayerDesignation.Red;
-        protected const int P2RightButton = (int)PlayerDesignation.Teal;
+        protected const int P2RightButton = (int)PlayerDesignation.Cyan;
         
         public bool AnyKeyDown();
 

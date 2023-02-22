@@ -7,6 +7,6 @@
         Purple,
         Yellow,
         Red,
-        Teal
+        Cyan
     }
 }
