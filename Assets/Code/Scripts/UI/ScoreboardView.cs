@@ -11,8 +11,7 @@ namespace Meyham.UI
         [SerializeField] private HorizontalLayoutGroup layoutGroup;
         [Header("Template")]
         [SerializeField] private float templateWidth;
-        
-        private ScoreBoardEntry[] scoreBoardEntries;
+        [SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
 
         public void SetScores(PlayerScore[] playerScores)
         {
@@ -36,7 +35,6 @@ namespace Meyham.UI
         protected override void Awake()
         {
             base.Awake();
-            scoreBoardEntries = transform.GetChild(0).GetComponentsInChildren<ScoreBoardEntry>();
             foreach (var entry in scoreBoardEntries)
             {
                 entry.gameObject.SetActive(false);
@@ -52,13 +50,10 @@ namespace Meyham.UI
 
         private void PrepareEntries()
         {
-            var root = transform.GetChild(0);
-            
             for (int i = 0; i < scoreBoardEntries.Length; i++)
             {
                 var entry = scoreBoardEntries[i];
                 entry.SetPlayerName(i);
-                entry.transform.SetParent(root);
                 entry.gameObject.SetActive(true);
             }
         }
