@@ -2,6 +2,7 @@
 using Meyham.Collision;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
+using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.UI;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace Meyham.Set_Up
 {
     public class MatchStep : AGameStep
     {
+        [Header("References")]
+        [SerializeField] private VoidEventChannelSO lastItemVanished;
+        
         [Header("Timer Values")]
         [SerializeField] private FloatValue timeUnit;
         [SerializeField, ReadOnly] private float currentTime;
@@ -40,12 +44,12 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
+            lastItemVanished += OnLastItemVanished;
         }
 
         public override void Deactivate()
         {
             playerManager.DisablePlayers();
-            waveManager.enabled = false;
             collisionResolver.enabled = false;
             
             inGameView.CloseView();
@@ -79,11 +83,21 @@ namespace Meyham.Set_Up
 
             if (currentTime <= 0f)
             {                
-                Deactivate();
+                OnTimerElapsed();
                 yield break;
             }
 
             StartCoroutine(TimerRoutine());
+        }
+
+        private void OnTimerElapsed()
+        {
+            waveManager.enabled = false;
+        }
+        
+        private void OnLastItemVanished()
+        {
+            Deactivate();
         }
     }
 }

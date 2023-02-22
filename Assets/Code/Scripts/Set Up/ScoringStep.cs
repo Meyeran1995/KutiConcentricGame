@@ -1,5 +1,4 @@
-﻿using Meyham.Events;
-using Meyham.GameMode;
+﻿using Meyham.GameMode;
 using Meyham.Player;
 using Meyham.UI;
 using UnityEngine;
@@ -8,7 +7,6 @@ namespace Meyham.Set_Up
 {
     public class ScoringStep : AGameStep
     {
-        [SerializeField] private VoidEventChannelSO lastItemVanishedEvent;
         [SerializeField] private float endOfGameDelay;
 
         private ScoreboardView scoreboard;
@@ -25,7 +23,6 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-            lastItemVanishedEvent += OnLastItemVanished;
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -33,12 +30,13 @@ namespace Meyham.Set_Up
             playerManager = manager;
         }
 
-        private void OnEnable()
+        public override void Activate()
         {
             var numberOfPlayers = playerManager.PlayerCount;
             
             if (playerScores != null && playerScores.Length == numberOfPlayers)
             {
+                base.Activate();
                 return;
             }
 
@@ -50,9 +48,11 @@ namespace Meyham.Set_Up
             {
                 playerScores[i] = players[i].GetComponent<PlayerScore>();
             }
+            
+            base.Activate();
         }
 
-        private void OnLastItemVanished()
+        private void OnEnable()
         {
             scoreboard.SetScores(playerScores);
             scoreboard.OpenView();

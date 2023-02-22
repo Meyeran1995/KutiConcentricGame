@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b332e636b414641b0dbff17d58d6fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastItemVanished: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   timeUnit: {fileID: 11400000, guid: 9795b5eb7cf2d7347ad372e24fc4d7ed, type: 2}
   currentTime: 0
 --- !u!1 &261147861
@@ -817,7 +818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44ac635edc247c4b86215a12e60f8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastItemVanishedEvent: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   endOfGameDelay: 0
 --- !u!1 &845955005
 GameObject:
@@ -1045,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Name
-      value: Player Teal
+      value: Player Cyan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
