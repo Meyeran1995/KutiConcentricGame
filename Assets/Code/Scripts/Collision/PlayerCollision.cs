@@ -140,8 +140,7 @@ namespace Meyham.Collision
         
         private void Awake()
         {
-            PlayerCollisionResolver.PlayerCollisions.Add(this);
-            ColliderToPlayer[playerCollider] = this;
+            ColliderToPlayer.Add(playerCollider, this);
 
             maskProvider ??= new LayerMaskProvider();
             origin ??= GameObject.FindGameObjectWithTag("Origin").transform;

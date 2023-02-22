@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Meyham.GameMode
 {
-    public class WaveManager : AGameLoopSystem
+    public class WaveManager : MonoBehaviour
     {
         [Header("Properties")]
         [SerializeField] private float spawnInterval;
@@ -14,48 +15,34 @@ namespace Meyham.GameMode
 
         [Header("References")] 
         [SerializeField] private CollectibleSpawner spawner;
-        [SerializeField] private VoidEventChannelSO onReleasedEvent, endOfSpawningEvent, lastItemVanishedEvent;
+        [SerializeField] private VoidEventChannelSO onReleasedEvent, lastItemVanishedEvent;
         
         [Header("Debug")] 
         [ReadOnly, SerializeField] private int currentWave;
         [ReadOnly, SerializeField] private int spawnCount;
-        [ReadOnly, SerializeField] private bool isSpawning, shouldSpawn;
+        [ReadOnly, SerializeField] private bool isSpawning;
 
-        protected override void OnGameStart()
+        private void Awake()
         {
-            shouldSpawn = true;
-            SpawnWave();
-            onReleasedEvent += OnCollectibleReleased;
-            endOfSpawningEvent += OnEndOfSpawns;
-        }
-
-        protected override void OnGameEnd()
-        {
-            onReleasedEvent -= OnCollectibleReleased;
-        }
-
-        protected override void OnGameRestart()
-        {
-            isSpawning = false;
-            shouldSpawn = true;
-            SpawnWave();
             onReleasedEvent += OnCollectibleReleased;
         }
 
-        private void OnEndOfSpawns()
+        private void OnEnable()
         {
-            shouldSpawn = false;
+            SpawnWave();
+        }
+
+        private void OnDisable()
+        {
             StopAllCoroutines();
 
-            if(spawnCount != 0) return;
+            if (spawnCount != 0) return;
             
             lastItemVanishedEvent.RaiseEvent();
         }
 
         private void SpawnWave()
         {
-            if(isSpawning || !shouldSpawn) return;
-            
             isSpawning = true;
             StartCoroutine(SpawnRoutine());
         }
@@ -77,13 +64,13 @@ namespace Meyham.GameMode
         {
             spawnCount--;
 
-            if (!shouldSpawn && spawnCount == 0)
+            if (spawnCount != 0) return;
+
+            if (!enabled)
             {
                 lastItemVanishedEvent.RaiseEvent();
                 return;
             }
-            
-            if(spawnCount != 0) return;
             
             SpawnWave();
         }

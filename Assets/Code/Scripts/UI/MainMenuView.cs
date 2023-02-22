@@ -1,39 +1,21 @@
-﻿using Meyham.Events;
+﻿using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.UI
 {
-    public class MainMenuView : AGameView
+    public class MainMenuView : AGameView, IPlayerNumberDependable
     {
         [Header("Players")]
-        [SerializeField] private GenericEventChannelSO<int> onPlayerJoined;
         [SerializeField] private Toggle[] playerToggles;
-        
-        private void Start()
+
+        public void OnPlayerJoined(int playerNumber)
         {
-            onPlayerJoined += OnPlayerJoin;
+            playerToggles[playerNumber].ToggleImage();
         }
 
-        private void OnPlayerJoin(int playerIndex)
+        public void OnPlayerLeft(int playerNumber)
         {
-            var toggle = playerToggles[playerIndex];
-            toggle.ToggleImage();
-        }
-        
-        // public override void OpenView(int animatorId)
-        // {
-        //     base.OpenView(animatorId);
-        // }
-
-        public override void CloseView(int animatorId)
-        {
-            base.CloseView(animatorId);
-            onPlayerJoined -= OnPlayerJoin;
-            Alerts.ClearAlert();
-        }
-
-        public override void SetTextColor(int playerId, Color color)
-        {
+            playerToggles[playerNumber].ToggleImage();
         }
     }
 }

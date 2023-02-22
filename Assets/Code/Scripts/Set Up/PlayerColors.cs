@@ -7,9 +7,6 @@ namespace Meyham.Set_Up
     {
         [SerializeField] private Color[] colors;
 
-        public Color GetColor(int playerNumber)
-        {
-            return colors[playerNumber];
-        }
+        public Color this[int i] => colors[i];
     }
 }

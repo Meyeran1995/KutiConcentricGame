@@ -1,25 +1,40 @@
-﻿using System.Collections.Generic;
-using Meyham.GameMode;
+﻿using System;
 using UnityEngine;
 
 namespace Meyham.Collision
 {
-    public class PlayerCollisionResolver : AGameLoopSystem
+    public class PlayerCollisionResolver : MonoBehaviour
     {
         private RaycastHit[] hits;
         
-        public static readonly List<PlayerCollision> PlayerCollisions = new();
+        private PlayerCollision[] playerCollisions;
         
         private void Awake()
         {
             hits = new RaycastHit[5];
+            enabled = false;
         }
 
+        private void OnEnable()
+        {
+            hits = new RaycastHit[5];
+        }
+
+        private void OnDisable()
+        {
+            hits = null;
+        }
+
+        public void SetPlayerCollisions(PlayerCollision[] collisions)
+        {
+            playerCollisions = collisions;
+        }
+        
         private void FixedUpdate()
         {
-            PlayerCollisions.Sort();
+            Array.Sort(playerCollisions);
 
-            foreach (var collision in PlayerCollisions)
+            foreach (var collision in playerCollisions)
             {
                 if (collision.TriggerCollision)
                 {
@@ -32,32 +47,10 @@ namespace Meyham.Collision
                 collision.FireCollisionRaycasts(hits);
             }
 
-            foreach (var collision in PlayerCollisions)
+            foreach (var collision in playerCollisions)
             {
                 collision.PlayerOrder.UpdatePlayerOrder();
             }
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            enabled = false;
-        }
-
-        protected override void OnGameStart()
-        {
-            enabled = true;
-        }
-
-        protected override void OnGameEnd()
-        {
-            enabled = false;
-        }
-
-        protected override void OnGameRestart()
-        {
-            hits = new RaycastHit[5];
-            enabled = true;
         }
     }
 }

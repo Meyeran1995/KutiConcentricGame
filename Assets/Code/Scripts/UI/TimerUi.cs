@@ -1,6 +1,5 @@
 ﻿using Meyham.DataObjects;
 using Meyham.EditorHelpers;
-using Meyham.GameMode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,11 +30,6 @@ namespace Meyham.UI
         {
             timerUiLeft.fillAmount -= fillPerUnit;
             timerUiRight.fillAmount -= fillPerUnit;
-        }
-
-        private void Awake()
-        {
-            GameLoop.RegisterTimer(this);
         }
 
         private void OnValidate()

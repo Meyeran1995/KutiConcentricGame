@@ -1,87 +1,88 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Meyham.DataObjects;
-using Meyham.Events;
-using Meyham.GameMode;
 using Meyham.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Meyham.Set_Up
 {
-    public class PlayerManager : AGameLoopSystem
+    public class PlayerManager : MonoBehaviour, IPlayerNumberDependable
     {
         [Header("References")]
         [SerializeField] private GameObject playerTemplate;
         [SerializeField] private PlayerColors playerColors;
-        [Header("Events")]
-        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         
         private static readonly Dictionary<int, PlayerController> Players = new();
-        public static int PlayerCount;
 
         private PlayerController[] playersAsArray;
-        private PlayerStartingPositionProvider startingPositionProvider;
-        
-        public static PlayerScore[] GetPlayers()
+
+        public PlayerController[] GetPlayers()
         {
-            var playerScores = new PlayerScore[Players.Count];
+            if (playersAsArray != null) return playersAsArray;
+            
+            playersAsArray = new PlayerController[Players.Count];
+
             int i = 0;
 
-            foreach (var controller in Players.Values)
+            foreach (var player in Players.Values)
             {
-                playerScores[i++] = controller.Score;
+                playersAsArray[i] = player;
+                i++;
             }
 
-            return playerScores;
+            return playersAsArray;
         }
-
-        private void OnPlayerJoined(int inputIndex)
+        
+        public void OnPlayerJoined(int inputIndex)
         {
             if (Players.TryGetValue(inputIndex, out var player))
             {
-                var playerObject = player.gameObject;
-                playerObject.SetActive(!playerObject.activeSelf);
+                player.gameObject.SetActive(true);
                 return;
             }
             
             CreateNewPlayer(inputIndex);
         }
 
-        private void CreateNewPlayer(int inputIndex)
+        public void OnPlayerLeft(int inputIndex)
         {
-            var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
-            newPlayer.name = $"Player{inputIndex}";
-            newPlayer.transform.position = transform.position;
-            newPlayer.enabled = false;
-            newPlayer.PlayerColor = playerColors.GetColor(inputIndex);
-            
-            newPlayer.SetButton(inputIndex);
-            newPlayer.SetPlayerNumber(inputIndex);
-            newPlayer.SetStartingPosition(0f);
-
-            Players.Add(inputIndex, newPlayer);
+            Players[inputIndex].gameObject.SetActive(false);
         }
 
-        private void RemoveInactivePlayers()
+        public void EnablePlayers()
+        {
+            foreach (var player in playersAsArray)
+            {
+                player.enabled = true;
+            }
+        }
+
+        public void DisablePlayers()
+        {
+            foreach (var player in playersAsArray)
+            {
+                player.enabled = false;
+            }
+        }
+
+        public void RemoveInactivePlayers()
         {
             for (int i = 0; i < 6; i++)
             {
                 if(!Players.TryGetValue(i, out var player)) continue;
                 
                 var playerObject = player.gameObject;
+                
                 if(playerObject.activeSelf) continue;
 
                 Players.Remove(i);
                 Destroy(playerObject);
             }
-
-            PlayerCount = Players.Count;
         }
         
-        private void ShufflePlayers()
+        public void ShufflePlayers()
         {
-            int n = PlayerCount;
+            int n = playersAsArray.Length;
             
             for (int i = 0; i < n - 1; i++)
             {
@@ -91,61 +92,20 @@ namespace Meyham.Set_Up
                 playersAsArray[i] = t;
             }
         }
-
-        private void StartPlayers()
+        
+        private void CreateNewPlayer(int inputIndex)
         {
-            for (int i = 0; i < PlayerCount; i++)
-            {
-                var player = playersAsArray[i];
-                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
-                player.enabled = true;
-            }
-        }
-
-        protected override void OnGameStart()
-        {
-            if (startingPositionProvider != null)
-            {
-                ShufflePlayers();
-                return;
-            }
-
-            RemoveInactivePlayers();
-            inputEventChannel -= OnPlayerJoined;
-            startingPositionProvider = new PlayerStartingPositionProvider(PlayerCount);
-            playersAsArray ??= Players.Values.ToArray();
+            var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
+            newPlayer.name = $"Player{inputIndex}";
+            newPlayer.transform.position = transform.position;
+            newPlayer.enabled = false;
+            newPlayer.PlayerColor = playerColors[inputIndex];
             
-            for (int i = 0; i < PlayerCount; i++)
-            {
-                var player = playersAsArray[i];
-                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
-                player.enabled = true;
-            }
-        }
+            newPlayer.SetButton(inputIndex);
+            newPlayer.SetPlayerNumber(inputIndex);
+            newPlayer.SetStartingPosition(0f);
 
-        protected override void OnGameEnd()
-        {
-            foreach (var player in playersAsArray)
-            {
-                player.OnGameEnd();
-            }
-        }
-
-        protected override void OnGameRestart()
-        {
-            startingPositionProvider.RotateStartingPositions();
-            
-            for (int i = 0; i < PlayerCount; i++)
-            {
-                var player = playersAsArray[i];
-                player.SetStartingPosition(startingPositionProvider.GetStartingPosition(i));
-                player.OnGameRestart();
-            }
-        }
-
-        private void Awake()
-        {
-            inputEventChannel += OnPlayerJoined;
+            Players.Add(inputIndex, newPlayer);
         }
 
 #if UNITY_EDITOR

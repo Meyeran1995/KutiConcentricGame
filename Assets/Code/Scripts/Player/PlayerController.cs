@@ -27,17 +27,6 @@ namespace Meyham.Player
         }
 
         public PlayerScore Score => score;
-        
-        public void OnGameEnd()
-        {
-            enabled = false;
-        }
-
-        public void OnGameRestart()
-        {
-            enabled = true;
-            score.ResetScore();
-        }
 
         public void SetButton(int button) => input.RightButton = button;
 
@@ -54,6 +43,7 @@ namespace Meyham.Player
             input.enabled = true;
             playerOrder.enabled = true;
             collisionParent.SetActive(true);
+            score.ResetScore();
         }
 
         private void OnDisable()

@@ -1,36 +1,51 @@
 ﻿using System.Collections.Generic;
 using Meyham.Events;
 using Meyham.Player;
+using Meyham.Set_Up;
 using TMPro;
 using UnityEngine;
 
 namespace Meyham.UI
 {
-    public class InGameView : AGameView
+    public class InGameView : AGameView, IColoredText, IPlayerNumberDependable
     {
         [Header("Texts")]
         [SerializeField] private TextMeshProUGUI[] scoreTexts;
         [Header("Events")]
         [SerializeField] private GenericEventChannelSO<PlayerScore> scoreEvent;
-        [SerializeField] private GenericEventChannelSO<int> playerJoinedEvent;
-        [SerializeField] private VoidEventChannelSO gameStartEvent;
 
-        private readonly List<int> activePlayers = new();
-        
-        // public override void OpenView(int animatorId)
-        // {
-        //     base.OpenView(animatorId);
-        // }
-        
-        public override void CloseView(int animatorId)
+        private readonly List<int> activePlayers = new(6);
+
+        public override void OpenView()
         {
-            ResetScores();
-            base.CloseView(animatorId);
+            scoreEvent += OnScoreAcquired;
+
+            base.OpenView();
         }
 
-        public override void SetTextColor(int playerId, Color color)
+        public override void CloseView()
+        {
+            ResetScores();
+            scoreEvent -= OnScoreAcquired;
+
+            base.CloseView();
+        }
+
+        public void SetTextColor(int playerId, Color color)
         {
             scoreTexts[playerId].color = color;
+        }
+        
+        public void OnPlayerJoined(int playerNumber)
+        {
+            activePlayers.Add(playerNumber);
+            scoreTexts[playerNumber].gameObject.SetActive(true);
+        }
+
+        public void OnPlayerLeft(int playerNumber)
+        {
+            scoreTexts[playerNumber].gameObject.SetActive(false);
+            activePlayers.Remove(playerNumber);
         }
 
         protected override void Awake()
@@ -39,33 +54,6 @@ namespace Meyham.UI
             {
                 text.gameObject.SetActive(false);
             }
-        }
-        
-        private void Start()
-        {
-            scoreEvent += OnScoreAcquired;
-            gameStartEvent += OnGameStart;
-            playerJoinedEvent += OnPlayerJoined;
-        }
-
-        private void OnGameStart()
-        {
-            playerJoinedEvent -= OnPlayerJoined;
-        }
-
-        private void OnPlayerJoined(int playerNumber)
-        {
-            var scoreTextGameObject = scoreTexts[playerNumber].gameObject;
-            
-            if (activePlayers.Contains(playerNumber))
-            {
-                scoreTextGameObject.SetActive(!scoreTextGameObject.activeSelf);
-                activePlayers.Remove(playerNumber);
-                return;
-            }
-            
-            activePlayers.Add(playerNumber);
-            scoreTextGameObject.SetActive(true);
         }
 
         private void OnScoreAcquired(PlayerScore scoringPlayer)

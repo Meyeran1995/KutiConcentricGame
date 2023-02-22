@@ -1,15 +1,11 @@
-﻿using System;
-using Meyham.Events;
-using Meyham.GameMode;
+﻿using Meyham.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Meyham.UI
 {
-    public class ScoreboardView : AGameView
+    public class ScoreboardView : AGameView, IColoredText
     {
-        [Header("Events")]
-        [SerializeField] private VoidEventChannelSO gameStart;
         [Header("Layout")]
         [SerializeField] private float screenWidth;
         [SerializeField] private HorizontalLayoutGroup layoutGroup;
@@ -18,24 +14,25 @@ namespace Meyham.UI
         
         private ScoreBoardEntry[] scoreBoardEntries;
 
-        public override void OpenView(int animatorId)
+        public void SetScores(PlayerScore[] playerScores)
         {
-            ShowScores();
-            base.OpenView(animatorId);
+            foreach (var playerScore in playerScores)
+            {
+                scoreBoardEntries[playerScore.PlayerNumber].SetScore(playerScore.GetScoreText());
+            }
         }
-
-        // public override void CloseView(int animatorId)
-        // {
-        //     base.CloseView(animatorId);
-        // }
         
-        public override void SetTextColor(int playerId, Color color)
+        public void SetTextColor(int playerId, Color color)
         {
-            var entry = scoreBoardEntries[playerId];
-            entry.gameObject.SetActive(true);
-            entry.SetEntryColor(color);
+            scoreBoardEntries[playerId].SetEntryColor(color);
         }
 
+        public void OnPlayerSelectionFinished()
+        {
+            PrepareEntries();
+            CenterScoreboardEntries();
+        }
+        
         protected override void Awake()
         {
             base.Awake();
@@ -44,19 +41,6 @@ namespace Meyham.UI
             {
                 entry.gameObject.SetActive(false);
             }
-        }
-
-        private void Start()
-        {
-            gameStart += OnPlayerSelectionFinished;
-        }
-
-        private void OnPlayerSelectionFinished()
-        {
-            gameStart -= OnPlayerSelectionFinished;
-
-            PrepareEntries();
-            CenterScoreboardEntries();
         }
 
         private void CenterScoreboardEntries()
@@ -75,15 +59,7 @@ namespace Meyham.UI
                 var entry = scoreBoardEntries[i];
                 entry.SetPlayerName(i);
                 entry.transform.SetParent(root);
-                scoreBoardEntries[i] = entry;
-            }
-        }
-        
-        private void ShowScores()
-        {
-            foreach (var playerScore in ScoreKeeper.GetScores())
-            {
-                scoreBoardEntries[playerScore.PlayerNumber].SetScore(playerScore.GetScoreText());
+                entry.gameObject.SetActive(true);
             }
         }
     }

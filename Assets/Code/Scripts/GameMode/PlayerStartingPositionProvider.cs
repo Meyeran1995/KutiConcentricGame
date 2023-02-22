@@ -5,17 +5,17 @@ namespace Meyham.GameMode
 {
     public class PlayerStartingPositionProvider
     {
-        private float[] StartingPositions;
+        private float[] startingPositions;
 
         public PlayerStartingPositionProvider(int playerCount)
         {
             float angleGain = Mathf.RoundToInt(360f / playerCount);
             float currentAngle = 0f;
-            StartingPositions = new float[playerCount];
+            startingPositions = new float[playerCount];
 
             for (int i = 0; i < playerCount; i++)
             {
-                StartingPositions[i] = currentAngle;
+                startingPositions[i] = currentAngle;
                 currentAngle += angleGain;
             }
         }
@@ -24,18 +24,18 @@ namespace Meyham.GameMode
         {
             float rotation = Random.Range(10f, 350f);
 
-            for (int i = 0; i < StartingPositions.Length; i++)
+            for (int i = 0; i < startingPositions.Length; i++)
             {
-                float position = StartingPositions[i];
+                float position = startingPositions[i];
                 position += rotation;
                 position %= 360f;
-                StartingPositions[i] = position;
+                startingPositions[i] = position;
             }
         }
 
         public float GetStartingPosition(int index)
         {
-            return StartingPositions[index];
+            return startingPositions[index];
         }
     }
 }
