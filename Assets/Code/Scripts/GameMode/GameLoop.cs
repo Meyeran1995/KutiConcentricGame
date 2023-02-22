@@ -47,7 +47,7 @@ namespace Meyham.GameMode
             
             currentStep++;
 
-            if ((int)currentStep > steps.Length)
+            if ((int)currentStep >= steps.Length)
             {
                 currentStep = GameSteps.Start;
             }

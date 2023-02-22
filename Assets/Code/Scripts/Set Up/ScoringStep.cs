@@ -1,4 +1,5 @@
-﻿using Meyham.GameMode;
+﻿using System.Collections;
+using Meyham.GameMode;
 using Meyham.Player;
 using Meyham.UI;
 using UnityEngine;
@@ -56,6 +57,14 @@ namespace Meyham.Set_Up
         {
             scoreboard.SetScores(playerScores);
             scoreboard.OpenView();
+            StartCoroutine(DisplayScoreboard());
+        }
+
+        private IEnumerator DisplayScoreboard()
+        {
+            yield return new WaitForSeconds(endOfGameDelay);
+            
+            Deactivate();
         }
     }
 }

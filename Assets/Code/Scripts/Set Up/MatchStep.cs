@@ -67,6 +67,7 @@ namespace Meyham.Set_Up
             inGameView.OpenView();
             
             currentTime = startingTime;
+            timerUi.ResetTimer();
             StartCoroutine(TimerRoutine());
             
             playerManager.EnablePlayers();

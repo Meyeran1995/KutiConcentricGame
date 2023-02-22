@@ -10,9 +10,12 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
 
         private PlayerManager playerManager;
+
+        private ScoreboardView scoreboard;
         
         public override void SeTup()
         {
+            scoreboard = FindAnyObjectByType<ScoreboardView>();
         }
 
         public override void Link(GameLoop loop)
@@ -44,6 +47,7 @@ namespace Meyham.Set_Up
         private void OnRestartPressed(int input)
         {
             Alerts.ClearAlert();
+            scoreboard.CloseView();
             playerManager.ShufflePlayers();
             Deactivate();
         }
