@@ -283,7 +283,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:
@@ -354,8 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee14609453664402b374b10d5b75a0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: -3059452512064107555}
   score: 0
-  PlayerNumber: 0
 --- !u!114 &5346232853266400848
 MonoBehaviour:
   m_ObjectHideFlags: 0

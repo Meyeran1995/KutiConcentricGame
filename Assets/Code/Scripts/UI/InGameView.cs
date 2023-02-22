@@ -58,7 +58,7 @@ namespace Meyham.UI
 
         private void OnScoreAcquired(PlayerScore scoringPlayer)
         {
-            scoreTexts[scoringPlayer.PlayerNumber].text = scoringPlayer.GetScoreText();
+            scoreTexts[(int)scoringPlayer.Designation].text = scoringPlayer.GetScoreText();
         }
 
         private void ResetScores()

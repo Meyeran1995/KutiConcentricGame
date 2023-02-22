@@ -1,13 +1,17 @@
-﻿using System;
-using Meyham.EditorHelpers;
+﻿using Meyham.EditorHelpers;
 using UnityEngine;
 
 namespace Meyham.Player
 {
-    public class PlayerScore : MonoBehaviour, IComparable<PlayerScore>
+    public class PlayerScore : MonoBehaviour
     {
+        [Header("References")] 
+        [SerializeField] private PlayerController controller;
+        
+        [Header("Debug")]
         [ReadOnly, SerializeField] private float score;
-        [ReadOnly] public int PlayerNumber;
+
+        public PlayerDesignation Designation => controller.Designation;
         
         public void AcquireScore(float gainedScore)
         {
@@ -19,10 +23,5 @@ namespace Meyham.Player
         public string GetScoreText() => Mathf.RoundToInt(score).ToString();
 
         public float GetScore() => Mathf.RoundToInt(score);
-        
-        public int CompareTo(PlayerScore other)
-        {
-           return other.PlayerNumber.CompareTo(PlayerNumber);
-        }
     }
 }
