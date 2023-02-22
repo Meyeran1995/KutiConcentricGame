@@ -35,13 +35,14 @@ namespace Meyham.Set_Up
 
         private void OnEnable()
         {
-            var players = playerManager.GetPlayers();
-            var numberOfPlayers = players.Length;
+            var numberOfPlayers = playerManager.PlayerCount;
             
-            if (playerScores == null || playerScores.Length == numberOfPlayers)
+            if (playerScores != null && playerScores.Length == numberOfPlayers)
             {
                 return;
             }
+
+            var players = playerManager.GetPlayers();
 
             playerScores = new PlayerScore[numberOfPlayers];
 

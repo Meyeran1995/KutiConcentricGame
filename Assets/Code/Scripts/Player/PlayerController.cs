@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Meyham.EditorHelpers;
+using UnityEngine;
 
 namespace Meyham.Player
 {
@@ -7,38 +8,43 @@ namespace Meyham.Player
         [Header("References")]
         [SerializeField] private GameObject collisionParent;
         [SerializeField] private SpriteRenderer spriteRenderer;
+        
         [Header("Player References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
         [SerializeField] private PlayerOrder playerOrder;
 
-        private Color playerColor;
-        
-        public Color PlayerColor
+        [field: Header("Properties"), SerializeField] 
+        public PlayerDesignation Designation { get; private set; }
+
+        [field: SerializeField, ReadOnly] 
+        public bool IsActive { get; private set; }
+
+        public void Activate()
         {
-            get => playerColor;
-
-            set
-            {
-                spriteRenderer.color = value;
-                playerColor = value;
-            }
+            IsActive = true;
         }
-
-        public PlayerScore Score => score;
-
-        public void SetButton(int button) => input.RightButton = button;
+        
+        public void Deactivate()
+        {
+            IsActive = false;
+        }
+        
+        public void SetPlayerColor(Color color)
+        {
+            spriteRenderer.color = color;
+        }
 
         public void SetStartingPosition(float angle)
         {
             movement.SnapToStartingAngle(angle);
         }
 
-        public void SetPlayerNumber(int number) => score.PlayerNumber = number;
-
         private void OnEnable()
         {
+            if(!IsActive) return;
+            
             movement.enabled = true;
             input.enabled = true;
             playerOrder.enabled = true;
@@ -48,10 +54,17 @@ namespace Meyham.Player
 
         private void OnDisable()
         {
+            if(!IsActive) return;
+
             movement.enabled = false;
             input.enabled = false;
             playerOrder.enabled = false;
             collisionParent.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            gameObject.name = Designation.ToString();
         }
     }
 }

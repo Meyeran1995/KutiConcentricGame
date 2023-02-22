@@ -283,7 +283,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:
@@ -303,6 +303,8 @@ MonoBehaviour:
   input: {fileID: 3343158596831003086}
   score: {fileID: 6551916424300729374}
   playerOrder: {fileID: 7474950231064833239}
+  <Designation>k__BackingField: 0
+  IsActive: 0
 --- !u!114 &3343158596831003080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,10 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03523b4253e8974f93fa24a0586adbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RightButton: 1
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   inputCanceledEventChannel: {fileID: 11400000, guid: 33fd5d7e24992b841b49a95c7870409d, type: 2}
   playerMovement: {fileID: 3343158596831003080}
+  controller: {fileID: -3059452512064107555}
 --- !u!114 &6551916424300729374
 MonoBehaviour:
   m_ObjectHideFlags: 0

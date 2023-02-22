@@ -58,7 +58,8 @@ namespace Meyham.Set_Up
             mainMenu.CloseView();
             scoreboard.OnPlayerSelectionFinished();
             
-            playerManager.RemoveInactivePlayers();
+            playerManager.UpdatePlayerCount();
+            playerManager.UpdatePlayerColors();
             
             base.Deactivate();
         }

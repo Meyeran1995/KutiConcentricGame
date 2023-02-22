@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Meyham.DataObjects;
+﻿using Meyham.DataObjects;
 using Meyham.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,103 +8,94 @@ namespace Meyham.Set_Up
     public class PlayerManager : MonoBehaviour, IPlayerNumberDependable
     {
         [Header("References")]
-        [SerializeField] private GameObject playerTemplate;
         [SerializeField] private PlayerColors playerColors;
-        
-        private static readonly Dictionary<int, PlayerController> Players = new();
+        [SerializeField] private PlayerController[] players;
 
-        private PlayerController[] playersAsArray;
+        public int PlayerCount { get; private set; }
 
         public PlayerController[] GetPlayers()
         {
-            if (playersAsArray != null) return playersAsArray;
-            
-            playersAsArray = new PlayerController[Players.Count];
+            var currentPlayers = new PlayerController[PlayerCount];
 
             int i = 0;
-
-            foreach (var player in Players.Values)
+            
+            foreach (var player in players)
             {
-                playersAsArray[i] = player;
+                if(!player.IsActive) continue;
+
+                currentPlayers[i] = player;
                 i++;
             }
-
-            return playersAsArray;
+            
+            return currentPlayers;
         }
         
         public void OnPlayerJoined(int inputIndex)
         {
-            if (Players.TryGetValue(inputIndex, out var player))
-            {
-                player.gameObject.SetActive(true);
-                return;
-            }
-            
-            CreateNewPlayer(inputIndex);
+            players[inputIndex].Activate();
         }
 
         public void OnPlayerLeft(int inputIndex)
         {
-            Players[inputIndex].gameObject.SetActive(false);
+            players[inputIndex].Deactivate();
         }
 
         public void EnablePlayers()
         {
-            foreach (var player in playersAsArray)
+            foreach (var player in players)
             {
+                if(!player.IsActive) continue;
+
                 player.enabled = true;
             }
         }
 
         public void DisablePlayers()
         {
-            foreach (var player in playersAsArray)
+            foreach (var player in players)
             {
+                if(!player.IsActive) continue;
+
                 player.enabled = false;
             }
         }
 
-        public void RemoveInactivePlayers()
+        public void UpdatePlayerCount()
         {
-            for (int i = 0; i < 6; i++)
+            PlayerCount = 0;
+            foreach (var player in players)
             {
-                if(!Players.TryGetValue(i, out var player)) continue;
-                
-                var playerObject = player.gameObject;
-                
-                if(playerObject.activeSelf) continue;
+                if(!player.IsActive)
+                {
+                    player.gameObject.SetActive(false);
+                    continue;
+                }
 
-                Players.Remove(i);
-                Destroy(playerObject);
+                PlayerCount++;
+            }
+        }
+
+        public void UpdatePlayerColors()
+        {
+            foreach (var player in players)
+            {
+                if(!player.IsActive) continue;
+
+                player.SetPlayerColor(playerColors[(int)player.Designation]);
             }
         }
         
         public void ShufflePlayers()
         {
-            int n = playersAsArray.Length;
+            int n = players.Length;
             
             for (int i = 0; i < n - 1; i++)
             {
                 int r = i + Random.Range(0, n - i);
-                var t = playersAsArray[r];
-                playersAsArray[r] = playersAsArray[i];
-                playersAsArray[i] = t;
+                var t = players[r];
+                players[r] = players[i];
+                players[i] = t;
             }
-        }
-        
-        private void CreateNewPlayer(int inputIndex)
-        {
-            var newPlayer = Instantiate(playerTemplate).GetComponent<PlayerController>();
-            newPlayer.name = $"Player{inputIndex}";
-            newPlayer.transform.position = transform.position;
-            newPlayer.enabled = false;
-            newPlayer.PlayerColor = playerColors[inputIndex];
-            
-            newPlayer.SetButton(inputIndex);
-            newPlayer.SetPlayerNumber(inputIndex);
-            newPlayer.SetStartingPosition(0f);
-
-            Players.Add(inputIndex, newPlayer);
         }
 
 #if UNITY_EDITOR

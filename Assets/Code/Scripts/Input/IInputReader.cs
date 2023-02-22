@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using Meyham.Player;
 
 namespace Meyham.Input
 {
     public interface IInputReader
     {
-        protected const int P1LeftButton = 0;
-        protected const int P1MiddleButton = 1;
-        protected const int P1RightButton = 2;
-        protected const int P2LeftButton = 3;
-        protected const int P2MiddleButton = 4;
-        protected const int P2RightButton = 5;
+        protected const int P1LeftButton = (int)PlayerDesignation.Orange;
+        protected const int P1MiddleButton = (int)PlayerDesignation.Green;
+        protected const int P1RightButton = (int)PlayerDesignation.Purple;
+        protected const int P2LeftButton = (int)PlayerDesignation.Yellow;
+        protected const int P2MiddleButton = (int)PlayerDesignation.Red;
+        protected const int P2RightButton = (int)PlayerDesignation.Teal;
         
         public bool AnyKeyDown();
 
