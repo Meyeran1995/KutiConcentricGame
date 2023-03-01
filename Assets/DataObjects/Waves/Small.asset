@@ -15,3 +15,5 @@ MonoBehaviour:
   itemTypes:
   - {fileID: 11400000, guid: 6b0431042e7e8074cb710b231c6ef403, type: 2}
   contents: 0000000000000000000000000000000000000000
+  randomize: 0
+  chances: []

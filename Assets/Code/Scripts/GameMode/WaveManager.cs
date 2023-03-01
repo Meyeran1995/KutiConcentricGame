@@ -63,7 +63,7 @@ namespace Meyham.GameMode
         {
             spawnCount--;
 
-            if (spawnCount != 0) return;
+            if (spawnCount > 0) return;
 
             if (!enabled)
             {

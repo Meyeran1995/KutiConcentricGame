@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Medium
   m_EditorClassIdentifier: 
   itemTypes:
-  - {fileID: 11400000, guid: 6b0431042e7e8074cb710b231c6ef403, type: 2}
-  - {fileID: 11400000, guid: edce4fa5c4a7b15429e938ace0212fc1, type: 2}
   - {fileID: 11400000, guid: 94b6b838e20a02f4e837a6caf68de4d2, type: 2}
   - {fileID: 11400000, guid: fa629c5f3190c5545b62206c8ed9ac93, type: 2}
-  contents: 0100000003000000000000000200000000000000020000000000000001000000
+  - {fileID: 11400000, guid: edce4fa5c4a7b15429e938ace0212fc1, type: 2}
+  contents: 000000000200000001000000000000000100000001000000000000000000000000000000
+  randomize: 1
+  chances:
+  - 0.5555556
+  - 0.33333334
+  - 0.11111111
