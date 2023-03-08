@@ -1,6 +1,5 @@
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Meyham.Cutscenes

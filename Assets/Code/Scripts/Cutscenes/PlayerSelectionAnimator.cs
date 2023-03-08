@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -7,14 +6,17 @@ namespace Meyham.Cutscenes
 {
     public class PlayerSelectionAnimator : MonoBehaviour, IPlayerNumberDependable
     {
-        [Header("References")]
+        [Header("References")] 
+        [SerializeField] private PlayerColors playerColors;
         [SerializeField] private CutScenePlayerRotator[] rotators;
-
+        [SerializeField] private SpriteRenderer[] spriteRenderers;
+        
         private List<int> activePlayers;
         
         public void OnPlayerJoined(int playerNumber)
         {
             rotators[playerNumber].RotateIntoCircle();
+            spriteRenderers[playerNumber].color = playerColors[playerNumber];
             activePlayers.Add(playerNumber);
             
             UpdateCirclePositions();
