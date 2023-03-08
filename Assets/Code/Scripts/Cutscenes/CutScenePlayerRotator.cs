@@ -24,6 +24,11 @@ namespace Meyham.Cutscenes
         
         private Quaternion currentRotationOuter, currentRotationInner;
 
+        public bool IsRotating()
+        {
+            return shouldRotateInner || shouldRotateOuter;
+        }
+
         public void RotateIntoCircle()
         {
             desiredRotationOuter = Quaternion.identity;

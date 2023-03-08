@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee903cf801dc44ac89c32168f06e1afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 20
+  startDelay: 5
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   colors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
   frontEnd: {fileID: 1912174591}

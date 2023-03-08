@@ -62,6 +62,8 @@ namespace Meyham.Set_Up
             playerManager.UpdatePlayerCount();
             playerManager.UpdatePlayerColors();
             
+            selectionAnimator.CloseCutscene();
+            
             base.Deactivate();
         }
 

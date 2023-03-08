@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -32,9 +33,27 @@ namespace Meyham.Cutscenes
             UpdateCirclePositions();
         }
 
+        public void CloseCutscene()
+        {
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.enabled = false;
+            }
+
+            StartCoroutine(WaitForElementsToLeaveCircle());
+        }
+
         private void Awake()
         {
             activePlayers = new List<int>(6);
+        }
+
+        private void OnEnable()
+        {
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.enabled = true;
+            }
         }
 
         private void UpdateCirclePositions()
@@ -48,6 +67,21 @@ namespace Meyham.Cutscenes
                 rotators[activePlayers[i]].RotateTowardsCircleAngle(desiredAngle);
                 desiredAngle += angleIncrement;
             }
+        }
+
+        private IEnumerator WaitForElementsToLeaveCircle()
+        {
+            foreach (var player in activePlayers)
+            {
+                rotators[player].RotateOutOfCircle();
+            }
+
+            CutScenePlayerRotator lastRotator = rotators[activePlayers[^1]];
+
+            yield return new WaitWhile(lastRotator.IsRotating);
+            
+            activePlayers.Clear();
+            gameObject.SetActive(false);
         }
     }
 }
