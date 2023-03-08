@@ -1,13 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Meyham.UI
 {
     public abstract class AGameView : MonoBehaviour
     {
-        [Header("Animator")]
-        [SerializeField] private Animator animator;
-
-        private static readonly int ViewIsOpenId = Animator.StringToHash("IsOpen");
+        [Header("Animation")]
+        [SerializeField] private TimelineEffect effect;
 
         protected virtual void Awake()
         {
@@ -16,12 +15,20 @@ namespace Meyham.UI
 
         public virtual void OpenView()
         {
-            animator.SetBool(ViewIsOpenId, true);
+            transform.GetChild(0).gameObject.SetActive(true);
+            _ = effect.ShowAsync();
         }
 
         public virtual void CloseView()
         {
-            animator.SetBool(ViewIsOpenId, false);
+            StartCoroutine(CloseRoutine());
+        }
+
+        private IEnumerator CloseRoutine()
+        {
+            yield return effect.HideAsync();
+            
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

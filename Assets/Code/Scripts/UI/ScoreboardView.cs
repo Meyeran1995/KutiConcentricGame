@@ -41,11 +41,11 @@ namespace Meyham.UI
 
         protected override void Awake()
         {
-            base.Awake();
             foreach (var entry in scoreBoardEntries)
             {
                 entry.gameObject.SetActive(false);
             }
+            base.Awake();
         }
 
 #if UNITY_EDITOR

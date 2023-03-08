@@ -54,6 +54,7 @@ namespace Meyham.UI
             {
                 text.gameObject.SetActive(false);
             }
+            base.Awake();
         }
 
         private void OnScoreAcquired(PlayerScore scoringPlayer)
