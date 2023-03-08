@@ -1,5 +1,6 @@
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Meyham.Cutscenes
@@ -45,6 +46,12 @@ namespace Meyham.Cutscenes
         public void RotateTowardsCircleAngle(float angle)
         {
             desiredRotationInner = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            if (desiredRotationInner == currentRotationInner)
+            {
+                return;
+            }
+            
             shouldRotateInner = true;
             lerpInner = 0f;
             enabled = true;
@@ -53,6 +60,7 @@ namespace Meyham.Cutscenes
         private void Awake()
         {
             currentRotationInner = Quaternion.identity;
+            transform.localRotation = Quaternion.identity;
             currentRotationOuter = Quaternion.AngleAxis(outerStartingRotation, Vector3.forward);
             outerPivot.localRotation = currentRotationOuter;
         }

@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 461226639001807868}
   - component: {fileID: 5198877415105177033}
-  - component: {fileID: 4625856024472332605}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -169,23 +168,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4625856024472332605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8101601910174571036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e43ba9cdb140b183a48bb27b012618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sizeFactor: {fileID: 11400000, guid: 80613f842352acd4ea723e02b7aa5be8, type: 2}
-  spriteRenderer: {fileID: 5198877415105177033}
-  playerRigidbody: {fileID: 0}
-  modelProvider: {fileID: 11400000, guid: 330129723766c1d47843ee46babac6fd, type: 2}
-  colliderUpdater: {fileID: 0}
-  playerCollision: {fileID: 0}
-  <Order>k__BackingField: 0
-  <TransitionLocked>k__BackingField: 0

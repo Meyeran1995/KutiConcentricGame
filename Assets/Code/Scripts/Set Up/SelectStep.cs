@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Meyham.Cutscenes;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
@@ -16,6 +17,7 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         [SerializeField] private PlayerColors colors;
         [SerializeField] private GameObject frontEnd;
+        [SerializeField] private PlayerSelectionAnimator selectionAnimator;
 
         [Header("Debug")]
         [ReadOnly, SerializeField] private int numberOfPlayers;
@@ -38,11 +40,13 @@ namespace Meyham.Set_Up
 
             var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>();
 
-            playerNumberDependables = new IPlayerNumberDependable[dependables.Length + 1];
+            playerNumberDependables = new IPlayerNumberDependable[dependables.Length + 2];
+
+            playerNumberDependables[1] = selectionAnimator;
             
-            for (int i = 1; i < playerNumberDependables.Length; i++)
+            for (int i = 0; i < dependables.Length; i++)
             {
-                playerNumberDependables[i] = dependables[i - 1];
+                playerNumberDependables[2 + i] = dependables[i];
             }
         }
 
