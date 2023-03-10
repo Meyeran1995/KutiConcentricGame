@@ -11,6 +11,7 @@
 /[Mm]emoryCaptures/
 /[Aa]ssets/[Cc]ode/[Pp]lugins/
 /[Aa]ssets/[Tt]extMesh Pro/
+[Uu]serSettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -62,4 +63,9 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# Settings files
+
+Assembly-CSharp-Editor.csproj.DotSettings
+ProjectSettings/*.json
 
