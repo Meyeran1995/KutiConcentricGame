@@ -63,7 +63,6 @@ namespace Meyham.Set_Up
         private void OnEnable()
         {
             currentTime = startingTime;
-            timerUi.ResetTimer();
             StartCoroutine(TimerRoutine());
             
             collisionResolver.enabled = true;
@@ -74,18 +73,17 @@ namespace Meyham.Set_Up
 
         private IEnumerator TimerRoutine()
         {
-            yield return new WaitForSeconds(timeUnit);
+            timerUi.ResetTimer();
 
-            timerUi.DepleteTime();
-            currentTime -= timeUnit;
+            while (currentTime > 0f)
+            {
+                yield return new WaitForSeconds(timeUnit);
 
-            if (currentTime <= 0f)
-            {                
-                OnTimerElapsed();
-                yield break;
+                timerUi.DepleteTime();
+                currentTime -= timeUnit;
             }
-
-            StartCoroutine(TimerRoutine());
+            
+            OnTimerElapsed();
         }
 
         private void OnTimerElapsed()

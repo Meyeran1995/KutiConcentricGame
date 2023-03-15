@@ -15,49 +15,79 @@ namespace Meyham.UI
         [Header("Children")]
         [SerializeField] private TimelineEffect[] childEffects;
 
+        private bool hasChildEffects;
+
         public IEnumerator ShowAsync()
         {
-            if (childEffects != null && childEffects.Length > 0)
-            {
-                foreach (var effect in childEffects)
-                {
-                    effect.PrepareShow();
-                }
-            }
+            HiddenState();
 
-            director.Play(show, DirectorWrapMode.None);
+            director.Play();
+            director.timeUpdateMode = DirectorUpdateMode.GameTime;
 
-            return new WaitForDirector(director);
+            var waitForDirector = new WaitForDirector(director);
+            StartCoroutine(ShowRoutine(waitForDirector));
+            
+            return waitForDirector;
         }
 
         public IEnumerator HideAsync()
         {
-            if (childEffects != null && childEffects.Length > 0)
-            {
-                foreach (var effect in childEffects)
-                {
-                    effect.PrepareHide();
-                }
-            }
+            IdleState();
             
-            director.Play(hide, DirectorWrapMode.None);
+            director.Play();
+            director.timeUpdateMode = DirectorUpdateMode.GameTime;
 
-            return new WaitForDirector(director);
+            var waitForDirector = new WaitForDirector(director);
+            StartCoroutine(HideRoutine(waitForDirector));
+            
+            return waitForDirector;
         }
 
-        private void PrepareShow()
+        private void Awake()
+        {
+            hasChildEffects = childEffects != null && childEffects.Length > 0;
+        }
+
+        private void HiddenState()
         {
             director.playableAsset = show;
             director.time = 0.0;
-            director.timeUpdateMode = DirectorUpdateMode.Manual;
             director.Evaluate();
+            director.Pause();
+
+            if (!hasChildEffects) return;
+            
+            foreach (var effect in childEffects)
+            {
+                effect.HiddenState();
+            }
         }
         
-        private void PrepareHide()
+        private void IdleState()
         {
             director.playableAsset = hide;
             director.time = 0.0;
             director.Evaluate();
+            director.Pause();
+            
+            if (!hasChildEffects) return;
+            
+            foreach (var effect in childEffects)
+            {
+                effect.IdleState();
+            }
+        }
+
+        private IEnumerator ShowRoutine(IEnumerator waitForDirector)
+        {
+            yield return waitForDirector;
+            IdleState();
+        }
+        
+        private IEnumerator HideRoutine(IEnumerator waitForDirector)
+        {
+            yield return waitForDirector;
+            HiddenState();
         }
 
 #if UNITY_EDITOR
