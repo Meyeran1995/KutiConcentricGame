@@ -1,12 +1,16 @@
-﻿using Meyham.Collision;
+﻿using System;
+using Meyham.Collision;
 using Meyham.GameMode;
 using Meyham.Player;
+using Meyham.UI;
 using UnityEngine;
 
 namespace Meyham.Set_Up
 {
     public class StartStep : AGameStep
     {
+        [SerializeField] private InGameView inGameView;
+
         private PlayerCollisionResolver collisionResolver;
 
         private PlayerManager playerManager;
@@ -42,6 +46,7 @@ namespace Meyham.Set_Up
 
         private void OnEnable()
         {
+            _ = inGameView.OpenView();
             var players = playerManager.GetPlayers();
 
             if (numberOfPlayers == players.Length)
@@ -65,6 +70,11 @@ namespace Meyham.Set_Up
             
             collisionResolver.SetPlayerCollisions(collisions);
             Deactivate();
+        }
+
+        private void OnDisable()
+        {
+            _ = inGameView.CloseView();
         }
     }
 }

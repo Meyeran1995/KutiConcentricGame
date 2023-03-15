@@ -5,7 +5,7 @@ namespace Meyham.UI
 {
     public class WaitForDirector : IEnumerator
     {
-        private PlayableDirector director;
+        private readonly PlayableDirector director;
         
         public WaitForDirector(PlayableDirector director)
         {

@@ -1,4 +1,5 @@
-﻿using Meyham.Events;
+﻿using System.Collections;
+using Meyham.Events;
 using Meyham.GameMode;
 using Meyham.UI;
 using UnityEngine;
@@ -23,12 +24,6 @@ namespace Meyham.Set_Up
             loop.LinkPlayerManager(LinkPlayerManager);
         }
 
-        public override void Activate()
-        {
-            Alerts.SendAlert("Drücken für Neustart");
-            base.Activate();
-        }
-        
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
@@ -36,19 +31,22 @@ namespace Meyham.Set_Up
 
         private void OnEnable()
         {
+            Alerts.SendAlert("Drücken für Neustart");
             inputEventChannel += OnRestartPressed;
-        }
-
-        private void OnDisable()
-        {
-            inputEventChannel -= OnRestartPressed;
         }
 
         private void OnRestartPressed(int input)
         {
+            inputEventChannel -= OnRestartPressed;
             Alerts.ClearAlert();
-            scoreboard.CloseView();
             playerManager.ShufflePlayers();
+            StartCoroutine(EndOfGame());
+        }
+
+        private IEnumerator EndOfGame()
+        {
+            yield return scoreboard.CloseView();
+            
             Deactivate();
         }
     }
