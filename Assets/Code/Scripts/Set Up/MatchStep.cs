@@ -37,8 +37,8 @@ namespace Meyham.Set_Up
             waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
             collisionResolver = FindAnyObjectByType<PlayerCollisionResolver>(FindObjectsInactive.Include);
 
-            inGameView = FindAnyObjectByType<InGameView>();
-            timerUi = FindAnyObjectByType<TimerUi>();
+            inGameView = FindAnyObjectByType<InGameView>(FindObjectsInactive.Include);
+            timerUi = FindAnyObjectByType<TimerUi>(FindObjectsInactive.Include);
         }
 
         public override void Link(GameLoop loop)
@@ -52,7 +52,7 @@ namespace Meyham.Set_Up
             playerManager.DisablePlayers();
             collisionResolver.enabled = false;
             
-            inGameView.CloseView();
+            _ = inGameView.CloseView();
             
             base.Deactivate();
         }
@@ -64,15 +64,12 @@ namespace Meyham.Set_Up
         
         private void OnEnable()
         {
-            inGameView.OpenView();
-            
             currentTime = startingTime;
-            timerUi.ResetTimer();
-            StartCoroutine(TimerRoutine());
             
-            playerManager.EnablePlayers();
-            waveManager.enabled = true;
             collisionResolver.enabled = true;
+            playerManager.EnablePlayers();
+
+            StartCoroutine(WaitForViewToOpen());
         }
 
         private IEnumerator TimerRoutine()
@@ -99,6 +96,16 @@ namespace Meyham.Set_Up
         private void OnLastItemVanished()
         {
             Deactivate();
+        }
+
+        private IEnumerator WaitForViewToOpen()
+        {
+            yield return inGameView.OpenView();
+            
+            timerUi.ResetTimer();
+            StartCoroutine(TimerRoutine());
+            
+            waveManager.enabled = true;
         }
     }
 }

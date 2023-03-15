@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.DataObjects;
+﻿using Meyham.DataObjects;
 using Meyham.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;

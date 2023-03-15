@@ -57,14 +57,10 @@ namespace Meyham.Set_Up
 
         public override void Deactivate()
         {
-            _ = mainMenu.CloseView();
-            
             playerManager.UpdatePlayerCount();
             playerManager.UpdatePlayerColors();
             
-            selectionAnimator.CloseCutscene();
-            
-            base.Deactivate();
+            StartCoroutine(WaitForViewToClose());
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -140,6 +136,13 @@ namespace Meyham.Set_Up
             yield return mainMenu.OpenView();
             inputEventChannel += OnPlayerJoined;
             Alerts.SendAlert("Wählt Eure Farben aus.");
+        }
+
+        private IEnumerator WaitForViewToClose()
+        {
+            yield return mainMenu.CloseView();
+            selectionAnimator.CloseCutscene();
+            base.Deactivate();
         }
 
         private IEnumerator DelayedStart()
