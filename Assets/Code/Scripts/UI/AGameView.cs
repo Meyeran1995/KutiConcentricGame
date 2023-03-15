@@ -23,7 +23,7 @@ namespace Meyham.UI
         public virtual IEnumerator CloseView()
         {
             var waitObject = effect.HideAsync();
-            //StartCoroutine(CloseRoutine(waitObject));
+            StartCoroutine(CloseRoutine(waitObject));
             return waitObject;
         }
 

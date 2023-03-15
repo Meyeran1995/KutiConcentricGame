@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -50,6 +49,7 @@ namespace Meyham.UI
         {
             director.playableAsset = show;
             director.time = 0.0;
+            director.timeUpdateMode = DirectorUpdateMode.Manual;
             director.Evaluate();
         }
         
