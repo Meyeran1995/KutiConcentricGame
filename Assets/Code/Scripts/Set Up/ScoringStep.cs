@@ -56,12 +56,13 @@ namespace Meyham.Set_Up
         private void OnEnable()
         {
             scoreboard.SetScores(playerScores);
-            scoreboard.OpenView();
             StartCoroutine(DisplayScoreboard());
         }
 
         private IEnumerator DisplayScoreboard()
         {
+            yield return scoreboard.OpenView();
+
             yield return new WaitForSeconds(endOfGameDelay);
             
             Deactivate();

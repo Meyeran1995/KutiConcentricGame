@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Meyham.Events;
 using Meyham.Player;
 using Meyham.Set_Up;
@@ -16,19 +17,19 @@ namespace Meyham.UI
 
         private readonly List<int> activePlayers = new(6);
 
-        public override void OpenView()
+        public override IEnumerator OpenView()
         {
             scoreEvent += OnScoreAcquired;
 
-            base.OpenView();
+            return base.OpenView();
         }
 
-        public override void CloseView()
+        public override IEnumerator CloseView()
         {
             ResetScores();
             scoreEvent -= OnScoreAcquired;
 
-            base.CloseView();
+            return base.CloseView();
         }
 
         public void SetTextColor(int playerId, Color color)

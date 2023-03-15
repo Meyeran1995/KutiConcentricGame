@@ -13,18 +13,13 @@ namespace Meyham.UI
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        public virtual void OpenView()
+        public virtual IEnumerator OpenView()
         {
             transform.GetChild(0).gameObject.SetActive(true);
-            _ = effect.ShowAsync();
+            return effect.ShowAsync();
         }
 
-        public virtual void CloseView()
-        {
-            StartCoroutine(CloseRoutine());
-        }
-
-        private IEnumerator CloseRoutine()
+        public virtual IEnumerator CloseView()
         {
             yield return effect.HideAsync();
             

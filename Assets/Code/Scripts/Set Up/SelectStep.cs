@@ -57,7 +57,7 @@ namespace Meyham.Set_Up
 
         public override void Deactivate()
         {
-            mainMenu.CloseView();
+            _ = mainMenu.CloseView();
             
             playerManager.UpdatePlayerCount();
             playerManager.UpdatePlayerColors();
@@ -76,8 +76,7 @@ namespace Meyham.Set_Up
         private void OnEnable()
         {
             activeSlots = new bool[6];
-            inputEventChannel += OnPlayerJoined;
-            mainMenu.OpenView();
+            StartCoroutine(DelayedEnable());
         }
         
         private void OnDisable()
@@ -133,6 +132,13 @@ namespace Meyham.Set_Up
             
             StopCoroutine(delayedStartRoutine);
             delayedStartRoutine = null;
+            Alerts.SendAlert("Wählt Eure Farben aus.");
+        }
+
+        private IEnumerator DelayedEnable()
+        {
+            yield return mainMenu.OpenView();
+            inputEventChannel += OnPlayerJoined;
             Alerts.SendAlert("Wählt Eure Farben aus.");
         }
 

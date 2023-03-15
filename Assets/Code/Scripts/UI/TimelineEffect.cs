@@ -28,7 +28,7 @@ namespace Meyham.UI
 
             director.Play(show, DirectorWrapMode.None);
 
-            return null;
+            return new WaitForDirector(director);
         }
 
         public IEnumerator HideAsync()
@@ -43,7 +43,7 @@ namespace Meyham.UI
             
             director.Play(hide, DirectorWrapMode.None);
 
-            return null;
+            return new WaitForDirector(director);
         }
 
         private void PrepareShow()

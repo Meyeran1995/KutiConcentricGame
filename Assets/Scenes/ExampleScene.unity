@@ -480,7 +480,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "W\xE4hlt Eure Farben."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
@@ -1548,7 +1548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "W\xE4hlt Eure Farben."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d81d151022f808046a52c00f72cb1614, type: 2}
   m_sharedMaterial: {fileID: 8872545449799892169, guid: d81d151022f808046a52c00f72cb1614, type: 2}
