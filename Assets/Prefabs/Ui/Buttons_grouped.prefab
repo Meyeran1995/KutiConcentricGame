@@ -62,6 +62,12 @@ PlayableDirector:
     value: {fileID: 2865934150869078092}
   - key: {fileID: -4653869770189911008, guid: e35761e182ef1fb49bc14a88621ba6de, type: 2}
     value: {fileID: 1923966280394544849}
+  - key: {fileID: 464050926923825780, guid: ecf68fcc76170d74c89121b16709362c, type: 2}
+    value: {fileID: 8273953620780359244}
+  - key: {fileID: 4578271256833476275, guid: ecf68fcc76170d74c89121b16709362c, type: 2}
+    value: {fileID: 2865934150869078092}
+  - key: {fileID: -4653869770189911008, guid: ecf68fcc76170d74c89121b16709362c, type: 2}
+    value: {fileID: 1923966280394544849}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &3141483128129756578
@@ -78,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   director: {fileID: 5558177674705145036}
   show: {fileID: 11400000, guid: e35761e182ef1fb49bc14a88621ba6de, type: 2}
-  hide: {fileID: 0}
+  hide: {fileID: 11400000, guid: ecf68fcc76170d74c89121b16709362c, type: 2}
   childEffects: []
 --- !u!1001 &1854644538634808514
 PrefabInstance:

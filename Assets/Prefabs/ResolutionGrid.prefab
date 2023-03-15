@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3206712627131890942}
   - component: {fileID: 334623547254505621}
   m_Layer: 0
-  m_Name: ResolutionGrid
+  m_Name: 1216x960
   m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -255,6 +255,12 @@ PlayableDirector:
     value: {fileID: 5500670690665306884}
   - key: {fileID: 3906973616340043303, guid: 3c2c64627e8fbc84fa5a3b358e661ae9, type: 2}
     value: {fileID: 259452793904998918}
+  - key: {fileID: 5868953372084969736, guid: 8eec0a42314c54142a620c68235c9a34, type: 2}
+    value: {fileID: 1798542581766073881}
+  - key: {fileID: 832162355730187233, guid: 8eec0a42314c54142a620c68235c9a34, type: 2}
+    value: {fileID: 5500670690665306884}
+  - key: {fileID: 3906973616340043303, guid: 8eec0a42314c54142a620c68235c9a34, type: 2}
+    value: {fileID: 259452793904998918}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &7778404743089055705
@@ -271,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   director: {fileID: 671997416624335373}
   show: {fileID: 11400000, guid: 3c2c64627e8fbc84fa5a3b358e661ae9, type: 2}
-  hide: {fileID: 0}
+  hide: {fileID: 11400000, guid: 8eec0a42314c54142a620c68235c9a34, type: 2}
   childEffects: []
 --- !u!1 &6397508458288284872
 GameObject:
