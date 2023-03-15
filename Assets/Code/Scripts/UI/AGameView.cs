@@ -5,25 +5,32 @@ namespace Meyham.UI
 {
     public abstract class AGameView : MonoBehaviour
     {
+        [SerializeField] private GameObject content;
         [Header("Animation")]
         [SerializeField] private TimelineEffect effect;
 
         protected virtual void Awake()
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            content.SetActive(false);
         }
 
         public virtual IEnumerator OpenView()
         {
-            transform.GetChild(0).gameObject.SetActive(true);
+            content.SetActive(true);
             return effect.ShowAsync();
         }
 
         public virtual IEnumerator CloseView()
         {
-            yield return effect.HideAsync();
-            
-            transform.GetChild(0).gameObject.SetActive(false);
+            var waitObject = effect.HideAsync();
+            //StartCoroutine(CloseRoutine(waitObject));
+            return waitObject;
+        }
+
+        private IEnumerator CloseRoutine(IEnumerator waitForDirector)
+        {
+            yield return waitForDirector;
+            content.SetActive(false);
         }
     }
 }
