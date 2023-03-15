@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.Player;
+﻿using Meyham.Player;
 using Meyham.Set_Up;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,53 +46,5 @@ namespace Meyham.UI
             }
             base.Awake();
         }
-
-#if UNITY_EDITOR
-
-        private void OnValidate()
-        {
-            if(scoreBoardEntries == null) return;
-
-            for (int i = 0; i < scoreBoardEntries.Length; i++)
-            {
-                scoreBoardEntries[i].SetPlayerName(GetPlayerName(i));
-            }
-        }
-
-        private string GetPlayerName(int index)
-        {
-            var designation = (PlayerDesignation)index;
-            string playerName = $"Spieler {index}";
-            
-            switch (designation)
-            {
-                case PlayerDesignation.Orange:
-                    playerName = "Orange";
-                    break;
-                case PlayerDesignation.Green:
-                    playerName = "Grün";
-                    break;
-                case PlayerDesignation.Purple:
-                    playerName = "Lila";
-                    break;
-                case PlayerDesignation.Yellow:
-                    playerName = "Gelb";
-                    break;
-                case PlayerDesignation.Red:
-                    playerName = "Rot";
-                    break;
-                case PlayerDesignation.Cyan:
-                    playerName = "Türkis";
-                    break;
-                default:
-                    Debug.LogWarning($"No name defined for Playerdesignation {designation}");
-                    break;
-            }
-
-            return playerName;
-        }
-
-#endif
-        
     }
 }
