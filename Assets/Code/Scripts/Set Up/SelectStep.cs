@@ -77,7 +77,6 @@ namespace Meyham.Set_Up
         
         private void OnDisable()
         {
-            inputEventChannel -= OnPlayerJoined;
             activeSlots = null;
         }
 
@@ -140,7 +139,10 @@ namespace Meyham.Set_Up
 
         private IEnumerator WaitForViewToClose()
         {
+            inputEventChannel -= OnPlayerJoined;
+
             yield return mainMenu.CloseView();
+            
             selectionAnimator.CloseCutscene();
             base.Deactivate();
         }

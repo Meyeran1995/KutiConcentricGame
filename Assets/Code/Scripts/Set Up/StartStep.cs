@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using Meyham.Collision;
 using Meyham.GameMode;
 using Meyham.Player;
@@ -29,6 +29,13 @@ namespace Meyham.Set_Up
             loop.LinkPlayerManager(LinkPlayerManager);
         }
 
+        public override void Activate()
+        {
+            base.Activate();
+
+            StartCoroutine(WaitForViewToOpen());
+        }
+
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
@@ -44,15 +51,13 @@ namespace Meyham.Set_Up
             }
         }
 
-        private void OnEnable()
+        private void SetUp()
         {
-            _ = inGameView.OpenView();
             var players = playerManager.GetPlayers();
 
             if (numberOfPlayers == players.Length)
             {
                 SetPlayersToStartingPositions(players);
-                Deactivate();
                 return;
             }
 
@@ -69,12 +74,15 @@ namespace Meyham.Set_Up
             }
             
             collisionResolver.SetPlayerCollisions(collisions);
-            Deactivate();
         }
-
-        private void OnDisable()
+        
+        private IEnumerator WaitForViewToOpen()
         {
-            _ = inGameView.CloseView();
+            SetUp();
+
+            yield return inGameView.OpenView();
+            
+            Deactivate();
         }
     }
 }

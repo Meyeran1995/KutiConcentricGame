@@ -51,10 +51,8 @@ namespace Meyham.Set_Up
         {
             playerManager.DisablePlayers();
             collisionResolver.enabled = false;
-            
-            _ = inGameView.CloseView();
-            
-            base.Deactivate();
+
+            StartCoroutine(WaitForViewToClose());
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -65,11 +63,13 @@ namespace Meyham.Set_Up
         private void OnEnable()
         {
             currentTime = startingTime;
+            timerUi.ResetTimer();
+            StartCoroutine(TimerRoutine());
             
             collisionResolver.enabled = true;
+            waveManager.enabled = true;
+            
             playerManager.EnablePlayers();
-
-            StartCoroutine(WaitForViewToOpen());
         }
 
         private IEnumerator TimerRoutine()
@@ -98,14 +98,11 @@ namespace Meyham.Set_Up
             Deactivate();
         }
 
-        private IEnumerator WaitForViewToOpen()
+        private IEnumerator WaitForViewToClose()
         {
-            yield return inGameView.OpenView();
+            yield return inGameView.CloseView();
             
-            timerUi.ResetTimer();
-            StartCoroutine(TimerRoutine());
-            
-            waveManager.enabled = true;
+            base.Deactivate();
         }
     }
 }
