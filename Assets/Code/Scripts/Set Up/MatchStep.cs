@@ -73,8 +73,6 @@ namespace Meyham.Set_Up
 
         private IEnumerator TimerRoutine()
         {
-            timerUi.ResetTimer();
-
             while (currentTime > 0f)
             {
                 yield return new WaitForSeconds(timeUnit);
@@ -88,6 +86,7 @@ namespace Meyham.Set_Up
 
         private void OnTimerElapsed()
         {
+            timerUi.gameObject.SetActive(false);
             waveManager.enabled = false;
         }
         

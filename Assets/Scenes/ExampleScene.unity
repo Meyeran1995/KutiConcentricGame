@@ -3468,10 +3468,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2190778965396223000, guid: cb3aedbc18f7eee449c5e4e5d50f487c, type: 3}
-      propertyPath: m_SceneBindings.Array.size
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 2319610181530367129, guid: cb3aedbc18f7eee449c5e4e5d50f487c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

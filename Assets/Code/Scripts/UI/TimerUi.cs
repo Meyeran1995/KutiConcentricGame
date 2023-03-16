@@ -19,12 +19,6 @@ namespace Meyham.UI
         [ReadOnly, SerializeField] private float startAmount;
 
         public const int NumberOfDots = 37;
-        
-        public void ResetTimer()
-        {
-            timerUiLeft.fillAmount = startAmount;
-            timerUiRight.fillAmount = startAmount;
-        }
 
         public void DepleteTime()
         {
