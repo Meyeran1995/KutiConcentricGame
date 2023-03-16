@@ -37,12 +37,12 @@ namespace Meyham.DataObjects
 
         private void GetDataFromTemplates()
         {
-            var renderer = itemTemplate.transform.GetChild(2).GetComponent<SpriteRenderer>();
+            var renderer = itemTemplate.transform.GetComponentInChildren<SpriteRenderer>();
             Sprite = renderer.sprite;
             
             MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
             
-            var collectiblesRoot = itemTemplate.transform.GetChild(3);
+            var collectiblesRoot = itemTemplate.transform.GetChild(2);
             
             HasPowerUp = collectiblesRoot.TryGetComponent(out PowerUp powerUp) && powerUp.Effect != null;
             
