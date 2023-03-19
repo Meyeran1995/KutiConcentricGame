@@ -84,11 +84,23 @@ namespace Meyham.Set_Up
             startingPositionsProvider = new PlayerStartingPositionProvider(players.Length);
             
             var collisions = new PlayerCollision[numberOfPlayers];
-            var playerIndicesInOrder = playerSelection.PlayerSelectionOrder();
+            var playerNumbersInOrder = playerSelection.PlayerSelectionOrder();
 
             for (int i = 0; i < players.Length; i++)
             {
-                var player = players[playerIndicesInOrder[i]];
+                PlayerController player = players[0];
+                var currentDesignation = (PlayerDesignation)playerNumbersInOrder[i];
+
+                foreach (var controller in players)
+                {
+                    if (controller.Designation != currentDesignation)
+                    {
+                        continue;
+                    }
+
+                    player = controller;
+                }
+                
                 player.SetStartingPosition(startingPositionsProvider.GetStartingPosition(i));
                 collisions[i] = player.GetComponentInChildren<PlayerCollision>(true);
             }
