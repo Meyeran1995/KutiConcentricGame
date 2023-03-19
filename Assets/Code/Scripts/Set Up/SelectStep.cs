@@ -39,8 +39,6 @@ namespace Meyham.Set_Up
             var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>(true);
 
             playerNumberDependables = new IPlayerNumberDependable[dependables.Length + 2];
-
-            playerNumberDependables[1] = playerSelection;
             
             for (int i = 0; i < dependables.Length; i++)
             {
@@ -77,6 +75,7 @@ namespace Meyham.Set_Up
         private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
         {
             playerSelection = playerSelectionAnimation;
+            playerNumberDependables[1] = playerSelection;
         }
         
         private void OnEnable()
