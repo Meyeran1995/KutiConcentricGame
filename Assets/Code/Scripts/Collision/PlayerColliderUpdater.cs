@@ -4,13 +4,7 @@ namespace Meyham.Collision
 {
     public class PlayerColliderUpdater : MonoBehaviour
     {
-        private static Transform spawnTransform;
         private static Vector3 startingScale;
-
-        public void FaceSpawn()
-        {
-            transform.LookAt(spawnTransform);
-        }
 
         public void ModifyCollisionSize(float sizeFactor, int order)
         {
@@ -28,9 +22,7 @@ namespace Meyham.Collision
         }
 
         private void Awake()
-        { 
-            spawnTransform ??= GameObject.FindGameObjectWithTag("Respawn").transform;
-            
+        {
             if(startingScale != Vector3.zero) return;
             
             startingScale = transform.localScale;
