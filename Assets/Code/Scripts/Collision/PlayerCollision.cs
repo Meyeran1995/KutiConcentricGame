@@ -113,7 +113,9 @@ namespace Meyham.Collision
         {
             int order = -1;
             int rayCastHits = FireRaycast(raycastOrigin, rayCastDirection, hits);
-            
+
+        #if UNITY_EDITOR
+        
             if(rayCastHits != 0)
             {
                 order = GetOrderFromRaycastHits(hits, rayCastHits);
@@ -126,6 +128,14 @@ namespace Meyham.Collision
             {
                 Debug.DrawRay(raycastOrigin, rayCastDirection, debugColor,1f);
             }
+            
+        #else
+            
+            if(rayCastHits == 0) return order;
+
+            order = GetOrderFromRaycastHits(hits, rayCastHits);
+            
+        #endif
 
             return order;
         }
