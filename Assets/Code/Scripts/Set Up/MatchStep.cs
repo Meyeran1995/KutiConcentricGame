@@ -33,18 +33,16 @@ namespace Meyham.Set_Up
         public override void SeTup()
         {
             startingTime = TimerUi.NumberOfDots * timeUnit;
-            
-            waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
-            collisionResolver = FindAnyObjectByType<PlayerCollisionResolver>(FindObjectsInactive.Include);
+            lastItemVanished += OnLastItemVanished;
 
-            inGameView = FindAnyObjectByType<InGameView>(FindObjectsInactive.Include);
-            timerUi = FindAnyObjectByType<TimerUi>(FindObjectsInactive.Include);
+            waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
         }
 
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-            lastItemVanished += OnLastItemVanished;
+            loop.LinkInGameView(LinkView);
+            loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
         }
 
         public override void Deactivate()
@@ -58,6 +56,17 @@ namespace Meyham.Set_Up
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
+        }
+        
+        private void LinkCollisionResolver(PlayerCollisionResolver resolver)
+        {
+            collisionResolver = resolver;
+        }
+        
+        private void LinkView(InGameView view)
+        {
+            inGameView = view;
+            timerUi = view.GetComponentInChildren<TimerUi>(true);
         }
         
         private void OnEnable()

@@ -17,7 +17,6 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         [SerializeField] private PlayerColors colors;
         [SerializeField] private GameObject frontEnd;
-        [SerializeField] private PlayerSelectionAnimator selectionAnimator;
 
         [Header("Debug")]
         [ReadOnly, SerializeField] private int numberOfPlayers;
@@ -31,18 +30,17 @@ namespace Meyham.Set_Up
         private IPlayerNumberDependable[] playerNumberDependables;
 
         private PlayerManager playerManager;
-        
+        private PlayerSelectionAnimator playerSelection;
+
         public override void SeTup()
         {
-            mainMenu = FindAnyObjectByType<MainMenuView>();
-            
             coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);
 
-            var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>();
+            var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>(true);
 
             playerNumberDependables = new IPlayerNumberDependable[dependables.Length + 2];
 
-            playerNumberDependables[1] = selectionAnimator;
+            playerNumberDependables[1] = playerSelection;
             
             for (int i = 0; i < dependables.Length; i++)
             {
@@ -53,6 +51,8 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
+            loop.LinkMainMenuView(LinkView);
+            loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
         }
 
         public override void Deactivate()
@@ -68,7 +68,17 @@ namespace Meyham.Set_Up
             playerManager = manager;
             playerNumberDependables[0] = manager;
         }
+        
+        private void LinkView(MainMenuView mainMenuView)
+        {
+            mainMenu = mainMenuView;
+        }
 
+        private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
+        {
+            playerSelection = playerSelectionAnimation;
+        }
+        
         private void OnEnable()
         {
             activeSlots = new bool[6];
@@ -143,7 +153,7 @@ namespace Meyham.Set_Up
 
             yield return mainMenu.CloseView();
             
-            selectionAnimator.CloseCutscene();
+            playerSelection.CloseCutscene();
             base.Deactivate();
         }
 

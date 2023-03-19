@@ -1,6 +1,9 @@
 using System;
+using Meyham.Collision;
+using Meyham.Cutscenes;
 using Meyham.EditorHelpers;
 using Meyham.Set_Up;
+using Meyham.UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,13 +11,22 @@ namespace Meyham.GameMode
 {
     public class GameLoop : MonoBehaviour
     {
-        [Header("References")]
+        [Header("Steps")]
         [SerializeField] private AGameStep[] steps;
+        
+        [Header("References")]
         [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private PlayerSelectionAnimator playerSelectionAnimator;
+        [SerializeField] private PlayerCollisionResolver playerCollisionResolver;
 
+        [Header("Views")]
+        [SerializeField] private MainMenuView mainMenuView; 
+        [SerializeField] private InGameView inGameView; 
+        [SerializeField] private ScoreboardView scoreboardView;
+        
         [Header("Debug")] 
         [SerializeField, ReadOnly] private GameSteps currentStep;
-        
+
         private void Awake()
         {
             Random.InitState(DateTime.Now.Second);
@@ -41,6 +53,31 @@ namespace Meyham.GameMode
         public void LinkPlayerManager(Action<PlayerManager> linkAction)
         {
             linkAction.Invoke(playerManager);
+        }
+
+        public void LinkPlayerCollisionResolver(Action<PlayerCollisionResolver> linkAction)
+        {
+            linkAction.Invoke(playerCollisionResolver);
+        }
+        
+        public void LinkMainMenuView(Action<MainMenuView> linkAction)
+        {
+            linkAction.Invoke(mainMenuView);
+        }
+        
+        public void LinkInGameView(Action<InGameView> linkAction)
+        {
+            linkAction.Invoke(inGameView);
+        }
+        
+        public void LinkScoreboardView(Action<ScoreboardView> linkAction)
+        {
+            linkAction.Invoke(scoreboardView);
+        }
+
+        public void LinkPlayerSelectionAnimation(Action<PlayerSelectionAnimator> linkAction)
+        {
+            linkAction.Invoke(playerSelectionAnimator);
         }
         
         private void OnStepFinished()

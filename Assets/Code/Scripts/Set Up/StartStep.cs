@@ -4,15 +4,14 @@ using Meyham.Cutscenes;
 using Meyham.GameMode;
 using Meyham.Player;
 using Meyham.UI;
-using UnityEngine;
 
 namespace Meyham.Set_Up
 {
     public class StartStep : AGameStep
     {
-        [SerializeField] private InGameView inGameView;
+        private InGameView inGameView;
 
-        [SerializeField] private PlayerSelectionAnimator playerSelection;
+        private PlayerSelectionAnimator playerSelection;
 
         private PlayerCollisionResolver collisionResolver;
 
@@ -24,24 +23,41 @@ namespace Meyham.Set_Up
 
         public override void SeTup()
         {
-            collisionResolver = FindAnyObjectByType<PlayerCollisionResolver>(FindObjectsInactive.Include);
         }
 
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
+            loop.LinkInGameView(LinkView);
+            loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
+            loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
         }
-
+        
         public override void Activate()
         {
             base.Activate();
 
             StartCoroutine(WaitForViewToOpen());
         }
+        
+        private void LinkCollisionResolver(PlayerCollisionResolver resolver)
+        {
+            collisionResolver = resolver;
+        }
 
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
+        }
+        
+        private void LinkView(InGameView gameView)
+        {
+            inGameView = gameView;
+        }
+        
+        private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
+        {
+            playerSelection = playerSelectionAnimation;
         }
 
         private void SetPlayersToStartingPositions(PlayerController[] players)
@@ -54,7 +70,7 @@ namespace Meyham.Set_Up
             }
         }
 
-        private void SetUp()
+        private void GameSetUp()
         {
             var players = playerManager.GetPlayers();
 
@@ -82,7 +98,7 @@ namespace Meyham.Set_Up
         
         private IEnumerator WaitForViewToOpen()
         {
-            SetUp();
+            GameSetUp();
 
             yield return inGameView.OpenView();
             

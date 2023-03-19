@@ -55,10 +55,17 @@ namespace Meyham.Cutscenes
 
         private void OnEnable()
         {
+            activePlayers ??= new List<int>(6);
+
             foreach (var spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.enabled = true;
             }
+        }
+
+        private void OnDisable()
+        {
+            activePlayers = null;
         }
 
         private void UpdateCirclePositions()

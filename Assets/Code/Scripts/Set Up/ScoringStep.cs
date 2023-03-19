@@ -18,17 +18,12 @@ namespace Meyham.Set_Up
 
         public override void SeTup()
         {
-            scoreboard = FindAnyObjectByType<ScoreboardView>(FindObjectsInactive.Include);
         }
 
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-        }
-
-        private void LinkPlayerManager(PlayerManager manager)
-        {
-            playerManager = manager;
+            loop.LinkScoreboardView(LinkView);
         }
 
         public override void Activate()
@@ -51,6 +46,16 @@ namespace Meyham.Set_Up
             }
             
             base.Activate();
+        }
+        
+        private void LinkView(ScoreboardView view)
+        {
+            scoreboard = view;
+        }
+
+        private void LinkPlayerManager(PlayerManager manager)
+        {
+            playerManager = manager;
         }
 
         private void OnEnable()

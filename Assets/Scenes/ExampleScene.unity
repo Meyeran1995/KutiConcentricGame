@@ -775,12 +775,28 @@ MonoBehaviour:
   - {fileID: 839295850}
   - {fileID: 1979414707}
   playerManager: {fileID: 2095045853}
+  playerSelectionAnimator: {fileID: 855478473}
+  playerCollisionResolver: {fileID: 14274503}
+  mainMenuView: {fileID: 1986757959}
+  inGameView: {fileID: 1554081040}
+  scoreboardView: {fileID: 714434187}
   currentStep: 0
 --- !u!212 &613587977 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5198877415105177033, guid: 0965df58a20b7774a87f2875d6ce9e9d, type: 3}
   m_PrefabInstance: {fileID: 1480924414}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &714434187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9208090162020530542, guid: e4b4ec9fb410eb7428f3fb249757e38d, type: 3}
+  m_PrefabInstance: {fileID: 1739299102976626843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd190c447f5436aa7c25cebc63e0ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &757913464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1441,7 +1457,6 @@ MonoBehaviour:
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   colors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
   frontEnd: {fileID: 1912174591}
-  selectionAnimator: {fileID: 855478473}
   numberOfPlayers: 0
 --- !u!1 &1268009118
 GameObject:
@@ -1904,8 +1919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b97e5c6cda47fc8f8bc91eda0c731a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inGameView: {fileID: 1554081040}
-  playerSelection: {fileID: 855478473}
 --- !u!114 &1728234696 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1183880417867884336, guid: 0965df58a20b7774a87f2875d6ce9e9d, type: 3}
@@ -2062,7 +2075,7 @@ GameObject:
   - component: {fileID: 1912174593}
   m_Layer: 5
   m_Name: Frontend
-  m_TagString: FrontEnd
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2538,6 +2551,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1986757959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1886553089, guid: 238acc6cdd655714a9f761a9e42bdf9c, type: 3}
+  m_PrefabInstance: {fileID: 1986757954}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5281254eedf414d8b5f7b83a7426266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035711502
 GameObject:
   m_ObjectHideFlags: 0
