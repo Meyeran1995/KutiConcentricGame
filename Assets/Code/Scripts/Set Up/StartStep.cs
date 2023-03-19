@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Meyham.Collision;
+using Meyham.Cutscenes;
 using Meyham.GameMode;
 using Meyham.Player;
 using Meyham.UI;
@@ -10,6 +11,8 @@ namespace Meyham.Set_Up
     public class StartStep : AGameStep
     {
         [SerializeField] private InGameView inGameView;
+
+        [SerializeField] private PlayerSelectionAnimator playerSelection;
 
         private PlayerCollisionResolver collisionResolver;
 
@@ -65,10 +68,11 @@ namespace Meyham.Set_Up
             startingPositionsProvider = new PlayerStartingPositionProvider(players.Length);
             
             var collisions = new PlayerCollision[numberOfPlayers];
+            var playerIndicesInOrder = playerSelection.PlayerSelectionOrder();
 
             for (int i = 0; i < players.Length; i++)
             {
-                var player = players[i];
+                var player = players[playerIndicesInOrder[i]];
                 player.SetStartingPosition(startingPositionsProvider.GetStartingPosition(i));
                 collisions[i] = player.GetComponentInChildren<PlayerCollision>(true);
             }

@@ -13,6 +13,11 @@ namespace Meyham.Cutscenes
         [SerializeField] private SpriteRenderer[] spriteRenderers;
         
         private List<int> activePlayers;
+
+        public int[] PlayerSelectionOrder()
+        {
+            return activePlayers.ToArray();
+        }
         
         public void OnPlayerJoined(int playerNumber)
         {

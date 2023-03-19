@@ -1905,6 +1905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGameView: {fileID: 1554081040}
+  playerSelection: {fileID: 855478473}
 --- !u!114 &1728234696 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1183880417867884336, guid: 0965df58a20b7774a87f2875d6ce9e9d, type: 3}
