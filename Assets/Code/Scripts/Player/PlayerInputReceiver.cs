@@ -7,6 +7,7 @@ namespace Meyham.Player
     {
         [Header("Input")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
+        [SerializeField] private GenericEventChannelSO<int> inputDoubleTapEventChannel;
         [SerializeField] private GenericEventChannelSO<int> inputCanceledEventChannel;
         
         [Header("References")] 
@@ -16,6 +17,7 @@ namespace Meyham.Player
         private void OnEnable()
         {
             inputEventChannel += OnInputReceived;
+            inputDoubleTapEventChannel += OnDoubleTap;
             inputCanceledEventChannel += OnInputCanceled;
         }
         
@@ -35,6 +37,12 @@ namespace Meyham.Player
         {
             if (input != (int)controller.Designation) return;
             playerMovement.Brake();
+        }
+        
+        private void OnDoubleTap(int input)
+        {
+            if (input != (int)controller.Designation) return;
+            playerMovement.FlipMovementDirection();
         }
     }
 }
