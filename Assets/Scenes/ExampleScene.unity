@@ -1504,7 +1504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPoolSize: 5
   maxPoolSize: 20
-  poolTemplate: {fileID: 6869339708918208851, guid: bb2482fbb5d0bf5479326ea7a300ea1f, type: 3}
+  poolTemplate: {fileID: 6869339708918208851, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
 --- !u!1 &1318953623
 GameObject:
   m_ObjectHideFlags: 0

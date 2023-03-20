@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5841842007433814728}
   - component: {fileID: 5841842007433814729}
   m_Layer: 0
-  m_Name: Spline_Curvy
+  m_Name: Spline_Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5841842007433814729
 MonoBehaviour:
@@ -46,6 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Spline:
     m_EditModeType: 1
+    m_Knots: []
+    m_Length: -1
+    m_MetaData: []
+    m_Closed: 0
+  m_Splines:
+  - m_EditModeType: 1
     m_Knots:
     - Position:
         x: 0.06054139
@@ -66,27 +72,9 @@ MonoBehaviour:
           z: 0
           w: 0.9679332
     - Position:
-        x: -0.31865737
-        y: -0.16842395
-        z: -12.022495
-      TangentIn:
-        x: -0
-        y: -0
-        z: -2.7548556
-      TangentOut:
-        x: 0
+        x: -4
         y: 0
-        z: 2.7548556
-      Rotation:
-        value:
-          x: 0
-          y: -0.757207
-          z: 0
-          w: 0.6531752
-    - Position:
-        x: 0.0016844646
-        y: 3.8315961
-        z: -16.818539
+        z: -16.811176
       TangentIn:
         x: 0
         y: 0
@@ -102,22 +90,31 @@ MonoBehaviour:
           z: 0
           w: -0.09798197
     - Position:
-        x: 1.1199993
-        y: 5.8315954
-        z: -16.818539
+        x: -6.9
+        y: 0
+        z: -17.24
       TangentIn:
-        x: 0
+        x: 0.0000001269117
         y: 0
-        z: 0
+        z: -1.8856294
       TangentOut:
-        x: 0
-        y: 0
-        z: 0
+        x: -0.0000001269117
+        y: -0
+        z: 1.8856294
       Rotation:
         value:
           x: 0
-          y: 0.9947174
+          y: 0.94434255
           z: 0
-          w: -0.102651134
+          w: 0.3289639
     m_Length: -1
+    m_MetaData:
+    - Mode: 4
+      Tension: 0.33333334
+    - Mode: 4
+      Tension: 0.33333334
+    - Mode: 4
+      Tension: 0.33333334
     m_Closed: 0
+  m_Knots:
+    m_KnotsLink: []

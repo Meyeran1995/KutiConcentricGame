@@ -13,81 +13,134 @@ MonoBehaviour:
   m_Name: Six
   m_EditorClassIdentifier: 
   itemTemplate: {fileID: 2859383707417604489, guid: 56bf7da2446c8584ba33306df32f90f4, type: 3}
-  movementTemplate: {fileID: 5841842007433814734, guid: 2adf508ebc9ebdd44adb495abaea932a, type: 3}
-  <Color>k__BackingField: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
+  movementTemplate: {fileID: 6869339708918208851, guid: d39aa3fd167a88345b5426c81a3e0657, type: 3}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 0c80aaac926f0304d9730a4c2d6622e6, type: 3}
   <MovementData>k__BackingField:
   - Position:
-      x: 0.06054139
+      x: 0
       y: 0
-      z: 0.37836742
+      z: 0
     TangentIn:
-      x: 0
-      y: 0
-      z: 0
+      x: -0.19133526
+      y: -0
+      z: 0.25382882
     TangentOut:
-      x: 0
+      x: 0.19133526
       y: 0
-      z: 0
+      z: -0.25382882
     Rotation:
       value:
         x: 0
-        y: 0.2512081
+        y: 0.5637575
         z: 0
-        w: 0.9679332
+        w: 0.82594043
   - Position:
-      x: -0.31872928
+      x: -1
       y: 0
-      z: -11.82336
+      z: -1.6240005
     TangentIn:
       x: -0
       y: -0
-      z: -2.7548556
+      z: -1
     TangentOut:
       x: 0
       y: 0
-      z: 2.715058
+      z: 1
     Rotation:
       value:
         x: 0
-        y: -0.757207
+        y: 0.9952441
         z: 0
-        w: 0.6531752
+        w: 0.09741206
+  - Position:
+      x: 1
+      y: 0
+      z: -3.6140003
+    TangentIn:
+      x: -0
+      y: -0
+      z: -1
+    TangentOut:
+      x: 0
+      y: 0
+      z: 1
+    Rotation:
+      value:
+        x: 0
+        y: 0.9996266
+        z: 0
+        w: -0.02732385
+  - Position:
+      x: -2
+      y: 0
+      z: -7.5200005
+    TangentIn:
+      x: -0
+      y: -0
+      z: -1
+    TangentOut:
+      x: 0
+      y: 0
+      z: 1
+    Rotation:
+      value:
+        x: 0
+        y: 0.9988108
+        z: 0
+        w: 0.048753332
+  - Position:
+      x: 2
+      y: 0
+      z: -11.470001
+    TangentIn:
+      x: -0
+      y: -0
+      z: -1
+    TangentOut:
+      x: 0
+      y: 0
+      z: 1
+    Rotation:
+      value:
+        x: 0
+        y: 0.9981743
+        z: 0
+        w: -0.0604001
   - Position:
       x: -4
       y: 0
-      z: -16.811176
+      z: -16.8
     TangentIn:
-      x: 0
-      y: 0
-      z: 0
-    TangentOut:
-      x: 0
-      y: 0
-      z: 0
-    Rotation:
-      value:
-        x: 0
-        y: 0.99518824
-        z: 0
-        w: -0.09798197
-  - Position:
-      x: -6.9
-      y: 0
-      z: -17.24
-    TangentIn:
-      x: 0.0000001269117
-      y: 0
-      z: -1.8856294
-    TangentOut:
-      x: -0.0000001269117
+      x: -0
       y: -0
-      z: 1.8856294
+      z: -1
+    TangentOut:
+      x: 0
+      y: 0
+      z: 1
     Rotation:
       value:
         x: 0
-        y: 0.94434255
+        y: 0.8573581
         z: 0
-        w: 0.3289639
+        w: -0.5147205
+  - Position:
+      x: -6
+      y: 0
+      z: -16.8
+    TangentIn:
+      x: 0
+      y: 0
+      z: 0
+    TangentOut:
+      x: 0
+      y: 0
+      z: 0
+    Rotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 1
   <PowerUpData>k__BackingField: {fileID: 0}
-  <IsPowerUp>k__BackingField: 0
+  <HasPowerUp>k__BackingField: 0

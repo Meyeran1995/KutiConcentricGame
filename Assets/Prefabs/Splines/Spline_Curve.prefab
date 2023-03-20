@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5841842007433814728}
   - component: {fileID: 5841842007433814729}
   m_Layer: 0
-  m_Name: Spline_Barely_Straight
+  m_Name: Spline_Curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5841842007433814729
 MonoBehaviour:
@@ -46,6 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Spline:
     m_EditModeType: 1
+    m_Knots: []
+    m_Length: -1
+    m_MetaData: []
+    m_Closed: 0
+  m_Splines:
+  - m_EditModeType: 1
     m_Knots:
     - Position:
         x: 0.06054139
@@ -66,27 +72,27 @@ MonoBehaviour:
           z: 0
           w: 0.9679332
     - Position:
-        x: -0.31872928
+        x: -0.31865737
         y: 0
-        z: -11.82336
+        z: -8.09
       TangentIn:
-        x: -0
-        y: -0
-        z: -2.7548556
-      TangentOut:
-        x: 0
+        x: -1.0554657
         y: 0
-        z: 2.715058
+        z: -2.7508054
+      TangentOut:
+        x: 1.0370994
+        y: 0
+        z: 3.673623
       Rotation:
         value:
           x: 0
-          y: -0.757207
+          y: 0.9659258
           z: 0
-          w: 0.6531752
+          w: 0.25881907
     - Position:
-        x: -4
+        x: 4
         y: 0
-        z: -16.811176
+        z: -16.818539
       TangentIn:
         x: 0
         y: 0
@@ -102,22 +108,33 @@ MonoBehaviour:
           z: 0
           w: -0.09798197
     - Position:
-        x: -6.9
+        x: 6.119999
         y: 0
-        z: -17.24
+        z: -16.818539
       TangentIn:
-        x: 0.0000001269117
+        x: 0
         y: 0
-        z: -1.8856294
+        z: 0
       TangentOut:
-        x: -0.0000001269117
-        y: -0
-        z: 1.8856294
+        x: 0
+        y: 0
+        z: 0
       Rotation:
         value:
           x: 0
-          y: 0.94434255
+          y: 0.9947174
           z: 0
-          w: 0.3289639
+          w: -0.102651134
     m_Length: -1
+    m_MetaData:
+    - Mode: 4
+      Tension: 0.33333334
+    - Mode: 4
+      Tension: 0.33333334
+    - Mode: 4
+      Tension: 0.33333334
+    - Mode: 4
+      Tension: 0.33333334
     m_Closed: 0
+  m_Knots:
+    m_KnotsLink: []

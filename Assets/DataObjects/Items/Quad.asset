@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Quad
   m_EditorClassIdentifier: 
   itemTemplate: {fileID: 2147256596431042240, guid: 6f6f0367c0867994081c1935c2ff92f8, type: 3}
-  movementTemplate: {fileID: 5841842007433814734, guid: 2adf508ebc9ebdd44adb495abaea932a, type: 3}
-  <Color>k__BackingField: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
+  movementTemplate: {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 879cf413326971d458dc32e0a6001817, type: 3}
   <MovementData>k__BackingField:
   - Position:
@@ -36,27 +35,27 @@ MonoBehaviour:
         z: 0
         w: 0.9679332
   - Position:
-      x: -0.31872928
+      x: -0.31865737
       y: 0
-      z: -11.82336
+      z: -8.09
     TangentIn:
-      x: -0
-      y: -0
-      z: -2.7548556
-    TangentOut:
-      x: 0
+      x: -1.0554657
       y: 0
-      z: 2.715058
+      z: -2.7508054
+    TangentOut:
+      x: 1.0370994
+      y: 0
+      z: 3.673623
     Rotation:
       value:
         x: 0
-        y: -0.757207
+        y: 0.9659258
         z: 0
-        w: 0.6531752
+        w: 0.25881907
   - Position:
-      x: -4
+      x: 4
       y: 0
-      z: -16.811176
+      z: -16.818539
     TangentIn:
       x: 0
       y: 0
@@ -72,22 +71,22 @@ MonoBehaviour:
         z: 0
         w: -0.09798197
   - Position:
-      x: -6.9
+      x: 6.119999
       y: 0
-      z: -17.24
+      z: -16.818539
     TangentIn:
-      x: 0.0000001269117
+      x: 0
       y: 0
-      z: -1.8856294
+      z: 0
     TangentOut:
-      x: -0.0000001269117
-      y: -0
-      z: 1.8856294
+      x: 0
+      y: 0
+      z: 0
     Rotation:
       value:
         x: 0
-        y: 0.94434255
+        y: 0.9947174
         z: 0
-        w: 0.3289639
+        w: -0.102651134
   <PowerUpData>k__BackingField: {fileID: 0}
-  <IsPowerUp>k__BackingField: 0
+  <HasPowerUp>k__BackingField: 0
