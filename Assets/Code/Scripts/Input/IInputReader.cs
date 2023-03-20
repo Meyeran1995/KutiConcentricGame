@@ -16,6 +16,8 @@ namespace Meyham.Input
 
         public bool AnyKeyUp();
 
+        public bool KeyHeld(int key);
+
         public IEnumerable<int> GetKeysDown();
 
         public IEnumerable<int> GetKeysUp();

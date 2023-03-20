@@ -14,9 +14,12 @@ namespace Meyham.Set_Up
         [SerializeField] private int startDelay;
         
         [Header("References")]
-        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
         [SerializeField] private PlayerColors colors;
         [SerializeField] private GameObject frontEnd;
+        
+        [Header("Events")]
+        [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
+        [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
 
         [Header("Debug")]
         [ReadOnly, SerializeField] private int numberOfPlayers;
@@ -81,6 +84,7 @@ namespace Meyham.Set_Up
         private void OnEnable()
         {
             activeSlots = new bool[6];
+            setHoldInteractionEventChannel.RaiseEvent(false);
             StartCoroutine(DelayedEnable());
         }
         

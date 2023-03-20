@@ -11,8 +11,9 @@ namespace Meyham.Set_Up
 {
     public class MatchStep : AGameStep
     {
-        [Header("References")]
+        [Header("Events")]
         [SerializeField] private VoidEventChannelSO lastItemVanished;
+        [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
         
         [Header("Timer Values")]
         [SerializeField] private FloatValue timeUnit;
@@ -47,6 +48,8 @@ namespace Meyham.Set_Up
 
         public override void Deactivate()
         {
+            setHoldInteractionEventChannel.RaiseEvent(false);
+            
             playerManager.DisablePlayers();
             collisionResolver.enabled = false;
 
@@ -78,6 +81,7 @@ namespace Meyham.Set_Up
             waveManager.enabled = true;
             
             playerManager.EnablePlayers();
+            setHoldInteractionEventChannel.RaiseEvent(true);
         }
 
         private IEnumerator TimerRoutine()

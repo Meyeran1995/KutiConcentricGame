@@ -5,7 +5,8 @@ namespace Meyham.Input
     public class KutiInputReader : IInputReader
     {
         private readonly Dictionary<EKutiButton, int> bindings;
-        private readonly List<int> keysDown, keysUp;
+        private readonly Dictionary<int, EKutiButton> buttonsByBindings;
+        private readonly List<int> keysDown, keysUp, keysHeld;
 
         public KutiInputReader()
         {
@@ -18,9 +19,20 @@ namespace Meyham.Input
                 { EKutiButton.P2_MID, IInputReader.P2MiddleButton },
                 { EKutiButton.P2_RIGHT, IInputReader.P2RightButton }
             };
+            
+            buttonsByBindings = new Dictionary<int, EKutiButton>
+            {
+                { IInputReader.P1LeftButton, EKutiButton.P1_LEFT },
+                { IInputReader.P1MiddleButton, EKutiButton.P1_MID },
+                { IInputReader.P1RightButton, EKutiButton.P1_RIGHT },
+                { IInputReader.P2LeftButton, EKutiButton.P2_LEFT },
+                { IInputReader.P2MiddleButton, EKutiButton.P2_MID },
+                { IInputReader.P2RightButton, EKutiButton.P2_RIGHT }
+            };
 
             keysDown = new List<int>(bindings.Count);
             keysUp = new List<int>(bindings.Count);
+            keysHeld = new List<int>(bindings.Count);
         }
 
         public bool AnyKeyDown() => KutiInput.GetAnyButtonDown();
@@ -30,6 +42,11 @@ namespace Meyham.Input
             PopulateKeysUp();
             
             return keysUp.Count > 0;
+        }
+
+        public bool KeyHeld(int key)
+        {
+            return KutiInput.GetKutiButton(buttonsByBindings[key]);
         }
 
         public IEnumerable<int> GetKeysDown()
