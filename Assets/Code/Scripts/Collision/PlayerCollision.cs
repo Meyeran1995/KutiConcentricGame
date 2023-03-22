@@ -143,10 +143,10 @@ namespace Meyham.Collision
         private IEnumerator TransitionDelay()
         {
             AllowRaycast = false;
-            playerCollider.isTrigger = false;
+            //playerCollider.isTrigger = false;
             yield return new WaitWhile(() => playerOrder.TransitionLocked);
             AllowRaycast = playerOrder.Order > 0;
-            playerCollider.isTrigger = true;
+            //playerCollider.isTrigger = true;
         }
         
         private void Awake()
@@ -156,17 +156,21 @@ namespace Meyham.Collision
         
         private void OnTriggerEnter(Collider other)
         {
-            if(TriggerCollision) return;
-
             var playerCollision = PlayerCollisionHelper.GetPlayerByCollider(other);
             
             int collisionVelocityOrder = playerCollision.VelocityOrder;
 
             if(collisionVelocityOrder > VelocityOrder) return;
             
+            if(collisionVelocityOrder < VelocityOrder)
+            {
+                TriggerCollision = true;
+                return;
+            }
+            
             if(collisionVelocityOrder == VelocityOrder && playerCollision.Velocity > Velocity) return;
 
-            playerCollision.TriggerCollision = true;
+            TriggerCollision = true;
         }
 
         private void OnDisable()
