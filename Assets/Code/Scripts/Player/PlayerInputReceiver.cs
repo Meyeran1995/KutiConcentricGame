@@ -24,6 +24,7 @@ namespace Meyham.Player
         private void OnDisable()
         {
             inputEventChannel -= OnInputReceived;
+            inputDoubleTapEventChannel -= OnDoubleTap;
             inputCanceledEventChannel -= OnInputCanceled;
         }
 
@@ -43,6 +44,7 @@ namespace Meyham.Player
         {
             if (input != (int)controller.Designation) return;
             playerMovement.FlipMovementDirection();
+            Debug.Log("Flipping direction");
         }
     }
 }
