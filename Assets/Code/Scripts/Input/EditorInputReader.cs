@@ -13,22 +13,22 @@ namespace Meyham.Input
         {
             bindings = new Dictionary<KeyCode, int>
             {
-                { KeyCode.A, IInputReader.P1LeftButton },
-                { KeyCode.W, IInputReader.P1MiddleButton },
-                { KeyCode.D, IInputReader.P1RightButton },
-                { KeyCode.H, IInputReader.P2LeftButton },
-                { KeyCode.U, IInputReader.P2MiddleButton },
-                { KeyCode.K, IInputReader.P2RightButton }
+                { KeyCode.A, InputConstants.P1LeftButton },
+                { KeyCode.W, InputConstants.P1MiddleButton },
+                { KeyCode.D, InputConstants.P1RightButton },
+                { KeyCode.H, InputConstants.P2LeftButton },
+                { KeyCode.U, InputConstants.P2MiddleButton },
+                { KeyCode.K, InputConstants.P2RightButton }
             };
             
             keysByBindings = new Dictionary<int, KeyCode>
             {
-                { IInputReader.P1LeftButton, KeyCode.A },
-                { IInputReader.P1MiddleButton, KeyCode.W },
-                { IInputReader.P1RightButton, KeyCode.D },
-                { IInputReader.P2LeftButton, KeyCode.H },
-                { IInputReader.P2MiddleButton, KeyCode.U },
-                { IInputReader.P2RightButton, KeyCode.K }
+                { InputConstants.P1LeftButton, KeyCode.A },
+                { InputConstants.P1MiddleButton, KeyCode.W },
+                { InputConstants.P1RightButton, KeyCode.D },
+                { InputConstants.P2LeftButton, KeyCode.H },
+                { InputConstants.P2MiddleButton, KeyCode.U },
+                { InputConstants.P2RightButton, KeyCode.K }
             };
 
             keysDown = new List<int>(bindings.Count);

@@ -12,22 +12,22 @@ namespace Meyham.Input
         {
             bindings = new Dictionary<EKutiButton, int>
             {
-                { EKutiButton.P1_LEFT, IInputReader.P1LeftButton },
-                { EKutiButton.P1_MID, IInputReader.P1MiddleButton },
-                { EKutiButton.P1_RIGHT, IInputReader.P1RightButton },
-                { EKutiButton.P2_LEFT, IInputReader.P2LeftButton },
-                { EKutiButton.P2_MID, IInputReader.P2MiddleButton },
-                { EKutiButton.P2_RIGHT, IInputReader.P2RightButton }
+                { EKutiButton.P1_LEFT, InputConstants.P1LeftButton },
+                { EKutiButton.P1_MID, InputConstants.P1MiddleButton },
+                { EKutiButton.P1_RIGHT, InputConstants.P1RightButton },
+                { EKutiButton.P2_LEFT, InputConstants.P2LeftButton },
+                { EKutiButton.P2_MID, InputConstants.P2MiddleButton },
+                { EKutiButton.P2_RIGHT, InputConstants.P2RightButton }
             };
             
             buttonsByBindings = new Dictionary<int, EKutiButton>
             {
-                { IInputReader.P1LeftButton, EKutiButton.P1_LEFT },
-                { IInputReader.P1MiddleButton, EKutiButton.P1_MID },
-                { IInputReader.P1RightButton, EKutiButton.P1_RIGHT },
-                { IInputReader.P2LeftButton, EKutiButton.P2_LEFT },
-                { IInputReader.P2MiddleButton, EKutiButton.P2_MID },
-                { IInputReader.P2RightButton, EKutiButton.P2_RIGHT }
+                { InputConstants.P1LeftButton, EKutiButton.P1_LEFT },
+                { InputConstants.P1MiddleButton, EKutiButton.P1_MID },
+                { InputConstants.P1RightButton, EKutiButton.P1_RIGHT },
+                { InputConstants.P2LeftButton, EKutiButton.P2_LEFT },
+                { InputConstants.P2MiddleButton, EKutiButton.P2_MID },
+                { InputConstants.P2RightButton, EKutiButton.P2_RIGHT }
             };
 
             keysDown = new List<int>(bindings.Count);

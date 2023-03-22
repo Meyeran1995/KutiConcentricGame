@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Meyham.Events;
@@ -26,11 +25,7 @@ namespace Meyham.Input
 
         private IInputReader inputReader;
 
-        private readonly Dictionary<int, int> tapCountPerKey = new(2);
-        
-        private readonly Dictionary<int, bool> isHeldPerKey = new(2);
-        
-        private readonly Dictionary<int, bool> holdRoutineIsActive = new(2);
+        private Dictionary<int, KeyInfo> infoPerKey;
 
         private void Awake()
         {
@@ -39,6 +34,16 @@ namespace Meyham.Input
 #else
             inputReader = new KutiInputReader();
 #endif
+
+            infoPerKey = new Dictionary<int, KeyInfo>()
+            {
+                {InputConstants.P1LeftButton, new KeyInfo(InputConstants.P1LeftButton)},
+                {InputConstants.P1MiddleButton, new KeyInfo(InputConstants.P1MiddleButton)},
+                {InputConstants.P1RightButton, new KeyInfo(InputConstants.P1RightButton)},
+                {InputConstants.P2LeftButton, new KeyInfo(InputConstants.P2LeftButton)},
+                {InputConstants.P2MiddleButton, new KeyInfo(InputConstants.P2MiddleButton)},
+                {InputConstants.P2RightButton, new KeyInfo(InputConstants.P2RightButton)}
+            };
         }
 
         private void OnEnable()
@@ -68,25 +73,28 @@ namespace Meyham.Input
         {
             foreach (var key in inputReader.GetKeysUp())
             {
-                if (isHeldPerKey.ContainsKey(key) && !isHeldPerKey[key])
+                var keyInfo = infoPerKey[key];
+                if (!keyInfo.IsHeld)
                 {
                     continue;
                 }
                 
-                isHeldPerKey[key] = false;
+                keyInfo.IsHeld = false;
                 inputCanceledEventChannel.RaiseEvent(key);
             }
             
             foreach (var key in inputReader.GetKeysDown())
             {
-                OnButtonTap(key);
+                var keyInfo = infoPerKey[key];
+
+                OnButtonTap(keyInfo);
                 
-                if (holdRoutineIsActive.ContainsKey(key) && holdRoutineIsActive[key])
+                if (keyInfo.HoldRoutineIsActive)
                 {
                     continue;
                 }
                 
-                StartCoroutine(WaitForHold(key));
+                StartCoroutine(WaitForHold(keyInfo));
             }
         }
 
@@ -98,53 +106,55 @@ namespace Meyham.Input
             }
         }
 
-        private IEnumerator WaitForHold(int key)
+        private IEnumerator WaitForHold(KeyInfo keyInfo)
         {
             float timer = 0f;
-            holdRoutineIsActive[key] = true;
+            keyInfo.HoldRoutineIsActive = true;
 
-            while (timer < holdThreshold && inputReader.KeyHeld(key))
+            while (timer < holdThreshold && inputReader.KeyHeld(keyInfo.ID))
             {
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            holdRoutineIsActive[key] = false;
+            keyInfo.HoldRoutineIsActive = false;
             
-            if (!inputReader.KeyHeld(key))
+            if (!inputReader.KeyHeld(keyInfo.ID))
             {
                 yield break;
             }
             
             Debug.Log("Hold");
-            inputEventChannel.RaiseEvent(key);
-            isHeldPerKey[key] = true;
-            holdRoutineIsActive[key] = false;
+            inputEventChannel.RaiseEvent(keyInfo.ID);
             
-            tapCountPerKey[key] = 0;
+            keyInfo.IsHeld = true;
+            keyInfo.HoldRoutineIsActive = false;
+            keyInfo.TapCount = 0;
             Debug.Log("Tap count reset");
         }
 
-        private void OnButtonTap(int key)
+        private void OnButtonTap(KeyInfo keyInfo)
         {
-            if (!tapCountPerKey.TryAdd(key, 1) && tapCountPerKey[key] == 0)
-            {
-                tapCountPerKey[key] = 1;
-            }
-            
-            var tapCount = tapCountPerKey[key];
-            
-            if (tapCount >= 2)
-            {
-                Debug.Log($"Tap {tapCount}");
+            keyInfo.TapCount++;
+            Debug.Log($"Tap {keyInfo.TapCount}");
 
-                inputDoubleTapEventChannel.RaiseEvent(key);
-                tapCountPerKey[key] = 0;
-                return;
+            if (keyInfo.TapCount < 2) return;
+
+            inputDoubleTapEventChannel.RaiseEvent(keyInfo.ID);
+            keyInfo.TapCount = 0;
+        }
+        
+        private class KeyInfo
+        {
+            public bool IsHeld;
+            public bool HoldRoutineIsActive;
+            public int TapCount;
+            public int ID { get; }
+
+            public KeyInfo(int id)
+            {
+                ID = id;
             }
-            
-            Debug.Log($"Tap {tapCount}");
-            tapCountPerKey[key]++;
         }
     }
 }
