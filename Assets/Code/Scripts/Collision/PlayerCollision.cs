@@ -37,10 +37,7 @@ namespace Meyham.Collision
         
         public void FireCollisionRaycasts(RaycastHit[] hits)
         {
-            if(playerOrder.TransitionLocked)
-            {
-                return;
-            }
+            if(playerOrder.TransitionLocked) return;
             
             Vector3 originPos = PlayerCollisionHelper.GetOriginPos();
 
@@ -52,10 +49,7 @@ namespace Meyham.Collision
             
             int newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
             
-            if (newOrder == playerOrder.Order)
-            {
-                return;
-            }
+            if (newOrder == playerOrder.Order) return;
             
             raycastOrigin = transform.position;
             int middleOrder = ComputeOrder(raycastOrigin, raycastOrigin - originPos, hits, Color.green);
@@ -143,10 +137,8 @@ namespace Meyham.Collision
         private IEnumerator TransitionDelay()
         {
             AllowRaycast = false;
-            //playerCollider.isTrigger = false;
             yield return new WaitWhile(() => playerOrder.TransitionLocked);
             AllowRaycast = playerOrder.Order > 0;
-            //playerCollider.isTrigger = true;
         }
         
         private void Awake()
