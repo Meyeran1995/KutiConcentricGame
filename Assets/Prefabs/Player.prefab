@@ -492,7 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3399815780424697885}
   - component: {fileID: 3731849146304716601}
-  - component: {fileID: 324411737580283261}
+  - component: {fileID: 6017693252296670171}
   m_Layer: 6
   m_Name: Player Collision
   m_TagString: Player
@@ -509,7 +509,7 @@ Transform:
   m_GameObject: {fileID: 7125840770204028365}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.25}
+  m_LocalScale: {x: 1.1, y: 1, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4804571318163610814}
@@ -533,13 +533,13 @@ MonoBehaviour:
   collisionSizeFactor: {fileID: 11400000, guid: 9bb670ec7668e8a459d7aad0e0df61c1, type: 2}
   localRaycastOriginLeft: {fileID: 4804571318163610814}
   localRaycastOriginRight: {fileID: 8286625528460377849}
-  playerCollider: {fileID: 324411737580283261}
+  playerCollider: {fileID: 6017693252296670171}
   velocityCalculator: {fileID: 5346232853266400848}
   playerOrder: {fileID: 7474950231064833239}
   <AllowRaycast>k__BackingField: 0
   <TriggerCollision>k__BackingField: 0
---- !u!136 &324411737580283261
-CapsuleCollider:
+--- !u!65 &6017693252296670171
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -556,8 +556,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
