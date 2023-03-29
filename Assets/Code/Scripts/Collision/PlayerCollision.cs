@@ -11,8 +11,8 @@ namespace Meyham.Collision
     {
         [SerializeField] private FloatValue radius, collisionSizeFactor;
         [Header("Raycasts")]
-        [SerializeField] private Transform localRaycastOriginLeft;
-        [SerializeField] private Transform localRaycastOriginRight;
+        [SerializeField] private Vector3 raycastOriginLeft;
+        [SerializeField] private Vector3 raycastOriginRight;
         [Header("References")]
         [SerializeField] private Collider playerCollider;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
@@ -37,21 +37,20 @@ namespace Meyham.Collision
         
         public void FireCollisionRaycasts(RaycastHit[] hits)
         {
-            if(playerOrder.TransitionLocked) return;
-            
             Vector3 originPos = PlayerCollisionHelper.GetOriginPos();
+            Transform playerCollisionTransform = transform;
 
-            Vector3 raycastOrigin = localRaycastOriginLeft.position;
+            Vector3 raycastOrigin = playerCollisionTransform.TransformPoint(raycastOriginLeft);
             int leftOrder = ComputeOrder(raycastOrigin, raycastOrigin - originPos, hits, Color.red);
             
-            raycastOrigin = localRaycastOriginRight.position;
+            raycastOrigin = playerCollisionTransform.TransformPoint(raycastOriginRight);
             int rightOrder = ComputeOrder(raycastOrigin, raycastOrigin - originPos, hits, Color.blue);
-            
+
             int newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
             
             if (newOrder == playerOrder.Order) return;
             
-            raycastOrigin = transform.position;
+            raycastOrigin = playerCollisionTransform.position;
             int middleOrder = ComputeOrder(raycastOrigin, raycastOrigin - originPos, hits, Color.green);
             
             newOrder = Mathf.Max(newOrder, middleOrder + 1);
@@ -93,6 +92,7 @@ namespace Meyham.Collision
             for (int i = 0; i < length; i++)
             {
                 var collision = PlayerCollisionHelper.GetPlayerByCollider(hits[i].collider);
+
                 int hitOrder = collision.playerOrder.Order;
 
                 if (hitOrder <= order) continue;
@@ -176,5 +176,15 @@ namespace Meyham.Collision
         {
             return playerOrder.Order.CompareTo(other.playerOrder.Order);
         }
+
+#if UNITY_EDITOR
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawSphere(transform.TransformPoint(raycastOriginLeft), 0.03f);
+            Gizmos.DrawSphere(transform.TransformPoint(raycastOriginRight), 0.03f);
+        }
+
+#endif
     }
 }
