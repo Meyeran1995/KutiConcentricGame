@@ -246,7 +246,7 @@ MonoBehaviour:
   colliderUpdater: {fileID: 1393740820513245191}
   playerCollision: {fileID: 3731849146304716601}
   <Order>k__BackingField: 0
-  <TransitionLocked>k__BackingField: 0
+  transitionLocked: 0
 --- !u!1 &3343158596831003082
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +447,7 @@ Transform:
   m_GameObject: {fileID: 7125840770204028365}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1, z: 0.25}
+  m_LocalScale: {x: 1, y: 1, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 987279441132426777}
@@ -467,13 +467,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   collisionSizeFactor: {fileID: 11400000, guid: 9bb670ec7668e8a459d7aad0e0df61c1, type: 2}
-  raycastOriginLeft: {x: 0.5, y: 0.25, z: 0}
-  raycastOriginRight: {x: -0.5, y: 0.25, z: 0}
+  raycastOriginForward: {x: -0.45, y: 0.45}
+  raycastOriginDownward: {x: 0.49, y: -0.25}
+  raycastDirectionForward: {x: -1.75, y: -0.26816}
+  raycastDirectionDownward: {x: -0.4, y: -1.676}
   playerCollider: {fileID: 6017693252296670171}
   velocityCalculator: {fileID: 5346232853266400848}
+  movement: {fileID: 3343158596831003080}
   playerOrder: {fileID: 7474950231064833239}
-  <AllowRaycast>k__BackingField: 0
-  <TriggerCollision>k__BackingField: 0
+  <ForwardCollision>k__BackingField: 0
+  <AllowDownwardRaycast>k__BackingField: 0
+  gizmoColorLeft: {r: 0, g: 0.89411765, b: 1, a: 1}
+  gizmoColorRight: {r: 1, g: 0.0698705, b: 0, a: 1}
 --- !u!65 &6017693252296670171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -489,7 +494,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

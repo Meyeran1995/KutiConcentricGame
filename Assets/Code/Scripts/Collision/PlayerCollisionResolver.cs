@@ -51,19 +51,21 @@ namespace Meyham.Collision
 
             foreach (var collision in playerCollisions)
             {
-                if (collision.TriggerCollision)
+                if(collision.AllowForwardRaycast)
                 {
-                    collision.OnTriggerCollision();
-                    continue;
-                }
-
-                if (!collision.AllowRaycast) continue;
+                    collision.FireRayInMovementDirection(hits);
                 
-                collision.FireCollisionRaycasts(hits);
-            }
-
-            foreach (var collision in playerCollisions)
-            {
+                    if (collision.ForwardCollision)
+                    {                
+                        collision.ResolveSameOrderCollision(hits);
+                        collision.UpdateOrder();
+                        continue;
+                    }
+                }
+                
+                if (!collision.AllowDownwardRaycast) continue;
+                
+                collision.FireDownwardCollisionRaycasts(hits);
                 collision.UpdateOrder();
             }
         }

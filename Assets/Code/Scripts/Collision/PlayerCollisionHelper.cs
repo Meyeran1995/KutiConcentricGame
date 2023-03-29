@@ -16,9 +16,19 @@ namespace Meyham.Collision
             return origin.position;
         }
 
-        public static int GetMask(int playerOrder)
+        public static int GetMaskForLowerOrders(int playerOrder)
         {
-            return maskProvider.GetMask(playerOrder);
+            return maskProvider.GetMaskForLowerOrders(playerOrder);
+        }
+        
+        public static int GetMaskForHigherOrders(int playerOrder)
+        {
+            return maskProvider.GetMaskForHigherOrders(playerOrder);
+        }
+        
+        public static int GetMaskForSameOrder(int playerOrder)
+        {
+            return maskProvider.GetMaskForSameOrder(playerOrder);
         }
         
         public static int GetLayer(int playerOrder)
