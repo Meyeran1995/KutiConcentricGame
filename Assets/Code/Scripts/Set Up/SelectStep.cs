@@ -39,6 +39,7 @@ namespace Meyham.Set_Up
 
         public override void SeTup()
         {
+            activeSlots = new bool[6];
             coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);
 
             var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>(true);
@@ -86,14 +87,8 @@ namespace Meyham.Set_Up
         
         private void OnEnable()
         {
-            activeSlots = new bool[6];
             setHoldInteractionEventChannel.RaiseEvent(false);
             StartCoroutine(DelayedEnable());
-        }
-        
-        private void OnDisable()
-        {
-            activeSlots = null;
         }
 
         private void OnPlayerJoined(int playerNumber)
@@ -160,7 +155,9 @@ namespace Meyham.Set_Up
             yield return mainMenu.CloseView();
             
             playerSelection.CloseCutscene();
+            
             base.Deactivate();
+            Destroy(this);
         }
 
         private IEnumerator DelayedStart()
