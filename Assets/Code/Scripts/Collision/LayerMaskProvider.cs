@@ -2,25 +2,42 @@
 {
     public class LayerMaskProvider
     {
-        private int[] masks;
+        private int[] lowerMasks;
+        private int[] upperMasks;
         
         private const int layer_offset = 6;
 
         public LayerMaskProvider()
         {
-            masks = new int[5];
+            lowerMasks = new int[5];
+            upperMasks = new int[5];
             
-            masks[0] = 1 << layer_offset;
-            for (int i = 1; i < masks.Length; i++)
+            lowerMasks[0] = 1 << layer_offset;
+            for (int i = 1; i < lowerMasks.Length; i++)
             {
                 int targetLayer = 1 << i + layer_offset;
-                masks[i] = masks[i - 1] | targetLayer;
+                lowerMasks[i] = lowerMasks[i - 1] | targetLayer;
+            }
+
+            for (int i = 0; i < lowerMasks.Length; i++)
+            {
+                upperMasks[i] = ~lowerMasks[i];
             }
         }
 
-        public int GetMask(int playerOrder)
+        public int GetMaskForLowerOrders(int playerOrder)
         {
-            return masks[playerOrder - 1];
+            return lowerMasks[playerOrder - 1];
+        }
+        
+        public int GetMaskForSameOrder(int playerOrder)
+        {
+            return 1 << GetLayer(playerOrder);
+        }
+        
+        public int GetMaskForHigherOrders(int playerOrder)
+        {
+            return upperMasks[playerOrder];
         }
 
         public int GetLayer(int playerOrder)

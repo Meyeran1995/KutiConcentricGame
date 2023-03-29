@@ -21,16 +21,20 @@ namespace Meyham.Player
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
 
-        [field: SerializeField, ReadOnly]
-        public bool TransitionLocked { get; private set; }
+        [SerializeField, ReadOnly] private bool transitionLocked;
         
         private bool wasModified;
-        
+
         private const float order_displacement_amount = 32f / 100f;
 
+        public bool IsTransitionLocked()
+        {
+            return transitionLocked;
+        }
+        
         public void IncrementOrder()
         {
-            ++Order;
+            Order++;
             wasModified = true;
             
             if (Order < 5) return;
@@ -46,7 +50,7 @@ namespace Meyham.Player
 
         public void UpdatePlayerOrder()
         {
-            if(!wasModified || TransitionLocked) return;
+            if(!wasModified || transitionLocked) return;
             OrderPlayer();
             wasModified = false;
         }
@@ -84,15 +88,15 @@ namespace Meyham.Player
 
         private void OnDisable()
         {
-            TransitionLocked = false;
+            transitionLocked = false;
             StopAllCoroutines();
         }
 
         private IEnumerator OrderTransition()
         {
-            TransitionLocked = true;
-            yield return new WaitForEndOfFrame();
-            TransitionLocked = false;
+            transitionLocked = true;
+            yield return new WaitForFixedUpdate();
+            transitionLocked = false;
         }
     }
 }

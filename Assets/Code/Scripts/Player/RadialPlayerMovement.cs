@@ -22,6 +22,8 @@ namespace Meyham.Player
         [SerializeField, ReadOnly] private float currentAngle;
         [SerializeField, ReadOnly] private MovementStates movementState;
 
+        public int MovementDirection => movementDirection;
+        
         private const int BaseMovementDirection = -1;
 
         private enum MovementStates

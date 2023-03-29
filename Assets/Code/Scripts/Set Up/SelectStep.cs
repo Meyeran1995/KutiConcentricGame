@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using Meyham.Collision;
 using Meyham.Cutscenes;
 using Meyham.EditorHelpers;
 using Meyham.Events;
@@ -30,23 +32,19 @@ namespace Meyham.Set_Up
         private MainMenuView mainMenu;
 
         private IColoredText[] coloredTexts;
-        private IPlayerNumberDependable[] playerNumberDependables;
+        private List<IPlayerNumberDependable> playerNumberDependables;
 
         private PlayerManager playerManager;
         private PlayerSelectionAnimator playerSelection;
 
         public override void SeTup()
         {
+            activeSlots = new bool[6];
             coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);
 
             var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>(true);
 
-            playerNumberDependables = new IPlayerNumberDependable[dependables.Length + 2];
-            
-            for (int i = 0; i < dependables.Length; i++)
-            {
-                playerNumberDependables[2 + i] = dependables[i];
-            }
+            playerNumberDependables = new List<IPlayerNumberDependable>(dependables);
         }
 
         public override void Link(GameLoop loop)
@@ -54,6 +52,12 @@ namespace Meyham.Set_Up
             loop.LinkPlayerManager(LinkPlayerManager);
             loop.LinkMainMenuView(LinkView);
             loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
+            loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
+        }
+
+        private void LinkCollisionResolver(PlayerCollisionResolver resolver)
+        {
+            playerNumberDependables.Add(resolver);
         }
 
         public override void Deactivate()
@@ -67,7 +71,7 @@ namespace Meyham.Set_Up
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
-            playerNumberDependables[0] = manager;
+            playerNumberDependables.Add(manager);
         }
         
         private void LinkView(MainMenuView mainMenuView)
@@ -78,19 +82,13 @@ namespace Meyham.Set_Up
         private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
         {
             playerSelection = playerSelectionAnimation;
-            playerNumberDependables[1] = playerSelection;
+            playerNumberDependables.Add(playerSelectionAnimation);
         }
         
         private void OnEnable()
         {
-            activeSlots = new bool[6];
             setHoldInteractionEventChannel.RaiseEvent(false);
             StartCoroutine(DelayedEnable());
-        }
-        
-        private void OnDisable()
-        {
-            activeSlots = null;
         }
 
         private void OnPlayerJoined(int playerNumber)
@@ -157,7 +155,9 @@ namespace Meyham.Set_Up
             yield return mainMenu.CloseView();
             
             playerSelection.CloseCutscene();
+            
             base.Deactivate();
+            Destroy(this);
         }
 
         private IEnumerator DelayedStart()
