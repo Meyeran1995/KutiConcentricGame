@@ -1,23 +1,38 @@
 ﻿using System;
+using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.Collision
 {
-    public class PlayerCollisionResolver : MonoBehaviour
+    public class PlayerCollisionResolver : MonoBehaviour, IPlayerNumberDependable
     {
         private RaycastHit[] hits;
         
         private PlayerCollision[] playerCollisions;
 
-        private void Awake()
+        private int playerCount;
+
+        public void OnPlayerJoined(int playerNumber)
         {
-            hits = new RaycastHit[5];
-            enabled = false;
+            playerCount++;
         }
 
+        public void OnPlayerLeft(int playerNumber)
+        {
+            playerCount--;
+        }
+        
         private void OnEnable()
         {
-            hits = new RaycastHit[5];
+            int maximumCollisions = playerCount - 1;
+            
+            if (maximumCollisions == 0)
+            {
+                enabled = false;
+                return;
+            }
+            
+            hits = new RaycastHit[maximumCollisions];
         }
 
         private void OnDisable()
