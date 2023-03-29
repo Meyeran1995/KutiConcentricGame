@@ -32,14 +32,12 @@ namespace Meyham.Set_Up
             loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
             loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
         }
-        
-        public override void Activate()
-        {
-            base.Activate();
 
+        private void OnEnable()
+        {
             StartCoroutine(WaitForViewToOpen());
         }
-        
+
         private void LinkCollisionResolver(PlayerCollisionResolver resolver)
         {
             collisionResolver = resolver;
