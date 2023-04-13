@@ -11,11 +11,11 @@ namespace Meyham.Collision
     {
         [SerializeField] private FloatParameter radius, collisionSizeFactor;
         [Header("Raycast Origins")]
-        [SerializeField] private Vector2 raycastOriginForward;
-        [SerializeField] private Vector2 raycastOriginDownward;
+        [SerializeField] private Vector2Parameter raycastOriginForward;
+        [SerializeField] private Vector2Parameter raycastOriginDownward;
         [Header("Raycast Direction")]
-        [SerializeField] private Vector2 raycastDirectionForward;
-        [SerializeField] private Vector2 raycastDirectionDownward;
+        [SerializeField] private Vector2Parameter raycastDirectionForward;
+        [SerializeField] private Vector2Parameter raycastDirectionDownward;
         [Header("References")]
         [SerializeField] private Collider playerCollider;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
@@ -280,7 +280,7 @@ namespace Meyham.Collision
             var originTransform = transform;
             
             //down
-            var origin = raycastOriginDownward;
+            var origin = raycastOriginDownward.RuntimeValue;
             var originRight = originTransform.TransformPoint(origin);
             origin.x = -origin.x;
             var originLeft = originTransform.TransformPoint(origin);
@@ -298,7 +298,7 @@ namespace Meyham.Collision
             Gizmos.DrawLine(originRight, originRight + originTransform.TransformDirection(flipped));
             
             Gizmos.color = Color.green;
-            flipped = transform.up * raycastDirectionDownward.magnitude;
+            flipped = transform.up * flipped.magnitude;
             flipped = -flipped;
             Gizmos.DrawLine(originTransform.position, originTransform.position + flipped);
 
