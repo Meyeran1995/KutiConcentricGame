@@ -6,7 +6,7 @@
         private int[] upperMasks;
         
         private const int layer_offset = 6;
-
+        
         public LayerMaskProvider()
         {
             lowerMasks = new int[5];
@@ -19,9 +19,17 @@
                 lowerMasks[i] = lowerMasks[i - 1] | targetLayer;
             }
 
-            for (int i = 0; i < lowerMasks.Length; i++)
+            upperMasks[0] = 1 << GetLayer(1);
+
+            for (int i = 2; i < lowerMasks.Length; i++)
             {
-                upperMasks[i] = ~lowerMasks[i];
+                upperMasks[0] |= 1 << GetLayer(i);
+            }
+            
+            for (int i = 1; i < lowerMasks.Length; i++)
+            {
+                int maskForSameOrder = ~GetMaskForSameOrder(i);
+                upperMasks[i] = upperMasks[i - 1] & maskForSameOrder;
             }
         }
 
