@@ -16,7 +16,7 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
         
         [Header("Timer Values")]
-        [SerializeField] private FloatValue timeUnit;
+        [SerializeField] private FloatParameter timeUnit;
         [SerializeField, ReadOnly] private float currentTime;
 
         private TimerUi timerUi;

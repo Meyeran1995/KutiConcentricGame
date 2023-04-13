@@ -2,11 +2,9 @@
 
 namespace Meyham.DataObjects
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/FloatValue")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/FloatParameter")]
     public class FloatParameter : ParameterSO<float>
     {
-        public static float operator +(FloatParameter a) => +a.RuntimeValue;
-
         public static float operator -(FloatParameter a) => -a.RuntimeValue;
         
         public static float operator +(FloatParameter a, FloatParameter b) => a.RuntimeValue + b.RuntimeValue;

@@ -10,8 +10,8 @@ namespace Meyham.Cutscenes
         [SerializeField] private Transform outerPivot;
         
         [Header("Values")]
-        [SerializeField] private FloatValue rotationSpeed;
-        [SerializeField] private FloatValue outerStartingRotation;
+        [SerializeField] private FloatParameter rotationSpeed;
+        [SerializeField] private FloatParameter outerStartingRotation;
         
         [Header("Debug")]
         [SerializeField, ReadOnly] private float lerpOuter;

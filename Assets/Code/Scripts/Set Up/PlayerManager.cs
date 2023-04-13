@@ -100,7 +100,7 @@ namespace Meyham.Set_Up
 
 #if UNITY_EDITOR
 
-        [Header("Debug"), SerializeField] private FloatValue radius;
+        [Header("Debug"), SerializeField] private FloatParameter radius;
 
         private void OnDrawGizmos()
         {

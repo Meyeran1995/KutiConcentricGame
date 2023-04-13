@@ -9,7 +9,7 @@ namespace Meyham.Collision
 {
     public class PlayerCollision : MonoBehaviour, IComparable<PlayerCollision>
     {
-        [SerializeField] private FloatValue radius, collisionSizeFactor;
+        [SerializeField] private FloatParameter radius, collisionSizeFactor;
         [Header("Raycast Origins")]
         [SerializeField] private Vector2 raycastOriginForward;
         [SerializeField] private Vector2 raycastOriginDownward;

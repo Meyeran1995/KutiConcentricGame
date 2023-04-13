@@ -9,7 +9,7 @@ namespace Meyham.Player
     public class PlayerOrder : MonoBehaviour
     {
         [Header("Properties")]
-        [SerializeField] private FloatValue sizeFactor;
+        [SerializeField] private FloatParameter sizeFactor;
         [Header("References")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Rigidbody playerRigidbody;

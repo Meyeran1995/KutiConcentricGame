@@ -7,8 +7,8 @@ namespace Meyham.Player
     public class RadialPlayerMovement : MonoBehaviour
     {
         [Header("Circle")]
-        [SerializeField] private FloatValue angleGain;
-        [SerializeField] private FloatValue radius;
+        [SerializeField] private FloatParameter angleGain;
+        [SerializeField] private FloatParameter radius;
         
         [Header("References")]
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;

@@ -9,7 +9,7 @@ namespace Meyham.Items
     public class ItemMovement : MonoBehaviour
     {
         [Header("Properties")]
-        [SerializeField] private FloatValue speed;
+        [SerializeField] private FloatParameter speed;
         
         [Header("References")]
         [SerializeField] private SplineFollower splineFollower;

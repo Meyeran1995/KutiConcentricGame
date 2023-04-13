@@ -12,7 +12,7 @@ namespace Meyham.UI
         [SerializeField] private Image timerUiLeft;
 
         [Header("Properties")]
-        [SerializeField] private FloatValue fillPerUnit;
+        [SerializeField] private FloatParameter fillPerUnit;
         [SerializeField] private int startingCircleOffset = 1;
         
         [Header("Debug")]
