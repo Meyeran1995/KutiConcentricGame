@@ -1,4 +1,5 @@
-﻿using Meyham.EditorHelpers;
+﻿using System.Collections;
+using Meyham.EditorHelpers;
 using Meyham.GameMode;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ namespace Meyham.Items
     public class ItemCollision : MonoBehaviour
     {
         [SerializeField] private Collider itemCollider;
+        [Space]
+        [SerializeField] private SplineFollower splineFollower;
+        [SerializeField] private ItemTweeningAnimation tweenAnimation;
 
         [Header("Collectibles")]
         [SerializeField] private ACollectible score;
@@ -47,10 +51,10 @@ namespace Meyham.Items
             if (!incomingObject.CompareTag("Player")) return;
 
             itemCollider.isTrigger = false;
+            splineFollower.Pause();
             
             DistributeCollectibles(incomingObject);
-            
-            spawner.ReleaseCollectible(transform.parent.gameObject);
+            StartCoroutine(WaitForShrinkAnimation());
         }
 
         private void DistributeCollectibles(GameObject receiver)
@@ -60,6 +64,13 @@ namespace Meyham.Items
             if (!HasPowerUp) return;
             
             powerUp.Collect(receiver);
+        }
+
+        private IEnumerator WaitForShrinkAnimation()
+        {
+            yield return tweenAnimation.TweenShrink();
+            
+            spawner.ReleaseCollectible(transform.parent.gameObject);
         }
 
 #if UNITY_EDITOR

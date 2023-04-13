@@ -82,6 +82,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 894932826824173693}
   toScore: {fileID: 11400000, guid: 7bc197e9b0a6d574fba305fc3435c2a4, type: 2}
   scoring: {fileID: 4181914751566992395}
+  tweeningAnimation: {fileID: 5401221051155842801}
 --- !u!1 &3395559192917456297
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3531844089078837481}
+  - component: {fileID: 5401221051155842801}
   - component: {fileID: 894932826824173693}
   m_Layer: 0
   m_Name: Fill
@@ -114,6 +116,20 @@ Transform:
   m_Father: {fileID: 2291004389240496477}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5401221051155842801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3395559192917456297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04598621644d02c4da47b3145c882af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growTime: 0.75
+  shrinkTime: 0.25
 --- !u!212 &894932826824173693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -292,6 +308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemCollider: {fileID: 2510469800630276338}
+  splineFollower: {fileID: 7777015892368765881}
+  tweenAnimation: {fileID: 5401221051155842801}
   score: {fileID: 4181914751566992395}
   powerUp: {fileID: 5616454385434641653}
   <HasPowerUp>k__BackingField: 0
