@@ -28,8 +28,9 @@ namespace Meyham.Collision
         [field: SerializeField, ReadOnly]
         public bool AllowDownwardRaycast { get; private set; }
 
-        public bool AllowForwardRaycast => allowForwardRaycast &&velocityCalculator.VelocityOrder > 0;
+        public bool AllowForwardRaycast => allowForwardRaycast && velocityCalculator.VelocityOrder > 0;
 
+        [SerializeField, ReadOnly]
         private bool allowForwardRaycast;
         
         public void ResolveSameOrderCollision(RaycastHit[] hits)
@@ -257,10 +258,14 @@ namespace Meyham.Collision
 
         private void OnDisable()
         {
-            allowForwardRaycast = true;
             AllowDownwardRaycast = false;
             ForwardCollision = false;
             StopAllCoroutines();
+        }
+
+        private void OnEnable()
+        {
+            allowForwardRaycast = true;
         }
 
         public int CompareTo(PlayerCollision other)
