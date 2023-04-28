@@ -20,7 +20,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <!--
         <receiver
             android:name="com.dnomad.uaoflibrary.BootReceiver"
             android:enabled="true"
@@ -30,7 +29,6 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        -->
     </application>
 
 </manifest>
