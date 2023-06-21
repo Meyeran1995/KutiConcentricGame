@@ -477,6 +477,7 @@ MonoBehaviour:
   playerOrder: {fileID: 7474950231064833239}
   <ForwardCollision>k__BackingField: 0
   <AllowDownwardRaycast>k__BackingField: 0
+  allowForwardRaycast: 0
   gizmoColorLeft: {r: 0, g: 0.89411765, b: 1, a: 1}
   gizmoColorRight: {r: 1, g: 0.0698705, b: 0, a: 1}
 --- !u!65 &6017693252296670171
