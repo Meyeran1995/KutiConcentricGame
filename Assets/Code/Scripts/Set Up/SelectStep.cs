@@ -37,7 +37,7 @@ namespace Meyham.Set_Up
         private PlayerManager playerManager;
         private PlayerSelectionAnimator playerSelection;
 
-        public override void SeTup()
+        public override void Setup()
         {
             activeSlots = new bool[6];
             coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);

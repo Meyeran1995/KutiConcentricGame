@@ -31,7 +31,7 @@ namespace Meyham.Set_Up
         
         private float startingTime;
 
-        public override void SeTup()
+        public override void Setup()
         {
             startingTime = TimerUi.NumberOfDots * timeUnit;
             lastItemVanished += OnLastItemVanished;

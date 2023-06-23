@@ -26,7 +26,6 @@ namespace Meyham.UI
 
         public override IEnumerator CloseView()
         {
-            ResetScores();
             scoreEvent -= OnScoreAcquired;
 
             return base.CloseView();

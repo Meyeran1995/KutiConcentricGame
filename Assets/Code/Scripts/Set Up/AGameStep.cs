@@ -8,7 +8,7 @@ namespace Meyham.Set_Up
     {
         public event Action StepFinished;
             
-        public abstract void SeTup();
+        public abstract void Setup();
 
         public abstract void Link(GameLoop loop);
 

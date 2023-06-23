@@ -34,7 +34,7 @@ namespace Meyham.GameMode
             
             foreach (var step in steps)
             {
-                step.SeTup();
+                step.Setup();
             }
         }
 

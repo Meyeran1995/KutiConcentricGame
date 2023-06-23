@@ -21,7 +21,7 @@ namespace Meyham.Set_Up
 
         private int numberOfPlayers;
 
-        public override void SeTup()
+        public override void Setup()
         {
         }
 

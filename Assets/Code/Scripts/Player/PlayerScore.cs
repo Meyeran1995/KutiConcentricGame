@@ -20,8 +20,8 @@ namespace Meyham.Player
 
         public void ResetScore() => score = 0;
 
-        public string GetScoreText() => Mathf.RoundToInt(score).ToString();
+        public string GetScoreText() => GetScore().ToString();
 
-        public float GetScore() => Mathf.RoundToInt(score);
+        public int GetScore() => Mathf.RoundToInt(score);
     }
 }

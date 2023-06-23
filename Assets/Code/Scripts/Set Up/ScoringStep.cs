@@ -16,7 +16,7 @@ namespace Meyham.Set_Up
         
         private PlayerScore[] playerScores;
 
-        public override void SeTup()
+        public override void Setup()
         {
         }
 
@@ -60,13 +60,14 @@ namespace Meyham.Set_Up
 
         private void OnEnable()
         {
-            scoreboard.SetScores(playerScores);
             StartCoroutine(DisplayScoreboard());
         }
 
         private IEnumerator DisplayScoreboard()
         {
             yield return scoreboard.OpenView();
+
+            yield return scoreboard.CountUpScores(playerScores);
 
             yield return new WaitForSeconds(endOfGameDelay);
             

@@ -14,7 +14,7 @@ namespace Meyham.Set_Up
 
         private ScoreboardView scoreboard;
         
-        public override void SeTup()
+        public override void Setup()
         {
         }
 

@@ -1585,3 +1585,4 @@ MonoBehaviour:
   - {fileID: 5240081700842260682}
   - {fileID: 6996458885471468872}
   - {fileID: 3258626099454694105}
+  countUpSpeed: 5
