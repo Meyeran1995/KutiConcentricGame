@@ -51,6 +51,7 @@ namespace Meyham.Set_Up
         private void LinkView(ScoreboardView view)
         {
             scoreboard = view;
+            scoreboard.Clean();
         }
 
         private void LinkPlayerManager(PlayerManager manager)
