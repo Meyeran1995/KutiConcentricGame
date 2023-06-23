@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Meyham.UI
@@ -26,6 +27,8 @@ namespace Meyham.UI
             StartCoroutine(CloseRoutine(waitObject));
             return waitObject;
         }
+        
+        public abstract void Clean();
 
         private IEnumerator CloseRoutine(IEnumerator waitForDirector)
         {

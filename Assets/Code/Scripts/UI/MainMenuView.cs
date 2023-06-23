@@ -17,5 +17,10 @@ namespace Meyham.UI
         {
             playerToggles[playerNumber].ToggleImage();
         }
+
+        public override void Clean()
+        {
+            playerToggles = null;
+        }
     }
 }

@@ -155,9 +155,9 @@ namespace Meyham.Set_Up
             yield return mainMenu.CloseView();
             
             playerSelection.CloseCutscene();
+            mainMenu.Clean();
             
             base.Deactivate();
-            Destroy(this);
         }
 
         private IEnumerator DelayedStart()

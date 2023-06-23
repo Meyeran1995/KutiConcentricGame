@@ -48,6 +48,14 @@ namespace Meyham.UI
             activePlayers.Remove(playerNumber);
         }
 
+        public override void Clean()
+        {
+            foreach (var player in activePlayers)
+            {
+                scoreTexts[player].text = "0";
+            }
+        }
+        
         protected override void Awake()
         {
             foreach (var text in scoreTexts)
@@ -60,14 +68,6 @@ namespace Meyham.UI
         private void OnScoreAcquired(PlayerScore scoringPlayer)
         {
             scoreTexts[(int)scoringPlayer.Designation].text = scoringPlayer.GetScoreText();
-        }
-
-        private void ResetScores()
-        {
-            foreach (var player in activePlayers)
-            {
-                scoreTexts[player].text = "0";
-            }
         }
     }
 }

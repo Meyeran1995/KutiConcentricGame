@@ -61,6 +61,16 @@ namespace Meyham.UI
             return new WaitUntil(() => activeTweens[winnerIndex].CurrentScore == winnerScore);
         }
 
+        public override void Clean()
+        {
+            activeTweens = null;
+
+            foreach (var entry in scoreBoardEntries)
+            {
+                entry.SetScore("0");
+            }
+        }
+        
         protected override void Awake()
         {
             foreach (var entry in scoreBoardEntries)
