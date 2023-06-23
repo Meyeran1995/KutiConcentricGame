@@ -3,18 +3,12 @@ using DG.Tweening;
 using Meyham.Player;
 using Meyham.Set_Up;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Meyham.UI
 {
     public class ScoreboardView : AGameView, IColoredText, IPlayerNumberDependable
     {
-        [Header("Layout")]
-        [SerializeField] private float screenWidth;
-        [SerializeField] private HorizontalLayoutGroup layoutGroup;
-        
-        [Header("Template")]
-        [SerializeField] private float templateWidth;
+        [Header("References")]
         [SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
 
         [Header("Parameters")] 
