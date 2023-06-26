@@ -17,13 +17,17 @@ namespace Meyham.GameMode
         private readonly struct CollectibleReferenceCache
         {
             public readonly ItemMovement Movement;
+            public readonly SplineFollower SplineFollower;
             public readonly ItemSpriteController SpriteController;
+            public readonly ItemCollision ItemCollision;
             
-            public CollectibleReferenceCache(ItemMovement movement,
-                ItemSpriteController spriteController)
+            public CollectibleReferenceCache(ItemMovement movement, SplineFollower splineFollower,
+                ItemSpriteController spriteController, ItemCollision itemCollision)
             {
                 Movement = movement;
+                SplineFollower = splineFollower;
                 SpriteController = spriteController;
+                ItemCollision = itemCollision;
             }
         }
         
@@ -33,6 +37,9 @@ namespace Meyham.GameMode
             var cache = referenceCaches[item];
 
             cache.SpriteController.SetSprite(itemData.Sprite);
+            
+            cache.ItemCollision.ReceiveColliderDimensions(itemData.ColliderPosition, 
+                itemData.ColliderRotation, itemData.ColliderScale);
 
             var movement = cache.Movement;
             movement.SetSpline(splineProvider.GetSpline(itemData.MovementData));
@@ -43,7 +50,7 @@ namespace Meyham.GameMode
         
         public void ReleaseCollectible(GameObject collectible)
         {
-            splineProvider.ReleaseSpline(collectible);
+            splineProvider.ReleaseSpline(referenceCaches[collectible].SplineFollower.GetTargetSpline());
             pool.Release(collectible);
             onReleasedEvent.RaiseEvent();
         }
@@ -51,8 +58,10 @@ namespace Meyham.GameMode
         protected override GameObject CreatePooledItem()
         {
             var item = Instantiate(poolTemplate);
-            var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(), 
-                item.GetComponent<ItemSpriteController>());
+            var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(),
+                item.GetComponent<SplineFollower>(),
+                item.GetComponent<ItemSpriteController>(), 
+                item.GetComponentInChildren<ItemCollision>());
             
             referenceCaches.Add(item, cache);
             

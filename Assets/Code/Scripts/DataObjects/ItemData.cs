@@ -1,4 +1,5 @@
 ﻿using Meyham.EditorHelpers;
+using Meyham.Items;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -15,6 +16,15 @@ namespace Meyham.DataObjects
 
         [field: SerializeField, ReadOnly]
         public BezierKnot[] MovementData { get; private set; }
+        
+        [field: SerializeField, ReadOnly]
+        public Vector3 ColliderPosition { get; private set; }
+        
+        [field: SerializeField, ReadOnly]
+        public Quaternion ColliderRotation { get; private set; }
+        
+        [field: SerializeField, ReadOnly]
+        public Vector3 ColliderScale { get; private set; }
 
         private void OnEnable()
         {
@@ -34,6 +44,12 @@ namespace Meyham.DataObjects
             Sprite = renderer.sprite;
             
             MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
+
+            var itemCollisionTransform = itemTemplate.GetComponentInChildren<ItemCollision>().transform;
+
+            ColliderPosition = itemCollisionTransform.localPosition;
+            ColliderRotation = itemCollisionTransform.localRotation;
+            ColliderScale = itemCollisionTransform.localScale;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Meyham.Items;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Splines;
 
 namespace Meyham.GameMode
@@ -14,12 +13,10 @@ namespace Meyham.GameMode
             return spline;
         }
 
-        public void ReleaseSpline(GameObject collectible)
+        public void ReleaseSpline(SplineContainer collectibleSpline)
         {
-            var spline = collectible.GetComponent<SplineFollower>().GetTargetSpline();
-            
-            spline.Spline.Clear();
-            pool.Release(spline.gameObject);
+            collectibleSpline.Spline.Clear();
+            pool.Release(collectibleSpline.gameObject);
         }
 
         public SplineContainer GetSpline(BezierKnot[] knots)

@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using Meyham.EditorHelpers;
 using Meyham.GameMode;
 using UnityEngine;
 
 namespace Meyham.Items
 {
-    [RequireComponent(typeof(Collider))]
     public class ItemCollision : MonoBehaviour
     {
         [Header("References")]
@@ -18,6 +16,15 @@ namespace Meyham.Items
 
         private static CollectibleSpawner spawner;
 
+        public void ReceiveColliderDimensions(Vector3 localPosition, Quaternion localRotation, 
+            Vector3 localScale)
+        {
+            var collisionTransform = transform;
+            collisionTransform.localPosition = localPosition;
+            collisionTransform.localRotation = localRotation;
+            collisionTransform.localScale = localScale;
+        }
+        
         private void Awake()
         {
             spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
