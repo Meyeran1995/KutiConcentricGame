@@ -16,7 +16,7 @@ namespace Meyham.GameMode
 
         public void ReleaseSpline(GameObject collectible)
         {
-            var spline = collectible.GetComponent<SplineFollower>().SplineContainer;
+            var spline = collectible.GetComponent<SplineFollower>().GetTargetSpline();
             
             spline.Spline.Clear();
             pool.Release(spline.gameObject);

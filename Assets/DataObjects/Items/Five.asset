@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
   m_Name: Five
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 6824879085356507670, guid: 4a85c702ae1da2c49b13547c26b41eee, type: 3}
+  itemTemplate: {fileID: 7739010823540788411, guid: 4a85c702ae1da2c49b13547c26b41eee, type: 3}
   movementTemplate: {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: cebb7e7ebc367e34b91efa6dca58b8f6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 79e4b67a3e2d2d543b06522c190e94f1, type: 3}
   <MovementData>k__BackingField:
   - Position:
       x: 0.06054139
@@ -88,5 +88,3 @@ MonoBehaviour:
         y: 0.9947174
         z: 0
         w: -0.102651134
-  <PowerUpData>k__BackingField: {fileID: 0}
-  <HasPowerUp>k__BackingField: 0

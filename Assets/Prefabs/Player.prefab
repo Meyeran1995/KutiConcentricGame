@@ -71,7 +71,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6194956205557232221}
   - component: {fileID: 8487728114132630084}
-  - component: {fileID: 9036680657733790180}
   - component: {fileID: 1393740820513245191}
   m_Layer: 0
   m_Name: Item Collision
@@ -116,20 +115,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.5}
---- !u!114 &9036680657733790180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566106488942533806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee13eee62dc94a2587d43d819b2d9e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  negativePowerUpEvent: {fileID: 11400000, guid: be1eb9356411e2d45bd23c5a151bd634, type: 2}
-  target: {fileID: 3343158596831003082}
 --- !u!114 &1393740820513245191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +268,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:

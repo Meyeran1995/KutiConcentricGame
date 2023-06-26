@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
   m_Name: Six
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 2859383707417604489, guid: 56bf7da2446c8584ba33306df32f90f4, type: 3}
+  itemTemplate: {fileID: 1332564507713462052, guid: 56bf7da2446c8584ba33306df32f90f4, type: 3}
   movementTemplate: {fileID: 6869339708918208851, guid: d39aa3fd167a88345b5426c81a3e0657, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 0c80aaac926f0304d9730a4c2d6622e6, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 79e4b67a3e2d2d543b06522c190e94f1, type: 3}
   <MovementData>k__BackingField:
   - Position:
       x: 0
       y: 0
       z: 0
     TangentIn:
-      x: -0.19133526
+      x: -0.5263558
       y: -0
-      z: 0.25382882
+      z: 0.026967585
     TangentOut:
-      x: 0.19133526
+      x: 0.5263558
       y: 0
-      z: -0.25382882
+      z: -0.026967585
     Rotation:
       value:
         x: 0
@@ -35,27 +35,9 @@ MonoBehaviour:
         z: 0
         w: 0.82594043
   - Position:
-      x: -1
-      y: 0
-      z: -1.6240005
-    TangentIn:
-      x: -0
-      y: -0
-      z: -1
-    TangentOut:
-      x: 0
-      y: 0
-      z: 1
-    Rotation:
-      value:
-        x: 0
-        y: 0.9952441
-        z: 0
-        w: 0.09741206
-  - Position:
       x: 1
       y: 0
-      z: -3.6140003
+      z: -3
     TangentIn:
       x: -0
       y: -0
@@ -71,9 +53,9 @@ MonoBehaviour:
         z: 0
         w: -0.02732385
   - Position:
-      x: -2
+      x: -1.5
       y: 0
-      z: -7.5200005
+      z: -6
     TangentIn:
       x: -0
       y: -0
@@ -89,9 +71,9 @@ MonoBehaviour:
         z: 0
         w: 0.048753332
   - Position:
-      x: 2
+      x: 1.5
       y: 0
-      z: -11.470001
+      z: -10
     TangentIn:
       x: -0
       y: -0
@@ -142,5 +124,3 @@ MonoBehaviour:
         y: 0
         z: 0
         w: 1
-  <PowerUpData>k__BackingField: {fileID: 0}
-  <HasPowerUp>k__BackingField: 0

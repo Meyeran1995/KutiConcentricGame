@@ -19,28 +19,11 @@ namespace Meyham.GameMode
             public readonly ItemMovement Movement;
             public readonly ItemSpriteController SpriteController;
             
-            public bool HasPowerUp => collision.HasPowerUp;
-
-            private readonly ItemCollision collision;
-            
-            public CollectibleReferenceCache(ItemCollision collision,
-                ItemMovement movement,
+            public CollectibleReferenceCache(ItemMovement movement,
                 ItemSpriteController spriteController)
             {
-                this.collision = collision;
-                
                 Movement = movement;
                 SpriteController = spriteController;
-            }
-
-            public void AddPowerUp(APowerUpEffect powerUpEffect)
-            {
-                collision.SetPowerUpEffect(powerUpEffect);
-            }
-            
-            public void RemovePowerUp()
-            {
-                collision.RemovePowerUpEffect();
             }
         }
         
@@ -56,10 +39,6 @@ namespace Meyham.GameMode
             movement.RestartMovement();
 
             item.SetActive(true);
-            
-            if (!itemData.HasPowerUp) return;
-            
-            cache.AddPowerUp(itemData.PowerUpData);
         }
         
         public void ReleaseCollectible(GameObject collectible)
@@ -72,23 +51,12 @@ namespace Meyham.GameMode
         protected override GameObject CreatePooledItem()
         {
             var item = Instantiate(poolTemplate);
-            var cache = new CollectibleReferenceCache(item.GetComponentInChildren<ItemCollision>(),
-                item.GetComponent<ItemMovement>(), item.GetComponent<ItemSpriteController>());
+            var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(), 
+                item.GetComponent<ItemSpriteController>());
             
             referenceCaches.Add(item, cache);
             
             return item;
-        }
-
-        protected override void OnReturnedToPool(GameObject item)
-        {
-            item.SetActive(false);
-
-            var cache = referenceCaches[item];
-            
-            if (!cache.HasPowerUp) return;
-            
-            cache.RemovePowerUp();
         }
 
         protected override void OnDestroyPoolObject(GameObject item)

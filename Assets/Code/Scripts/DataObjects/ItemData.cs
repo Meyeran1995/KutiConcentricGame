@@ -1,5 +1,4 @@
 ﻿using Meyham.EditorHelpers;
-using Meyham.Items;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -16,12 +15,6 @@ namespace Meyham.DataObjects
 
         [field: SerializeField, ReadOnly]
         public BezierKnot[] MovementData { get; private set; }
-
-        [field: SerializeField, ReadOnly]
-        public APowerUpEffect PowerUpData { get; private set; }
-
-        [field: SerializeField, ReadOnly]
-        public bool HasPowerUp { get; private set; }
 
         private void OnEnable()
         {
@@ -41,14 +34,6 @@ namespace Meyham.DataObjects
             Sprite = renderer.sprite;
             
             MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
-            
-            var collectiblesRoot = itemTemplate.transform.GetChild(2);
-            
-            HasPowerUp = collectiblesRoot.TryGetComponent(out PowerUp powerUp) && powerUp.Effect != null;
-            
-            if(!HasPowerUp) return;
-            
-            PowerUpData = powerUp.Effect;
         }
     }
 }

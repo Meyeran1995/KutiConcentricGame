@@ -8,32 +8,16 @@ namespace Meyham.Items
     [RequireComponent(typeof(Collider))]
     public class ItemCollision : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private Collider itemCollider;
         [Space]
         [SerializeField] private SplineFollower splineFollower;
         [SerializeField] private ItemTweeningAnimation tweenAnimation;
-
-        [Header("Collectibles")]
+        [Space]
         [SerializeField] private ACollectible score;
-        [SerializeField] private PowerUp powerUp;
-
-        [field: SerializeField, ReadOnly]
-        public bool HasPowerUp { get; private set; }
 
         private static CollectibleSpawner spawner;
 
-        public void SetPowerUpEffect(APowerUpEffect effect)
-        {
-            powerUp.Effect = effect;
-            HasPowerUp = true;
-        }
-
-        public void RemovePowerUpEffect()
-        {
-            powerUp.Effect = null;
-            HasPowerUp = false;
-        }
-        
         private void Awake()
         {
             spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
@@ -60,10 +44,6 @@ namespace Meyham.Items
         private void DistributeCollectibles(GameObject receiver)
         {
             score.Collect(receiver);
-            
-            if (!HasPowerUp) return;
-            
-            powerUp.Collect(receiver);
         }
 
         private IEnumerator WaitForShrinkAnimation()
@@ -72,14 +52,5 @@ namespace Meyham.Items
             
             spawner.ReleaseCollectible(transform.parent.gameObject);
         }
-
-#if UNITY_EDITOR
-
-        private void OnValidate()
-        {
-            HasPowerUp = powerUp != null && powerUp.Effect != null;
-        }
-
-#endif
     }
 }

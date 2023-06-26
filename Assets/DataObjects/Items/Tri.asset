@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
   m_Name: Tri
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 2900956978713061276, guid: 28de847c79139d74b890825f88437cdf, type: 3}
+  itemTemplate: {fileID: 2131028398171375921, guid: 28de847c79139d74b890825f88437cdf, type: 3}
   movementTemplate: {fileID: 5841842007433814734, guid: 2adf508ebc9ebdd44adb495abaea932a, type: 3}
-  <Color>k__BackingField: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 79e4b67a3e2d2d543b06522c190e94f1, type: 3}
   <MovementData>k__BackingField:
   - Position:
       x: 0.06054139
@@ -35,24 +34,6 @@ MonoBehaviour:
         y: 0.2512081
         z: 0
         w: 0.9679332
-  - Position:
-      x: -0.31872928
-      y: 0
-      z: -11.82336
-    TangentIn:
-      x: -0
-      y: -0
-      z: -2.7548556
-    TangentOut:
-      x: 0
-      y: 0
-      z: 2.715058
-    Rotation:
-      value:
-        x: 0
-        y: -0.757207
-        z: 0
-        w: 0.6531752
   - Position:
       x: -4
       y: 0
@@ -89,5 +70,3 @@ MonoBehaviour:
         y: 0.94434255
         z: 0
         w: 0.3289639
-  <PowerUpData>k__BackingField: {fileID: 0}
-  <IsPowerUp>k__BackingField: 0
