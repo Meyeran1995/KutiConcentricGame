@@ -133,13 +133,12 @@ GameObject:
   m_Component:
   - component: {fileID: 14274501}
   - component: {fileID: 14274503}
-  - component: {fileID: 14274502}
   m_Layer: 0
-  m_Name: PlayerCollisionManagement
+  m_Name: PlayerCollisionResolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &14274501
 Transform:
@@ -156,18 +155,6 @@ Transform:
   m_Father: {fileID: 784535207}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &14274502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14274500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 577cfc326a2540bf96c8d1e2f1d0f402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &14274503
 MonoBehaviour:
   m_ObjectHideFlags: 0
