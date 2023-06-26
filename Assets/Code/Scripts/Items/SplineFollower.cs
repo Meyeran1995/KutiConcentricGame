@@ -1,7 +1,6 @@
 ﻿using System;
 using Meyham.EditorHelpers;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Splines;
 
 namespace Meyham.Items
@@ -10,11 +9,20 @@ namespace Meyham.Items
     {
         [HideInInspector] public float Speed;
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
-        [ReadOnly] public SplineContainer SplineContainer;
-
         public event Action EndOfSplineReached;
 
+        [SerializeField, ReadOnly] private SplineContainer splineContainer;
         [SerializeField, ReadOnly] private float progress;
+
+        public void SetSpline(SplineContainer spline)
+        {
+            splineContainer = spline;
+        }
+
+        public SplineContainer GetTargetSpline()
+        {
+            return splineContainer;
+        }
         
         public void Restart(bool autoPlay)
         {
@@ -28,8 +36,6 @@ namespace Meyham.Items
 
         public void Play()
         {
-            Assert.IsNotNull(SplineContainer, $"SplineContainer == null while performing Play on Follower: {name}");
-            
             IsPlaying = true;
         }
 
@@ -60,12 +66,12 @@ namespace Meyham.Items
 
         private void UpdatePosition()
         {
-            transform.localPosition = SplineContainer.EvaluatePosition(progress);
+            transform.localPosition = splineContainer.EvaluatePosition(progress);
         }
         
         private void SetPosition(float splineProgress)
         {
-            transform.localPosition = SplineContainer.EvaluatePosition(splineProgress);
+            transform.localPosition = splineContainer.EvaluatePosition(splineProgress);
         }
     }
 }

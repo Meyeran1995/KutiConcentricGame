@@ -26,7 +26,7 @@ namespace Meyham.Items
         {
             Assert.IsNotNull(spline, "spline == null");
             
-            splineFollower.SplineContainer = spline;
+            splineFollower.SetSpline(spline);
             splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }
 
@@ -39,15 +39,5 @@ namespace Meyham.Items
         {
             spawner.ReleaseCollectible(gameObject);
         }
-        
-#if UNITY_EDITOR
-        
-        //Keep updating in case of speed value being modified
-        private void Update()
-        {
-            splineFollower.Speed = speed;
-        }
-        
-#endif
     }
 }
