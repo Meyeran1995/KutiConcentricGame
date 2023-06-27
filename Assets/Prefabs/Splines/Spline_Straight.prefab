@@ -75,57 +75,57 @@ MonoBehaviour:
       Rotation:
         value:
           x: 0
-          y: 0.2512081
+          y: 0.9979946
           z: 0
-          w: 0.9679332
+          w: -0.06329861
     - Position:
         x: -2
         y: 0
         z: -15.8
       TangentIn:
-        x: 0
-        y: 0
-        z: 0
+        x: -0
+        y: -0
+        z: -2.5087886
       TangentOut:
         x: 0
         y: 0
-        z: 0
+        z: 1.2936479
       Rotation:
         value:
           x: 0
-          y: 0.99518824
+          y: 0.9750178
           z: 0
-          w: -0.09798197
+          w: -0.22212693
     - Position:
         x: -4
         y: 0
         z: -16.8
       TangentIn:
-        x: -0
-        y: -0
-        z: -0.79940903
+        x: 0
+        y: 0
+        z: -0
       TangentOut:
         x: 0
         y: 0
-        z: 0.93830305
+        z: 0
       Rotation:
         value:
           x: 0
-          y: 0.81839824
+          y: 0
           z: 0
-          w: -0.5746515
+          w: 1
     - Position:
         x: -7
         y: 0
         z: -17.5
       TangentIn:
-        x: -0
-        y: -0
-        z: -0.30805847
+        x: 0
+        y: 0
+        z: 0
       TangentOut:
         x: 0
         y: 0
-        z: 0.30805847
+        z: 0
       Rotation:
         value:
           x: 0
@@ -133,11 +133,11 @@ MonoBehaviour:
           z: 0
           w: -0.62159884
     m_MetaData:
-    - Mode: 4
+    - Mode: 1
       Tension: 0.33333334
       DistanceToInterpolation:
-      - Distance: 0
-        T: 0
+      - Distance: -1
+        T: -1
       - Distance: 0.056839988
         T: 0.03448276
       - Distance: 0.22201025
@@ -196,11 +196,11 @@ MonoBehaviour:
         T: 0.9655172
       - Distance: 16.309057
         T: 1
-    - Mode: 4
+    - Mode: 0
       Tension: 0.33333334
       DistanceToInterpolation:
-      - Distance: 0
-        T: 0
+      - Distance: -1
+        T: -1
       - Distance: 0.005068895
         T: 0.03448276
       - Distance: 0.019930737
@@ -259,11 +259,11 @@ MonoBehaviour:
         T: 0.9655172
       - Distance: 2.2383215
         T: 1
-    - Mode: 0
+    - Mode: 2
       Tension: 0.5
       DistanceToInterpolation:
-      - Distance: 0
-        T: 0
+      - Distance: -1
+        T: -1
       - Distance: 0.10010234
         T: 0.03448276
       - Distance: 0.2059187
@@ -322,7 +322,7 @@ MonoBehaviour:
         T: 0.9655172
       - Distance: 3.0829334
         T: 1
-    - Mode: 0
+    - Mode: 1
       Tension: 0.33333334
       DistanceToInterpolation:
       - Distance: -1
