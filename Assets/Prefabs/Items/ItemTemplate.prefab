@@ -63,11 +63,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86243a031a047569d2c13053c8fe4df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 0
   <IsPlaying>k__BackingField: 1
   splineContainer: {fileID: 0}
-  speedContainer: {fileID: 0}
   progress: 0
-  currentSpeed: 0
 --- !u!114 &8534015451335927573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +254,7 @@ Transform:
   m_GameObject: {fileID: 9107496107595027932}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.25, y: 2.25, z: 2.25}
+  m_LocalScale: {x: 2.25, y: 2.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8809008453101588930}
