@@ -7,21 +7,32 @@ namespace Meyham.Items
 {
     public class SplineFollower : MonoBehaviour
     {
-        [HideInInspector] public float Speed;
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
         public event Action EndOfSplineReached;
 
         [SerializeField, ReadOnly] private SplineContainer splineContainer;
+        [SerializeField, ReadOnly] private SpeedPointContainer speedContainer;
         [SerializeField, ReadOnly] private float progress;
+        [SerializeField, ReadOnly] private float currentSpeed;
+        [SerializeField, ReadOnly] private bool usesSpeedPoints;
+
+        private float baseSpeed;
 
         public void SetSpline(SplineContainer spline)
         {
             splineContainer = spline;
+            usesSpeedPoints = splineContainer.TryGetComponent(out speedContainer);
         }
 
         public SplineContainer GetTargetSpline()
         {
             return splineContainer;
+        }
+        
+        public void SetBaseSpeed(float speed)
+        {
+            baseSpeed = speed;
+            currentSpeed = speed;
         }
         
         public void Restart(bool autoPlay)
@@ -53,7 +64,7 @@ namespace Meyham.Items
         {
             if(!IsPlaying) return;
             
-            progress += Time.deltaTime / Speed;
+            progress += Time.deltaTime / currentSpeed;
             
             if (progress >= 1f)
             {
@@ -62,6 +73,12 @@ namespace Meyham.Items
                 return;
             }
             UpdatePosition();
+            
+            if(!usesSpeedPoints) return;
+
+            if(!speedContainer.WasNewSpeedPointReached(progress, out var speedModifier)) return;
+
+            currentSpeed = baseSpeed * speedModifier;
         }
 
         private void UpdatePosition()

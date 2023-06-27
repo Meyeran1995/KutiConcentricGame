@@ -19,7 +19,6 @@ namespace Meyham.Items
         private void Awake()
         {
             spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
-            splineFollower.Speed = speed;
         }
 
         public void SetSpline(SplineContainer spline)
@@ -27,6 +26,7 @@ namespace Meyham.Items
             Assert.IsNotNull(spline, "spline == null");
             
             splineFollower.SetSpline(spline);
+            splineFollower.SetBaseSpeed(speed);
             splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }
 
