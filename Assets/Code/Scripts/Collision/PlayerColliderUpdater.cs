@@ -1,12 +1,15 @@
+using Meyham.DataObjects;
 using UnityEngine;
 
 namespace Meyham.Collision
 {
     public class PlayerColliderUpdater : MonoBehaviour
     {
+        [SerializeField] private FloatParameter sizeFactor;
+        
         private static Vector3 startingScale;
 
-        public void ModifyCollisionSize(float sizeFactor, int order)
+        public void ModifyCollisionSize(int order)
         {
             if (order == 0)
             {

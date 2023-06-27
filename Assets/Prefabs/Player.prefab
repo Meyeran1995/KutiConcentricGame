@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 987279441132426777}
   - component: {fileID: 5963414438623310424}
+  - component: {fileID: 2068861727984402671}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Player
@@ -61,6 +62,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2068861727984402671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21176729701189190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0c1b6a7018cd84fac49b7ab3230208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeFactor: {fileID: 11400000, guid: 9bb670ec7668e8a459d7aad0e0df61c1, type: 2}
 --- !u!1 &1566106488942533806
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6194956205557232221}
   - component: {fileID: 8487728114132630084}
-  - component: {fileID: 1393740820513245191}
   m_Layer: 0
   m_Name: Item Collision
   m_TagString: Player
@@ -115,18 +128,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.5}
---- !u!114 &1393740820513245191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566106488942533806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0c1b6a7018cd84fac49b7ab3230208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3343158595621873218
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,11 +225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e43ba9cdb140b183a48bb27b012618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeFactor: {fileID: 11400000, guid: 80613f842352acd4ea723e02b7aa5be8, type: 2}
   spriteRenderer: {fileID: 3343158595621873216}
   playerRigidbody: {fileID: 5963414438623310424}
   modelProvider: {fileID: 11400000, guid: 330129723766c1d47843ee46babac6fd, type: 2}
-  colliderUpdater: {fileID: 1393740820513245191}
+  colliderUpdater: {fileID: 2068861727984402671}
   playerCollision: {fileID: 3731849146304716601}
   <Order>k__BackingField: 0
   transitionLocked: 0
@@ -268,7 +268,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:
@@ -451,7 +451,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
-  collisionSizeFactor: {fileID: 11400000, guid: 9bb670ec7668e8a459d7aad0e0df61c1, type: 2}
   raycastOriginForward: {fileID: 11400000, guid: b8ed511da30708e43801c68fcc109a3d, type: 2}
   raycastOriginDownward: {fileID: 11400000, guid: 10e51ef0879b4a9409cc54a1fdd800ea, type: 2}
   raycastDirectionForward: {fileID: 11400000, guid: b714fb8b3cbafd84689739c3a6eaffe1, type: 2}

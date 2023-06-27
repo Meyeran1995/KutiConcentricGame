@@ -8,8 +8,6 @@ namespace Meyham.Player
 {
     public class PlayerOrder : MonoBehaviour
     {
-        [Header("Properties")]
-        [SerializeField] private FloatParameter sizeFactor;
         [Header("References")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Rigidbody playerRigidbody;
@@ -65,7 +63,7 @@ namespace Meyham.Player
             {
                 modelTransform.localPosition = Vector3.zero;
                 playerRigidbody.transform.position = modelTransform.position;
-                colliderUpdater.ModifyCollisionSize(1f, 0);
+                colliderUpdater.ModifyCollisionSize(0);
                 playerCollision.OnOrderChanged(0);
                return;
             }
@@ -74,7 +72,7 @@ namespace Meyham.Player
             modelTransform.localPosition = displacement;
             
             playerRigidbody.transform.position = modelTransform.position;
-            colliderUpdater.ModifyCollisionSize(sizeFactor.RuntimeValue, Order);
+            colliderUpdater.ModifyCollisionSize(Order);
             playerCollision.OnOrderChanged(Order);
         }
 

@@ -9,7 +9,7 @@ namespace Meyham.Collision
 {
     public class PlayerCollision : MonoBehaviour, IComparable<PlayerCollision>
     {
-        [SerializeField] private FloatParameter radius, collisionSizeFactor;
+        [SerializeField] private FloatParameter radius;
         [Header("Raycast Origins")]
         [SerializeField] private Vector2Parameter raycastOriginForward;
         [SerializeField] private Vector2Parameter raycastOriginDownward;
@@ -118,15 +118,6 @@ namespace Meyham.Collision
         public void OnOrderChanged(int order)
         {
             gameObject.layer = PlayerCollisionHelper.GetLayer(order);
-            var currentScale = transform.localScale;
-            
-            if (order == 0)
-            {
-                transform.localScale = new Vector3(1f, currentScale.y, currentScale.z);
-                return;
-            }
-
-            transform.localScale = new Vector3(1f - collisionSizeFactor * order, currentScale.y, currentScale.z);
         }
 
         public void UpdateOrder()
