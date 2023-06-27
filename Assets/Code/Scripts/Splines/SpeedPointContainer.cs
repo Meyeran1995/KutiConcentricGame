@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace Meyham.Items
+namespace Meyham.Splines
 {
     public class SpeedPointContainer : MonoBehaviour
     {

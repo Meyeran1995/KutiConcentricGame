@@ -1,9 +1,10 @@
 ﻿using System;
+using DG.Tweening;
 using Meyham.EditorHelpers;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace Meyham.Items
+namespace Meyham.Splines
 {
     public class SplineFollower : MonoBehaviour
     {
@@ -77,6 +78,8 @@ namespace Meyham.Items
             if(!usesSpeedPoints) return;
 
             if(!speedContainer.WasNewSpeedPointReached(progress, out var speedModifier)) return;
+
+            // DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 0.5f);
 
             currentSpeed = baseSpeed * speedModifier;
         }

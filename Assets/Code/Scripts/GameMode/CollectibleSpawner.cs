@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Meyham.DataObjects;
 using Meyham.Events;
 using Meyham.Items;
+using Meyham.Splines;
 using UnityEngine;
 
 namespace Meyham.GameMode
