@@ -1,5 +1,6 @@
 ﻿using Meyham.EditorHelpers;
 using Meyham.Items;
+using Meyham.Splines;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -13,9 +14,6 @@ namespace Meyham.DataObjects
 
         [field: Header("Debug"), SerializeField, ReadOnly]
         public Sprite Sprite { get; private set; }
-
-        [field: SerializeField, ReadOnly]
-        public BezierKnot[] MovementData { get; private set; }
         
         [field: SerializeField, ReadOnly]
         public Vector3 ColliderPosition { get; private set; }
@@ -25,6 +23,8 @@ namespace Meyham.DataObjects
         
         [field: SerializeField, ReadOnly]
         public Vector3 ColliderScale { get; private set; }
+        
+        public SplineKnotData MovementData { get; private set; }
 
         private void OnEnable()
         {
@@ -42,8 +42,16 @@ namespace Meyham.DataObjects
         {
             var renderer = itemTemplate.transform.GetComponentInChildren<SpriteRenderer>();
             Sprite = renderer.sprite;
+
+            var spline = movementTemplate.GetComponent<SplineContainer>().Spline;
+            var tangentModes = new TangentMode[spline.Count];
+
+            for (int i = 0; i < tangentModes.Length; i++)
+            {
+                tangentModes[i] = spline.GetTangentMode(i);
+            }
             
-            MovementData = movementTemplate.GetComponent<SplineContainer>().Spline.ToArray();
+            MovementData = new SplineKnotData(spline.ToArray(), tangentModes);
 
             var itemCollisionTransform = itemTemplate.GetComponentInChildren<ItemCollision>().transform;
 

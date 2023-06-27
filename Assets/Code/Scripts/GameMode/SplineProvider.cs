@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Meyham.Splines;
+using UnityEngine;
 using UnityEngine.Splines;
 
 namespace Meyham.GameMode
@@ -19,17 +20,19 @@ namespace Meyham.GameMode
             pool.Release(collectibleSpline.gameObject);
         }
 
-        public SplineContainer GetSpline(BezierKnot[] knots)
+        public SplineContainer GetSpline(SplineKnotData splineData)
         {
             pool.Get(out var splineHolder);
             splineHolder.transform.rotation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
             
             var splineContainer = splineHolder.GetComponent<SplineContainer>();
             var spline = splineContainer.Spline;
-            
-            foreach (var knot in knots)
+
+            for (var i = 0; i < splineData.Knots.Length; i++)
             {
+                var knot = splineData.Knots[i];
                 spline.Add(knot);
+                spline.SetTangentMode(i, splineData.TangentModes[i]);
             }
 
             return splineContainer;
