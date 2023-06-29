@@ -2,7 +2,6 @@ using Meyham.DataObjects;
 using Meyham.GameMode;
 using Meyham.Splines;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Splines;
 
 namespace Meyham.Items
@@ -22,11 +21,9 @@ namespace Meyham.Items
             spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
         }
 
-        public void SetSpline(SplineContainer spline)
+        public void SetUpMovement(SplineContainer spline, SpeedPoint[] speedPoints)
         {
-            Assert.IsNotNull(spline, "spline == null");
-            
-            splineFollower.SetSpline(spline);
+            splineFollower.SetUpSpline(spline, speedPoints);
             splineFollower.SetBaseSpeed(speed);
             splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }

@@ -1,4 +1,5 @@
-﻿using Meyham.EditorHelpers;
+﻿using System;
+using Meyham.EditorHelpers;
 using Meyham.Items;
 using Meyham.Splines;
 using UnityEngine;
@@ -26,6 +27,8 @@ namespace Meyham.DataObjects
         
         public SplineKnotData MovementData { get; private set; }
 
+        public SpeedPoint[] SpeedPoints { get; private set; }
+
         private void OnEnable()
         {
             GetDataFromTemplates();
@@ -52,7 +55,8 @@ namespace Meyham.DataObjects
             }
             
             MovementData = new SplineKnotData(spline.ToArray(), tangentModes);
-
+            SpeedPoints = movementTemplate.GetComponent<SpeedPointContainer>().GetSpeedPoints();
+            
             var itemCollisionTransform = itemTemplate.GetComponentInChildren<ItemCollision>().transform;
 
             ColliderPosition = itemCollisionTransform.localPosition;

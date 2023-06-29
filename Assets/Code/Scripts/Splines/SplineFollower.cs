@@ -9,20 +9,22 @@ namespace Meyham.Splines
     public class SplineFollower : MonoBehaviour
     {
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
-        public event Action EndOfSplineReached;
 
         [SerializeField, ReadOnly] private SplineContainer splineContainer;
         [SerializeField, ReadOnly] private SpeedPointContainer speedContainer;
         [SerializeField, ReadOnly] private float progress;
         [SerializeField, ReadOnly] private float currentSpeed;
         [SerializeField, ReadOnly] private bool usesSpeedPoints;
-
+        
         private float baseSpeed;
+        
+        public event Action EndOfSplineReached;
 
-        public void SetSpline(SplineContainer spline)
+        public void SetUpSpline(SplineContainer spline, SpeedPoint[] speedPoints)
         {
             splineContainer = spline;
             usesSpeedPoints = splineContainer.TryGetComponent(out speedContainer);
+            speedContainer.SetSpeedPoints(speedPoints);
         }
 
         public SplineContainer GetTargetSpline()
@@ -79,9 +81,9 @@ namespace Meyham.Splines
 
             if(!speedContainer.WasNewSpeedPointReached(progress, out var speedModifier)) return;
 
-            // DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 0.5f);
+            DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 2f);
 
-            currentSpeed = baseSpeed * speedModifier;
+            // currentSpeed = baseSpeed * speedModifier;
         }
 
         private void UpdatePosition()

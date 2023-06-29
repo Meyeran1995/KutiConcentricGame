@@ -5,28 +5,36 @@ namespace Meyham.Splines
 {
     public class SpeedPointContainer : MonoBehaviour
     {
-        // define speed points based on spline progress (0-1)
-        // provide method to set speed upon reaching a speed point?
         [Header("References")]
         [SerializeField] private SplineContainer splineContainer;
-        [Header("Parameters")]
-        [SerializeField] private float[] progressPerPoint;
-        [SerializeField] private float[] speedModifierPerPoint;
+
+        [Header("Parameters")] 
+        [SerializeField] private SpeedPoint[] speedPoints;
 
         private int activeSpeedPoint;
 
         public bool WasNewSpeedPointReached(float progressOnSpline, out float speedModifier)
         {
             speedModifier = 1f;
-            if (activeSpeedPoint == progressPerPoint.Length) return false;
+            if (activeSpeedPoint == speedPoints.Length) return false;
 
-            if (progressOnSpline < progressPerPoint[activeSpeedPoint]) return false;
+            if (progressOnSpline < speedPoints[activeSpeedPoint].Progress) return false;
 
-            speedModifier = speedModifierPerPoint[activeSpeedPoint];
+            speedModifier = speedPoints[activeSpeedPoint].Modifier;
             activeSpeedPoint++;
             return true;
         }
+
+        public SpeedPoint[] GetSpeedPoints()
+        {
+            return speedPoints;
+        }
         
+        public void SetSpeedPoints(SpeedPoint[] points)
+        {
+            speedPoints = points;
+        }
+
         private void OnDisable()
         {
             activeSpeedPoint = 0;
@@ -36,34 +44,22 @@ namespace Meyham.Splines
 
         private void OnValidate()
         {
-            if (splineContainer == null)
-            {
-                splineContainer = GetComponent<SplineContainer>();
-            }
-            
-            if (progressPerPoint == null || speedModifierPerPoint == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < progressPerPoint.Length; i++)
-            {
-                progressPerPoint[i] = Mathf.Clamp01(progressPerPoint[i]);
-            }
+            if (splineContainer != null) return;
+            splineContainer = GetComponent<SplineContainer>();
         }
 
         private void OnDrawGizmos()
         {
-            if (progressPerPoint == null || speedModifierPerPoint == null)
+            if (speedPoints == null)
             {
                 return;
             }
 
             var position = transform.position;
             
-            foreach (var point in progressPerPoint)
+            foreach (var point in speedPoints)
             {
-                Vector3 splinePosition = splineContainer.Spline.EvaluatePosition(point);
+                Vector3 splinePosition = splineContainer.Spline.EvaluatePosition(point.Progress);
                 Gizmos.DrawSphere(position + transform.rotation * splinePosition, 0.25f);
             }
         }
