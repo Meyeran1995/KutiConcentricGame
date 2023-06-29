@@ -6,7 +6,7 @@ namespace Meyham.Splines
     [Serializable]
     public struct SpeedPoint
     {
-        [field: SerializeField, Range(0f,1f)]
+        [field: SerializeField, Min(0f)]
         public float Progress { get; private set; }
         
         [field: SerializeField, Min(0f)]

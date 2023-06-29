@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.EditorHelpers;
+﻿using Meyham.EditorHelpers;
 using Meyham.Items;
 using Meyham.Splines;
 using UnityEngine;

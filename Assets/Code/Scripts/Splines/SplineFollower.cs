@@ -14,16 +14,17 @@ namespace Meyham.Splines
         [SerializeField, ReadOnly] private SpeedPointContainer speedContainer;
         [SerializeField, ReadOnly] private float progress;
         [SerializeField, ReadOnly] private float currentSpeed;
-        [SerializeField, ReadOnly] private bool usesSpeedPoints;
         
         private float baseSpeed;
+
+        private Tweener activeTween;
         
         public event Action EndOfSplineReached;
 
         public void SetUpSpline(SplineContainer spline, SpeedPoint[] speedPoints)
         {
             splineContainer = spline;
-            usesSpeedPoints = splineContainer.TryGetComponent(out speedContainer);
+            speedContainer = splineContainer.GetComponent<SpeedPointContainer>();
             speedContainer.SetSpeedPoints(speedPoints);
         }
 
@@ -35,11 +36,11 @@ namespace Meyham.Splines
         public void SetBaseSpeed(float speed)
         {
             baseSpeed = speed;
-            currentSpeed = speed;
         }
         
         public void Restart(bool autoPlay)
         {
+            currentSpeed = baseSpeed;
             progress = 0f;
             SetPosition(0f);
             
@@ -61,6 +62,10 @@ namespace Meyham.Splines
         private void OnDisable()
         {
             EndOfSplineReached = null;
+            
+            if (!activeTween.IsActive()) return;
+            
+            activeTween.Kill(true);
         }
 
         private void Update() 
@@ -75,15 +80,17 @@ namespace Meyham.Splines
                 EndOfSplineReached?.Invoke();
                 return;
             }
+            
             UpdatePosition();
             
-            if(!usesSpeedPoints) return;
-
             if(!speedContainer.WasNewSpeedPointReached(progress, out var speedModifier)) return;
 
-            DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 2f);
-
-            // currentSpeed = baseSpeed * speedModifier;
+            if (activeTween.IsActive())
+            {
+                activeTween.Kill(true);
+            }
+            
+            activeTween = DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 2f);
         }
 
         private void UpdatePosition()
