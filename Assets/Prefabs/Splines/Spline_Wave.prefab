@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
+      propertyPath: speedPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
+      propertyPath: speedPoints.Array.data[0].<Modifier>k__BackingField
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
+      propertyPath: speedPoints.Array.data[0].<Progress>k__BackingField
+      value: 0.154
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
+      propertyPath: speedPoints.Array.data[1].<Modifier>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
+      propertyPath: speedPoints.Array.data[1].<Progress>k__BackingField
+      value: 0.79
+      objectReference: {fileID: 0}
     - target: {fileID: 6869339708918208850, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: m_RootOrder
       value: 0
