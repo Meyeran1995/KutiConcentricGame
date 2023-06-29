@@ -63,10 +63,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86243a031a047569d2c13053c8fe4df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0
+  speedPointEasingDuration: {fileID: 11400000, guid: f6fdda3a617d9a444b2aff112581fe28, type: 2}
   <IsPlaying>k__BackingField: 1
   splineContainer: {fileID: 0}
+  speedContainer: {fileID: 0}
   progress: 0
+  currentSpeed: 0
 --- !u!114 &8534015451335927573
 MonoBehaviour:
   m_ObjectHideFlags: 0

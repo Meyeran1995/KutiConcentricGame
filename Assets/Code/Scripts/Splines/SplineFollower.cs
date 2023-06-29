@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -8,6 +9,9 @@ namespace Meyham.Splines
 {
     public class SplineFollower : MonoBehaviour
     {
+        [Header("Parameters")]
+        [SerializeField] private FloatParameter speedPointEasingDuration;
+        
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
 
         [SerializeField, ReadOnly] private SplineContainer splineContainer;
@@ -72,7 +76,7 @@ namespace Meyham.Splines
         {
             if(!IsPlaying) return;
             
-            progress += Time.deltaTime / currentSpeed;
+            progress += currentSpeed * Time.deltaTime;
             
             if (progress >= 1f)
             {
@@ -90,7 +94,7 @@ namespace Meyham.Splines
                 activeTween.Kill(true);
             }
             
-            activeTween = DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, 2f);
+            activeTween = DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, speedPointEasingDuration);
         }
 
         private void UpdatePosition()

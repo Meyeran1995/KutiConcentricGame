@@ -14,19 +14,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: speedPoints.Array.data[0].<Modifier>k__BackingField
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: speedPoints.Array.data[0].<Progress>k__BackingField
-      value: 0.154
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: speedPoints.Array.data[1].<Modifier>k__BackingField
-      value: 3
+      value: 0.3333333
       objectReference: {fileID: 0}
     - target: {fileID: 1388746067734281661, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: speedPoints.Array.data[1].<Progress>k__BackingField
-      value: 0.79
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 6869339708918208850, guid: 4c09a8b38a815c94b9e71d849f8d3094, type: 3}
       propertyPath: m_RootOrder
