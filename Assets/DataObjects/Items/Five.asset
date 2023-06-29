@@ -13,78 +13,8 @@ MonoBehaviour:
   m_Name: Five
   m_EditorClassIdentifier: 
   itemTemplate: {fileID: 7739010823540788411, guid: 4a85c702ae1da2c49b13547c26b41eee, type: 3}
-  movementTemplate: {fileID: 5841842007433814734, guid: 4983dca8717738045905fed32dcec235, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 79e4b67a3e2d2d543b06522c190e94f1, type: 3}
-  <MovementData>k__BackingField:
-  - Position:
-      x: 0.06054139
-      y: 0
-      z: 0.37836742
-    TangentIn:
-      x: 0
-      y: 0
-      z: 0
-    TangentOut:
-      x: 0
-      y: 0
-      z: 0
-    Rotation:
-      value:
-        x: 0
-        y: 0.2512081
-        z: 0
-        w: 0.9679332
-  - Position:
-      x: -0.31865737
-      y: 0
-      z: -8.09
-    TangentIn:
-      x: -1.0554657
-      y: 0
-      z: -2.7508054
-    TangentOut:
-      x: 1.0370994
-      y: 0
-      z: 3.673623
-    Rotation:
-      value:
-        x: 0
-        y: 0.9659258
-        z: 0
-        w: 0.25881907
-  - Position:
-      x: 4
-      y: 0
-      z: -16.818539
-    TangentIn:
-      x: 0
-      y: 0
-      z: 0
-    TangentOut:
-      x: 0
-      y: 0
-      z: 0
-    Rotation:
-      value:
-        x: 0
-        y: 0.99518824
-        z: 0
-        w: -0.09798197
-  - Position:
-      x: 6.119999
-      y: 0
-      z: -16.818539
-    TangentIn:
-      x: 0
-      y: 0
-      z: 0
-    TangentOut:
-      x: 0
-      y: 0
-      z: 0
-    Rotation:
-      value:
-        x: 0
-        y: 0.9947174
-        z: 0
-        w: -0.102651134
+  movementTemplate: {fileID: 2880560562915733486, guid: 61cf9c684f3057f47994e4c5e01dee3a, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: cebb7e7ebc367e34b91efa6dca58b8f6, type: 3}
+  <ColliderPosition>k__BackingField: {x: 0.405, y: -0.086, z: 0}
+  <ColliderRotation>k__BackingField: {x: -0.11918376, y: 0.99287224, z: -0, w: 0}
+  <ColliderScale>k__BackingField: {x: 2.38, y: 1.67, z: 1}

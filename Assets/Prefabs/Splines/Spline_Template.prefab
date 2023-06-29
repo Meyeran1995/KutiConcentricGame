@@ -86,7 +86,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splineContainer: {fileID: 9188344382188448015}
-  progressPerPoint:
-  - 0.75
-  speedModifierPerPoint:
-  - 2.5
+  speedPoints:
+  - <Progress>k__BackingField: 0.256
+    <Modifier>k__BackingField: 2
