@@ -29,7 +29,7 @@ namespace Meyham.Cutscenes
             return shouldRotateInner || shouldRotateOuter;
         }
 
-        public void RotateIntoCircle()
+        public void StartRotationIntoCircle()
         {
             desiredRotationOuter = Quaternion.identity;
 
@@ -38,7 +38,7 @@ namespace Meyham.Cutscenes
             enabled = true;
         }
 
-        public void RotateOutOfCircle()
+        public void StartRotationOutOfCircle()
         {
             desiredRotationOuter = Quaternion.AngleAxis(outerStartingRotation, Vector3.forward);
 
@@ -47,7 +47,7 @@ namespace Meyham.Cutscenes
             enabled = true;
         }
 
-        public void RotateTowardsCircleAngle(float angle)
+        public void StartRotationTowardsCircleAngle(float angle)
         {
             desiredRotationInner = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -59,6 +59,33 @@ namespace Meyham.Cutscenes
             shouldRotateInner = true;
             lerpInner = 0f;
             enabled = true;
+        }
+        
+        public void SetInnerRotationInstant(float angle)
+        {
+            desiredRotationInner = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            lerpInner = 0f;
+            currentRotationInner = desiredRotationInner;
+            transform.localRotation = currentRotationInner;
+        }
+
+        public void RotateIntoCircleInstant()
+        {
+            desiredRotationOuter = Quaternion.identity;
+
+            lerpOuter = 0f;
+            currentRotationOuter = Quaternion.identity;
+            outerPivot.localRotation = Quaternion.identity;
+        }
+        
+        public void RotateOutOfCircleInstant()
+        {
+            desiredRotationOuter = Quaternion.AngleAxis(outerStartingRotation, Vector3.forward);
+
+            lerpOuter = 0f;
+            currentRotationOuter = desiredRotationOuter;
+            outerPivot.localRotation = desiredRotationOuter;
         }
         
         private void Awake()

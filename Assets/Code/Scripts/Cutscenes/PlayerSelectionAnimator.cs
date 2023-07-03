@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -7,12 +6,10 @@ namespace Meyham.Cutscenes
 {
     public class PlayerSelectionAnimator : MonoBehaviour, IPlayerNumberDependable
     {
-        [Header("References")] 
-        [SerializeField] private PlayerColors playerColors;
-        [SerializeField] private CutScenePlayerRotator[] rotators;
-        [SerializeField] private SpriteRenderer[] spriteRenderers;
+        [Header("References")]
+        [SerializeField] private RotatingCutscene cutscene;
         
-        private List<int> activePlayers;
+        private static List<int> activePlayers = new();
 
         public int[] PlayerSelectionOrder()
         {
@@ -21,8 +18,7 @@ namespace Meyham.Cutscenes
         
         public void OnPlayerJoined(int playerNumber)
         {
-            rotators[playerNumber].RotateIntoCircle();
-            spriteRenderers[playerNumber].color = playerColors[playerNumber];
+            cutscene.AnimatePlayerEnteringCircle(playerNumber);
             activePlayers.Add(playerNumber);
             
             UpdateCirclePositions();
@@ -30,7 +26,7 @@ namespace Meyham.Cutscenes
 
         public void OnPlayerLeft(int playerNumber)
         {
-            rotators[playerNumber].RotateOutOfCircle();
+            cutscene.AnimatePlayerLeavingCircle(playerNumber);
             activePlayers.Remove(playerNumber);
 
             if (activePlayers.Count == 0) return;
@@ -40,27 +36,8 @@ namespace Meyham.Cutscenes
 
         public void CloseCutscene()
         {
-            foreach (var spriteRenderer in spriteRenderers)
-            {
-                spriteRenderer.enabled = false;
-            }
-
-            StartCoroutine(WaitForElementsToLeaveCircle());
-        }
-
-        private void Awake()
-        {
-            activePlayers = new List<int>(6);
-        }
-
-        private void OnEnable()
-        {
-            activePlayers ??= new List<int>(6);
-
-            foreach (var spriteRenderer in spriteRenderers)
-            {
-                spriteRenderer.enabled = true;
-            }
+            cutscene.MoveAllPlayersOutsideTheCircle(activePlayers.ToArray());
+            cutscene.gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -70,30 +47,17 @@ namespace Meyham.Cutscenes
 
         private void UpdateCirclePositions()
         {
-            var desiredAngle = 0f;
             var numOfPlayers = activePlayers.Count;
+            var desiredAngles = new float[numOfPlayers];
+            var desiredAngle = 0f;
             var angleIncrement = Mathf.RoundToInt(360f / numOfPlayers);
 
-            for (int i = 0; i < numOfPlayers; i++)
+            for (int i = 0; i < numOfPlayers; i++, desiredAngle += angleIncrement)
             {
-                rotators[activePlayers[i]].RotateTowardsCircleAngle(desiredAngle);
-                desiredAngle += angleIncrement;
+                desiredAngles[i] = desiredAngle;
             }
-        }
-
-        private IEnumerator WaitForElementsToLeaveCircle()
-        {
-            foreach (var player in activePlayers)
-            {
-                rotators[player].RotateOutOfCircle();
-            }
-
-            CutScenePlayerRotator lastRotator = rotators[activePlayers[^1]];
-
-            yield return new WaitWhile(lastRotator.IsRotating);
             
-            activePlayers.Clear();
-            gameObject.SetActive(false);
+            cutscene.UpdateCirclePositions(activePlayers.ToArray(), desiredAngles);
         }
     }
 }

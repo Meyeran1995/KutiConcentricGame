@@ -5592,7 +5592,7 @@ MonoBehaviour:
   - {fileID: 839295850}
   - {fileID: 1979414707}
   playerManager: {fileID: 2095045853}
-  playerSelectionAnimator: {fileID: 855478473}
+  playerSelectionAnimator: {fileID: 1232454607}
   playerCollisionResolver: {fileID: 14274503}
   mainMenuView: {fileID: 1986757959}
   inGameView: {fileID: 1554081040}
@@ -5812,41 +5812,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 855478474}
-  - component: {fileID: 855478473}
+  - component: {fileID: 855478475}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: Rotating Cutscene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &855478473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855478472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dbe61e1ef9e4592acda935afe5e2c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
-  rotators:
-  - {fileID: 7090238176807246452}
-  - {fileID: 2047150221}
-  - {fileID: 1728234696}
-  - {fileID: 1480924416}
-  - {fileID: 289918008}
-  - {fileID: 1857413837}
-  spriteRenderers:
-  - {fileID: 915972094}
-  - {fileID: 271068678}
-  - {fileID: 2063302007}
-  - {fileID: 613587977}
-  - {fileID: 1866368020}
-  - {fileID: 1930291101}
 --- !u!4 &855478474
 Transform:
   m_ObjectHideFlags: 0
@@ -5868,6 +5841,33 @@ Transform:
   m_Father: {fileID: 421990024}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855478475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855478472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca7abeecaef5ab4983183f61958f4ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
+  rotators:
+  - {fileID: 7090238176807246452}
+  - {fileID: 2047150221}
+  - {fileID: 1728234696}
+  - {fileID: 1480924416}
+  - {fileID: 289918008}
+  - {fileID: 1857413837}
+  spriteRenderers:
+  - {fileID: 915972094}
+  - {fileID: 271068678}
+  - {fileID: 2063302007}
+  - {fileID: 613587977}
+  - {fileID: 1866368020}
+  - {fileID: 1930291101}
 --- !u!1 &870790936
 GameObject:
   m_ObjectHideFlags: 0
@@ -6237,6 +6237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1232454605}
   - component: {fileID: 1232454606}
+  - component: {fileID: 1232454607}
   m_Layer: 0
   m_Name: Select
   m_TagString: Untagged
@@ -6277,6 +6278,19 @@ MonoBehaviour:
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   setHoldInteractionEventChannel: {fileID: 11400000, guid: 3010c374e0269a744a570d8404f8e26e, type: 2}
   numberOfPlayers: 0
+--- !u!114 &1232454607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232454604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbe61e1ef9e4592acda935afe5e2c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutscene: {fileID: 855478475}
 --- !u!1 &1268009118
 GameObject:
   m_ObjectHideFlags: 0
