@@ -41,6 +41,16 @@ namespace Meyham.Player
             movement.SnapToStartingAngle(angle);
         }
 
+        public void ShowPlayer()
+        {
+            spriteRenderer.enabled = true;
+        }
+        
+        public void HidePlayer()
+        {
+            spriteRenderer.enabled = false;
+        }
+
         private void OnEnable()
         {
             if(!IsActive) return;

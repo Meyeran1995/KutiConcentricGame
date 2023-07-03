@@ -87,7 +87,6 @@ namespace Meyham.Player
         private void OnDisable()
         {
             transitionLocked = false;
-            StopAllCoroutines();
         }
 
         private IEnumerator OrderTransition()

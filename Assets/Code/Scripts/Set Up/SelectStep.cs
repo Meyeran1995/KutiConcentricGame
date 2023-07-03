@@ -63,7 +63,6 @@ namespace Meyham.Set_Up
         public override void Deactivate()
         {
             playerManager.UpdatePlayerCount();
-            playerManager.UpdatePlayerColors();
             
             StartCoroutine(WaitForViewToClose());
         }
@@ -155,6 +154,7 @@ namespace Meyham.Set_Up
             yield return mainMenu.CloseView();
             
             playerSelection.CloseCutscene();
+            playerManager.ShowPlayers();
             mainMenu.Clean();
             
             base.Deactivate();

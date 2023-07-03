@@ -59,6 +59,26 @@ namespace Meyham.Set_Up
                 player.enabled = false;
             }
         }
+        
+        public void ShowPlayers()
+        {
+            foreach (var player in players)
+            {
+                if(!player.IsActive) continue;
+
+                player.ShowPlayer();
+            }
+        }
+        
+        public void HidePlayers()
+        {
+            foreach (var player in players)
+            {
+                if(!player.IsActive) continue;
+
+                player.HidePlayer();
+            }
+        }
 
         public void UpdatePlayerCount()
         {
@@ -75,16 +95,6 @@ namespace Meyham.Set_Up
             }
         }
 
-        public void UpdatePlayerColors()
-        {
-            foreach (var player in players)
-            {
-                if(!player.IsActive) continue;
-
-                player.SetPlayerColor(playerColors[(int)player.Designation]);
-            }
-        }
-        
         public void ShufflePlayers()
         {
             int n = players.Length;
@@ -95,6 +105,15 @@ namespace Meyham.Set_Up
                 var t = players[r];
                 players[r] = players[i];
                 players[i] = t;
+            }
+        }
+
+        private void Start()
+        {
+            foreach (var player in players)
+            {
+                player.SetPlayerColor(playerColors[(int)player.Designation]);
+                player.HidePlayer();
             }
         }
 
