@@ -12,7 +12,8 @@ namespace Meyham.UI
         [SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
 
         [Header("Parameters")] 
-        [SerializeField] private float countUpSpeed;
+        [SerializeField] private float maxCountUpTime;
+        [SerializeField] private float minCountUpTime;
 
         private ScoreTweenWrapper[] activeTweens;
 
@@ -31,28 +32,34 @@ namespace Meyham.UI
             scoreBoardEntries[playerNumber].gameObject.SetActive(false);
         }
 
-        public IEnumerator CountUpScores(PlayerScore[] playerScores)
+        public WaitForSeconds CountUpScores(PlayerScore[] playerScores)
         {
             var targetScores = new int[playerScores.Length];
-            var winnerScore = 0;
+            var winnerScore = playerScores[0].GetScore();
             var winnerIndex = 0;
+            var loserScore = playerScores[0].GetScore();
+            var loserIndex = 0;
 
-            for (int i = 0; i < playerScores.Length; i++)
+            for (int i = 1; i < playerScores.Length; i++)
             {
                 var score = playerScores[i].GetScore();
                 targetScores[i] = score;
                 
-                if (score < winnerScore)
+                if (score > winnerScore)
                 {
+                    winnerScore = score;
+                    winnerIndex = i;
                     continue;
                 }
 
-                winnerIndex = i;
-                winnerScore = score;
+                if (score >= loserScore) continue;
+                
+                loserScore = score;
+                loserIndex = i;
             }
-            
-            StartCoroutine(CountUpAnimation(targetScores, winnerIndex, playerScores));
-            return new WaitUntil(() => activeTweens[winnerIndex].CurrentScore == winnerScore);
+
+            StartCoroutine(CountUpAnimation(targetScores, winnerIndex, loserIndex, playerScores));
+            return new WaitForSeconds(maxCountUpTime);
         }
 
         public override void Clean()
@@ -74,13 +81,15 @@ namespace Meyham.UI
             base.Awake();
         }
 
-        private IEnumerator CountUpAnimation(int[] targetScores, int winnerIndex, PlayerScore[] playerScores)
+        private IEnumerator CountUpAnimation(int[] targetScores, int winnerIndex, int loserIndex, PlayerScore[] playerScores)
         {
             activeTweens = new ScoreTweenWrapper[targetScores.Length];
 
             for (int i = 0; i < targetScores.Length; i++)
             {
-                activeTweens[i] = new ScoreTweenWrapper(targetScores[i], countUpSpeed);
+                var score = targetScores[i];
+                var countUpInterpolationValue = Mathf.InverseLerp(targetScores[loserIndex], targetScores[winnerIndex], score);
+                activeTweens[i] = new ScoreTweenWrapper(score, Mathf.Lerp(minCountUpTime, maxCountUpTime, countUpInterpolationValue));
             }
 
             while (activeTweens[winnerIndex].IsActive)
