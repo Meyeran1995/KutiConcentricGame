@@ -61,7 +61,7 @@ namespace Meyham.GameMode
             var item = Instantiate(poolTemplate);
             var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(),
                 item.GetComponent<SplineFollower>(),
-                item.GetComponent<ItemSpriteController>(), 
+                item.GetComponentInChildren<ItemSpriteController>(), 
                 item.GetComponentInChildren<ItemCollision>());
             
             referenceCaches.Add(item, cache);

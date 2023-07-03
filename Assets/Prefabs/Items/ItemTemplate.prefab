@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8809008453101588930}
   - component: {fileID: 6890571281404568285}
   - component: {fileID: 5930802319533646037}
-  - component: {fileID: 8534015451335927573}
+  - component: {fileID: 6886996144896209816}
   m_Layer: 0
   m_Name: ItemTemplate
   m_TagString: Untagged
@@ -26,14 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3034267622359027703}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3756848514611577095}
   - {fileID: 7474211189511392552}
-  - {fileID: 2347041144072812429}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69,7 +68,7 @@ MonoBehaviour:
   speedContainer: {fileID: 0}
   progress: 0
   currentSpeed: 0
---- !u!114 &8534015451335927573
+--- !u!114 &6886996144896209816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,58 +77,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3034267622359027703}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac006ce7fee4b5cb3047e76c868d009, type: 3}
+  m_Script: {fileID: 11500000, guid: 19d4fcf5b4393d54da90e522d7cf8cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 3927611934904360832}
-  toScore: {fileID: 11400000, guid: 7bc197e9b0a6d574fba305fc3435c2a4, type: 2}
-  scoring: {fileID: 2861707904806270996}
-  tweeningAnimation: {fileID: 7353643439254260286}
---- !u!1 &6856453134219131902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2347041144072812429}
-  - component: {fileID: 2861707904806270996}
-  m_Layer: 0
-  m_Name: Collectibles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2347041144072812429
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6856453134219131902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8809008453101588930}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2861707904806270996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6856453134219131902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+  maxRotationSpeed: {fileID: 11400000, guid: 00a6563c707abb14db3bd393a74e5d64, type: 2}
+  rotationSpeed: 0
 --- !u!1 &7302006715172128952
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7474211189511392552}
+  - component: {fileID: 4497797170522856190}
   - component: {fileID: 7353643439254260286}
   - component: {fileID: 3927611934904360832}
   m_Layer: 0
@@ -163,6 +116,22 @@ Transform:
   m_Father: {fileID: 8809008453101588930}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4497797170522856190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7302006715172128952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac006ce7fee4b5cb3047e76c868d009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3927611934904360832}
+  toScore: {fileID: 11400000, guid: 7bc197e9b0a6d574fba305fc3435c2a4, type: 2}
+  scoring: {fileID: 6982279346736877678}
+  tweeningAnimation: {fileID: 7353643439254260286}
 --- !u!114 &7353643439254260286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +209,7 @@ GameObject:
   - component: {fileID: 3756848514611577095}
   - component: {fileID: 1785018970952984634}
   - component: {fileID: 9170357810292836992}
+  - component: {fileID: 6982279346736877678}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
@@ -298,4 +268,17 @@ MonoBehaviour:
   itemCollider: {fileID: 1785018970952984634}
   splineFollower: {fileID: 5930802319533646037}
   tweenAnimation: {fileID: 7353643439254260286}
-  score: {fileID: 2861707904806270996}
+  score: {fileID: 6982279346736877678}
+--- !u!114 &6982279346736877678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107496107595027932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
