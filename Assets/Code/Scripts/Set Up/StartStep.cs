@@ -4,11 +4,14 @@ using Meyham.Cutscenes;
 using Meyham.GameMode;
 using Meyham.Player;
 using Meyham.UI;
+using UnityEngine;
 
 namespace Meyham.Set_Up
 {
     public class StartStep : AGameStep
     {
+        [SerializeField] private RotatingCutscene rotatingCutscene;
+
         private InGameView inGameView;
 
         private PlayerSelectionAnimator playerSelection;
@@ -35,7 +38,7 @@ namespace Meyham.Set_Up
 
         private void OnEnable()
         {
-            StartCoroutine(WaitForViewToOpen());
+            StartCoroutine(WaitForSetUp());
         }
 
         private void LinkCollisionResolver(PlayerCollisionResolver resolver)
@@ -68,16 +71,8 @@ namespace Meyham.Set_Up
             }
         }
 
-        private void GameSetUp()
+        private void GameSetUp(PlayerController[] players)
         {
-            var players = playerManager.GetPlayers();
-
-            if (numberOfPlayers == players.Length)
-            {
-                SetPlayersToStartingPositions(players);
-                return;
-            }
-
             numberOfPlayers = players.Length;
             startingPositionsProvider = new PlayerStartingPositionProvider(players.Length);
             
@@ -106,9 +101,35 @@ namespace Meyham.Set_Up
             collisionResolver.SetPlayerCollisions(collisions);
         }
         
-        private IEnumerator WaitForViewToOpen()
+        private IEnumerator WaitForSetUp()
         {
-            GameSetUp();
+            var players = playerManager.GetPlayers();
+
+            if (numberOfPlayers != players.Length)
+            {
+                GameSetUp(players);
+                yield return inGameView.OpenView();
+                Deactivate();
+                yield break;
+            }
+            
+            SetPlayersToStartingPositions(players);
+
+            var playerIDs = new int[numberOfPlayers];
+            var playerAngles = new float[numberOfPlayers];
+
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                playerIDs[i] = (int)players[i].Designation;
+                playerAngles[i] = players[i].GetCurrentCirclePosition();
+            }
+
+            rotatingCutscene.UpdateCirclePositions(playerIDs, playerAngles);
+
+            yield return rotatingCutscene.AnimateAllPlayersEnteringTheCircle(playerIDs);
+
+            rotatingCutscene.gameObject.SetActive(false);
+            playerManager.ShowPlayers();
 
             yield return inGameView.OpenView();
             

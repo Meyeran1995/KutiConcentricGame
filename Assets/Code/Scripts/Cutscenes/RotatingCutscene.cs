@@ -13,7 +13,7 @@ namespace Meyham.Cutscenes
 
         public void UpdateCirclePositions(int[] activePlayers, float[] desiredAngles)
         {
-            if (enabled)
+            if (gameObject.activeSelf)
             {
                 for (int i = 0; i < activePlayers.Length; i++)
                 {

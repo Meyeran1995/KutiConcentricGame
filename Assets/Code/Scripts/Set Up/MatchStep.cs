@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Meyham.Collision;
+using Meyham.Cutscenes;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
@@ -11,6 +12,9 @@ namespace Meyham.Set_Up
 {
     public class MatchStep : AGameStep
     {
+
+        [SerializeField] private RotatingCutscene rotatingCutscene;
+        
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO lastItemVanished;
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
@@ -111,6 +115,23 @@ namespace Meyham.Set_Up
         private IEnumerator WaitForViewToClose()
         {
             yield return inGameView.CloseView();
+
+            var activePlayers = playerManager.GetPlayers();
+            var playerIDs = new int[activePlayers.Length];
+            var playerAngles = new float[activePlayers.Length];
+
+            for (int i = 0; i < playerIDs.Length; i++)
+            {
+                playerIDs[i] = (int)activePlayers[i].Designation;
+                playerAngles[i] = activePlayers[i].GetCurrentCirclePosition();
+            }
+            
+            rotatingCutscene.MoveAllPlayersIntoTheCircle(playerIDs);
+            rotatingCutscene.UpdateCirclePositions(playerIDs, playerAngles);
+            rotatingCutscene.gameObject.SetActive(true);
+            playerManager.HidePlayers();
+            
+            yield return rotatingCutscene.AnimateAllPlayersLeavingTheCircle(playerIDs);
             
             base.Deactivate();
         }

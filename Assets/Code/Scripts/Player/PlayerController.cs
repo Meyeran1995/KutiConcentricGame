@@ -41,6 +41,11 @@ namespace Meyham.Player
             movement.SnapToStartingAngle(angle);
         }
 
+        public float GetCurrentCirclePosition()
+        {
+            return movement.CirclePosition;
+        }
+
         public void ShowPlayer()
         {
             spriteRenderer.enabled = true;
