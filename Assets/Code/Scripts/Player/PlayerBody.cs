@@ -46,7 +46,20 @@ namespace Meyham.Player
 
         public void LoseBodySegment()
         {
-
+            PlayerBodyPart bodyPart;
+            
+            if (headIsFront)
+            {
+                bodyPart = playerBodyParts.First.Value;
+                playerBodyParts.RemoveFirst();
+            }
+            else
+            {
+                bodyPart = playerBodyParts.Last.Value;
+                playerBodyParts.RemoveLast();
+            }
+            
+            bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
         }
         
         private void Awake()
