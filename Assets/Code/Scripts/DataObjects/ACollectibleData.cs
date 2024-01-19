@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Meyham.Items
+namespace Meyham.DataObjects
 {
-    public abstract class ACollectible : MonoBehaviour
+    public abstract class ACollectibleData : ScriptableObject
     {
         public abstract void Collect(GameObject player);
     }

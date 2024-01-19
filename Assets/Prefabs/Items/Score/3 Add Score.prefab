@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3 Add Score
       objectReference: {fileID: 0}
+    - target: {fileID: 5197019318700715657, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
+      propertyPath: <Collectible>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 76c53b83a65eac348b40b1fa1240ec1c, type: 2}
     - target: {fileID: 6575391197759549495, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
       propertyPath: itemCollider
       value: 

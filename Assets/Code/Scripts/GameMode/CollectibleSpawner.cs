@@ -21,14 +21,16 @@ namespace Meyham.GameMode
             public readonly SplineFollower SplineFollower;
             public readonly ItemSpriteController SpriteController;
             public readonly ItemCollision ItemCollision;
+            public readonly ItemCollectibleCarrier CollectibleCarrier;
             
             public CollectibleReferenceCache(ItemMovement movement, SplineFollower splineFollower,
-                ItemSpriteController spriteController, ItemCollision itemCollision)
+                ItemSpriteController spriteController, ItemCollision itemCollision, ItemCollectibleCarrier collectibleCarrier)
             {
                 Movement = movement;
                 SplineFollower = splineFollower;
                 SpriteController = spriteController;
                 ItemCollision = itemCollision;
+                CollectibleCarrier = collectibleCarrier;
             }
         }
         
@@ -46,6 +48,8 @@ namespace Meyham.GameMode
             movement.SetUpMovement(splineProvider.GetSpline(itemData.MovementData), itemData.SpeedPoints);
             movement.RestartMovement();
 
+            cache.CollectibleCarrier.SetCollectible(itemData.CollectibleData);
+            
             item.SetActive(true);
         }
         
@@ -59,10 +63,12 @@ namespace Meyham.GameMode
         protected override GameObject CreatePooledItem()
         {
             var item = Instantiate(poolTemplate);
+            var itemCollision = item.GetComponentInChildren<ItemCollision>();
             var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(),
                 item.GetComponent<SplineFollower>(),
-                item.GetComponentInChildren<ItemSpriteController>(), 
-                item.GetComponentInChildren<ItemCollision>());
+                item.GetComponentInChildren<ItemSpriteController>(), itemCollision,
+                itemCollision.GetComponent<ItemCollectibleCarrier>()
+                );
             
             referenceCaches.Add(item, cache);
             

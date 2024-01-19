@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4 Add Score
       objectReference: {fileID: 0}
+    - target: {fileID: 5197019318700715657, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
+      propertyPath: <Collectible>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: a3a7df432678e154fb6a752f3b880079, type: 2}
     - target: {fileID: 6881229052698813037, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01

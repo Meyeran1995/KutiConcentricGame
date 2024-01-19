@@ -2,19 +2,16 @@ using Meyham.Events;
 using Meyham.Player;
 using UnityEngine;
 
-namespace Meyham.Items
+namespace Meyham.DataObjects
 {
-    public class AddScoreCollectible : ACollectible
+    [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/Collectibles/AddScore")]
+    public class AddScoreCollectible : ACollectibleData
     {
         [Header("References")]
         [SerializeField] private PlayerScoreEventChannelSO collectionEvent;
         
-        private float score;
-
-        public void SetScore(float newScore)
-        {
-            score = newScore;
-        }
+        [Header("Value")]
+        [SerializeField] private float score;
 
         public override void Collect(GameObject player)
         {
