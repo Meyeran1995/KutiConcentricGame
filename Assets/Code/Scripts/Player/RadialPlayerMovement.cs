@@ -87,7 +87,7 @@ namespace Meyham.Player
 
         private void Move()
         {
-            float currentVelocity = velocityCalculator.GetVelocity();
+            var currentVelocity = velocityCalculator.GetVelocity();
 
             if (movementState is MovementStates.Brake)
             {
@@ -96,7 +96,7 @@ namespace Meyham.Player
                     movementState = MovementStates.None;
                     return;
                 }
-
+                
                 currentAngle += currentVelocity * angleGain * brakeDirection;
             }
             else
@@ -104,18 +104,37 @@ namespace Meyham.Player
                 currentAngle += currentVelocity * angleGain * movementDirection;
             }
 
-            var nextPosition = GetCirclePoint();
+            ClampAngle();
             
-            transform.SetPositionAndRotation(nextPosition, Quaternion.AngleAxis(currentAngle, Vector3.forward));
+            transform.SetPositionAndRotation(GetCirclePoint(), Quaternion.AngleAxis(currentAngle, Vector3.forward));
         }
 
         private Vector3 GetCirclePoint()
         {
             float angleInRad = Mathf.Deg2Rad * currentAngle;
-            float x = radius.BaseValue * Mathf.Cos(angleInRad);
-            float y = radius.BaseValue * Mathf.Sin(angleInRad);
+            float x = radius * Mathf.Cos(angleInRad);
+            float y = radius * Mathf.Sin(angleInRad);
 
             return new Vector3(x, y, transform.position.z);
+        }
+
+        private void ClampAngle()
+        {
+            switch (currentAngle)
+            {
+                case < 0f:
+                {
+                    currentAngle += 360f;
+                    return;
+                }
+                case > 360f:
+                {
+                    currentAngle -= 360f;
+                    return;
+                }
+                default:
+                    return;
+            }
         }
     }
 }
