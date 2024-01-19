@@ -28,6 +28,8 @@ namespace Meyham.DataObjects
 
         public SpeedPoint[] SpeedPoints { get; private set; }
 
+        public ACollectibleData CollectibleData { get; private set; }
+
         private void OnEnable()
         {
             GetDataFromTemplates();
@@ -61,6 +63,8 @@ namespace Meyham.DataObjects
             ColliderPosition = itemCollisionTransform.localPosition;
             ColliderRotation = itemCollisionTransform.localRotation;
             ColliderScale = itemCollisionTransform.localScale;
+
+            CollectibleData = itemCollisionTransform.GetComponent<ItemCollectibleCarrier>().Collectible;
         }
     }
 }

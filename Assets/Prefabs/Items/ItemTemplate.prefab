@@ -129,8 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3927611934904360832}
-  toScore: {fileID: 11400000, guid: 7bc197e9b0a6d574fba305fc3435c2a4, type: 2}
-  scoring: {fileID: 6982279346736877678}
   tweeningAnimation: {fileID: 7353643439254260286}
 --- !u!114 &7353643439254260286
 MonoBehaviour:
@@ -209,7 +207,7 @@ GameObject:
   - component: {fileID: 3756848514611577095}
   - component: {fileID: 1785018970952984634}
   - component: {fileID: 9170357810292836992}
-  - component: {fileID: 6982279346736877678}
+  - component: {fileID: 7790199493809689662}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
@@ -268,8 +266,8 @@ MonoBehaviour:
   itemCollider: {fileID: 1785018970952984634}
   splineFollower: {fileID: 5930802319533646037}
   tweenAnimation: {fileID: 7353643439254260286}
-  score: {fileID: 6982279346736877678}
---- !u!114 &6982279346736877678
+  collectibleCarrier: {fileID: 7790199493809689662}
+--- !u!114 &7790199493809689662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9107496107595027932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c2e0917803a6f479ad9034415ceada, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e89e83aef5f45559fa3d2f8f8afb553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionEvent: {fileID: 11400000, guid: b2d27b259ca3d314381f10d9d70a9163, type: 2}
+  <Collectible>k__BackingField: {fileID: 0}

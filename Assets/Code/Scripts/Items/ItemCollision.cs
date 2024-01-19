@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Meyham.DataObjects;
 using Meyham.GameMode;
 using Meyham.Splines;
 using UnityEngine;
@@ -12,8 +13,8 @@ namespace Meyham.Items
         [Space]
         [SerializeField] private SplineFollower splineFollower;
         [SerializeField] private ItemTweeningAnimation tweenAnimation;
-        [Space]
-        [SerializeField] private ACollectible score;
+        [Space] 
+        [SerializeField] private ItemCollectibleCarrier collectibleCarrier;
 
         private static CollectibleSpawner spawner;
 
@@ -45,13 +46,9 @@ namespace Meyham.Items
             itemCollider.isTrigger = false;
             splineFollower.Pause();
             
-            DistributeCollectibles(incomingObject);
+            collectibleCarrier.OnCollected(incomingObject);
+            
             StartCoroutine(WaitForShrinkAnimation());
-        }
-
-        private void DistributeCollectibles(GameObject receiver)
-        {
-            score.Collect(receiver);
         }
 
         private IEnumerator WaitForShrinkAnimation()

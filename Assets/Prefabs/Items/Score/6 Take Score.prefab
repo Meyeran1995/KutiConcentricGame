@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1015630919977284928, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
       propertyPath: m_Name
-      value: 6 Add Score
+      value: 6 Take Score
       objectReference: {fileID: 0}
     - target: {fileID: 1162172188181887920, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
       propertyPath: m_LocalScale.x
@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 6 Add Score
       objectReference: {fileID: 0}
+    - target: {fileID: 5197019318700715657, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
+      propertyPath: <Collectible>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ebe9b3060f0c64a9610971591702cd, type: 2}
     - target: {fileID: 6881229052698813037, guid: 0d36f94aeb592de4ab2eed9c5497cbb5, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
