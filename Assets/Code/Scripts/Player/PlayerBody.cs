@@ -28,8 +28,10 @@ namespace Meyham.Player
 
         private static PlayerBodyPartPool bodyPartPool;
 
-        public void AcquireBodyPart(PlayerBodyPart incomingPart)
+        public void AcquireBodyPart()
         {
+            var incomingPart = bodyPartPool.GetBodyPart();
+            
             if (headIsFront)
             {
                 playerBodyParts.AddLast(incomingPart);
@@ -56,20 +58,6 @@ namespace Meyham.Player
         private void Start()
         {
             AlignBodyParts();
-        }
-
-        private void FixedUpdate()
-        {
-            counter += Time.fixedDeltaTime;
-
-            if (counter < 3f)
-            {
-                return;
-            }
-
-            counter = 0f;
-            
-            AcquireBodyPart(bodyPartPool.GetBodyPart()); 
         }
 
         private void AlignBodyParts()
@@ -126,8 +114,6 @@ namespace Meyham.Player
 
         [SerializeField] private int numberOfBodyParts;
         [SerializeField] private Vector3 gizmoScale;
-        
-        
         
         private void OnDrawGizmos()
         {
