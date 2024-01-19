@@ -1,9 +1,10 @@
 using Meyham.Player;
 using UnityEngine;
 
-namespace Meyham.Items
+namespace Meyham.DataObjects
 {
-    public class AddBodyPartCollectible : ACollectible
+    [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/Collectibles/AddBodyPart")]
+    public class AddBodyPartCollectible : ACollectibleData
     {
         public override void Collect(GameObject player)
         {
