@@ -14,6 +14,7 @@ namespace Meyham.Player
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerScore score;
         [SerializeField] private PlayerOrder playerOrder;
+        [SerializeField] private PlayerBody playerBody;
 
         [field: Header("Properties"), SerializeField] 
         public PlayerDesignation Designation { get; private set; }
@@ -63,6 +64,8 @@ namespace Meyham.Player
             movement.enabled = true;
             input.enabled = true;
             playerOrder.enabled = true;
+            playerBody.enabled = true;
+            
             collisionParent.SetActive(true);
             score.ResetScore();
         }
@@ -74,6 +77,8 @@ namespace Meyham.Player
             movement.enabled = false;
             input.enabled = false;
             playerOrder.enabled = false;
+            playerBody.enabled = false;
+            
             collisionParent.SetActive(false);
         }
 

@@ -8,6 +8,7 @@ namespace Meyham.Player
     public class PlayerBodyPart : MonoBehaviour
     {
         [SerializeField] private SpriteShapeController body;
+        [SerializeField] private Renderer spriteRenderer;
         
         private Spline spline;
         
@@ -17,6 +18,16 @@ namespace Meyham.Player
         //hat eigene order
             // muss basierend auf der order lokale position der spline punkte animieren
         //kennt base settings für reset/pooling
+
+        public void Show()
+        {
+            spriteRenderer.enabled = true;
+        }
+        
+        public void Hide()
+        {
+            spriteRenderer.enabled = false;
+        }
         
         private void Start()
         {
@@ -28,6 +39,7 @@ namespace Meyham.Player
         private void OnValidate()
         {
             body = GetComponent<SpriteShapeController>();
+            spriteRenderer = GetComponent<Renderer>();
         }
 
 #endif

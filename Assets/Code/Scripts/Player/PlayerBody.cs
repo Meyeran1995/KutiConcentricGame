@@ -21,7 +21,7 @@ namespace Meyham.Player
         [SerializeField] private float anglePerBodyPart;
         [SerializeField] private RadialPlayerMovement playerMovement;
 
-        [ReadOnly, SerializeField] private bool headIsFront = true;
+        [ReadOnly, SerializeField] private bool headIsFront;
         [ReadOnly, SerializeField] private int hydraIndex;
 
         private LinkedList<PlayerBodyPart> playerBodyParts = new();
@@ -57,19 +57,19 @@ namespace Meyham.Player
         public void LoseBodySegment()
         {
             PlayerBodyPart bodyPart;
-            
+
             if (headIsFront)
-            {
-                bodyPart = playerBodyParts.First.Value;
-                playerBodyParts.RemoveFirst();
-            }
-            else
             {
                 bodyPart = playerBodyParts.Last.Value;
                 playerBodyParts.RemoveLast();
+            }
+            else
+            {
+                bodyPart = playerBodyParts.First.Value;
+                playerBodyParts.RemoveFirst();
                 hydraIndex--;
             }
-            
+
             bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
         }
         
@@ -77,20 +77,45 @@ namespace Meyham.Player
         {
             playerBodyParts= new LinkedList<PlayerBodyPart>(GetComponentsInChildren<PlayerBodyPart>());
             bodyPartPool ??= FindAnyObjectByType<PlayerBodyPartPool>(FindObjectsInactive.Include);
+            headIsFront = true;
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            AlignBodyParts();
+            PrepareStartingBodyParts();
         }
 
-        private void AlignBodyParts()
+        private void OnDisable()
+        {
+
+#if UNITY_EDITOR
+            if (isQuitting)
+            {
+                return;
+            }
+#endif
+            
+            headIsFront = true;
+            hydraIndex = 0;
+            
+            for (int i = playerBodyParts.Count - 1; i >= min_number_of_body_parts; i--)
+            {
+                LoseBodySegment();
+            }
+
+            foreach (var playerBodyPart in playerBodyParts)
+            {
+                playerBodyPart.Hide();
+            }
+        }
+
+        private void PrepareStartingBodyParts()
         {
             var index = 0;
 
             foreach (var bodyPart in playerBodyParts)
             {
-                var angle = anglePerBodyPart * index;
+                bodyPart.Show();
                 AlignBodyPart(index, bodyPart);
                 index++;
             }
@@ -136,8 +161,9 @@ namespace Meyham.Player
 
 #if UNITY_EDITOR
 
-        [SerializeField] private int numberOfBodyParts;
         [SerializeField] private Vector3 gizmoScale;
+
+        private bool isQuitting;
         
         private void OnDrawGizmos()
         {
@@ -148,12 +174,17 @@ namespace Meyham.Player
                 positionOffset = new Vector3(0f, radius);
             }
             
-            for (int i = 0; i < numberOfBodyParts; i++)
+            for (int i = 0; i < max_number_of_body_parts; i++)
             {
                 var angle = i * anglePerBodyPart;
                 var position = GetCirclePoint(angle) + positionOffset;
                 Gizmos.DrawCube(position, gizmoScale);
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            isQuitting = true;
         }
 
 #endif

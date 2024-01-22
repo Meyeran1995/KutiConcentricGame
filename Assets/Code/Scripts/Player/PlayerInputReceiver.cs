@@ -13,6 +13,8 @@ namespace Meyham.Player
         [Header("References")] 
         [SerializeField] private RadialPlayerMovement playerMovement;
         [SerializeField] private PlayerController controller;
+        [SerializeField] private PlayerBody playerBody;
+        
 
         private void OnEnable()
         {
@@ -44,7 +46,7 @@ namespace Meyham.Player
         {
             if (input != (int)controller.Designation) return;
             playerMovement.FlipMovementDirection();
-            Debug.Log("Flipping direction");
+            playerBody.OnDoubleTap(playerMovement.MovementDirection);
         }
     }
 }

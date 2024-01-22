@@ -269,7 +269,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:
@@ -289,6 +289,7 @@ MonoBehaviour:
   input: {fileID: 3343158596831003086}
   score: {fileID: 6551916424300729374}
   playerOrder: {fileID: 7474950231064833239}
+  playerBody: {fileID: 37668768775586591}
   <Designation>k__BackingField: 0
   <IsActive>k__BackingField: 0
 --- !u!114 &3343158596831003080
@@ -328,6 +329,7 @@ MonoBehaviour:
   inputCanceledEventChannel: {fileID: 11400000, guid: 33fd5d7e24992b841b49a95c7870409d, type: 2}
   playerMovement: {fileID: 3343158596831003080}
   controller: {fileID: -3059452512064107555}
+  playerBody: {fileID: 37668768775586591}
 --- !u!114 &6551916424300729374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +539,7 @@ MonoBehaviour:
   anglePerBodyPart: 12
   playerMovement: {fileID: 3343158596831003080}
   headIsFront: 0
+  hydraIndex: 0
   numberOfBodyParts: 30
   gizmoScale: {x: 0.25, y: 0.5, z: 1}
 --- !u!1001 &1663807368128608135
