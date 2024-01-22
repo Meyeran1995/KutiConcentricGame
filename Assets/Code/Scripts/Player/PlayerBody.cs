@@ -8,6 +8,13 @@ using UnityEngine;
 
 namespace Meyham.Player
 {
+    
+    // verwaltet body parts mit linked list
+    // parts instanziieren/aus pool anfordern
+    // parts abstoßen von einschlag aus
+    // updatet alle body parts mit collision basierend auf der gemittelten order
+    // setzt positionen von body parts
+    
     public class PlayerBody : MonoBehaviour
     {
         [SerializeField] private FloatParameter radius;
@@ -15,19 +22,21 @@ namespace Meyham.Player
         [SerializeField] private RadialPlayerMovement playerMovement;
 
         [ReadOnly, SerializeField] private bool headIsFront = true;
-
-        private float counter;
-        
-        // verwaltet body parts mit linked list
-            // parts instanziieren/aus pool anfordern
-            // parts abstoßen von einschlag aus
-        // updatet alle body parts mit collision basierend auf der gemittelten order
-        // setzt positionen von body parts
+        [ReadOnly, SerializeField] private int hydraIndex;
 
         private LinkedList<PlayerBodyPart> playerBodyParts = new();
 
         private static PlayerBodyPartPool bodyPartPool;
+        
+        private const int max_number_of_body_parts = 30;
+        
+        private const int min_number_of_body_parts = 3;
 
+        public void OnDoubleTap(int input)
+        {
+            headIsFront = input < 0;
+        }
+        
         public void AcquireBodyPart()
         {
             var incomingPart = bodyPartPool.GetBodyPart();
@@ -39,6 +48,7 @@ namespace Meyham.Player
             else
             {
                 playerBodyParts.AddFirst(incomingPart);
+                hydraIndex++;
             }
 
             AlignBodyPart(incomingPart);
@@ -57,6 +67,7 @@ namespace Meyham.Player
             {
                 bodyPart = playerBodyParts.Last.Value;
                 playerBodyParts.RemoveLast();
+                hydraIndex--;
             }
             
             bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
@@ -87,9 +98,6 @@ namespace Meyham.Player
 
         private void AlignBodyPart(int index, PlayerBodyPart bodyPart)
         {
-            //what to do if tail is current head?
-            //use max index - 1?
-            
             var transformSelf = transform;
             var angle = anglePerBodyPart * index + playerMovement.CirclePosition;
 
@@ -112,7 +120,9 @@ namespace Meyham.Player
         
         private void AlignBodyPart(PlayerBodyPart bodyPart)
         {
-            AlignBodyPart(playerBodyParts.Count - 1, bodyPart);
+            var index = headIsFront ? playerBodyParts.Count - 1 : max_number_of_body_parts;
+            
+            AlignBodyPart(index - hydraIndex, bodyPart);
         }
         
         private Vector3 GetCirclePoint(float currentAngle)
