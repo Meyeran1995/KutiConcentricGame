@@ -87,12 +87,11 @@ namespace Meyham.Player
 
         private void AlignBodyPart(int index, PlayerBodyPart bodyPart)
         {
-            
             //what to do if tail is current head?
             //use max index - 1?
             
             var transformSelf = transform;
-            var angle = anglePerBodyPart * index - 1 + playerMovement.CirclePosition;
+            var angle = anglePerBodyPart * index + playerMovement.CirclePosition;
 
             if (angle > 360f)
             {
@@ -100,13 +99,15 @@ namespace Meyham.Player
             }
             
             var circlePos = GetCirclePoint(angle);
-
             circlePos = transformSelf.worldToLocalMatrix * circlePos;
             circlePos.y += radius;
             
+            var localRotation = Quaternion.Inverse(transformSelf.rotation);
+            localRotation *= Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+            
             var partTransform = bodyPart.transform;
             partTransform.parent = transformSelf;
-            partTransform.SetLocalPositionAndRotation(circlePos, Quaternion.AngleAxis(angle, Vector3.forward));
+            partTransform.SetLocalPositionAndRotation(circlePos, localRotation);
         }
         
         private void AlignBodyPart(PlayerBodyPart bodyPart)
