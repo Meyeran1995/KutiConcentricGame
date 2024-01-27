@@ -214,8 +214,8 @@ MonoBehaviour:
   rotatingCutscene: {fileID: 855478475}
   lastItemVanished: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   setHoldInteractionEventChannel: {fileID: 11400000, guid: 3010c374e0269a744a570d8404f8e26e, type: 2}
-  startingTime: {fileID: 11400000, guid: 9795b5eb7cf2d7347ad372e24fc4d7ed, type: 2}
-  currentTime: 0
+  playerDestroyedEventChannel: {fileID: 11400000, guid: 50b1cc7a9b334bc4bb5e51ce3e89f98b, type: 2}
+  alivePlayers: 0
 --- !u!1 &120632352
 GameObject:
   m_ObjectHideFlags: 0

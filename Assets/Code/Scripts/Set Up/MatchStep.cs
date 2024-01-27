@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Meyham.Collision;
 using Meyham.Cutscenes;
-using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
@@ -16,10 +15,10 @@ namespace Meyham.Set_Up
         [Header("Events")]
         [SerializeField] private VoidEventChannelSO lastItemVanished;
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
+        [SerializeField] private GenericEventChannelSO<int> playerDestroyedEventChannel;
         
-        [Header("Timer Values")]
-        [SerializeField] private FloatParameter startingTime;
-        [SerializeField, ReadOnly] private float currentTime;
+        [Header("Debug")]
+        [SerializeField, ReadOnly] private int alivePlayers;
 
         private PlayerManager playerManager;
         
@@ -30,6 +29,7 @@ namespace Meyham.Set_Up
         public override void Setup()
         {
             lastItemVanished += OnLastItemVanished;
+            playerDestroyedEventChannel += OnPlayerDestroyed;
 
             waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
         }
@@ -62,30 +62,22 @@ namespace Meyham.Set_Up
         
         private void OnEnable()
         {
-            currentTime = startingTime;
-            StartCoroutine(TimerRoutine());
-            
             collisionResolver.enabled = true;
             waveManager.enabled = true;
             
             playerManager.EnablePlayers();
+            alivePlayers = playerManager.PlayerCount;
+
             setHoldInteractionEventChannel.RaiseEvent(true);
         }
 
-        private IEnumerator TimerRoutine()
+        private void OnPlayerDestroyed(int playerDesignation)
         {
-            while (currentTime > 0f)
-            {
-                yield return new WaitForSeconds(startingTime);
-
-                currentTime -= startingTime;
-            }
+            playerManager.DisablePlayer(playerDesignation);
+            alivePlayers--;
             
-            OnTimerElapsed();
-        }
-
-        private void OnTimerElapsed()
-        {
+            if (alivePlayers > 0) return;
+            
             waveManager.enabled = false;
         }
         
