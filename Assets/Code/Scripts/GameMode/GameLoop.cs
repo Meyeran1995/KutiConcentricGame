@@ -21,7 +21,6 @@ namespace Meyham.GameMode
 
         [Header("Views")]
         [SerializeField] private MainMenuView mainMenuView; 
-        [SerializeField] private InGameView inGameView; 
         [SerializeField] private ScoreboardView scoreboardView;
         
         [Header("Debug")] 
@@ -63,11 +62,6 @@ namespace Meyham.GameMode
         public void LinkMainMenuView(Action<MainMenuView> linkAction)
         {
             linkAction.Invoke(mainMenuView);
-        }
-        
-        public void LinkInGameView(Action<InGameView> linkAction)
-        {
-            linkAction.Invoke(inGameView);
         }
         
         public void LinkScoreboardView(Action<ScoreboardView> linkAction)

@@ -32,35 +32,35 @@ namespace Meyham.UI
             scoreBoardEntries[playerNumber].gameObject.SetActive(false);
         }
 
-        public WaitForSeconds CountUpScores(PlayerScore[] playerScores)
-        {
-            var targetScores = new int[playerScores.Length];
-            var winnerScore = playerScores[0].GetScore();
-            var winnerIndex = 0;
-            var loserScore = playerScores[0].GetScore();
-            var loserIndex = 0;
-
-            for (int i = 1; i < playerScores.Length; i++)
-            {
-                var score = playerScores[i].GetScore();
-                targetScores[i] = score;
-                
-                if (score > winnerScore)
-                {
-                    winnerScore = score;
-                    winnerIndex = i;
-                    continue;
-                }
-
-                if (score >= loserScore) continue;
-                
-                loserScore = score;
-                loserIndex = i;
-            }
-
-            StartCoroutine(CountUpAnimation(targetScores, winnerIndex, loserIndex, playerScores));
-            return new WaitForSeconds(maxCountUpTime);
-        }
+        // public WaitForSeconds CountUpScores(PlayerScore[] playerScores)
+        // {
+        //     var targetScores = new int[playerScores.Length];
+        //     var winnerScore = playerScores[0].GetScore();
+        //     var winnerIndex = 0;
+        //     var loserScore = playerScores[0].GetScore();
+        //     var loserIndex = 0;
+        //
+        //     for (int i = 1; i < playerScores.Length; i++)
+        //     {
+        //         var score = playerScores[i].GetScore();
+        //         targetScores[i] = score;
+        //         
+        //         if (score > winnerScore)
+        //         {
+        //             winnerScore = score;
+        //             winnerIndex = i;
+        //             continue;
+        //         }
+        //
+        //         if (score >= loserScore) continue;
+        //         
+        //         loserScore = score;
+        //         loserIndex = i;
+        //     }
+        //
+        //     StartCoroutine(CountUpAnimation(targetScores, winnerIndex, loserIndex, playerScores));
+        //     return new WaitForSeconds(maxCountUpTime);
+        // }
 
         public override void Clean()
         {
@@ -81,28 +81,28 @@ namespace Meyham.UI
             base.Awake();
         }
 
-        private IEnumerator CountUpAnimation(int[] targetScores, int winnerIndex, int loserIndex, PlayerScore[] playerScores)
-        {
-            activeTweens = new ScoreTweenWrapper[targetScores.Length];
-
-            for (int i = 0; i < targetScores.Length; i++)
-            {
-                var score = targetScores[i];
-                var countUpInterpolationValue = Mathf.InverseLerp(targetScores[loserIndex], targetScores[winnerIndex], score);
-                activeTweens[i] = new ScoreTweenWrapper(score, Mathf.Lerp(minCountUpTime, maxCountUpTime, countUpInterpolationValue));
-            }
-
-            while (activeTweens[winnerIndex].IsActive)
-            {
-                for (var i = 0; i < playerScores.Length; i++)
-                {
-                    var playerScore = playerScores[i];
-                    scoreBoardEntries[(int)playerScore.Designation].SetScore(activeTweens[i].CurrentScore.ToString());
-                }
-
-                yield return null;
-            }
-        }
+        // private IEnumerator CountUpAnimation(int[] targetScores, int winnerIndex, int loserIndex, PlayerScore[] playerScores)
+        // {
+        //     activeTweens = new ScoreTweenWrapper[targetScores.Length];
+        //
+        //     for (int i = 0; i < targetScores.Length; i++)
+        //     {
+        //         var score = targetScores[i];
+        //         var countUpInterpolationValue = Mathf.InverseLerp(targetScores[loserIndex], targetScores[winnerIndex], score);
+        //         activeTweens[i] = new ScoreTweenWrapper(score, Mathf.Lerp(minCountUpTime, maxCountUpTime, countUpInterpolationValue));
+        //     }
+        //
+        //     while (activeTweens[winnerIndex].IsActive)
+        //     {
+        //         for (var i = 0; i < playerScores.Length; i++)
+        //         {
+        //             var playerScore = playerScores[i];
+        //             scoreBoardEntries[(int)playerScore.Designation].SetScore(activeTweens[i].CurrentScore.ToString());
+        //         }
+        //
+        //         yield return null;
+        //     }
+        // }
         
         private class ScoreTweenWrapper
         {

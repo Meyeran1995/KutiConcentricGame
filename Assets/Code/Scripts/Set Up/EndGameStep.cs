@@ -14,8 +14,6 @@ namespace Meyham.Set_Up
 
         private ScoreboardView scoreboard;
 
-        private InGameView inGameView;
-        
         public override void Setup()
         {
         }
@@ -24,17 +22,11 @@ namespace Meyham.Set_Up
         {
             loop.LinkPlayerManager(LinkPlayerManager);
             loop.LinkScoreboardView(LinkScoreboard);
-            loop.LinkInGameView(LinkInGameView);
         }
 
         private void LinkScoreboard(ScoreboardView view)
         {
             scoreboard = view;
-        }
-        
-        private void LinkInGameView(InGameView view)
-        {
-            inGameView = view;
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -45,7 +37,6 @@ namespace Meyham.Set_Up
         public override void Deactivate()
         {
             scoreboard.Clean();
-            inGameView.Clean();
             base.Deactivate();
         }
 

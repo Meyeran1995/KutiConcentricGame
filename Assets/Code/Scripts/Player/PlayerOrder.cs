@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Meyham.Collision;
-using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ namespace Meyham.Player
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Rigidbody playerRigidbody;
         [Header("Player references")]
-        [SerializeField] private PlayerModelProvider modelProvider;
         [SerializeField] private PlayerColliderUpdater colliderUpdater;
         [SerializeField] private PlayerCollision playerCollision;
 
@@ -56,7 +54,6 @@ namespace Meyham.Player
         private void OrderPlayer()
         {
             StartCoroutine(OrderTransition());
-            spriteRenderer.sprite = modelProvider.GetModel(Order);
             var modelTransform = transform;
 
             if (Order == 0)

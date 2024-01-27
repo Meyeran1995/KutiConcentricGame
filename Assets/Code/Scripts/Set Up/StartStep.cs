@@ -12,8 +12,6 @@ namespace Meyham.Set_Up
     {
         [SerializeField] private RotatingCutscene rotatingCutscene;
 
-        private InGameView inGameView;
-
         private PlayerSelectionAnimator playerSelection;
 
         private PlayerCollisionResolver collisionResolver;
@@ -31,7 +29,6 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-            loop.LinkInGameView(LinkView);
             loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
             loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
         }
@@ -49,11 +46,6 @@ namespace Meyham.Set_Up
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;
-        }
-        
-        private void LinkView(InGameView gameView)
-        {
-            inGameView = gameView;
         }
         
         private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
@@ -108,7 +100,6 @@ namespace Meyham.Set_Up
             if (numberOfPlayers != players.Length)
             {
                 GameSetUp(players);
-                yield return inGameView.OpenView();
                 Deactivate();
                 yield break;
             }
@@ -131,8 +122,6 @@ namespace Meyham.Set_Up
             rotatingCutscene.gameObject.SetActive(false);
             playerManager.ShowPlayers();
 
-            yield return inGameView.OpenView();
-            
             Deactivate();
         }
     }
