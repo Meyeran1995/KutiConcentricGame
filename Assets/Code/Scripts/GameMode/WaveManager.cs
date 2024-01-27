@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Meyham.DataObjects;
+﻿using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using UnityEngine;
@@ -8,17 +7,29 @@ namespace Meyham.GameMode
 {
     public class WaveManager : MonoBehaviour
     {
-        [Header("Properties")]
-        [SerializeField] private float spawnInterval;
-
+        private const int max_number_of_spawns = 30;
+        
+        [Header("Spawning")]
+        [SerializeField] private AnimationCurve curveSpawnInterval;
+        [Space]
+        [SerializeField] private AnimationCurve curveItemDistribution;
+        [Space]
+        [SerializeField] private AnimationCurve splineStraightProbability;
+        [Space]
+        [SerializeField] private AnimationCurve splineCurvyProbability;
+        
+        [Header("Items")]
+        [SerializeField] private ItemData[] addBodyPartItems;
+        [SerializeField] private ItemData[] takeBodyPartItems;
+        
         [Header("References")] 
-        [SerializeField] private CollectibleSpawner spawner;
+        [SerializeField] private CollectiblePool pool;
         [SerializeField] private VoidEventChannelSO onReleasedEvent, lastItemVanishedEvent;
         
         [Header("Debug")] 
-        [ReadOnly, SerializeField] private int currentWave;
+        [ReadOnly, SerializeField] private float spawnTime;
+        [ReadOnly, SerializeField] private float currentTimeInMinutes;
         [ReadOnly, SerializeField] private int spawnCount;
-        [ReadOnly, SerializeField] private bool isSpawning;
 
         private void Awake()
         {
@@ -27,60 +38,78 @@ namespace Meyham.GameMode
 
         private void OnEnable()
         {
-            SpawnWave();
+            currentTimeInMinutes = 0f;
+            spawnTime = curveSpawnInterval.Evaluate(0f) / 2f;
         }
 
         private void OnDisable()
         {
-            StopAllCoroutines();
-
             if (spawnCount != 0) return;
             
             lastItemVanishedEvent.RaiseEvent();
         }
 
-        private void SpawnWave()
+        private void Update()
         {
-            isSpawning = true;
-            StartCoroutine(SpawnRoutine());
+            var deltaTime = Time.deltaTime;
+            currentTimeInMinutes += deltaTime / 60;
+            spawnTime += deltaTime;
+            
+            if (spawnCount >= max_number_of_spawns ||
+                spawnTime < curveSpawnInterval.Evaluate(currentTimeInMinutes)) return;
+
+            spawnTime = 0f;
+            
+            SpawnCollectible();
+        }
+        
+        private void SpawnCollectible()
+        {
+            spawnCount++;
+            var collectibleData = SelectCollectible();
+            
+            pool.GetCollectible(collectibleData);
         }
 
-        private IEnumerator SpawnRoutine()
+        private ItemData SelectCollectible()
         {
-            // foreach (var content in waves[currentWave].Wave)
-            // {
-            //     spawner.GetCollectible(content);
-            //     spawnCount++;
-            //     yield return new WaitForSeconds(spawnInterval);
-            // }
-            //
-            // isSpawning = false;
-            // currentWave = ++currentWave % waves.Length;
-            yield return null;
+            var selector = Random.value;
+            var probabilityGoodItem = curveItemDistribution.Evaluate(currentTimeInMinutes);
+
+            if (probabilityGoodItem >= selector)
+            {
+                return addBodyPartItems[GetCurveIndex(selector)];
+            }
+            
+            return takeBodyPartItems[GetCurveIndex(selector)];
+        }
+
+        private int GetCurveIndex(float selector)
+        {
+            var currentProbability = splineStraightProbability.Evaluate(currentTimeInMinutes);
+
+            if (currentProbability >= selector)
+            {
+                return 0;
+            }
+            
+            currentProbability = splineCurvyProbability.Evaluate(currentTimeInMinutes);
+
+            if (currentProbability >= selector)
+            {
+                return 1;
+            }
+
+            return 2;
         }
 
         private void OnCollectibleReleased()
         {
             spawnCount--;
 
-            if (spawnCount > 0) return;
+            if (enabled || spawnCount > 0) return;
 
-            if (!enabled)
-            {
-                lastItemVanishedEvent.RaiseEvent();
-                return;
-            }
-            
-            SpawnWave();
+            lastItemVanishedEvent.RaiseEvent();
         }
-
-#if UNITY_EDITOR
-
-        public void EditorSpawnWave()
-        {
-            SpawnWave();
-        }
-        
-#endif
     }
 }

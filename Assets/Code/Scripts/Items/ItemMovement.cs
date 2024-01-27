@@ -14,11 +14,11 @@ namespace Meyham.Items
         [Header("References")]
         [SerializeField] private SplineFollower splineFollower;
         
-        private static CollectibleSpawner spawner;
+        private static CollectiblePool pool;
 
         private void Awake()
         {
-            spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+            pool ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectiblePool>();
         }
 
         public void SetUpMovement(SplineContainer spline, SpeedPoint[] speedPoints)
@@ -35,7 +35,7 @@ namespace Meyham.Items
 
         private void OnEndOfSplineReached()
         {
-            spawner.ReleaseCollectible(gameObject);
+            pool.ReleaseCollectible(gameObject);
         }
     }
 }

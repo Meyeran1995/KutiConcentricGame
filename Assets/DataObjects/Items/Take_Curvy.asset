@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
-  m_Name: Five
+  m_Name: Take_Curvy
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 7739010823540788411, guid: 4a85c702ae1da2c49b13547c26b41eee, type: 3}
+  itemTemplate: {fileID: 1747961303976598721, guid: 73bc40650f8107b4a82b34f82468f926, type: 3}
   movementTemplate: {fileID: 2880560562915733486, guid: 61cf9c684f3057f47994e4c5e01dee3a, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: cebb7e7ebc367e34b91efa6dca58b8f6, type: 3}
-  <ColliderPosition>k__BackingField: {x: 0.405, y: -0.086, z: 0}
-  <ColliderRotation>k__BackingField: {x: -0.11918376, y: 0.99287224, z: -0, w: 0}
-  <ColliderScale>k__BackingField: {x: 2.38, y: 1.67, z: 1}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
+  <ColliderPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  <ColliderRotation>k__BackingField: {x: 0, y: 1, z: 0, w: 0}
+  <ColliderScale>k__BackingField: {x: 0.4, y: 0.4, z: 1}

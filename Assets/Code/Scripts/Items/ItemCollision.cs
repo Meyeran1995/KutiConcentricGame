@@ -16,7 +16,7 @@ namespace Meyham.Items
         [Space] 
         [SerializeField] private ItemCollectibleCarrier collectibleCarrier;
 
-        private static CollectibleSpawner spawner;
+        private static CollectiblePool pool;
 
         public void ReceiveColliderDimensions(Vector3 localPosition, Quaternion localRotation, 
             Vector3 localScale)
@@ -29,7 +29,7 @@ namespace Meyham.Items
         
         private void Awake()
         {
-            spawner ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectibleSpawner>();
+            pool ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectiblePool>();
         }
         
         private void OnEnable()
@@ -55,7 +55,7 @@ namespace Meyham.Items
         {
             yield return tweenAnimation.TweenShrink();
             
-            spawner.ReleaseCollectible(transform.parent.gameObject);
+            pool.ReleaseCollectible(transform.parent.gameObject);
         }
     }
 }

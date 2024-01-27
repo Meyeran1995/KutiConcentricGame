@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
-  m_Name: Six
+  m_Name: Take_Sine
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 1332564507713462052, guid: 56bf7da2446c8584ba33306df32f90f4, type: 3}
+  itemTemplate: {fileID: 1747961303976598721, guid: 73bc40650f8107b4a82b34f82468f926, type: 3}
   movementTemplate: {fileID: 183184798827745455, guid: d39aa3fd167a88345b5426c81a3e0657, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 0c80aaac926f0304d9730a4c2d6622e6, type: 3}
-  <ColliderPosition>k__BackingField: {x: -0.063, y: 0.072, z: 0}
-  <ColliderRotation>k__BackingField: {x: 0.1302666, y: 0.99147904, z: 0, w: 0}
-  <ColliderScale>k__BackingField: {x: 2.05, y: 1.95, z: 1}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
+  <ColliderPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  <ColliderRotation>k__BackingField: {x: 0, y: 1, z: 0, w: 0}
+  <ColliderScale>k__BackingField: {x: 0.4, y: 0.4, z: 1}

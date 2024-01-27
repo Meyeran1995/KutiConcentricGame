@@ -8,7 +8,6 @@ namespace Meyham.Player
     public class PlayerOrder : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Rigidbody playerRigidbody;
         [Header("Player references")]
         [SerializeField] private PlayerColliderUpdater colliderUpdater;

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e329e28faa638e47b90498f1372f45a, type: 3}
   m_Name: TimeUnit
   m_EditorClassIdentifier: 
-  baseValue: 1
-  <RuntimeValue>k__BackingField: 1
-  updateRuntimeValue: 1
+  baseValue: 300
+  <RuntimeValue>k__BackingField: 300
+  updateBaseValue: 0

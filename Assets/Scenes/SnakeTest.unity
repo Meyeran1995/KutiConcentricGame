@@ -214,7 +214,7 @@ MonoBehaviour:
   rotatingCutscene: {fileID: 855478475}
   lastItemVanished: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   setHoldInteractionEventChannel: {fileID: 11400000, guid: 3010c374e0269a744a570d8404f8e26e, type: 2}
-  startingTime: {fileID: 0}
+  startingTime: {fileID: 11400000, guid: 9795b5eb7cf2d7347ad372e24fc4d7ed, type: 2}
   currentTime: 0
 --- !u!1 &120632352
 GameObject:
@@ -6259,13 +6259,152 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6bbc7b875f401c957150c12632c804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 0.5
-  spawner: {fileID: 1816520460}
+  curveSpawnInterval:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5
+      value: 0.125
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveItemDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3
+      value: 0.25
+      inSlope: -0.07291667
+      outSlope: -0.07291667
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5
+      value: 0.125
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  splineStraightProbability:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 0.125
+      inSlope: -0.4375
+      outSlope: -0.4375
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  splineCurvyProbability:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5
+      value: 0
+      inSlope: -0.125
+      outSlope: -0.125
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  addBodyPartItems:
+  - {fileID: 11400000, guid: 94b6b838e20a02f4e837a6caf68de4d2, type: 2}
+  - {fileID: 11400000, guid: a23dafeac19ea1b4585d7c09b020f4b3, type: 2}
+  - {fileID: 11400000, guid: fa629c5f3190c5545b62206c8ed9ac93, type: 2}
+  takeBodyPartItems:
+  - {fileID: 11400000, guid: 1734b2c6a79930f4f9f81f5a81571ed2, type: 2}
+  - {fileID: 11400000, guid: cbcec42b2014077488f60f1b1cf62b57, type: 2}
+  - {fileID: 11400000, guid: a7d26c4ee3be1cb42af4ca893aca0ae1, type: 2}
+  pool: {fileID: 1816520460}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
   lastItemVanishedEvent: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
-  currentWave: 0
+  spawnTime: 0
+  currentTimeInMinutes: 0
   spawnCount: 0
-  isSpawning: 0
 --- !u!1 &1232454604
 GameObject:
   m_ObjectHideFlags: 0

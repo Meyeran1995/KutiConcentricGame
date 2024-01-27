@@ -13,6 +13,10 @@ PrefabInstance:
       value: Take Bodypart
       objectReference: {fileID: 0}
     - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
+    - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}

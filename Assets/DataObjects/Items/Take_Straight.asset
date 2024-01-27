@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f12b6db58d0543e4b3ebcd438907e468, type: 3}
-  m_Name: Tri
+  m_Name: Take_Straight
   m_EditorClassIdentifier: 
-  itemTemplate: {fileID: 2131028398171375921, guid: 28de847c79139d74b890825f88437cdf, type: 3}
+  itemTemplate: {fileID: 1747961303976598721, guid: 73bc40650f8107b4a82b34f82468f926, type: 3}
   movementTemplate: {fileID: 6000960185640069762, guid: 4ee88e7ccc6e44749b967a14feb7e302, type: 3}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
-  <ColliderPosition>k__BackingField: {x: -0.172, y: -0.591, z: 0}
-  <ColliderRotation>k__BackingField: {x: -0.061048605, y: 0.99813485, z: -0, w: 0}
-  <ColliderScale>k__BackingField: {x: 1.84, y: 1.5, z: 1}
+  <ColliderPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  <ColliderRotation>k__BackingField: {x: 0, y: 1, z: 0, w: 0}
+  <ColliderScale>k__BackingField: {x: 0.4, y: 0.4, z: 1}
