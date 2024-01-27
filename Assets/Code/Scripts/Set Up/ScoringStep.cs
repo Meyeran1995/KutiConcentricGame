@@ -14,8 +14,6 @@ namespace Meyham.Set_Up
 
         private PlayerManager playerManager;
         
-        private PlayerScore[] playerScores;
-
         public override void Setup()
         {
         }
@@ -26,27 +24,27 @@ namespace Meyham.Set_Up
             loop.LinkScoreboardView(LinkView);
         }
 
-        public override void Activate()
-        {
-            var numberOfPlayers = playerManager.PlayerCount;
-            
-            if (playerScores != null && playerScores.Length == numberOfPlayers)
-            {
-                base.Activate();
-                return;
-            }
-
-            var players = playerManager.GetPlayers();
-
-            playerScores = new PlayerScore[numberOfPlayers];
-
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                playerScores[i] = players[i].GetComponent<PlayerScore>();
-            }
-            
-            base.Activate();
-        }
+        // public override void Activate()
+        // {
+        //     var numberOfPlayers = playerManager.PlayerCount;
+        //     
+        //     if (playerScores != null && playerScores.Length == numberOfPlayers)
+        //     {
+        //         base.Activate();
+        //         return;
+        //     }
+        //     
+        //     var players = playerManager.GetPlayers();
+        //     
+        //     playerScores = new PlayerScore[numberOfPlayers];
+        //     
+        //     for (int i = 0; i < numberOfPlayers; i++)
+        //     {
+        //         playerScores[i] = players[i].GetComponent<PlayerScore>();
+        //     }
+        //     
+        //     base.Activate();
+        // }
         
         private void LinkView(ScoreboardView view)
         {
@@ -67,8 +65,6 @@ namespace Meyham.Set_Up
         private IEnumerator DisplayScoreboard()
         {
             yield return scoreboard.OpenView();
-
-            yield return scoreboard.CountUpScores(playerScores);
 
             yield return new WaitForSeconds(endOfGameDelay);
             

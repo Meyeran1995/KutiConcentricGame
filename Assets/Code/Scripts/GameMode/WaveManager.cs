@@ -10,7 +10,6 @@ namespace Meyham.GameMode
     {
         [Header("Properties")]
         [SerializeField] private float spawnInterval;
-        [SerializeField] private CollectibleWave[] waves;
 
         [Header("References")] 
         [SerializeField] private CollectibleSpawner spawner;
@@ -48,15 +47,16 @@ namespace Meyham.GameMode
 
         private IEnumerator SpawnRoutine()
         {
-            foreach (var content in waves[currentWave].Wave)
-            {
-                spawner.GetCollectible(content);
-                spawnCount++;
-                yield return new WaitForSeconds(spawnInterval);
-            }
-
-            isSpawning = false;
-            currentWave = ++currentWave % waves.Length;
+            // foreach (var content in waves[currentWave].Wave)
+            // {
+            //     spawner.GetCollectible(content);
+            //     spawnCount++;
+            //     yield return new WaitForSeconds(spawnInterval);
+            // }
+            //
+            // isSpawning = false;
+            // currentWave = ++currentWave % waves.Length;
+            yield return null;
         }
 
         private void OnCollectibleReleased()

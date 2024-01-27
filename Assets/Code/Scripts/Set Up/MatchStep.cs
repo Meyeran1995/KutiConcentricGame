@@ -5,14 +5,12 @@ using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
-using Meyham.UI;
 using UnityEngine;
 
 namespace Meyham.Set_Up
 {
     public class MatchStep : AGameStep
     {
-
         [SerializeField] private RotatingCutscene rotatingCutscene;
         
         [Header("Events")]
@@ -20,10 +18,8 @@ namespace Meyham.Set_Up
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
         
         [Header("Timer Values")]
-        [SerializeField] private FloatParameter timeUnit;
+        [SerializeField] private FloatParameter startingTime;
         [SerializeField, ReadOnly] private float currentTime;
-
-        private TimerUi timerUi;
 
         private PlayerManager playerManager;
         
@@ -31,13 +27,8 @@ namespace Meyham.Set_Up
 
         private WaveManager waveManager;
 
-        private InGameView inGameView;
-        
-        private float startingTime;
-
         public override void Setup()
         {
-            startingTime = TimerUi.NumberOfDots * timeUnit;
             lastItemVanished += OnLastItemVanished;
 
             waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
@@ -46,7 +37,6 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-            loop.LinkInGameView(LinkView);
             loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
         }
 
@@ -70,12 +60,6 @@ namespace Meyham.Set_Up
             collisionResolver = resolver;
         }
         
-        private void LinkView(InGameView view)
-        {
-            inGameView = view;
-            timerUi = view.GetComponentInChildren<TimerUi>(true);
-        }
-        
         private void OnEnable()
         {
             currentTime = startingTime;
@@ -92,10 +76,9 @@ namespace Meyham.Set_Up
         {
             while (currentTime > 0f)
             {
-                yield return new WaitForSeconds(timeUnit);
+                yield return new WaitForSeconds(startingTime);
 
-                timerUi.DepleteTime();
-                currentTime -= timeUnit;
+                currentTime -= startingTime;
             }
             
             OnTimerElapsed();
@@ -103,7 +86,6 @@ namespace Meyham.Set_Up
 
         private void OnTimerElapsed()
         {
-            timerUi.gameObject.SetActive(false);
             waveManager.enabled = false;
         }
         
@@ -114,8 +96,6 @@ namespace Meyham.Set_Up
 
         private IEnumerator WaitForViewToClose()
         {
-            yield return inGameView.CloseView();
-
             var activePlayers = playerManager.GetPlayers();
             var playerIDs = new int[activePlayers.Length];
             var playerAngles = new float[activePlayers.Length];

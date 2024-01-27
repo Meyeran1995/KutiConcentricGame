@@ -12,7 +12,6 @@ namespace Meyham.Player
         [Header("Player References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
-        [SerializeField] private PlayerScore score;
         [SerializeField] private PlayerOrder playerOrder;
         [SerializeField] private PlayerBody playerBody;
 
@@ -67,7 +66,6 @@ namespace Meyham.Player
             playerBody.enabled = true;
             
             collisionParent.SetActive(true);
-            score.ResetScore();
         }
 
         private void OnDisable()
