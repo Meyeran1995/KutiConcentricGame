@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Meyham.GameMode
 {
-    public class CollectibleSpawner : AnObjectPoolBehaviour
+    public class CollectiblePool : AnObjectPoolBehaviour
     {
         [Header("References")]
         [SerializeField] private VoidEventChannelSO onReleasedEvent;

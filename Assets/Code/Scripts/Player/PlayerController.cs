@@ -7,7 +7,6 @@ namespace Meyham.Player
     {
         [Header("References")]
         [SerializeField] private GameObject collisionParent;
-        [SerializeField] private SpriteRenderer spriteRenderer;
         
         [Header("Player References")]
         [SerializeField] private RadialPlayerMovement movement;
@@ -33,7 +32,6 @@ namespace Meyham.Player
         
         public void SetPlayerColor(Color color)
         {
-            spriteRenderer.color = color;
         }
 
         public void SetStartingPosition(float angle)
@@ -48,12 +46,10 @@ namespace Meyham.Player
 
         public void ShowPlayer()
         {
-            spriteRenderer.enabled = true;
         }
         
         public void HidePlayer()
         {
-            spriteRenderer.enabled = false;
         }
 
         private void OnEnable()

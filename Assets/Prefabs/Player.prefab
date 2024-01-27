@@ -137,7 +137,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3343158595621873217}
-  - component: {fileID: 3343158595621873216}
   - component: {fileID: 7474950231064833239}
   - component: {fileID: 3275505422473986951}
   m_Layer: 0
@@ -165,58 +164,6 @@ Transform:
   m_Father: {fileID: 3343158596831003081}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!212 &3343158595621873216
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3343158595621873218}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8bacd21dca0ff2042aa36c3922c07e6a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!114 &7474950231064833239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e43ba9cdb140b183a48bb27b012618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 3343158595621873216}
   playerRigidbody: {fileID: 5963414438623310424}
   colliderUpdater: {fileID: 2068861727984402671}
   playerCollision: {fileID: 3731849146304716601}
@@ -303,7 +249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionParent: {fileID: 21176729701189190}
-  spriteRenderer: {fileID: 3343158595621873216}
   movement: {fileID: 3343158596831003080}
   input: {fileID: 3343158596831003086}
   playerOrder: {fileID: 7474950231064833239}
@@ -347,7 +292,7 @@ MonoBehaviour:
   inputCanceledEventChannel: {fileID: 11400000, guid: 33fd5d7e24992b841b49a95c7870409d, type: 2}
   playerMovement: {fileID: 3343158596831003080}
   controller: {fileID: -3059452512064107555}
-  playerBody: {fileID: 0}
+  playerBody: {fileID: 3275505422473986951}
 --- !u!114 &5346232853266400848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +445,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 1744481090969126844, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_Creator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart (2)
@@ -566,6 +515,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 1744481090969126844, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_Creator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart
@@ -632,6 +585,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 1744481090969126844, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_Creator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart (1)
