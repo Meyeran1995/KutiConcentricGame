@@ -84,14 +84,5 @@ namespace Meyham.Player
             playerOrder.enabled = false;
             collisionParent.SetActive(false);
         }
-
-#if UNITY_EDITOR
-        
-        private void OnValidate()
-        {
-            gameObject.name = $"Player {Designation}";
-        }
-        
-#endif
     }
 }

@@ -194,10 +194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
-  anglePerBodyPart: 12
   playerMovement: {fileID: 3343158596831003080}
+  playerDestroyed: {fileID: 11400000, guid: 50b1cc7a9b334bc4bb5e51ce3e89f98b, type: 2}
   headIsFront: 0
   hydraIndex: 0
+  designation: 0
   gizmoScale: {x: 0.25, y: 0.5, z: 1}
 --- !u!1 &3343158596831003082
 GameObject:
@@ -213,7 +214,7 @@ GameObject:
   - component: {fileID: 3343158596831003086}
   - component: {fileID: 5346232853266400848}
   m_Layer: 0
-  m_Name: Player Orange
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

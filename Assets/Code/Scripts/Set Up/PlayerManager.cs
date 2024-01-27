@@ -40,6 +40,11 @@ namespace Meyham.Set_Up
             players[inputIndex].Deactivate();
         }
 
+        public void DisablePlayer(int designation)
+        {
+            players[designation].enabled = false;
+        }
+
         public void EnablePlayers()
         {
             foreach (var player in players)
