@@ -14,9 +14,9 @@ namespace Meyham.Items
             Collectible = collectibleData;
         }
 
-        public void OnCollected(GameObject playerCollision)
+        public void OnCollected(GameObject playerItemCollision)
         {
-            Collectible.Collect(playerCollision);
+            Collectible.Collect(playerItemCollision);
         }
     }
 }
