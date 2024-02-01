@@ -1,5 +1,4 @@
-﻿using System;
-using Meyham.Set_Up;
+﻿using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.Collision
@@ -22,11 +21,16 @@ namespace Meyham.Collision
             playerCount--;
         }
         
+        public void SetPlayerCollisions(PlayerCollision[] collisions)
+        {
+            playerCollisions = collisions;
+        }
+        
         private void OnEnable()
         {
             int maximumCollisions = playerCount - 1;
             
-            if (maximumCollisions == 0)
+            if (maximumCollisions <= 0)
             {
                 enabled = false;
                 return;
@@ -39,34 +43,27 @@ namespace Meyham.Collision
         {
             hits = null;
         }
-
-        public void SetPlayerCollisions(PlayerCollision[] collisions)
-        {
-            playerCollisions = collisions;
-        }
         
         private void FixedUpdate()
         {
-            Array.Sort(playerCollisions);
+            // Array.Sort(playerCollisions); sort based on max order of bodyparts
 
             foreach (var collision in playerCollisions)
             {
-                if(collision.AllowForwardRaycast)
-                {
-                    collision.FireRayInMovementDirection(hits);
-                
-                    if (collision.ForwardCollision)
-                    {                
-                        collision.ResolveSameOrderCollision(hits);
-                        collision.UpdateOrder();
-                        continue;
-                    }
-                }
-                
-                if (!collision.AllowDownwardRaycast) continue;
-                
-                collision.FireDownwardCollisionRaycasts(hits);
-                collision.UpdateOrder();
+                collision.ResolveForwardCollisions(hits);
+                collision.ResolveDownwardChecks(hits);
+                // if(collision.AllowForwardRaycast)
+                // {
+                //     if(!collision.FireRayInMovementDirection(hits)) continue;
+                //
+                //     collision.ResolveSameOrderCollision(hits);
+                //     collision.UpdateOrder();
+                // }
+                //
+                // if (!collision.AllowDownwardRaycast) continue;
+                //
+                // collision.FireDownwardCollisionRaycasts(hits);
+                // collision.UpdateOrder();
             }
         }
     }

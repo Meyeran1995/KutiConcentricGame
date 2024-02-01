@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307a9345f6a10a4478664c1a7c56d14e, type: 3}
   m_Name: Raycast Direction Downward
   m_EditorClassIdentifier: 
-  baseValue: {x: -0.4, y: -1.676}
-  <RuntimeValue>k__BackingField: {x: -0.4, y: -1.676}
-  updateBaseValue: 0
+  baseValue: {x: -0.17, y: -1.676}
+  <RuntimeValue>k__BackingField: {x: -0.17, y: -1.676}
+  updateBaseValue: 1

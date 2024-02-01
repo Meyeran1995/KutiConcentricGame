@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
@@ -27,7 +28,7 @@ namespace Meyham.Player
         [ReadOnly, SerializeField] private int hydraIndex;
         [ReadOnly, SerializeField] private PlayerDesignation designation;
 
-        private LinkedList<PlayerBodyPart> playerBodyParts = new();
+        private LinkedList<BodyPart> playerBodyParts = new();
 
         private static PlayerBodyPartPool bodyPartPool;
         
@@ -40,6 +41,21 @@ namespace Meyham.Player
         public void OnDoubleTap(int input)
         {
             headIsFront = input < 0;
+        }
+
+        public BodyPart[] GetBodyParts()
+        {
+            BodyPart[] bodyPartsBuffer = new BodyPart[playerBodyParts.Count];
+            playerBodyParts.CopyTo(bodyPartsBuffer, 0);
+
+            if (headIsFront)
+            {
+                return bodyPartsBuffer;
+            }
+            
+            Array.Reverse(bodyPartsBuffer);
+            
+            return bodyPartsBuffer;
         }
         
         public void AcquireBodyPart()
@@ -63,7 +79,7 @@ namespace Meyham.Player
 
         public void LoseBodySegment()
         {
-            PlayerBodyPart bodyPart;
+            BodyPart bodyPart;
 
             if (headIsFront)
             {
@@ -86,7 +102,7 @@ namespace Meyham.Player
         
         private void Awake()
         {
-            playerBodyParts= new LinkedList<PlayerBodyPart>(GetComponentsInChildren<PlayerBodyPart>());
+            playerBodyParts= new LinkedList<BodyPart>(GetComponentsInChildren<BodyPart>());
             bodyPartPool ??= FindAnyObjectByType<PlayerBodyPartPool>(FindObjectsInactive.Include);
             headIsFront = true;
             designation = GetComponentInParent<PlayerController>().Designation;
@@ -130,7 +146,7 @@ namespace Meyham.Player
             }
         }
 
-        private void AlignBodyPart(int index, PlayerBodyPart bodyPart)
+        private void AlignBodyPart(int index, BodyPart bodyPart)
         {
             var transformSelf = transform;
             var angle = angle_per_body_part * index + playerMovement.CirclePosition;
@@ -152,7 +168,7 @@ namespace Meyham.Player
             partTransform.SetLocalPositionAndRotation(circlePos, localRotation);
         }
         
-        private void AlignBodyPart(PlayerBodyPart bodyPart)
+        private void AlignBodyPart(BodyPart bodyPart)
         {
             var index = headIsFront ? playerBodyParts.Count - 1 : max_number_of_body_parts;
             

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Meyham.Player;
 using UnityEngine;
 
 namespace Meyham.Collision
@@ -7,9 +8,9 @@ namespace Meyham.Collision
     {
         private static Transform origin;
         
-        private static readonly LayerMaskProvider MaskProvider = new ();
+        private static readonly LayerMaskProvider MaskProvider = new();
         
-        private static readonly Dictionary<Collider, PlayerCollision> ColliderToPlayer = new(6);
+        private static readonly Dictionary<BodyPart, BodyCollision> BodyPartToCollision = new(18);
 
         public static Vector3 GetOriginPos()
         {
@@ -38,14 +39,19 @@ namespace Meyham.Collision
             return MaskProvider.GetLayer(playerOrder);
         }
 
-        public static void Register(Collider playerCollider, PlayerCollision playerCollision)
+        public static void Register(BodyPart bodyPart, BodyCollision bodyCollision)
         {
-            ColliderToPlayer.Add(playerCollider, playerCollision);
+            BodyPartToCollision.Add(bodyPart, bodyCollision);
         }
-
-        public static PlayerCollision GetPlayerByCollider(Collider playerCollider)
+        
+        public static void DeRegister(BodyPart bodyPart)
         {
-            return ColliderToPlayer[playerCollider];
+            BodyPartToCollision.Remove(bodyPart);
+        }
+        
+        public static BodyCollision GetCollisionByBodyPart(BodyPart bodyPart)
+        {
+            return BodyPartToCollision[bodyPart];
         }
     }
 }
