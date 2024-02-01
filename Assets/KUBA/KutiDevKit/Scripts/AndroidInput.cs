@@ -71,6 +71,16 @@ public class AndroidInput : MonoBehaviour
     }
     private  void Initialize()
     {
+
+#if UNITY_EDITOR
+        if (!File.Exists("proc/device-tree/model"))
+        {
+            isInitialized = true;
+            return;
+        }
+#endif
+        
+        
         if(File.ReadAllText("proc/device-tree/model").Contains("Compute Module"))
         {
             Ports = new Dictionary<int, EKutiButton>
