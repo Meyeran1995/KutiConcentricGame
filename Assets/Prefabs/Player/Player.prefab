@@ -176,8 +176,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3343158595621873217}
-  - component: {fileID: 7474950231064833239}
   - component: {fileID: 3275505422473986951}
+  - component: {fileID: 65925185074372495}
   m_Layer: 0
   m_Name: BodyParts
   m_TagString: Untagged
@@ -203,21 +203,6 @@ Transform:
   m_Father: {fileID: 3343158596831003081}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &7474950231064833239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3343158595621873218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e43ba9cdb140b183a48bb27b012618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCollision: {fileID: 0}
-  <Order>k__BackingField: 0
-  transitionLocked: 0
 --- !u!114 &3275505422473986951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +222,18 @@ MonoBehaviour:
   hydraIndex: 0
   designation: 0
   gizmoScale: {x: 0.25, y: 0.5, z: 1}
+--- !u!114 &65925185074372495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343158595621873218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b48e6cba1624de98960a72f1e8f2f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3343158596831003082
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +286,7 @@ MonoBehaviour:
   collisionParent: {fileID: 21176729701189190}
   movement: {fileID: 3343158596831003080}
   input: {fileID: 3343158596831003086}
-  playerOrder: {fileID: 7474950231064833239}
+  playerOrder: {fileID: 0}
   playerBody: {fileID: 3275505422473986951}
   <Designation>k__BackingField: 0
   <IsActive>k__BackingField: 0
