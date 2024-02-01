@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Meyham.UI
 {
-    public class ScoreboardView : AGameView, IColoredText, IPlayerNumberDependable
+    public class ScoreboardView : AGameView, IPlayerColorReceiver, IPlayerNumberDependable
     {
         [Header("References")]
         [SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
@@ -17,7 +17,7 @@ namespace Meyham.UI
 
         private ScoreTweenWrapper[] activeTweens;
 
-        public void SetTextColor(int playerId, Color color)
+        public void SetColor(int playerId, Color color)
         {
             scoreBoardEntries[playerId].SetEntryColor(color);
         }

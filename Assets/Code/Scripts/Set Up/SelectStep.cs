@@ -31,7 +31,7 @@ namespace Meyham.Set_Up
 
         private MainMenuView mainMenu;
 
-        private IColoredText[] coloredTexts;
+        private IPlayerColorReceiver[] coloredElements;
         private List<IPlayerNumberDependable> playerNumberDependables;
 
         private PlayerManager playerManager;
@@ -40,7 +40,7 @@ namespace Meyham.Set_Up
         public override void Setup()
         {
             activeSlots = new bool[6];
-            coloredTexts = frontEnd.GetComponentsInChildren<IColoredText>(true);
+            coloredElements = frontEnd.GetComponentsInChildren<IPlayerColorReceiver>(true);
 
             var dependables = frontEnd.GetComponentsInChildren<IPlayerNumberDependable>(true);
 
@@ -176,9 +176,9 @@ namespace Meyham.Set_Up
 
         private void SetColors(int playerNumber)
         {
-            foreach (var text in coloredTexts)
+            foreach (var element in coloredElements)
             {
-                text.SetTextColor(playerNumber, colors[playerNumber]);
+                element.SetColor(playerNumber, colors[playerNumber]);
             }
         }
 
