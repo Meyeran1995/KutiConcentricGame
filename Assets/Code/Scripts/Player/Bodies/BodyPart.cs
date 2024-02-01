@@ -4,12 +4,12 @@ using Meyham.EditorHelpers;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Meyham.Player
+namespace Meyham.Player.Bodies
 {
     public class BodyPart : MonoBehaviour
     {
         [SerializeField] private SpriteShapeController body;
-        [SerializeField] private Renderer spriteRenderer;
+        [SerializeField] private SpriteShapeRenderer spriteRenderer;
         [SerializeField] private Collider bodyCollider;
         
         [field: Header("Debug"), SerializeField, ReadOnly]
@@ -30,6 +30,11 @@ namespace Meyham.Player
             // muss basierend auf der order lokale position der spline punkte animieren
         //kennt base settings für reset/pooling
 
+        public void SetColor(Color activeColor)
+        {
+            spriteRenderer.color = activeColor;
+        }
+        
         public void Show()
         {
             spriteRenderer.enabled = true;
@@ -47,7 +52,6 @@ namespace Meyham.Player
         
         public void IncrementOrder()
         {
-            Debug.Log("Order incremented");
             Order++;
             wasModified = true;
             
@@ -57,8 +61,7 @@ namespace Meyham.Player
         }
 
         public void OrderPlayer(int order)
-        {            
-            Debug.Log($"Order set to {order}");
+        {
             Order = order;
             wasModified = true;
         }
