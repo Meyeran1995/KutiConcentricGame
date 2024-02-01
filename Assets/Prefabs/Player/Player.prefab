@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 987279441132426777}
   - component: {fileID: 3594001768764848216}
   - component: {fileID: 5963414438623310424}
-  - component: {fileID: 2068861727984402671}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Player
@@ -87,19 +86,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2068861727984402671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 21176729701189190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0c1b6a7018cd84fac49b7ab3230208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sizeFactor: {fileID: 11400000, guid: 9bb670ec7668e8a459d7aad0e0df61c1, type: 2}
 --- !u!1 &1566106488942533806
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +255,7 @@ Transform:
   - {fileID: 3343158595621873217}
   - {fileID: 987279441132426777}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3059452512064107555
 MonoBehaviour:
@@ -286,7 +272,6 @@ MonoBehaviour:
   collisionParent: {fileID: 21176729701189190}
   movement: {fileID: 3343158596831003080}
   input: {fileID: 3343158596831003086}
-  playerOrder: {fileID: 0}
   playerBody: {fileID: 3275505422473986951}
   <Designation>k__BackingField: 0
   <IsActive>k__BackingField: 0
