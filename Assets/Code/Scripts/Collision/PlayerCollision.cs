@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using Meyham.DataObjects;
-using Meyham.EditorHelpers;
 using Meyham.Player;
 using UnityEngine;
 
@@ -9,6 +7,7 @@ namespace Meyham.Collision
 {
     public class PlayerCollision : MonoBehaviour, IComparable<PlayerCollision>
     {
+        [SerializeField] private FloatParameter raycastLenght;
         [SerializeField] private FloatParameter radius;
         [Header("Raycast Origins")]
         [SerializeField] private Vector2Parameter raycastOriginForward;
@@ -17,147 +16,164 @@ namespace Meyham.Collision
         [SerializeField] private Vector2Parameter raycastDirectionForward;
         [SerializeField] private Vector2Parameter raycastDirectionDownward;
         [Header("References")]
-        [SerializeField] private Collider playerCollider;
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
         [SerializeField] private RadialPlayerMovement movement;
-        [SerializeField] private PlayerOrder playerOrder;
+        [SerializeField] private PlayerBody playerBody;
 
-        [field: Header("Debug"), SerializeField, ReadOnly]
-        public bool ForwardCollision { get; private set; }
+        private RaycastData counterClockwise, clockwise, downLeft, downRight;
         
-        [field: SerializeField, ReadOnly]
-        public bool AllowDownwardRaycast { get; private set; }
-
-        public bool AllowForwardRaycast => allowForwardRaycast && velocityCalculator.VelocityOrder > 0;
-
-        [SerializeField, ReadOnly]
-        private bool allowForwardRaycast;
-        
-        public void ResolveSameOrderCollision(RaycastHit[] hits)
+        public int CompareTo(PlayerCollision other)
         {
-            int currentOrder = playerOrder.Order;
-            
-            //TODO: Filter same velocity collisions to prevent flickering
-            FireUpwardCollisionRaycasts(hits);
+            return 1;
+            // return playerOrder.Order.CompareTo(other.playerOrder.Order);
+        }
+        
+        public void ResolveForwardCollisions(RaycastHit[] hits)
+        {
+            if (velocityCalculator.VelocityOrder == 0) return;
 
-            if (currentOrder != playerOrder.Order)
+            var bodyParts = playerBody.GetBodyParts();
+            var bodyPart = bodyParts[0];
+            var previousOrder = bodyParts[0].Order;
+            
+            ResolveSameOrderCollision(bodyPart, hits);
+            bodyPart.UpdatePlayerOrder();
+            
+            for (var i = 1; i < bodyParts.Length; i++)
             {
+                bodyPart = bodyParts[i];
+                var currentOrder = bodyPart.Order;
+
+                if (currentOrder == previousOrder)
+                {
+                    previousOrder = currentOrder;
+                    continue;
+                }
+
+                ResolveSameOrderCollision(bodyPart, hits);
+                bodyPart.UpdatePlayerOrder();
+                previousOrder = currentOrder;
+            }
+        }
+
+        public void ResolveDownwardChecks(RaycastHit[] hits)
+        {
+            foreach (var bodyPart in playerBody.GetBodyParts())
+            {
+                if(bodyPart.Order == 0 || bodyPart.IsTransitionLocked()) continue;
+                FireDownwardCollisionRaycasts(bodyPart, hits);
+                bodyPart.UpdatePlayerOrder();
+            }
+        }
+        
+        private void ResolveSameOrderCollision(BodyPart bodyPart, RaycastHit[] hits)
+        {
+            var bodyCollision = PlayerCollisionHelper.GetCollisionByBodyPart(bodyPart);
+            var rayCastData = movement.MovementDirection == -1 ? clockwise : counterClockwise;
+
+            if(!bodyCollision.FireRayInMovementDirection(rayCastData, hits)) return;
+
+            // //TODO: Filter same velocity collisions to prevent flickering
+            // FireUpwardCollisionRaycasts(bodyPart, hits);
+            //
+            // if (bodyPart.IsTransitionLocked())
+            // {
+            //     return;
+            // }
+            
+            bodyPart.IncrementOrder();
+        }
+
+        private void FireDownwardCollisionRaycasts(BodyPart bodyPart, RaycastHit[] hits)
+        {
+            var bodyCollision = PlayerCollisionHelper.GetCollisionByBodyPart(bodyPart);
+            var numberOfHits = bodyCollision.FireDownWardRaycast(downLeft, hits);
+
+            var leftOrder = -1;
+            if (numberOfHits > 0)
+            {
+                leftOrder = GetOrderFromRaycastHits(numberOfHits, hits);
+            }
+
+            numberOfHits = bodyCollision.FireDownWardRaycast(downRight, hits);
+            
+            var rightOrder = -1;
+            if (numberOfHits > 0)
+            {
+                rightOrder = GetOrderFromRaycastHits(numberOfHits, hits);
+            }
+            
+            var newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
+            
+            if (newOrder >= bodyPart.Order) return;
+
+            numberOfHits = bodyCollision.FireDownwardCenterRaycast(radius, hits);
+            
+            if (numberOfHits == 0)
+            {
+                bodyPart.OrderPlayer(newOrder);
                 return;
             }
             
-            playerOrder.IncrementOrder();
-            StartCoroutine(TransitionDelay());
-        }
-        
-        public void FireRayInMovementDirection(RaycastHit[] hits)
-        {
-            Transform playerCollisionTransform = transform;
-            Vector3 raycastOrigin = raycastOriginForward;
-            Vector3 raycastDirection = raycastDirectionForward;
+            var middleOrder = GetOrderFromRaycastHits(numberOfHits, hits) + 1;
+            newOrder = Mathf.Max(newOrder, middleOrder);
             
-            if (movement.MovementDirection == 1)
-            {
-                //right
-                raycastOrigin = playerCollisionTransform.TransformPoint(raycastOrigin);
-                raycastDirection.x = -raycastDirection.x;
-                raycastDirection = playerCollisionTransform.TransformDirection(raycastDirection);
-                
-                ForwardCollision = FireRaycastIntoSameLayer(raycastOrigin, raycastDirection, hits) > 0;
+            if (newOrder >= bodyPart.Order) return;
+            
+            bodyPart.OrderPlayer(newOrder);
+        }
 
-#if UNITY_EDITOR
-                Debug.DrawRay(raycastOrigin, raycastDirection, Color.magenta,1f);
-#endif
+        private void FireUpwardCollisionRaycasts(BodyPart bodyPart, RaycastHit[] hits)
+        {
+            var currentOrder = bodyPart.Order;
+            var bodyCollision = PlayerCollisionHelper.GetCollisionByBodyPart(bodyPart);
+            var numberOfHits = bodyCollision.FireUpwardRaycast(downLeft, hits);
+
+            var leftOrder = currentOrder;
+            
+            if (numberOfHits > 0)
+            {
+                leftOrder = GetOrderFromRaycastHits(numberOfHits, hits);
+            }
+            
+            var rightOrder = currentOrder;
+
+            numberOfHits = bodyCollision.FireUpwardRaycast(downRight, hits);
+            if (numberOfHits > 0)
+            {
+                rightOrder = GetOrderFromRaycastHits(numberOfHits, hits);
+            }
+            
+            int newOrder = Mathf.Max(leftOrder, rightOrder);
+            
+            if (newOrder <= currentOrder) return;
+
+            numberOfHits = bodyCollision.FireUpwardCenterRaycast(radius, hits);
+            if (numberOfHits == 0)
+            {
+                bodyPart.OrderPlayer(newOrder);
                 return;
             }
             
-            //left
-            raycastOrigin.x = -raycastOrigin.x;
-            raycastOrigin = playerCollisionTransform.TransformPoint(raycastOrigin);
-            raycastDirection = playerCollisionTransform.TransformDirection(raycastDirection);
-
-            ForwardCollision = FireRaycastIntoSameLayer(raycastOrigin, raycastDirection, hits) > 0;
-
-#if UNITY_EDITOR
-            Debug.DrawRay(raycastOrigin, raycastDirection, Color.magenta,1f);
-#endif
-        }
+            int middleOrder = GetOrderFromRaycastHits(numberOfHits, hits);
+            
+            newOrder = Mathf.Max(newOrder, middleOrder);
+            
+            if (newOrder <= bodyPart.Order) return;
         
-        public void FireDownwardCollisionRaycasts(RaycastHit[] hits)
-        {
-            Transform playerCollisionTransform = transform;
-
-            Vector3 raycastOriginLeft = raycastOriginDownward;
-            raycastOriginLeft.x = -raycastOriginLeft.x;
-            raycastOriginLeft = playerCollisionTransform.TransformPoint(raycastOriginLeft);
-            
-            Vector3 raycastDirection = playerCollisionTransform.TransformDirection(raycastDirectionDownward);
-
-            int leftOrder = ComputeOrder(raycastOriginLeft, raycastDirection, hits, Color.red);
-
-            Vector3 raycastOriginRight = playerCollisionTransform.TransformPoint(raycastOriginDownward);
-
-            raycastDirection = raycastDirectionDownward;
-            raycastDirection.x = -raycastDirection.x;
-            raycastDirection = playerCollisionTransform.TransformDirection(raycastDirection);
-                
-            int rightOrder = ComputeOrder(raycastOriginRight, raycastDirection, hits, Color.blue);
-        
-            int newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
-            
-            if (newOrder == playerOrder.Order) return;
-            
-            Vector3 raycastOriginMiddle = playerCollisionTransform.position;
-            int middleOrder = ComputeOrder(raycastOriginMiddle, -transform.up, hits, Color.green);
-            
-            newOrder = Mathf.Max(newOrder, middleOrder + 1);
-            
-            playerOrder.OrderPlayer(newOrder);
-            StartCoroutine(TransitionDelay());
+            bodyPart.OrderPlayer(newOrder);
         }
 
-        public void OnOrderChanged(int order)
-        {
-            gameObject.layer = PlayerCollisionHelper.GetLayer(order);
-        }
-
-        public void UpdateOrder()
-        {
-            playerOrder.UpdatePlayerOrder();
-        }
-
-        private int FireRaycastIntoSameLayer(Vector3 raycastOrigin, Vector3 raycastDirection, RaycastHit[] hits)
-        {
-            int mask = PlayerCollisionHelper.GetMaskForSameOrder(playerOrder.Order);
-            
-            // returns size of buffer as in number of hits
-            return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, raycastDirection.magnitude, mask);
-        }
-        
-        private int FireRaycastIntoLayersBelow(Vector3 raycastOrigin, Vector3 raycastDirection, RaycastHit[] hits)
-        {
-            int mask = PlayerCollisionHelper.GetMaskForLowerOrders(playerOrder.Order);
-            
-            // returns size of buffer as in number of hits
-            return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, radius, mask);
-        }
-        
-        private int FireRaycastIntoLayersAbove(Vector3 raycastOrigin, Vector3 raycastDirection, RaycastHit[] hits)
-        {
-            int mask = PlayerCollisionHelper.GetMaskForHigherOrders(playerOrder.Order);
-            
-            // returns size of buffer as in number of hits
-            return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, radius, mask);
-        }
-
-        private int GetOrderFromRaycastHits(RaycastHit[] hits, int length)
+        private int GetOrderFromRaycastHits(int numberOfHits, RaycastHit[] hits)
         {
             int order = -1;
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < numberOfHits; i++)
             {
-                var collision = PlayerCollisionHelper.GetPlayerByCollider(hits[i].collider);
+                // var collision = PlayerCollisionHelper.GetPlayerByCollider(hits[i].collider);
 
-                int hitOrder = collision.playerOrder.Order;
+                var body = hits[i].collider.GetComponentInParent<BodyPart>();
+                int hitOrder = body.Order;
 
                 if (hitOrder <= order) continue;
 
@@ -167,101 +183,35 @@ namespace Meyham.Collision
             return order;
         }
 
-        private int ComputeOrder(Vector3 raycastOrigin, Vector3 rayCastDirection, RaycastHit[] hits, Color debugColor, bool castBelow = true)
+        private void Start()
         {
-            int order = -1;
-            int rayCastHits = castBelow ? FireRaycastIntoLayersBelow(raycastOrigin, rayCastDirection, hits) 
-                : FireRaycastIntoLayersAbove(raycastOrigin, rayCastDirection, hits);
-
-        #if UNITY_EDITOR
-        
-            if(rayCastHits != 0)
-            {
-                order = GetOrderFromRaycastHits(hits, rayCastHits);
-                if (order >= 0)
-                {
-                    Debug.DrawRay(raycastOrigin, hits[0].point - raycastOrigin, debugColor,1f);
-                }
-            }
-            else
-            {
-                Debug.DrawRay(raycastOrigin, rayCastDirection, debugColor,1f);
-            }
-            
-        #else
-            
-            if(rayCastHits == 0) return order;
-
-            order = GetOrderFromRaycastHits(hits, rayCastHits);
-            
-        #endif
-
-            return order;
+            BuildRayCastData();
         }
         
-        private void FireUpwardCollisionRaycasts(RaycastHit[] hits)
+        private void BuildRayCastData()
         {
-            Transform playerCollisionTransform = transform;
-
-            Vector3 raycastOriginLeft = raycastOriginDownward;
-            raycastOriginLeft.x = -raycastOriginLeft.x;
-            raycastOriginLeft = playerCollisionTransform.TransformPoint(raycastOriginLeft);
-
-            Vector3 raycastDirection = transform.up;
-
-            int leftOrder = ComputeOrder(raycastOriginLeft, raycastDirection, hits, Color.magenta, castBelow: false);
-
-            Vector3 raycastOriginRight = playerCollisionTransform.TransformPoint(raycastOriginDownward);
-
-            int rightOrder = ComputeOrder(raycastOriginRight, raycastDirection, hits, Color.cyan, castBelow: false);
-        
-            int newOrder = Mathf.Max(leftOrder, rightOrder) + 1;
+            //left movement == -1
+            Vector3 raycastOrigin = raycastOriginForward;
+            raycastOrigin.x = -raycastOrigin.x;
             
-            if (newOrder <= playerOrder.Order + 1) return;
+            clockwise = new RaycastData(raycastOrigin, raycastDirectionForward, raycastLenght);
             
-            Vector3 raycastOriginMiddle = playerCollisionTransform.position;
-            int middleOrder = ComputeOrder(raycastOriginMiddle, raycastDirection, hits, Color.green, castBelow: false);
+            //right movement == 1
+            Vector3 raycastDirection = raycastDirectionForward;
+            raycastDirection.x = -raycastDirection.x;
+
+            counterClockwise = new RaycastData(raycastOriginForward, raycastDirection, raycastLenght);
+
+            //downward
+            raycastDirection = raycastDirectionDownward;
+            raycastDirection.x = -raycastDirection.x;
             
-            newOrder = Mathf.Max(newOrder, middleOrder + 1);
+            downRight = new RaycastData(raycastOriginDownward, raycastDirection, radius);
+
+            raycastOrigin = raycastOriginDownward;
+            raycastOrigin.x = -raycastOrigin.x;
             
-            if (newOrder <= playerOrder.Order + 1) return;
-
-            playerOrder.OrderPlayer(newOrder);
-            StartCoroutine(TransitionDelay());
-        }
-
-        private IEnumerator TransitionDelay()
-        {
-            AllowDownwardRaycast = false;
-            ForwardCollision = false;
-            allowForwardRaycast = false;
-            
-            yield return new WaitWhile(playerOrder.IsTransitionLocked);
-            
-            allowForwardRaycast = true;
-            AllowDownwardRaycast = playerOrder.Order > 0;
-        }
-        
-        private void Awake()
-        {
-            PlayerCollisionHelper.Register(playerCollider, this);
-        }
-
-        private void OnDisable()
-        {
-            AllowDownwardRaycast = false;
-            ForwardCollision = false;
-            StopAllCoroutines();
-        }
-
-        private void OnEnable()
-        {
-            allowForwardRaycast = true;
-        }
-
-        public int CompareTo(PlayerCollision other)
-        {
-            return playerOrder.Order.CompareTo(other.playerOrder.Order);
+            downLeft = new RaycastData(raycastOrigin, raycastDirectionDownward, radius);
         }
 
 #if UNITY_EDITOR
@@ -270,10 +220,13 @@ namespace Meyham.Collision
         [Header("Gizmos")]
         [SerializeField] private Color gizmoColorLeft;
         [SerializeField] private Color gizmoColorRight;
+        [SerializeField] private Transform originTransform;
+        [SerializeField] private bool drawGizmos;
+        
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
-            var originTransform = transform;
+            if (!drawGizmos) return;
             
             //down
             var origin = raycastOriginDownward.RuntimeValue;
@@ -294,7 +247,7 @@ namespace Meyham.Collision
             Gizmos.DrawLine(originRight, originRight + originTransform.TransformDirection(flipped));
             
             Gizmos.color = Color.green;
-            flipped = transform.up * flipped.magnitude;
+            flipped = originTransform.up * flipped.magnitude;
             flipped = -flipped;
             Gizmos.DrawLine(originTransform.position, originTransform.position + flipped);
 
@@ -304,14 +257,18 @@ namespace Meyham.Collision
             origin.x = -origin.x;
             originLeft = originTransform.TransformPoint(origin);
 
+            Vector3 direction = raycastDirectionForward;
+            direction.Normalize();
+            direction *= raycastLenght;
+            
             Gizmos.color = gizmoColorLeft;
             Gizmos.DrawSphere(originLeft, 0.03f);
-            Gizmos.DrawLine(originLeft, originLeft + originTransform.TransformDirection(raycastDirectionForward));
+            Gizmos.DrawLine(originLeft, originLeft + originTransform.TransformDirection(direction));
 
             Gizmos.color = gizmoColorRight;
             Gizmos.DrawSphere(originRight, 0.03f);
             
-            flipped = raycastDirectionForward;
+            flipped = direction;
             flipped.x = -flipped.x;
             Gizmos.DrawLine(originRight, originRight + originTransform.TransformDirection(flipped));
         }

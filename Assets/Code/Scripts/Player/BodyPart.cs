@@ -1,18 +1,17 @@
-﻿using System.Collections;
+using System.Collections;
 using Meyham.Collision;
 using Meyham.EditorHelpers;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace Meyham.Player
 {
-    public class PlayerOrder : MonoBehaviour
+    public class BodyPart : MonoBehaviour
     {
-        // [Header("References")]
-        // [SerializeField] private Rigidbody playerRigidbody;
-        [Header("Player references")]
-        // [SerializeField] private PlayerColliderUpdater colliderUpdater;
-        [SerializeField] private PlayerCollision playerCollision;
-
+        [SerializeField] private SpriteShapeController body;
+        [SerializeField] private Renderer spriteRenderer;
+        [SerializeField] private Collider bodyCollider;
+        
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
 
@@ -21,6 +20,25 @@ namespace Meyham.Player
         private bool wasModified;
 
         private const float order_displacement_amount = 32f / 100f;
+        
+        private Spline spline;
+        
+        //collisionen checken
+            // vorwärts -> kann man skippen, wenn nicht kopf
+            // unten -> kann man skippen wenn order == 0
+        //hat eigene order
+            // muss basierend auf der order lokale position der spline punkte animieren
+        //kennt base settings für reset/pooling
+
+        public void Show()
+        {
+            spriteRenderer.enabled = true;
+        }
+        
+        public void Hide()
+        {
+            spriteRenderer.enabled = false;
+        }
 
         public bool IsTransitionLocked()
         {
@@ -29,6 +47,7 @@ namespace Meyham.Player
         
         public void IncrementOrder()
         {
+            Debug.Log("Order incremented");
             Order++;
             wasModified = true;
             
@@ -38,7 +57,8 @@ namespace Meyham.Player
         }
 
         public void OrderPlayer(int order)
-        {
+        {            
+            Debug.Log($"Order set to {order}");
             Order = order;
             wasModified = true;
         }
@@ -53,23 +73,27 @@ namespace Meyham.Player
         private void OrderPlayer()
         {
             StartCoroutine(OrderTransition());
-            var modelTransform = transform;
+            var modelTransform = spriteRenderer.transform;
+            var collisionTransform = bodyCollider.transform;
 
             if (Order == 0)
             {
                 modelTransform.localPosition = Vector3.zero;
-                // playerRigidbody.transform.position = modelTransform.position;
-                // colliderUpdater.ModifyCollisionSize(0);
-                // playerCollision.OnOrderChanged(0);
+                collisionTransform.localPosition = Vector3.zero;
+                bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
                return;
             }
 
-            var displacement = new Vector3(-Order * order_displacement_amount, 0f, 0f);
+            var displacement = new Vector3(0f, Order * order_displacement_amount, 0f);
             modelTransform.localPosition = displacement;
-            
-            // playerRigidbody.transform.position = modelTransform.position;
-            // colliderUpdater.ModifyCollisionSize(Order);
-            // playerCollision.OnOrderChanged(Order);
+            collisionTransform.localPosition = displacement;
+
+            bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
+        }
+        
+        private void Start()
+        {
+            spline = body.spline;
         }
 
         private void OnEnable()

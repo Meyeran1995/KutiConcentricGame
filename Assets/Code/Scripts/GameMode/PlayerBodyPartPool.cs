@@ -11,11 +11,11 @@ namespace Meyham.GameMode
             item.transform.parent = null;
         }
 
-        public PlayerBodyPart GetBodyPart()
+        public BodyPart GetBodyPart()
         {
             pool.Get(out var part);
 
-            return part.GetComponent<PlayerBodyPart>();
+            return part.GetComponent<BodyPart>();
         }
         
         public void ReleaseBodyPart(GameObject bodyPart)
