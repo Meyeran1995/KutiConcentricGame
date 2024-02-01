@@ -13,7 +13,6 @@ namespace Meyham.Player
         [Header("Player References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
-        [SerializeField] private PlayerOrder playerOrder;
         [SerializeField] private PlayerBody playerBody;
 
         [field: Header("Properties"), SerializeField] 
@@ -72,7 +71,6 @@ namespace Meyham.Player
             
             movement.enabled = true;
             input.enabled = true;
-            playerOrder.enabled = true;
             playerBody.enabled = true;
             
             collisionParent.SetActive(true);
@@ -84,18 +82,8 @@ namespace Meyham.Player
 
             movement.enabled = false;
             input.enabled = false;
-            playerOrder.enabled = false;
             playerBody.enabled = false;
             
-            collisionParent.SetActive(false);
-        }
-
-        private void Awake()
-        {
-            enabled = false;
-            movement.enabled = false;
-            input.enabled = false;
-            playerOrder.enabled = false;
             collisionParent.SetActive(false);
         }
     }
