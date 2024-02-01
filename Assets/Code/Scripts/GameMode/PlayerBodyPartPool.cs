@@ -1,4 +1,5 @@
 ﻿using Meyham.Player;
+using Meyham.Player.Bodies;
 using UnityEngine;
 
 namespace Meyham.GameMode

@@ -1,7 +1,7 @@
-using Meyham.Collision;
+using Meyham.Player.Bodies;
 using UnityEngine;
 
-namespace Meyham.Player
+namespace Meyham.Collision
 {
     public class BodyCollision : MonoBehaviour
     {

@@ -1,4 +1,6 @@
 ﻿using Meyham.EditorHelpers;
+using Meyham.Player.Bodies;
+using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.Player
@@ -20,6 +22,8 @@ namespace Meyham.Player
         [field: SerializeField, ReadOnly] 
         public bool IsActive { get; private set; }
 
+        private IPlayerColorReceiver playerColor;
+
         public void Activate()
         {
             IsActive = true;
@@ -32,6 +36,7 @@ namespace Meyham.Player
         
         public void SetPlayerColor(Color color)
         {
+            playerColor.SetColor((int)Designation, color);
         }
 
         public void SetStartingPosition(float angle)
@@ -52,6 +57,15 @@ namespace Meyham.Player
         {
         }
 
+        private void Awake()
+        {
+            enabled = false;
+            movement.enabled = false;
+            input.enabled = false;
+            collisionParent.SetActive(false);
+            playerColor = GetComponentInChildren<IPlayerColorReceiver>();
+        }
+        
         private void OnEnable()
         {
             if(!IsActive) return;

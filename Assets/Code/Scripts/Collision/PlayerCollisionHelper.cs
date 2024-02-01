@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Meyham.Player;
+using Meyham.Player.Bodies;
 using UnityEngine;
 
 namespace Meyham.Collision

@@ -7,7 +7,7 @@ using Meyham.GameMode;
 using UnityEditor;
 using UnityEngine;
 
-namespace Meyham.Player
+namespace Meyham.Player.Bodies
 {
     
     // verwaltet body parts mit linked list
@@ -18,6 +18,12 @@ namespace Meyham.Player
     
     public class PlayerBody : MonoBehaviour
     {
+        private const int max_number_of_body_parts = 30;
+        
+        private const int min_number_of_body_parts = 3;
+        
+        private const float angle_per_body_part = 12f;
+        
         [Header("Parameter")]
         [SerializeField] private FloatParameter radius;
         [Header("References")]
@@ -31,12 +37,8 @@ namespace Meyham.Player
         private LinkedList<BodyPart> playerBodyParts = new();
 
         private static PlayerBodyPartPool bodyPartPool;
-        
-        private const int max_number_of_body_parts = 30;
-        
-        private const int min_number_of_body_parts = 3;
-        
-        private const float angle_per_body_part = 12f;
+
+        public event Action<BodyPart> BodyPartAcquired;
 
         public void OnDoubleTap(int input)
         {
@@ -75,6 +77,7 @@ namespace Meyham.Player
             }
 
             AlignBodyPart(incomingPart);
+            BodyPartAcquired?.Invoke(incomingPart);
         }
 
         public void LoseBodySegment()
