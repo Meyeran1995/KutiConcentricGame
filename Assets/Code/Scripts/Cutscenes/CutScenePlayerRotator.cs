@@ -88,10 +88,8 @@ namespace Meyham.Cutscenes
             outerPivot.localRotation = desiredRotationOuter;
         }
         
-        private void Awake()
+        private void Start()
         {
-            currentRotationInner = Quaternion.identity;
-            transform.localRotation = Quaternion.identity;
             currentRotationOuter = Quaternion.AngleAxis(outerStartingRotation, Vector3.forward);
             outerPivot.localRotation = currentRotationOuter;
         }

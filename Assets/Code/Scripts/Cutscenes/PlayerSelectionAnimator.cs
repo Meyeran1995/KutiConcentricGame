@@ -52,9 +52,10 @@ namespace Meyham.Cutscenes
             var desiredAngle = 0f;
             var angleIncrement = Mathf.RoundToInt(360f / numOfPlayers);
 
-            for (int i = 0; i < numOfPlayers; i++, desiredAngle += angleIncrement)
+            for (int i = 0; i < numOfPlayers; i++)
             {
                 desiredAngles[i] = desiredAngle;
+                desiredAngle += angleIncrement;
             }
             
             cutscene.UpdateCirclePositions(activePlayers.ToArray(), desiredAngles);
