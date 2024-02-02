@@ -9,7 +9,8 @@ namespace Meyham.Cutscenes
         [Header("References")] 
         [SerializeField] private PlayerColors playerColors;
         [SerializeField] private CutScenePlayerRotator[] rotators;
-        [SerializeField] private SpriteRenderer[] spriteRenderers;
+        
+        private IPlayerColorReceiver[] cutsceneDummyRenderers;
 
         public void UpdateCirclePositions(int[] activePlayers, float[] desiredAngles)
         {
@@ -82,11 +83,16 @@ namespace Meyham.Cutscenes
             }
         }
 
-        private void Start()
+        private void Awake()
         {
-            for (int i = 0; i < 6; i++)
+            cutsceneDummyRenderers = new IPlayerColorReceiver[rotators.Length];
+
+            for (int i = 0; i < rotators.Length; i++)
             {
-                spriteRenderers[i].color = playerColors[i];
+                var dummyRenderer = rotators[i].GetComponentInChildren<IPlayerColorReceiver>();
+                
+                dummyRenderer.SetColor(i, playerColors[i]);
+                cutsceneDummyRenderers[i] = dummyRenderer;
             }
         }
     }
