@@ -18,11 +18,11 @@ namespace Meyham.Player.Bodies
     
     public class PlayerBody : MonoBehaviour
     {
+        public const int MIN_NUMBER_OF_BODY_PARTS = 3;
+        
+        public const float ANGLE_PER_BODY_PART = 12f;
+        
         private const int max_number_of_body_parts = 30;
-        
-        private const int min_number_of_body_parts = 3;
-        
-        private const float angle_per_body_part = 12f;
         
         [Header("Parameter")]
         [SerializeField] private FloatParameter radius;
@@ -34,6 +34,8 @@ namespace Meyham.Player.Bodies
         [ReadOnly, SerializeField] private int hydraIndex;
         [ReadOnly, SerializeField] private PlayerDesignation designation;
 
+        private bool initialized;
+        
         private LinkedList<BodyPart> playerBodyParts = new();
 
         private static PlayerBodyPartPool bodyPartPool;
@@ -77,6 +79,7 @@ namespace Meyham.Player.Bodies
             }
 
             AlignBodyPart(incomingPart);
+            
             BodyPartAcquired?.Invoke(incomingPart);
         }
 
@@ -105,15 +108,32 @@ namespace Meyham.Player.Bodies
         
         private void Awake()
         {
-            playerBodyParts= new LinkedList<BodyPart>(GetComponentsInChildren<BodyPart>());
+            playerBodyParts = new LinkedList<BodyPart>();
             bodyPartPool ??= FindAnyObjectByType<PlayerBodyPartPool>(FindObjectsInactive.Include);
-            headIsFront = true;
             designation = GetComponentInParent<PlayerController>().Designation;
+            
+            headIsFront = true;
+            enabled = false;
         }
 
         private void OnEnable()
         {
-            PrepareStartingBodyParts();
+            if (playerBodyParts.Count != 0)
+            {
+                foreach (var bodyPart in playerBodyParts)
+                {
+                    bodyPart.Show();
+                }
+                
+                return;
+            }
+            
+            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
+            {
+                AcquireBodyPart();
+            }
+
+            initialized = true;
         }
 
         private void OnDisable()
@@ -126,10 +146,12 @@ namespace Meyham.Player.Bodies
             }
 #endif
             
+            if(!initialized) return;
+            
             headIsFront = true;
             hydraIndex = 0;
             
-            for (int i = 0; i < min_number_of_body_parts; i++)
+            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
             {
                 var incomingPart = bodyPartPool.GetBodyPart();
                 playerBodyParts.AddLast(incomingPart);
@@ -137,22 +159,10 @@ namespace Meyham.Player.Bodies
             }
         }
 
-        private void PrepareStartingBodyParts()
-        {
-            var index = 0;
-            
-            foreach (var bodyPart in playerBodyParts)
-            {
-                bodyPart.Show();
-                AlignBodyPart(index, bodyPart);
-                index++;
-            }
-        }
-
         private void AlignBodyPart(int index, BodyPart bodyPart)
         {
             var transformSelf = transform;
-            var angle = angle_per_body_part * index + playerMovement.CirclePosition;
+            var angle = ANGLE_PER_BODY_PART * index + playerMovement.CirclePosition;
 
             if (angle > 360f)
             {
@@ -204,7 +214,7 @@ namespace Meyham.Player.Bodies
             
             for (int i = 0; i < max_number_of_body_parts; i++)
             {
-                var angle = i * angle_per_body_part;
+                var angle = i * ANGLE_PER_BODY_PART;
                 var position = GetCirclePoint(angle) + positionOffset;
                 Gizmos.DrawCube(position, gizmoScale);
             }

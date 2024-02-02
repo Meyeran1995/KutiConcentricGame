@@ -20,7 +20,6 @@ namespace Meyham.Player
                 bodyPart.SetColor(activeColor);
             }
         }
-        
 
         private void OnBodyPartAcquired(BodyPart bodyPart)
         {
