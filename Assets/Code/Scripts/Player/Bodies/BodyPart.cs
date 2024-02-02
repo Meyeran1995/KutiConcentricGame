@@ -42,11 +42,15 @@ namespace Meyham.Player.Bodies
         public void Show()
         {
             spriteRenderer.enabled = true;
+            bodyCollider.enabled = true;
+            itemCollider.enabled = true;
         }
         
         public void Hide()
         {
             spriteRenderer.enabled = false;
+            bodyCollider.enabled = false;
+            itemCollider.enabled = false;
         }
 
         public bool IsTransitionLocked()
