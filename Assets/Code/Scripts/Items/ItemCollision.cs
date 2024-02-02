@@ -39,7 +39,9 @@ namespace Meyham.Items
         
         private void OnTriggerEnter(Collider other)
         {
-            var incomingObject = other.gameObject;
+            if(!collectibleCarrier.enabled) return;
+            
+            var incomingObject = other.attachedRigidbody.gameObject;
 
             if (!incomingObject.CompareTag("Player")) return;
 

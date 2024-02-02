@@ -7,7 +7,7 @@ namespace Meyham.Player
     public class PlayerItemCollector : MonoBehaviour
     {
         [SerializeField] private PlayerBody playerBody;
-
+        
         public void OnItemCollected(ACollectibleData item)
         {
             if (item is AddBodyPartCollectible)

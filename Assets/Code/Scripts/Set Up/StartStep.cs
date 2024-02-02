@@ -3,7 +3,6 @@ using Meyham.Collision;
 using Meyham.Cutscenes;
 using Meyham.GameMode;
 using Meyham.Player;
-using Meyham.UI;
 using UnityEngine;
 
 namespace Meyham.Set_Up

@@ -8,9 +8,13 @@ namespace Meyham.Player.Bodies
 {
     public class BodyPart : MonoBehaviour
     {
-        [SerializeField] private SpriteShapeController body;
+        [Header("Model")]
+        [SerializeField] private SpriteShapeController spriteShapeController;
         [SerializeField] private SpriteShapeRenderer spriteRenderer;
+        
+        [Header("Body")]
         [SerializeField] private Collider bodyCollider;
+        [SerializeField] private Collider itemCollider;
         
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
@@ -22,14 +26,14 @@ namespace Meyham.Player.Bodies
         private const float order_displacement_amount = 32f / 100f;
         
         private Spline spline;
-        
+
         //collisionen checken
             // vorwärts -> kann man skippen, wenn nicht kopf
             // unten -> kann man skippen wenn order == 0
         //hat eigene order
             // muss basierend auf der order lokale position der spline punkte animieren
         //kennt base settings für reset/pooling
-
+        
         public void SetColor(Color activeColor)
         {
             spriteRenderer.color = activeColor;
@@ -78,25 +82,30 @@ namespace Meyham.Player.Bodies
             StartCoroutine(OrderTransition());
             var modelTransform = spriteRenderer.transform;
             var collisionTransform = bodyCollider.transform;
+            var itemCollectionTransform = itemCollider.transform;
 
             if (Order == 0)
             {
                 modelTransform.localPosition = Vector3.zero;
                 collisionTransform.localPosition = Vector3.zero;
+                itemCollectionTransform.localPosition = Vector3.zero;
+                
                 bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
                return;
             }
 
             var displacement = new Vector3(0f, Order * order_displacement_amount, 0f);
+            
             modelTransform.localPosition = displacement;
             collisionTransform.localPosition = displacement;
+            itemCollectionTransform.localPosition = displacement;
 
             bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
         }
         
         private void Start()
         {
-            spline = body.spline;
+            spline = spriteShapeController.spline;
         }
 
         private void OnEnable()

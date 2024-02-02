@@ -7,9 +7,6 @@ namespace Meyham.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [Header("References")]
-        [SerializeField] private GameObject collisionParent;
-        
         [Header("Player References")]
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
@@ -61,7 +58,7 @@ namespace Meyham.Player
             enabled = false;
             movement.enabled = false;
             input.enabled = false;
-            collisionParent.SetActive(false);
+            
             playerColor = GetComponentInChildren<IPlayerColorReceiver>();
         }
         
@@ -72,8 +69,6 @@ namespace Meyham.Player
             movement.enabled = true;
             input.enabled = true;
             playerBody.enabled = true;
-            
-            collisionParent.SetActive(true);
         }
 
         private void OnDisable()
@@ -83,8 +78,6 @@ namespace Meyham.Player
             movement.enabled = false;
             input.enabled = false;
             playerBody.enabled = false;
-            
-            collisionParent.SetActive(false);
         }
     }
 }
