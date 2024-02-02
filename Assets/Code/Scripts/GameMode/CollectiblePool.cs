@@ -20,15 +20,17 @@ namespace Meyham.GameMode
             public readonly ItemMovement Movement;
             public readonly SplineFollower SplineFollower;
             public readonly ItemSpriteController SpriteController;
+            public readonly ItemRotator ItemRotator;
             public readonly ItemCollision ItemCollision;
             public readonly ItemCollectibleCarrier CollectibleCarrier;
             
             public CollectibleReferenceCache(ItemMovement movement, SplineFollower splineFollower,
-                ItemSpriteController spriteController, ItemCollision itemCollision, ItemCollectibleCarrier collectibleCarrier)
+                ItemSpriteController spriteController, ItemRotator itemRotator, ItemCollision itemCollision, ItemCollectibleCarrier collectibleCarrier)
             {
                 Movement = movement;
                 SplineFollower = splineFollower;
                 SpriteController = spriteController;
+                ItemRotator = itemRotator;
                 ItemCollision = itemCollision;
                 CollectibleCarrier = collectibleCarrier;
             }
@@ -48,7 +50,9 @@ namespace Meyham.GameMode
             movement.SetUpMovement(splineProvider.GetSpline(itemData.MovementData), itemData.SpeedPoints);
             movement.RestartMovement();
 
-            cache.CollectibleCarrier.SetCollectible(itemData.CollectibleData);
+            var collectible = itemData.CollectibleData;
+            cache.CollectibleCarrier.SetCollectible(collectible);
+            cache.ItemRotator.enabled = collectible is DestroyBodyPartCollectible;
             
             item.SetActive(true);
         }
@@ -66,7 +70,9 @@ namespace Meyham.GameMode
             var itemCollision = item.GetComponentInChildren<ItemCollision>();
             var cache = new CollectibleReferenceCache(item.GetComponent<ItemMovement>(),
                 item.GetComponent<SplineFollower>(),
-                item.GetComponentInChildren<ItemSpriteController>(), itemCollision,
+                item.GetComponentInChildren<ItemSpriteController>(), 
+                item.GetComponent<ItemRotator>(),
+                itemCollision,
                 itemCollision.GetComponent<ItemCollectibleCarrier>()
                 );
             
