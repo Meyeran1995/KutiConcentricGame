@@ -69,15 +69,6 @@ namespace Meyham.Cutscenes
             currentRotationInner = desiredRotationInner;
             transform.localRotation = currentRotationInner;
         }
-
-        public void RotateIntoCircleInstant()
-        {
-            desiredRotationOuter = Quaternion.identity;
-
-            lerpOuter = 0f;
-            currentRotationOuter = Quaternion.identity;
-            outerPivot.localRotation = Quaternion.identity;
-        }
         
         public void RotateOutOfCircleInstant()
         {

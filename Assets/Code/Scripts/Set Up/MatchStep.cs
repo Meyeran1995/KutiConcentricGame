@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Meyham.Collision;
+﻿using Meyham.Collision;
 using Meyham.Cutscenes;
 using Meyham.EditorHelpers;
 using Meyham.Events;
@@ -47,7 +46,19 @@ namespace Meyham.Set_Up
             playerManager.DisablePlayers();
             collisionResolver.enabled = false;
 
-            StartCoroutine(WaitForViewToClose());
+            var activePlayers = playerManager.GetPlayers();
+            var playerIDs = new int[activePlayers.Length];
+            var playerAngles = new float[activePlayers.Length];
+            
+            for (int i = 0; i < playerIDs.Length; i++)
+            {
+                playerIDs[i] = (int)activePlayers[i].Designation;
+                playerAngles[i] = activePlayers[i].GetCurrentCirclePosition();
+            }
+            
+            rotatingCutscene.MoveAllPlayersOutsideTheCircleInstant(playerIDs);
+            
+            base.Deactivate();
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -84,28 +95,6 @@ namespace Meyham.Set_Up
         private void OnLastItemVanished()
         {
             Deactivate();
-        }
-
-        private IEnumerator WaitForViewToClose()
-        {
-            var activePlayers = playerManager.GetPlayers();
-            var playerIDs = new int[activePlayers.Length];
-            var playerAngles = new float[activePlayers.Length];
-
-            for (int i = 0; i < playerIDs.Length; i++)
-            {
-                playerIDs[i] = (int)activePlayers[i].Designation;
-                playerAngles[i] = activePlayers[i].GetCurrentCirclePosition();
-            }
-            
-            rotatingCutscene.MoveAllPlayersIntoTheCircle(playerIDs);
-            rotatingCutscene.UpdateCirclePositions(playerIDs, playerAngles);
-            rotatingCutscene.gameObject.SetActive(true);
-            playerManager.HidePlayers();
-            
-            yield return rotatingCutscene.AnimateAllPlayersLeavingTheCircle(playerIDs);
-            
-            base.Deactivate();
         }
     }
 }

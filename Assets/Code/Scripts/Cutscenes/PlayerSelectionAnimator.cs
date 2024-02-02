@@ -36,7 +36,7 @@ namespace Meyham.Cutscenes
 
         public void CloseCutscene()
         {
-            cutscene.MoveAllPlayersOutsideTheCircle(activePlayers.ToArray());
+            cutscene.MoveAllPlayersOutsideTheCircleInstant(activePlayers.ToArray());
             cutscene.gameObject.SetActive(false);
         }
 
