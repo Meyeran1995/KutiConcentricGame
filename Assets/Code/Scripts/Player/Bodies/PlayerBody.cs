@@ -155,6 +155,7 @@ namespace Meyham.Player.Bodies
             {
                 var incomingPart = bodyPartPool.GetBodyPart();
                 playerBodyParts.AddLast(incomingPart);
+                AlignBodyPart(incomingPart);
                 incomingPart.Hide();
             }
         }
