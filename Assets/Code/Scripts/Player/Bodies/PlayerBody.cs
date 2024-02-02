@@ -18,9 +18,9 @@ namespace Meyham.Player.Bodies
     
     public class PlayerBody : MonoBehaviour
     {
-        public const int MIN_NUMBER_OF_BODY_PARTS = 3;
-        
         public const float ANGLE_PER_BODY_PART = 12f;
+        
+        private const int min_number_of_body_parts = 3;
         
         private const int max_number_of_body_parts = 30;
         
@@ -122,13 +122,14 @@ namespace Meyham.Player.Bodies
             {
                 foreach (var bodyPart in playerBodyParts)
                 {
+                    BodyPartAcquired?.Invoke(bodyPart);
                     bodyPart.Show();
                 }
                 
                 return;
             }
             
-            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
+            for (int i = 0; i < min_number_of_body_parts; i++)
             {
                 AcquireBodyPart();
             }
@@ -151,7 +152,7 @@ namespace Meyham.Player.Bodies
             headIsFront = true;
             hydraIndex = 0;
             
-            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
+            for (int i = 0; i < min_number_of_body_parts; i++)
             {
                 var incomingPart = bodyPartPool.GetBodyPart();
                 playerBodyParts.AddLast(incomingPart);
