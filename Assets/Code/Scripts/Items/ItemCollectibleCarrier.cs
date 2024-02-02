@@ -8,15 +8,17 @@ namespace Meyham.Items
     {
         [field: ReadOnly, SerializeField] 
         public ACollectibleData Collectible { get; private set; }
-
+        
         public void SetCollectible(ACollectibleData collectibleData)
         {
             Collectible = collectibleData;
+            enabled = true;
         }
 
-        public void OnCollected(GameObject playerItemCollision)
+        public void OnCollected(GameObject playerBodyPart)
         {
-            Collectible.Collect(playerItemCollision);
+            Collectible.Collect(playerBodyPart);
+            enabled = false;
         }
     }
 }
