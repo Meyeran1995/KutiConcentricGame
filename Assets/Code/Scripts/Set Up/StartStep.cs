@@ -114,6 +114,7 @@ namespace Meyham.Set_Up
                 playerAngles[i] = players[i].GetCurrentCirclePosition();
             }
 
+            rotatingCutscene.gameObject.SetActive(true);
             rotatingCutscene.UpdateCirclePositions(playerIDs, playerAngles);
 
             yield return rotatingCutscene.AnimateAllPlayersEnteringTheCircle(playerIDs);

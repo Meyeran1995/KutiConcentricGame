@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -52,34 +53,13 @@ namespace Meyham.Cutscenes
             return new WaitWhile(lastRotator.IsRotating);
         }
         
-        public IEnumerator AnimateAllPlayersLeavingTheCircle(int[] activePlayers)
-        { 
-            foreach (var player in activePlayers)
-            {
-                AnimatePlayerLeavingCircle(player);
-            }
-
-            var lastRotator = rotators[activePlayers[^1]];
-
-            return new WaitWhile(lastRotator.IsRotating);
-        }
-        
-        public void MoveAllPlayersOutsideTheCircle(int[] activePlayers)
+        public void MoveAllPlayersOutsideTheCircleInstant(IEnumerable<int> activePlayers)
         { 
             foreach (var player in activePlayers)
             {
                 var rotator = rotators[player];
                 rotator.RotateOutOfCircleInstant();
                 rotator.SetInnerRotationInstant(0f);
-            }
-        }
-        
-        public void MoveAllPlayersIntoTheCircle(int[] activePlayers)
-        { 
-            foreach (var player in activePlayers)
-            {
-                var rotator = rotators[player];
-                rotator.RotateIntoCircleInstant();
             }
         }
 
