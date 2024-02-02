@@ -47,10 +47,18 @@ namespace Meyham.Player
 
         public void ShowPlayer()
         {
+            foreach (var bodyPart in playerBody.GetBodyParts())
+            {
+                bodyPart.Show();
+            }
         }
         
         public void HidePlayer()
         {
+            foreach (var bodyPart in playerBody.GetBodyParts())
+            {
+                bodyPart.Hide();
+            }
         }
 
         private void Awake()
