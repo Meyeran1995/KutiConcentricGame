@@ -123,7 +123,6 @@ namespace Meyham.Player.Bodies
                 foreach (var bodyPart in playerBodyParts)
                 {
                     BodyPartAcquired?.Invoke(bodyPart);
-                    bodyPart.Show();
                 }
                 
                 return;
