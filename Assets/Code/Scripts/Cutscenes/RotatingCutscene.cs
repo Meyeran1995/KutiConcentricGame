@@ -63,7 +63,7 @@ namespace Meyham.Cutscenes
             }
         }
 
-        private void Awake()
+        private void Start()
         {
             cutsceneDummyRenderers = new IPlayerColorReceiver[rotators.Length];
 
