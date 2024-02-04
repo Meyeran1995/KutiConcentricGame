@@ -223,7 +223,27 @@ namespace Meyham.Collision
         [SerializeField] private Color gizmoColorRight;
         [SerializeField] private Transform originTransform;
         [SerializeField] private bool drawGizmos;
-        
+
+        private float lastSumOfMagnitudes;
+
+        private void Update()
+        {
+            var current = raycastDirectionDownward.RuntimeValue.magnitude;
+            current += raycastDirectionForward.RuntimeValue.magnitude;
+            current += raycastOriginForward.RuntimeValue.magnitude;
+            current += raycastOriginDownward.RuntimeValue.magnitude;
+            current += raycastLenght;
+
+            if (Mathf.Abs(lastSumOfMagnitudes - current) < 0.01f)
+            {
+                lastSumOfMagnitudes = current;
+                return;
+            }
+            
+            BuildRayCastData();
+            
+            lastSumOfMagnitudes = current;
+        }
 
         private void OnDrawGizmos()
         {

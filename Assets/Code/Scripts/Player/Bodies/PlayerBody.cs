@@ -229,9 +229,13 @@ namespace Meyham.Player.Bodies
         
         private void Update()
         {
-            var diff = lastPaddingAndWidth - padding - anglePerBodyPart;
+            var currentPaddingAndWidth = padding - anglePerBodyPart;
             
-            if(Mathf.Abs(diff) < 0.01f) return;
+            if(Mathf.Abs(lastPaddingAndWidth - currentPaddingAndWidth) < 0.01f)
+            {
+                lastPaddingAndWidth = currentPaddingAndWidth;
+                return;
+            }
 
             int i = 0;
 
@@ -240,6 +244,8 @@ namespace Meyham.Player.Bodies
                 AlignBodyPart(i, bodyPart);
                 i++;
             }
+            
+            lastPaddingAndWidth = currentPaddingAndWidth;
         }
 
 #endif
