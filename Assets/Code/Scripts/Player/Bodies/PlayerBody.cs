@@ -65,7 +65,7 @@ namespace Meyham.Player.Bodies
         
         public void AcquireBodyPart()
         {
-            if (!enabled) return;
+            if (!enabled || playerBodyParts.Count == max_number_of_body_parts) return;
             
             var incomingPart = bodyPartPool.GetBodyPart();
             
