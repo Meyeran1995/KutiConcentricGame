@@ -32,7 +32,7 @@ namespace Meyham.Collision
             float compareA = velocityCalculator.VelocityOrder + velocityCalculator.LastVelocity;
             float compareB = other.velocityCalculator.VelocityOrder + other.velocityCalculator.LastVelocity;
             
-            return compareA.CompareTo(compareB);
+            return compareB.CompareTo(compareA);
         }
 
         public void OnStartCollisionChecks()
