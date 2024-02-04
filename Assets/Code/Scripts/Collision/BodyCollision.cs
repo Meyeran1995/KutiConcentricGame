@@ -5,7 +5,6 @@ namespace Meyham.Collision
 {
     public class BodyCollision : MonoBehaviour
     {
-        [SerializeField] private Collider bodyCollider;
         [SerializeField] private BodyPart bodyPart;
         
         public bool FireRayInMovementDirection(RaycastData raycastData, RaycastHit[] hits)
