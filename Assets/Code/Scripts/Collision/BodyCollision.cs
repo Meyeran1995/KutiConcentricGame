@@ -7,7 +7,7 @@ namespace Meyham.Collision
     {
         [SerializeField] private BodyPart bodyPart;
         
-        public bool FireRayInMovementDirection(RaycastData raycastData, RaycastHit[] hits)
+        public int FireRayInMovementDirection(RaycastData raycastData, RaycastHit[] hits)
         {
             var transformSelf = transform;
             var raycastOrigin = transformSelf.TransformPoint(raycastData.Origin);
@@ -20,7 +20,7 @@ namespace Meyham.Collision
 #endif
             
             // returns size of buffer as in number of hits
-            return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, raycastData.Length, mask) > 0;
+            return Physics.RaycastNonAlloc(raycastOrigin, raycastDirection, hits, raycastData.Length, mask);
         }
         
         public int FireDownWardRaycast(RaycastData raycastData, RaycastHit[] hits)

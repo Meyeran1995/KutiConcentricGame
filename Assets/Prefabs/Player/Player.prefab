@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8ae50977994666a26600aaf6c3974c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastLenght: {fileID: 11400000, guid: 2ff29c0c8be2bd541a55b4c693c7a1a2, type: 2}
+  raycastLength: {fileID: 11400000, guid: 2ff29c0c8be2bd541a55b4c693c7a1a2, type: 2}
   radius: {fileID: 11400000, guid: 7fb086609799ee9439b0461767aa4921, type: 2}
   raycastOriginForward: {fileID: 11400000, guid: b8ed511da30708e43801c68fcc109a3d, type: 2}
   raycastOriginDownward: {fileID: 11400000, guid: 10e51ef0879b4a9409cc54a1fdd800ea, type: 2}

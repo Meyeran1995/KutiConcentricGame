@@ -8,14 +8,17 @@ namespace Meyham.Collision
 {
     public class PlayerCollision : MonoBehaviour, IComparable<PlayerCollision>
     {
-        [SerializeField] private FloatParameter raycastLenght;
+        [SerializeField] private FloatParameter raycastLength;
         [SerializeField] private FloatParameter radius;
+        
         [Header("Raycast Origins")]
         [SerializeField] private Vector2Parameter raycastOriginForward;
         [SerializeField] private Vector2Parameter raycastOriginDownward;
+        
         [Header("Raycast Direction")]
         [SerializeField] private Vector2Parameter raycastDirectionForward;
         [SerializeField] private Vector2Parameter raycastDirectionDownward;
+        
         [Header("References")]
         [SerializeField] private PlayerVelocityCalculator velocityCalculator;
         [SerializeField] private RadialPlayerMovement movement;
@@ -25,30 +28,44 @@ namespace Meyham.Collision
         
         public int CompareTo(PlayerCollision other)
         {
-            return 1;
-            // return playerOrder.Order.CompareTo(other.playerOrder.Order);
+            // compares based on velocity
+            float compareA = velocityCalculator.VelocityOrder + velocityCalculator.LastVelocity;
+            float compareB = other.velocityCalculator.VelocityOrder + other.velocityCalculator.LastVelocity;
+            
+            return compareA.CompareTo(compareB);
+        }
+
+        public void OnStartCollisionChecks()
+        {
+            playerBody.IgnoreRaycast();
+        }
+
+        public void OnFinishedCollisionChecks()
+        {
+            playerBody.AllowRaycast();
         }
         
         public void ResolveForwardCollisions(RaycastHit[] hits)
         {
-            if (velocityCalculator.VelocityOrder == 0) return;
-
             var bodyParts = playerBody.GetBodyParts();
             var bodyPart = bodyParts[0];
-            var previousOrder = bodyParts[0].Order;
-            
-            ResolveSameOrderCollision(bodyPart, hits);
-            bodyPart.UpdatePlayerOrder();
-            bodyPart.IgnoreRaycast();
+            var previousOrder = 5;
+
+            if (bodyPart.Order != 5 && !bodyPart.IsTransitionLocked())
+            {
+                previousOrder = bodyPart.Order;
+                
+                ResolveSameOrderCollision(bodyPart, hits);
+                bodyPart.UpdatePlayerOrder();
+            }
             
             for (var i = 1; i < bodyParts.Length; i++)
             {
                 bodyPart = bodyParts[i];
-                bodyPart.IgnoreRaycast();
 
                 var currentOrder = bodyPart.Order;
 
-                if (currentOrder == previousOrder)
+                if (currentOrder == 5 || currentOrder == previousOrder || bodyPart.IsTransitionLocked())
                 {
                     previousOrder = currentOrder;
                     continue;
@@ -58,14 +75,10 @@ namespace Meyham.Collision
                 bodyPart.UpdatePlayerOrder();
                 previousOrder = currentOrder;
             }
-            
-            playerBody.AllowRaycast();
         }
 
         public void ResolveDownwardChecks(RaycastHit[] hits)
         {
-            playerBody.IgnoreRaycast();
-            
             foreach (var bodyPart in playerBody.GetBodyParts())
             {
                 if(bodyPart.Order == 0 || bodyPart.IsTransitionLocked()) continue;
@@ -73,18 +86,17 @@ namespace Meyham.Collision
                 FireDownwardCollisionRaycasts(bodyPart, hits);
                 bodyPart.UpdatePlayerOrder();
             }
-            
-            playerBody.AllowRaycast();
         }
         
         private void ResolveSameOrderCollision(BodyPart bodyPart, RaycastHit[] hits)
         {
             var bodyCollision = PlayerCollisionHelper.GetCollisionByBodyPart(bodyPart);
             var rayCastData = movement.MovementDirection == -1 ? clockwise : counterClockwise;
-
-            if(!bodyCollision.FireRayInMovementDirection(rayCastData, hits)) return;
+            var forwardHits = bodyCollision.FireRayInMovementDirection(rayCastData, hits);
             
-            bodyPart.IncrementOrder();
+            if(forwardHits == 0) return;
+            
+            bodyPart.OrderPlayer(GetOrderFromRaycastHits(forwardHits, hits) + 1);
         }
 
         private void FireDownwardCollisionRaycasts(BodyPart bodyPart, RaycastHit[] hits)
@@ -126,55 +138,12 @@ namespace Meyham.Collision
             bodyPart.OrderPlayer(newOrder);
         }
 
-        private void FireUpwardCollisionRaycasts(BodyPart bodyPart, RaycastHit[] hits)
-        {
-            var currentOrder = bodyPart.Order;
-            var bodyCollision = PlayerCollisionHelper.GetCollisionByBodyPart(bodyPart);
-            var numberOfHits = bodyCollision.FireUpwardRaycast(downLeft, hits);
-
-            var leftOrder = currentOrder;
-            
-            if (numberOfHits > 0)
-            {
-                leftOrder = GetOrderFromRaycastHits(numberOfHits, hits);
-            }
-            
-            var rightOrder = currentOrder;
-
-            numberOfHits = bodyCollision.FireUpwardRaycast(downRight, hits);
-            if (numberOfHits > 0)
-            {
-                rightOrder = GetOrderFromRaycastHits(numberOfHits, hits);
-            }
-            
-            int newOrder = Mathf.Max(leftOrder, rightOrder);
-            
-            if (newOrder <= currentOrder) return;
-
-            numberOfHits = bodyCollision.FireUpwardCenterRaycast(radius, hits);
-            if (numberOfHits == 0)
-            {
-                bodyPart.OrderPlayer(newOrder);
-                return;
-            }
-            
-            int middleOrder = GetOrderFromRaycastHits(numberOfHits, hits);
-            
-            newOrder = Mathf.Max(newOrder, middleOrder);
-            
-            if (newOrder <= bodyPart.Order) return;
-        
-            bodyPart.OrderPlayer(newOrder);
-        }
-
         private int GetOrderFromRaycastHits(int numberOfHits, RaycastHit[] hits)
         {
             int order = -1;
 
             for (int i = 0; i < numberOfHits; i++)
             {
-                // var collision = PlayerCollisionHelper.GetPlayerByCollider(hits[i].collider);
-
                 var body = hits[i].collider.GetComponentInParent<BodyPart>();
                 int hitOrder = body.Order;
 
@@ -197,13 +166,13 @@ namespace Meyham.Collision
             Vector3 raycastOrigin = raycastOriginForward;
             raycastOrigin.x = -raycastOrigin.x;
             
-            clockwise = new RaycastData(raycastOrigin, raycastDirectionForward, raycastLenght);
+            clockwise = new RaycastData(raycastOrigin, raycastDirectionForward, raycastLength);
             
             //right movement == 1
             Vector3 raycastDirection = raycastDirectionForward;
             raycastDirection.x = -raycastDirection.x;
 
-            counterClockwise = new RaycastData(raycastOriginForward, raycastDirection, raycastLenght);
+            counterClockwise = new RaycastData(raycastOriginForward, raycastDirection, raycastLength);
 
             //downward
             raycastDirection = raycastDirectionDownward;
@@ -234,7 +203,7 @@ namespace Meyham.Collision
             current += raycastDirectionForward.RuntimeValue.magnitude;
             current += raycastOriginForward.RuntimeValue.magnitude;
             current += raycastOriginDownward.RuntimeValue.magnitude;
-            current += raycastLenght;
+            current += raycastLength;
 
             if (Mathf.Abs(lastSumOfMagnitudes - current) < 0.01f)
             {
@@ -282,7 +251,7 @@ namespace Meyham.Collision
 
             Vector3 direction = raycastDirectionForward;
             direction.Normalize();
-            direction *= raycastLenght;
+            direction *= raycastLength;
             
             Gizmos.color = gizmoColorLeft;
             Gizmos.DrawSphere(originLeft, 0.03f);

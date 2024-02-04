@@ -1,4 +1,5 @@
-﻿using Meyham.Set_Up;
+﻿using System;
+using Meyham.Set_Up;
 using UnityEngine;
 
 namespace Meyham.Collision
@@ -46,12 +47,16 @@ namespace Meyham.Collision
         
         private void FixedUpdate()
         {
-            // Array.Sort(playerCollisions); sort based on max order of bodyparts
+            Array.Sort(playerCollisions);
 
             foreach (var collision in playerCollisions)
             {
+                collision.OnStartCollisionChecks();
+                
                 collision.ResolveForwardCollisions(hits);
                 collision.ResolveDownwardChecks(hits);
+                
+                collision.OnFinishedCollisionChecks();
             }
         }
     }

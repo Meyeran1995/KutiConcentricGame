@@ -69,16 +69,6 @@ namespace Meyham.Player.Bodies
         {
             return transitionLocked;
         }
-        
-        public void IncrementOrder()
-        {
-            Order++;
-            wasModified = true;
-            
-            if (Order < 5) return;
-            
-            Order = 5;
-        }
 
         public void OrderPlayer(int order)
         {
@@ -95,7 +85,6 @@ namespace Meyham.Player.Bodies
         
         private void OrderPlayer()
         {
-
             if (Order == 0)
             {
                 StartCoroutine(OrderTransition(Vector3.zero));
