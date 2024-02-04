@@ -81,8 +81,8 @@ SpriteShapeRenderer:
   m_Sprites:
   - {fileID: 21300000, guid: 82bafd5a2c5266740a6ae5dc11ab204e, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0.0009933412, y: -0.00013786554, z: 0}
-    m_Extent: {x: 0.41127986, y: 0.1624111, z: 0}
+    m_Center: {x: 0.00082173944, y: -0.00055003166, z: 0}
+    m_Extent: {x: 0.41057628, y: 0.16194807, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &2319444512150239818
 MonoBehaviour:
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_SpriteShape: {fileID: 11400000, guid: 0eceb6a3d152e1948ac8967db8c986e4, type: 2}
   m_FillPixelPerUnit: 100
   m_StretchTiling: 1
-  m_SplineDetail: 16
+  m_SplineDetail: 8
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0

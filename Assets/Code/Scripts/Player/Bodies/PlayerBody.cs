@@ -18,14 +18,15 @@ namespace Meyham.Player.Bodies
     
     public class PlayerBody : MonoBehaviour
     {
-        public const float ANGLE_PER_BODY_PART = 12f;
-        
         private const int min_number_of_body_parts = 3;
         
-        private const int max_number_of_body_parts = 30;
+        private const int max_number_of_body_parts = 26;
         
-        [Header("Parameter")]
+        [Header("Parameters")]
         [SerializeField] private FloatParameter radius;
+        [SerializeField] private FloatParameter anglePerBodyPart;
+        [SerializeField] private FloatParameter padding;
+        
         [Header("References")]
         [SerializeField] private RadialPlayerMovement playerMovement;
         [SerializeField] private GenericEventChannelSO<int> playerDestroyed;
@@ -138,14 +139,6 @@ namespace Meyham.Player.Bodies
 
         private void OnDisable()
         {
-
-#if UNITY_EDITOR
-            if (isQuitting)
-            {
-                return;
-            }
-#endif
-            
             if(!initialized) return;
             
             headIsFront = true;
@@ -163,7 +156,7 @@ namespace Meyham.Player.Bodies
         private void AlignBodyPart(int index, BodyPart bodyPart)
         {
             var transformSelf = transform;
-            var angle = ANGLE_PER_BODY_PART * index + playerMovement.CirclePosition;
+            var angle = (anglePerBodyPart + padding) * index + playerMovement.CirclePosition;
 
             if (angle > 360f)
             {
@@ -201,29 +194,52 @@ namespace Meyham.Player.Bodies
 #if UNITY_EDITOR
 
         [SerializeField] private Vector3 gizmoScale;
-
-        private bool isQuitting;
+        private float lastPaddingAndWidth;
         
         private void OnDrawGizmos()
         {
-            var positionOffset = Vector3.zero;
-
-            if (EditorApplication.isPlaying || EditorApplication.isPaused)
-            {
-                positionOffset = new Vector3(0f, radius);
-            }
+            if (EditorApplication.isPlaying || EditorApplication.isPaused) return;
             
             for (int i = 0; i < max_number_of_body_parts; i++)
             {
-                var angle = i * ANGLE_PER_BODY_PART;
-                var position = GetCirclePoint(angle) + positionOffset;
+                var angle = i * (anglePerBodyPart + padding) + playerMovement.CirclePosition;
+                var position = GetCirclePoint(angle);
                 Gizmos.DrawCube(position, gizmoScale);
+            }
+        }
+        
+        private void OnDrawGizmosSelected()
+        {
+            if (!EditorApplication.isPlaying || !EditorApplication.isPaused) return;
+            
+            var positionOffset = new Vector3(0f, radius);
+                
+            for (int i = 0; i < max_number_of_body_parts; i++)
+            {
+                var angle = i * anglePerBodyPart;
+                var position = GetCirclePoint(angle) + positionOffset;
+                Gizmos.DrawCube(transform.worldToLocalMatrix * position, gizmoScale);
             }
         }
 
         private void OnApplicationQuit()
         {
-            isQuitting = true;
+            initialized = false;
+        }
+        
+        private void Update()
+        {
+            var diff = lastPaddingAndWidth - padding - anglePerBodyPart;
+            
+            if(Mathf.Abs(diff) < 0.01f) return;
+
+            int i = 0;
+
+            foreach (var bodyPart in playerBodyParts)
+            {
+                AlignBodyPart(i, bodyPart);
+                i++;
+            }
         }
 
 #endif
