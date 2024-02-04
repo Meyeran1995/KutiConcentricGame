@@ -7,8 +7,10 @@ namespace Meyham.Cutscenes
 {
     public class CutSceneBodySimulator : MonoBehaviour, IPlayerColorReceiver
     {
-        [Header("Parameter")]
+        [Header("Parameters")]
         [SerializeField] private FloatParameter radius;
+        [SerializeField] private FloatParameter anglePerBodyPart;
+        [SerializeField] private FloatParameter padding;
 
         private DummyBodyPart[] dummyBodyParts;
 
@@ -32,7 +34,7 @@ namespace Meyham.Cutscenes
         private void AlignBodyPart(int index, Transform bodyPart)
         {
             var transformSelf = transform;
-            var angle = PlayerBody.ANGLE_PER_BODY_PART * index;
+            var angle = (anglePerBodyPart + padding) * index;
 
             if (angle > 360f)
             {
