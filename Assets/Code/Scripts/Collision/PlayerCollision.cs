@@ -56,7 +56,6 @@ namespace Meyham.Collision
                 previousOrder = bodyPart.Order;
                 
                 ResolveSameOrderCollision(bodyPart, hits);
-                bodyPart.UpdatePlayerOrder();
             }
             
             for (var i = 1; i < bodyParts.Length; i++)
@@ -72,7 +71,6 @@ namespace Meyham.Collision
                 }
 
                 ResolveSameOrderCollision(bodyPart, hits);
-                bodyPart.UpdatePlayerOrder();
                 previousOrder = currentOrder;
             }
         }
@@ -84,7 +82,6 @@ namespace Meyham.Collision
                 if(bodyPart.Order == 0 || bodyPart.IsTransitionLocked()) continue;
                 
                 FireDownwardCollisionRaycasts(bodyPart, hits);
-                bodyPart.UpdatePlayerOrder();
             }
         }
         
@@ -96,7 +93,7 @@ namespace Meyham.Collision
             
             if(forwardHits == 0) return;
             
-            bodyPart.OrderPlayer(GetOrderFromRaycastHits(forwardHits, hits) + 1);
+            bodyPart.UpdatePlayerOrder(GetOrderFromRaycastHits(forwardHits, hits) + 1);
         }
 
         private void FireDownwardCollisionRaycasts(BodyPart bodyPart, RaycastHit[] hits)
@@ -126,7 +123,7 @@ namespace Meyham.Collision
             
             if (numberOfHits == 0)
             {
-                bodyPart.OrderPlayer(newOrder);
+                bodyPart.UpdatePlayerOrder(newOrder);
                 return;
             }
             
@@ -135,7 +132,7 @@ namespace Meyham.Collision
             
             if (newOrder >= bodyPart.Order) return;
             
-            bodyPart.OrderPlayer(newOrder);
+            bodyPart.UpdatePlayerOrder(newOrder);
         }
 
         private int GetOrderFromRaycastHits(int numberOfHits, RaycastHit[] hits)
