@@ -20,7 +20,7 @@ namespace Meyham.Player.Bodies
     {
         private const int min_number_of_body_parts = 3;
         
-        private const int max_number_of_body_parts = 26;
+        private const int max_number_of_body_parts = 25;
         
         [Header("Parameters")]
         [SerializeField] private FloatParameter radius;
