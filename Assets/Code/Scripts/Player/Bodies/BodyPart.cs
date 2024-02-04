@@ -8,8 +8,9 @@ namespace Meyham.Player.Bodies
 {
     public class BodyPart : MonoBehaviour
     {
+        private const float order_displacement_amount = 32f / 100f;
+        
         [Header("Model")]
-        [SerializeField] private SpriteShapeController spriteShapeController;
         [SerializeField] private SpriteShapeRenderer spriteRenderer;
         
         [Header("Body")]
@@ -22,19 +23,6 @@ namespace Meyham.Player.Bodies
         public int Order { get; private set; }
 
         [SerializeField, ReadOnly] private bool transitionLocked;
-        
-        private bool wasModified;
-
-        private const float order_displacement_amount = 32f / 100f;
-        
-        private Spline spline;
-
-        //collisionen checken
-            // vorwärts -> kann man skippen, wenn nicht kopf
-            // unten -> kann man skippen wenn order == 0
-        //hat eigene order
-            // muss basierend auf der order lokale position der spline punkte animieren
-        //kennt base settings für reset/pooling
         
         public void SetColor(Color activeColor)
         {
@@ -69,21 +57,15 @@ namespace Meyham.Player.Bodies
         {
             return transitionLocked;
         }
-
-        public void OrderPlayer(int order)
+        public void UpdatePlayerOrder(int newOrder)
         {
-            Order = order;
-            wasModified = true;
-        }
+            if(transitionLocked) return;
 
-        public void UpdatePlayerOrder()
-        {
-            if(!wasModified || transitionLocked) return;
-            OrderPlayer();
-            wasModified = false;
+            Order = newOrder;
+            OrderPlayerAsync();
         }
         
-        private void OrderPlayer()
+        private void OrderPlayerAsync()
         {
             if (Order == 0)
             {
@@ -97,18 +79,14 @@ namespace Meyham.Player.Bodies
             StartCoroutine(OrderTransition(displacement));
             bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
         }
-        
-        private void Start()
-        {
-            spline = spriteShapeController.spline;
-        }
 
         private void OnEnable()
         {
             if(Order == 0) return;
             
             Order = 0;
-            OrderPlayer();
+            tween.transform.localPosition = Vector3.zero;
+            bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
         }
 
         private void OnDisable()
@@ -119,7 +97,7 @@ namespace Meyham.Player.Bodies
         private IEnumerator OrderTransition(Vector3 localPosition)
         {
             transitionLocked = true;
-            yield return tween.TweenToPosition(localPosition);
+            yield return tween.TweenToPosition(localPosition, Order);
             transitionLocked = false;
         }
     }
