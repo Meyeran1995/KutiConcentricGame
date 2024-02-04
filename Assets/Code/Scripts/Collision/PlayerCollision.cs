@@ -59,12 +59,17 @@ namespace Meyham.Collision
 
         public void ResolveDownwardChecks(RaycastHit[] hits)
         {
+            playerBody.IgnoreRaycast();
+            
             foreach (var bodyPart in playerBody.GetBodyParts())
             {
                 if(bodyPart.Order == 0 || bodyPart.IsTransitionLocked()) continue;
+                
                 FireDownwardCollisionRaycasts(bodyPart, hits);
                 bodyPart.UpdatePlayerOrder();
             }
+            
+            playerBody.AllowRaycast();
         }
         
         private void ResolveSameOrderCollision(BodyPart bodyPart, RaycastHit[] hits)

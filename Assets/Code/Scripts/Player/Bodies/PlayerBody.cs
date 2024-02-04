@@ -106,6 +106,22 @@ namespace Meyham.Player.Bodies
             
             playerDestroyed.RaiseEvent((int)designation);
         }
+
+        public void IgnoreRaycast()
+        {
+            foreach (var bodyPart in playerBodyParts)
+            {
+                bodyPart.IgnoreRaycast();
+            }
+        }
+        
+        public void AllowRaycast()
+        {
+            foreach (var bodyPart in playerBodyParts)
+            {
+                bodyPart.AllowRaycast();
+            }
+        }
         
         private void Awake()
         {

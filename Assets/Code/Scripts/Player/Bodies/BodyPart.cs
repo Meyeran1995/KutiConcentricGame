@@ -53,6 +53,16 @@ namespace Meyham.Player.Bodies
             itemCollider.enabled = false;
         }
 
+        public void IgnoreRaycast()
+        {
+            bodyCollider.gameObject.layer = 2;
+        }
+
+        public void AllowRaycast()
+        {
+            bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
+        }
+
         public bool IsTransitionLocked()
         {
             return transitionLocked;
