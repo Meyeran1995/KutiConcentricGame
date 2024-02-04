@@ -15,6 +15,8 @@ namespace Meyham.Player.Bodies
         [Header("Body")]
         [SerializeField] private Collider bodyCollider;
         [SerializeField] private Collider itemCollider;
+
+        [Space, SerializeField] private OrderTween tween;
         
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
@@ -93,27 +95,17 @@ namespace Meyham.Player.Bodies
         
         private void OrderPlayer()
         {
-            StartCoroutine(OrderTransition());
-            var modelTransform = spriteRenderer.transform;
-            var collisionTransform = bodyCollider.transform;
-            var itemCollectionTransform = itemCollider.transform;
 
             if (Order == 0)
             {
-                modelTransform.localPosition = Vector3.zero;
-                collisionTransform.localPosition = Vector3.zero;
-                itemCollectionTransform.localPosition = Vector3.zero;
-                
-                bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
-               return;
+                StartCoroutine(OrderTransition(Vector3.zero));
+                bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0); 
+                return;
             }
 
             var displacement = new Vector3(0f, Order * order_displacement_amount, 0f);
             
-            modelTransform.localPosition = displacement;
-            collisionTransform.localPosition = displacement;
-            itemCollectionTransform.localPosition = displacement;
-
+            StartCoroutine(OrderTransition(displacement));
             bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
         }
         
@@ -135,10 +127,10 @@ namespace Meyham.Player.Bodies
             transitionLocked = false;
         }
 
-        private IEnumerator OrderTransition()
+        private IEnumerator OrderTransition(Vector3 localPosition)
         {
             transitionLocked = true;
-            yield return new WaitForFixedUpdate();
+            yield return tween.TweenToPosition(localPosition);
             transitionLocked = false;
         }
     }

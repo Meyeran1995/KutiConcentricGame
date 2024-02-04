@@ -52,18 +52,6 @@ namespace Meyham.Collision
             {
                 collision.ResolveForwardCollisions(hits);
                 collision.ResolveDownwardChecks(hits);
-                // if(collision.AllowForwardRaycast)
-                // {
-                //     if(!collision.FireRayInMovementDirection(hits)) continue;
-                //
-                //     collision.ResolveSameOrderCollision(hits);
-                //     collision.UpdateOrder();
-                // }
-                //
-                // if (!collision.AllowDownwardRaycast) continue;
-                //
-                // collision.FireDownwardCollisionRaycasts(hits);
-                // collision.UpdateOrder();
             }
         }
     }

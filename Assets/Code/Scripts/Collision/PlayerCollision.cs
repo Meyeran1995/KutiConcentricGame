@@ -39,10 +39,13 @@ namespace Meyham.Collision
             
             ResolveSameOrderCollision(bodyPart, hits);
             bodyPart.UpdatePlayerOrder();
+            bodyPart.IgnoreRaycast();
             
             for (var i = 1; i < bodyParts.Length; i++)
             {
                 bodyPart = bodyParts[i];
+                bodyPart.IgnoreRaycast();
+
                 var currentOrder = bodyPart.Order;
 
                 if (currentOrder == previousOrder)
@@ -55,6 +58,8 @@ namespace Meyham.Collision
                 bodyPart.UpdatePlayerOrder();
                 previousOrder = currentOrder;
             }
+            
+            playerBody.AllowRaycast();
         }
 
         public void ResolveDownwardChecks(RaycastHit[] hits)
@@ -78,14 +83,6 @@ namespace Meyham.Collision
             var rayCastData = movement.MovementDirection == -1 ? clockwise : counterClockwise;
 
             if(!bodyCollision.FireRayInMovementDirection(rayCastData, hits)) return;
-
-            // //TODO: Filter same velocity collisions to prevent flickering
-            // FireUpwardCollisionRaycasts(bodyPart, hits);
-            //
-            // if (bodyPart.IsTransitionLocked())
-            // {
-            //     return;
-            // }
             
             bodyPart.IncrementOrder();
         }
