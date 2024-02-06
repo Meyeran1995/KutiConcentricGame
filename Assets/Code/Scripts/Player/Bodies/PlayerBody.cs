@@ -18,9 +18,9 @@ namespace Meyham.Player.Bodies
     
     public class PlayerBody : MonoBehaviour
     {
-        private const int min_number_of_body_parts = 3;
-        
-        private const int max_number_of_body_parts = 25;
+        public const int MIN_NUMBER_OF_BODY_PARTS = 3;
+
+        public const int MAX_NUMBER_OF_BODY_PARTS = 25;
         
         [Header("Parameters")]
         [SerializeField] private FloatParameter radius;
@@ -42,6 +42,10 @@ namespace Meyham.Player.Bodies
         private static PlayerBodyPartPool bodyPartPool;
 
         public event Action<BodyPart> BodyPartAcquired;
+        
+        public event Action<BodyPart> BodyPartLost;
+
+        public int Count => playerBodyParts.Count;
 
         public void OnDoubleTap(int input)
         {
@@ -65,7 +69,7 @@ namespace Meyham.Player.Bodies
         
         public void AcquireBodyPart()
         {
-            if (!enabled || playerBodyParts.Count == max_number_of_body_parts) return;
+            if (!enabled || playerBodyParts.Count == MAX_NUMBER_OF_BODY_PARTS) return;
             
             var incomingPart = bodyPartPool.GetBodyPart();
             
@@ -100,6 +104,7 @@ namespace Meyham.Player.Bodies
                 hydraIndex--;
             }
 
+            BodyPartLost?.Invoke(bodyPart);
             bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
             
             if (transform.childCount > 0) return;
@@ -145,7 +150,7 @@ namespace Meyham.Player.Bodies
                 return;
             }
             
-            for (int i = 0; i < min_number_of_body_parts; i++)
+            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
             {
                 AcquireBodyPart();
             }
@@ -160,7 +165,7 @@ namespace Meyham.Player.Bodies
             headIsFront = true;
             hydraIndex = 0;
             
-            for (int i = 0; i < min_number_of_body_parts; i++)
+            for (int i = 0; i < MIN_NUMBER_OF_BODY_PARTS; i++)
             {
                 var incomingPart = bodyPartPool.GetBodyPart();
                 playerBodyParts.AddLast(incomingPart);
@@ -193,7 +198,7 @@ namespace Meyham.Player.Bodies
         
         private void AlignBodyPart(BodyPart bodyPart)
         {
-            var index = headIsFront ? playerBodyParts.Count - 1 : max_number_of_body_parts;
+            var index = headIsFront ? playerBodyParts.Count - 1 : MAX_NUMBER_OF_BODY_PARTS;
             
             AlignBodyPart(index - hydraIndex, bodyPart);
         }
@@ -216,7 +221,7 @@ namespace Meyham.Player.Bodies
         {
             if (EditorApplication.isPlaying || EditorApplication.isPaused) return;
             
-            for (int i = 0; i < max_number_of_body_parts; i++)
+            for (int i = 0; i < MAX_NUMBER_OF_BODY_PARTS; i++)
             {
                 var angle = i * (anglePerBodyPart + padding) + playerMovement.CirclePosition;
                 var position = GetCirclePoint(angle);
@@ -230,7 +235,7 @@ namespace Meyham.Player.Bodies
             
             var positionOffset = new Vector3(0f, radius);
                 
-            for (int i = 0; i < max_number_of_body_parts; i++)
+            for (int i = 0; i < MAX_NUMBER_OF_BODY_PARTS; i++)
             {
                 var angle = i * anglePerBodyPart;
                 var position = GetCirclePoint(angle) + positionOffset;
