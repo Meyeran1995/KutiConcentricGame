@@ -28,9 +28,9 @@ namespace Meyham.Collision
         
         public int CompareTo(PlayerCollision other)
         {
-            // compares based on velocity
-            float compareA = velocityCalculator.VelocityOrder + velocityCalculator.LastVelocity;
-            float compareB = other.velocityCalculator.VelocityOrder + other.velocityCalculator.LastVelocity;
+            // compares based on velocityorder and bodycount
+            var compareA = velocityCalculator.VelocityOrder - playerBody.Count;
+            var compareB = other.velocityCalculator.VelocityOrder - other.playerBody.Count;
             
             return compareB.CompareTo(compareA);
         }

@@ -68,6 +68,10 @@ namespace Meyham.Player
             input.enabled = false;
             
             playerColor = GetComponentInChildren<IPlayerColorReceiver>();
+
+            var velocityCalculator = GetComponent<PlayerVelocityCalculator>();
+            playerBody.BodyPartAcquired += velocityCalculator.OnBodyPartAcquired;
+            playerBody.BodyPartLost += velocityCalculator.OnBodyPartLost;
         }
         
         private void OnEnable()
