@@ -18,7 +18,7 @@ namespace Meyham.Items
             tween = itemTween;
         }
 
-        public void Play(Vector3 endPosition)
+        public void Play(Transform target)
         {
             
 #if UNITY_EDITOR || DEBUG
@@ -29,7 +29,7 @@ namespace Meyham.Items
             }
 #endif
             
-            yieldInstruction = tween.TweenCollection(endPosition);
+            yieldInstruction = tween.TweenCollection(target);
             isPlaying = true;
         }
 

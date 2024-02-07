@@ -17,11 +17,13 @@ namespace Meyham.Items
             return new WaitForCompletion(tween);
         }
 
-        public WaitForCompletion TweenCollection(Vector3 targetPosition)
+        public WaitForCompletion TweenCollection(Transform targetTransform)
         {
             var parent = transform.parent;
+            parent.SetParent(targetTransform, true);
+            
             var sequence = DOTween.Sequence();
-            sequence.Append(parent.DOMove(targetPosition, timeToTarget));
+            sequence.Append(parent.DOLocalMove(Vector3.zero, timeToTarget));
             sequence.Insert(timeToTarget - shrinkTime,transform.DOScale(Vector3.zero, shrinkTime));
 
             return new WaitForCompletion(sequence);

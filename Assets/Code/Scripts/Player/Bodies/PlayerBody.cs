@@ -79,19 +79,21 @@ namespace Meyham.Player.Bodies
         public void AcquireBodyPartAnimated(AddBodyCollectionAnimationHandle animationHandle)
         {
             var incomingPart = AcquireBodyPart();
+            incomingPart.Hide();
 
             StartCoroutine(WaitForCollectionAnimation(animationHandle, incomingPart));
         }
 
         private IEnumerator WaitForCollectionAnimation(AddBodyCollectionAnimationHandle animationHandle, BodyPart incomingPart)
         {
-            animationHandle.Play(incomingPart.transform.position);
+            animationHandle.Play(incomingPart.transform);
             
             handleByPart.Add(incomingPart, animationHandle);
             
             yield return animationHandle;
 
             handleByPart.Remove(incomingPart);
+            incomingPart.Show();
             
             if (!animationHandle.ReleaseAfterPlaying) yield break;
             
