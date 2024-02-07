@@ -1,4 +1,5 @@
 using Meyham.DataObjects;
+using Meyham.Items;
 using Meyham.Player.Bodies;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ namespace Meyham.Player
     {
         [SerializeField] private PlayerBody playerBody;
         
-        public void OnItemCollected(ACollectibleData item)
+        public void OnItemCollected(ACollectibleData item, AddBodyCollectionAnimationHandle collectionAnimationHandle = null)
         {
-            if (item is AddBodyPartCollectible)
+            if (item is AddBodyPartCollectible && playerBody.CanAcquireBodyParts())
             {
-                playerBody.AcquireBodyPart();
+                playerBody.AcquireBodyPartAnimated(collectionAnimationHandle);
                 return;
             }
             

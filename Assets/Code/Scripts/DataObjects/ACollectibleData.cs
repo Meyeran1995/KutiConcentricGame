@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Meyham.Items;
 using Meyham.Player;
-using Meyham.Player.Bodies;
 using UnityEngine;
 
 namespace Meyham.DataObjects
@@ -9,17 +9,17 @@ namespace Meyham.DataObjects
     {
         private static readonly Dictionary<GameObject, PlayerItemCollector> PlayerItemCollectors = new();
         
-        public void Collect(GameObject bodyPart)
+        public void Collect(GameObject playerBody, AddBodyCollectionAnimationHandle itemCollectionAnimationHandle = null)
         {
-            if (PlayerItemCollectors.TryGetValue(bodyPart, out var collector))
+            if (PlayerItemCollectors.TryGetValue(playerBody, out var collector))
             {
-                collector.OnItemCollected(this);
+                collector.OnItemCollected(this, itemCollectionAnimationHandle);
                 return;
             }
 
-            collector = bodyPart.GetComponent<PlayerItemCollector>();
-            collector.OnItemCollected(this);
-            PlayerItemCollectors.Add(bodyPart, collector);
+            collector = playerBody.GetComponent<PlayerItemCollector>();
+            collector.OnItemCollected(this, itemCollectionAnimationHandle);
+            PlayerItemCollectors.Add(playerBody, collector);
         }
     }
 }
