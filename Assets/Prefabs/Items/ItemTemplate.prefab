@@ -142,8 +142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04598621644d02c4da47b3145c882af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growTime: 0.75
-  shrinkTime: 0.25
+  growTime: {fileID: 11400000, guid: e0e7efbcafd24de4d88bb31273188d8e, type: 2}
+  shrinkTime: {fileID: 11400000, guid: cab07747a436cc948a97e27cc402035e, type: 2}
+  timeToTarget: {fileID: 11400000, guid: 79aefe4f896e74d48bf345a591f79836, type: 2}
 --- !u!212 &3927611934904360832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -265,7 +266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemCollider: {fileID: 1785018970952984634}
   splineFollower: {fileID: 5930802319533646037}
-  tweenAnimation: {fileID: 7353643439254260286}
   collectibleCarrier: {fileID: 7790199493809689662}
 --- !u!114 &7790199493809689662
 MonoBehaviour:
@@ -279,4 +279,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e89e83aef5f45559fa3d2f8f8afb553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tweenAnimation: {fileID: 7353643439254260286}
   <Collectible>k__BackingField: {fileID: 0}

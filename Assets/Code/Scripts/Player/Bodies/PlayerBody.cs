@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
+using Meyham.Items;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,6 +43,8 @@ namespace Meyham.Player.Bodies
 
         private static PlayerBodyPartPool bodyPartPool;
 
+        private Dictionary<BodyPart, AddBodyCollectionAnimationHandle> handleByPart;
+
         public event Action<BodyPart> BodyPartAcquired;
         
         public event Action<BodyPart> BodyPartLost;
@@ -66,26 +70,32 @@ namespace Meyham.Player.Bodies
             
             return bodyPartsBuffer;
         }
-        
-        public void AcquireBodyPart()
-        {
-            if (!enabled || playerBodyParts.Count == MAX_NUMBER_OF_BODY_PARTS) return;
-            
-            var incomingPart = bodyPartPool.GetBodyPart();
-            
-            if (headIsFront)
-            {
-                playerBodyParts.AddLast(incomingPart);
-            }
-            else
-            {
-                playerBodyParts.AddFirst(incomingPart);
-                hydraIndex++;
-            }
 
-            AlignBodyPart(incomingPart);
+        public bool CanAcquireBodyParts()
+        {
+            return enabled && playerBodyParts.Count < MAX_NUMBER_OF_BODY_PARTS;
+        }
+        
+        public void AcquireBodyPartAnimated(AddBodyCollectionAnimationHandle animationHandle)
+        {
+            var incomingPart = AcquireBodyPart();
+
+            StartCoroutine(WaitForCollectionAnimation(animationHandle, incomingPart));
+        }
+
+        private IEnumerator WaitForCollectionAnimation(AddBodyCollectionAnimationHandle animationHandle, BodyPart incomingPart)
+        {
+            animationHandle.Play(incomingPart.transform.position);
             
-            BodyPartAcquired?.Invoke(incomingPart);
+            handleByPart.Add(incomingPart, animationHandle);
+            
+            yield return animationHandle;
+
+            handleByPart.Remove(incomingPart);
+            
+            if (!animationHandle.ReleaseAfterPlaying) yield break;
+            
+            bodyPartPool.ReleaseBodyPart(incomingPart.gameObject);
         }
 
         public void LoseBodySegment()
@@ -105,7 +115,15 @@ namespace Meyham.Player.Bodies
             }
 
             BodyPartLost?.Invoke(bodyPart);
-            bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
+
+            if (handleByPart.TryGetValue(bodyPart, out var handle))
+            {
+                handle.ReleaseAfterPlaying = true;
+            }
+            else
+            {
+                bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
+            }
             
             if (transform.childCount > 0) return;
             
@@ -130,6 +148,7 @@ namespace Meyham.Player.Bodies
         
         private void Awake()
         {
+            handleByPart = new Dictionary<BodyPart, AddBodyCollectionAnimationHandle>(2);
             playerBodyParts = new LinkedList<BodyPart>();
             bodyPartPool ??= FindAnyObjectByType<PlayerBodyPartPool>(FindObjectsInactive.Include);
             designation = GetComponentInParent<PlayerController>().Designation;
@@ -174,6 +193,27 @@ namespace Meyham.Player.Bodies
             }
         }
 
+        private BodyPart AcquireBodyPart()
+        {
+            var incomingPart = bodyPartPool.GetBodyPart();
+            
+            if (headIsFront)
+            {
+                playerBodyParts.AddLast(incomingPart);
+            }
+            else
+            {
+                playerBodyParts.AddFirst(incomingPart);
+                hydraIndex++;
+            }
+
+            AlignBodyPart(incomingPart);
+
+            BodyPartAcquired?.Invoke(incomingPart);
+
+            return incomingPart;
+        }
+        
         private void AlignBodyPart(int index, BodyPart bodyPart)
         {
             var transformSelf = transform;
