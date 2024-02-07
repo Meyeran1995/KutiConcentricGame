@@ -54,8 +54,11 @@ namespace Meyham.Items
             yield return new WaitUntil(handle.IsPlaying);
 
             yield return handle;
+
+            var parent = transform.parent;
+            parent.SetParent(null);
             
-            pool.ReleaseCollectible(transform.parent.gameObject);
+            pool.ReleaseCollectible(parent.gameObject);
         }
     }
 }
