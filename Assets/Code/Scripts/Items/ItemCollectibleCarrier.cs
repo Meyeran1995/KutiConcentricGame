@@ -2,6 +2,7 @@
 using Meyham.Animation;
 using Meyham.DataObjects;
 using Meyham.GameMode;
+using Meyham.Player.Bodies;
 using Unity.Collections;
 using UnityEngine;
 
@@ -22,19 +23,21 @@ namespace Meyham.Items
             enabled = true;
         }
 
-        public void OnCollected(GameObject playerBody)
+        public void OnCollected(GameObject playerBody, GameObject part)
         {
             enabled = false;
 
+            ATweenBasedAnimation animationHandle;
             if (Collectible is AddBodyPartCollectible)
             {
-                var animationHandle = new AddBodyCollectionAnimationHandle(tweenAnimation);
+                animationHandle = new AddBodyCollectionAnimationHandle(tweenAnimation);
                 Collectible.Collect(playerBody, animationHandle);
                 StartCoroutine(WaitForCollectionAnimation(animationHandle));
                 return;
             }
-            
-            Collectible.Collect(playerBody);
+
+            animationHandle = new DestroyBodyCollectionHandle(part.GetComponentInParent<BodyPart>());
+            Collectible.Collect(playerBody, animationHandle);
             StartCoroutine(WaitForShrinkAnimation());
         }
         
@@ -50,10 +53,8 @@ namespace Meyham.Items
             pool.ReleaseCollectible(transform.parent.gameObject);
         }
         
-        private IEnumerator WaitForCollectionAnimation(AddBodyCollectionAnimationHandle handle)
+        private IEnumerator WaitForCollectionAnimation(ATweenBasedAnimation handle)
         {
-            yield return new WaitUntil(handle.IsPlaying);
-
             yield return handle;
 
             var parent = transform.parent;

@@ -44,7 +44,7 @@ namespace Meyham.Player.Bodies
 
         private static PlayerBodyPartPool bodyPartPool;
 
-        private Dictionary<BodyPart, AddBodyCollectionAnimationHandle> handleByPart;
+        private Dictionary<BodyPart, AddBodyCollectionAnimationHandle> collectionAnimationHandleByPart;
 
         public event Action<BodyPart> BodyPartAcquired;
         
@@ -77,60 +77,93 @@ namespace Meyham.Player.Bodies
             return enabled && playerBodyParts.Count < MAX_NUMBER_OF_BODY_PARTS;
         }
         
-        public void AcquireBodyPartAnimated(AddBodyCollectionAnimationHandle animationHandle)
+        public void AcquireBodyPartAnimated(ATweenBasedAnimation animationHandle)
         {
             var incomingPart = AcquireBodyPart();
             incomingPart.Hide();
 
-            StartCoroutine(WaitForCollectionAnimation(animationHandle, incomingPart));
+            StartCoroutine(WaitForCollectionAnimation((AddBodyCollectionAnimationHandle)animationHandle, incomingPart));
         }
 
+        public void LoseBodyPartAnimated(ATweenBasedAnimation animationHandle)
+        {
+            var bodyPart = LoseBodySegment();
+            
+            if (collectionAnimationHandleByPart.TryGetValue(bodyPart, out var addBodyCollectionAnimationHandle))
+            {
+                addBodyCollectionAnimationHandle.ReleaseAfterPlaying = true;
+            }
+            
+            var destructionAnimation = (DestroyBodyCollectionHandle)animationHandle;
+            var destructionOrigin = destructionAnimation.Origin;
+            var bodyPartIndex = bodyPart.transform.GetSiblingIndex();
+
+            if (bodyPart == destructionOrigin)
+            {
+                StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
+                return;
+            }
+
+            var node = playerBodyParts.Find(destructionOrigin);
+            node = node.Next;
+            
+            if (headIsFront)
+            {
+                for (int i = destructionOrigin.transform.GetSiblingIndex() + 1; i < bodyPartIndex; i++)
+                {
+                    destructionAnimation.AddBodyPartToAnimation(node.Value.GetTweenAnimation());
+                    node = node.Next;
+                }
+            }
+            else
+            {
+                var buffer = new List<BodyPart>();
+
+                foreach (var part in playerBodyParts)
+                {
+                    buffer.Add(part);
+                    
+                    if(part == destructionOrigin) break;
+                }
+
+                buffer.Reverse();
+
+                foreach (var part in buffer)
+                {
+                    destructionAnimation.AddBodyPartToAnimation(part.GetTweenAnimation());
+                }
+            }
+            
+            StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
+        }
+
+        private IEnumerator WaitForDestructionAnimation(DestroyBodyCollectionHandle animationHandle, BodyPart bodyPart)
+        {
+            animationHandle.Play();
+            
+            yield return animationHandle;
+
+            bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
+            
+            if (transform.childCount > 0) yield break;
+            
+            playerDestroyed.RaiseEvent((int)designation);
+        }
+        
         private IEnumerator WaitForCollectionAnimation(AddBodyCollectionAnimationHandle animationHandle, BodyPart incomingPart)
         {
             animationHandle.Play(incomingPart.transform);
             
-            handleByPart.Add(incomingPart, animationHandle);
+            collectionAnimationHandleByPart.Add(incomingPart, animationHandle);
             
             yield return animationHandle;
 
-            handleByPart.Remove(incomingPart);
+            collectionAnimationHandleByPart.Remove(incomingPart);
             incomingPart.Show();
             
             if (!animationHandle.ReleaseAfterPlaying) yield break;
             
             bodyPartPool.ReleaseBodyPart(incomingPart.gameObject);
-        }
-
-        public void LoseBodySegment()
-        {
-            BodyPart bodyPart;
-
-            if (headIsFront)
-            {
-                bodyPart = playerBodyParts.Last.Value;
-                playerBodyParts.RemoveLast();
-            }
-            else
-            {
-                bodyPart = playerBodyParts.First.Value;
-                playerBodyParts.RemoveFirst();
-                hydraIndex--;
-            }
-
-            BodyPartLost?.Invoke(bodyPart);
-
-            if (handleByPart.TryGetValue(bodyPart, out var handle))
-            {
-                handle.ReleaseAfterPlaying = true;
-            }
-            else
-            {
-                bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
-            }
-            
-            if (transform.childCount > 0) return;
-            
-            playerDestroyed.RaiseEvent((int)designation);
         }
 
         public void IgnoreRaycast()
@@ -151,7 +184,7 @@ namespace Meyham.Player.Bodies
         
         private void Awake()
         {
-            handleByPart = new Dictionary<BodyPart, AddBodyCollectionAnimationHandle>(2);
+            collectionAnimationHandleByPart = new Dictionary<BodyPart, AddBodyCollectionAnimationHandle>(2);
             playerBodyParts = new LinkedList<BodyPart>();
             bodyPartPool ??= FindAnyObjectByType<PlayerBodyPartPool>(FindObjectsInactive.Include);
             designation = GetComponentInParent<PlayerController>().Designation;
@@ -215,6 +248,27 @@ namespace Meyham.Player.Bodies
             BodyPartAcquired?.Invoke(incomingPart);
 
             return incomingPart;
+        }
+        
+        private BodyPart LoseBodySegment()
+        {
+            BodyPart bodyPart;
+
+            if (headIsFront)
+            {
+                bodyPart = playerBodyParts.Last.Value;
+                playerBodyParts.RemoveLast();
+            }
+            else
+            {
+                bodyPart = playerBodyParts.First.Value;
+                playerBodyParts.RemoveFirst();
+                hydraIndex--;
+            }
+
+            BodyPartLost?.Invoke(bodyPart);
+
+            return bodyPart;
         }
         
         private void AlignBodyPart(int index, BodyPart bodyPart)

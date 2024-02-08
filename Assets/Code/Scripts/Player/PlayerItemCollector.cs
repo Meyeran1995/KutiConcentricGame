@@ -9,7 +9,7 @@ namespace Meyham.Player
     {
         [SerializeField] private PlayerBody playerBody;
         
-        public void OnItemCollected(ACollectibleData item, AddBodyCollectionAnimationHandle collectionAnimationHandle = null)
+        public void OnItemCollected(ACollectibleData item, ATweenBasedAnimation collectionAnimationHandle)
         {
             if (item is AddBodyPartCollectible && playerBody.CanAcquireBodyParts())
             {
@@ -17,7 +17,7 @@ namespace Meyham.Player
                 return;
             }
             
-            playerBody.LoseBodySegment();
+            playerBody.LoseBodyPartAnimated(collectionAnimationHandle);
         }
     }
 }
