@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Meyham.GameMode;
+using Meyham.Player.Bodies;
 using Meyham.Splines;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace Meyham.Items
             itemCollider.isTrigger = false;
             splineFollower.Pause();
             
-            collectibleCarrier.OnCollected(incomingObject);
+            collectibleCarrier.OnCollected(incomingObject, other.gameObject);
         }
     }
 }

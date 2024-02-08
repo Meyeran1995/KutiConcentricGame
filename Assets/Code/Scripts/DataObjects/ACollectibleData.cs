@@ -10,7 +10,7 @@ namespace Meyham.DataObjects
     {
         private static readonly Dictionary<GameObject, PlayerItemCollector> PlayerItemCollectors = new();
         
-        public void Collect(GameObject playerBody, AddBodyCollectionAnimationHandle itemCollectionAnimationHandle = null)
+        public void Collect(GameObject playerBody, ATweenBasedAnimation itemCollectionAnimationHandle)
         {
             if (PlayerItemCollectors.TryGetValue(playerBody, out var collector))
             {

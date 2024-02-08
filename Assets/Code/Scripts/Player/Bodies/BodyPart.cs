@@ -12,12 +12,13 @@ namespace Meyham.Player.Bodies
         
         [Header("Model")]
         [SerializeField] private SpriteShapeRenderer spriteRenderer;
+        [SerializeField] private BodyTweenAnimation tweenAnimation;
         
         [Header("Body")]
         [SerializeField] private Collider bodyCollider;
         [SerializeField] private Collider itemCollider;
 
-        [Space, SerializeField] private OrderTween tween;
+        [Space, SerializeField] private OrderTween orderTween;
         
         [field: Header("Debug"), SerializeField, ReadOnly]
         public int Order { get; private set; }
@@ -27,6 +28,11 @@ namespace Meyham.Player.Bodies
         public void SetColor(Color activeColor)
         {
             spriteRenderer.color = activeColor;
+        }
+
+        public BodyTweenAnimation GetTweenAnimation()
+        {
+            return tweenAnimation;
         }
         
         public void Show()
@@ -57,12 +63,27 @@ namespace Meyham.Player.Bodies
         {
             return transitionLocked;
         }
+        
         public void UpdatePlayerOrder(int newOrder)
         {
             if(transitionLocked) return;
 
             Order = newOrder;
             OrderPlayerAsync();
+        }
+
+        private void OnEnable()
+        {
+            if(Order == 0) return;
+            
+            Order = 0;
+            orderTween.transform.localPosition = Vector3.zero;
+            bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
+        }
+
+        private void OnDisable()
+        {
+            transitionLocked = false;
         }
         
         private void OrderPlayerAsync()
@@ -80,24 +101,10 @@ namespace Meyham.Player.Bodies
             bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(Order);
         }
 
-        private void OnEnable()
-        {
-            if(Order == 0) return;
-            
-            Order = 0;
-            tween.transform.localPosition = Vector3.zero;
-            bodyCollider.gameObject.layer = PlayerCollisionHelper.GetLayer(0);
-        }
-
-        private void OnDisable()
-        {
-            transitionLocked = false;
-        }
-
         private IEnumerator OrderTransition(Vector3 localPosition)
         {
             transitionLocked = true;
-            yield return tween.TweenToPosition(localPosition, Order);
+            yield return orderTween.TweenToPosition(localPosition, Order);
             transitionLocked = false;
         }
     }

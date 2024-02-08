@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8840769973094770640}
+  - component: {fileID: 6095586686979280748}
   - component: {fileID: 2709812294342956011}
   - component: {fileID: 2319444512150239818}
   m_Layer: 0
@@ -33,6 +34,21 @@ Transform:
   m_Father: {fileID: 2375266697516629751}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6095586686979280748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397747011881057457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8084fadcc72884e89adc14b03c4267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeValue: {fileID: 11400000, guid: 2a5730fad0c26fa4f9cfdf132b306f2e, type: 2}
+  fadeDuration: {fileID: 11400000, guid: 1adf115e1d52b9142b16faf4b838f4f4, type: 2}
+  shapeRenderer: {fileID: 2709812294342956011}
 --- !u!1971053207 &2709812294342956011
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -353,10 +369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0870d32d3ad2e4b814e76647d87b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteShapeController: {fileID: 2319444512150239818}
   spriteRenderer: {fileID: 2709812294342956011}
+  tweenAnimation: {fileID: 6095586686979280748}
   bodyCollider: {fileID: 7218035193191475402}
   itemCollider: {fileID: 1788797028872685090}
-  tween: {fileID: 2068182288328041923}
+  orderTween: {fileID: 2068182288328041923}
   <Order>k__BackingField: 0
   transitionLocked: 0
