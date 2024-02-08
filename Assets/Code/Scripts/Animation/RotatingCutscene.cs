@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Meyham.Set_Up;
 using UnityEngine;
 
-namespace Meyham.Cutscenes
+namespace Meyham.Animation
 {
     public class RotatingCutscene : MonoBehaviour
     {
