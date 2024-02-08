@@ -10,7 +10,7 @@ namespace Meyham.Items
         [SerializeField] private FloatParameter growTime;
         [SerializeField] private FloatParameter shrinkTime;
         [SerializeField] private FloatParameter timeToTarget;
-
+        
         public WaitForCompletion TweenShrink()
         {
             var tween = transform.DOScale(Vector3.zero, shrinkTime);

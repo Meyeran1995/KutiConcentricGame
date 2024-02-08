@@ -2,7 +2,7 @@
 using Meyham.Set_Up;
 using UnityEngine;
 
-namespace Meyham.Cutscenes
+namespace Meyham.Animation
 {
     public class PlayerSelectionAnimator : MonoBehaviour, IPlayerNumberDependable
     {

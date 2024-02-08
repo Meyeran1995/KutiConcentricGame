@@ -2,7 +2,7 @@ using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
 
-namespace Meyham.Cutscenes
+namespace Meyham.Animation
 {
     public class CutScenePlayerRotator : MonoBehaviour
     {
