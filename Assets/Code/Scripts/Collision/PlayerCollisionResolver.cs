@@ -51,6 +51,8 @@ namespace Meyham.Collision
 
             foreach (var collision in playerCollisions)
             {
+                if(!collision.enabled) continue;
+                
                 collision.OnStartCollisionChecks();
                 
                 collision.ResolveForwardCollisions(hits);

@@ -47,6 +47,8 @@ namespace Meyham.Collision
         
         public void ResolveForwardCollisions(RaycastHit[] hits)
         {
+            if (playerBody.Count == 0) return;
+            
             var bodyParts = playerBody.GetBodyParts();
             var bodyPart = bodyParts[0];
             var previousOrder = 5;
