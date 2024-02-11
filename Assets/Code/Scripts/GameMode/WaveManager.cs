@@ -24,7 +24,7 @@ namespace Meyham.GameMode
         
         [Header("References")] 
         [SerializeField] private CollectiblePool pool;
-        [SerializeField] private VoidEventChannelSO onReleasedEvent, lastItemVanishedEvent;
+        [SerializeField] private VoidEventChannelSO onReleasedEvent;
         
         [Header("Debug")] 
         [ReadOnly, SerializeField] private float spawnTime;
@@ -40,13 +40,6 @@ namespace Meyham.GameMode
         {
             currentTimeInMinutes = 0f;
             spawnTime = curveSpawnInterval.Evaluate(0f) / 2f;
-        }
-
-        private void OnDisable()
-        {
-            if (spawnCount != 0) return;
-            
-            lastItemVanishedEvent.RaiseEvent();
         }
 
         private void Update()
@@ -106,10 +99,6 @@ namespace Meyham.GameMode
         private void OnCollectibleReleased()
         {
             spawnCount--;
-
-            if (enabled || spawnCount > 0) return;
-
-            lastItemVanishedEvent.RaiseEvent();
         }
     }
 }

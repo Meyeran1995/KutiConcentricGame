@@ -12,7 +12,6 @@ namespace Meyham.Set_Up
         [SerializeField] private RotatingCutscene rotatingCutscene;
         
         [Header("Events")]
-        [SerializeField] private VoidEventChannelSO lastItemVanished;
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
         [SerializeField] private GenericEventChannelSO<int> playerDestroyedEventChannel;
         
@@ -27,7 +26,6 @@ namespace Meyham.Set_Up
 
         public override void Setup()
         {
-            lastItemVanished += OnLastItemVanished;
             playerDestroyedEventChannel += OnPlayerDestroyed;
 
             waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
@@ -90,10 +88,6 @@ namespace Meyham.Set_Up
             if (alivePlayers > 0) return;
             
             waveManager.enabled = false;
-        }
-        
-        private void OnLastItemVanished()
-        {
             Deactivate();
         }
     }
