@@ -1,4 +1,5 @@
-﻿using Meyham.EditorHelpers;
+﻿using Meyham.Collision;
+using Meyham.EditorHelpers;
 using Meyham.Player.Bodies;
 using Meyham.Set_Up;
 using UnityEngine;
@@ -11,7 +12,8 @@ namespace Meyham.Player
         [SerializeField] private RadialPlayerMovement movement;
         [SerializeField] private PlayerInputReceiver input;
         [SerializeField] private PlayerBody playerBody;
-
+        [SerializeField] private PlayerCollision playerCollision;
+        
         [field: Header("Properties"), SerializeField] 
         public PlayerDesignation Designation { get; private set; }
 
@@ -81,6 +83,7 @@ namespace Meyham.Player
             movement.enabled = true;
             input.enabled = true;
             playerBody.enabled = true;
+            playerCollision.enabled = true;
         }
 
         private void OnDisable()
@@ -90,6 +93,7 @@ namespace Meyham.Player
             movement.enabled = false;
             input.enabled = false;
             playerBody.enabled = false;
+            playerCollision.enabled = false;
         }
     }
 }
