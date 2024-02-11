@@ -15,6 +15,8 @@ namespace Meyham.Animation
         
         private bool hasStartedPlaying;
         
+        private bool wasCanceled;
+        
         public DestroyBodyCollectionHandle(BodyPart bodyPart)
         {
             Origin = bodyPart;
@@ -28,7 +30,7 @@ namespace Meyham.Animation
 
         public void Play()
         {
-            var durationIncrement = bodyTweenAnimations[0].GetDuration() / 2f;
+            var durationIncrement = bodyTweenAnimations[0].GetDuration() / bodyTweenAnimations.Count;
             hasStartedPlaying = true;
             
             animationSequence = DOTween.Sequence();
@@ -42,7 +44,18 @@ namespace Meyham.Animation
 
         public override bool MoveNext()
         {
+            if (wasCanceled)
+            {
+                return false;
+            }
+            
             return !hasStartedPlaying || (animationSequence.active && !animationSequence.IsComplete());
+        }
+
+        public override void Cancel()
+        {
+            wasCanceled = true;
+            animationSequence?.Kill();
         }
     }
 }

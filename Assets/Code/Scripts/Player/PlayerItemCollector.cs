@@ -16,8 +16,10 @@ namespace Meyham.Player
                 if (playerBody.CanAcquireBodyParts())
                 {
                     playerBody.AcquireBodyPartAnimated(collectionAnimationHandle);
+                    return;
                 }
                 
+                collectionAnimationHandle.Cancel();
                 return;
             }
             
