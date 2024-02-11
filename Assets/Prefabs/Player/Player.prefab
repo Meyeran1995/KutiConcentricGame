@@ -163,6 +163,7 @@ MonoBehaviour:
   movement: {fileID: 3343158596831003080}
   input: {fileID: 3343158596831003086}
   playerBody: {fileID: 3275505422473986951}
+  playerCollision: {fileID: 4649982748758523031}
   <Designation>k__BackingField: 0
   <IsActive>k__BackingField: 0
 --- !u!114 &3343158596831003080
@@ -267,6 +268,7 @@ MonoBehaviour:
   timeToMaxVelocity: 0
   timeToMinVelocity: 0
   velocityState: 0
+  <LastVelocity>k__BackingField: 0
 --- !u!114 &4649982748758523031
 MonoBehaviour:
   m_ObjectHideFlags: 0
