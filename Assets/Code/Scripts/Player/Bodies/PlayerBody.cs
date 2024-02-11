@@ -92,7 +92,6 @@ namespace Meyham.Player.Bodies
             if (collectionAnimationHandleByPart.TryGetValue(bodyPart, out var addBodyCollectionAnimationHandle))
             {
                 addBodyCollectionAnimationHandle.ReleaseBodyAfterPlaying = true;
-                StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
                 animationHandle.Cancel();
                 return;
             }
@@ -113,6 +112,13 @@ namespace Meyham.Player.Bodies
                 for (; node != null; node = node.Next, originIndex++)
                 {
                     if (destructionOrigin == node.Value) break;
+                }
+                
+                if (node == null)
+                {
+                    animationHandle.Cancel();
+                    ReleaseBodyPart(bodyPart);
+                    return;
                 }
 
                 for (int i = originIndex; i < playerBodyParts.Count; i++)
@@ -156,11 +162,7 @@ namespace Meyham.Player.Bodies
             
             yield return animationHandle;
 
-            bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
-            
-            if (transform.childCount > 0) yield break;
-            
-            playerDestroyed.RaiseEvent((int)designation);
+            ReleaseBodyPart(bodyPart);
         }
         
         private IEnumerator WaitForCollectionAnimation(AddBodyCollectionAnimationHandle animationHandle, BodyPart incomingPart)
@@ -174,9 +176,9 @@ namespace Meyham.Player.Bodies
             collectionAnimationHandleByPart.Remove(incomingPart);
             incomingPart.Show();
             
-            if (!animationHandle.ReleaseBodyAfterPlaying || playerBodyParts.Find(incomingPart) == null) yield break;
+            if (!animationHandle.ReleaseBodyAfterPlaying) yield break;
             
-            bodyPartPool.ReleaseBodyPart(incomingPart.gameObject);
+            ReleaseBodyPart(incomingPart);
         }
 
         public void IgnoreRaycast()
@@ -282,6 +284,15 @@ namespace Meyham.Player.Bodies
             BodyPartLost?.Invoke(bodyPart);
 
             return bodyPart;
+        }
+
+        private void ReleaseBodyPart(BodyPart bodyPart)
+        {
+            bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
+            
+            if (transform.childCount > 0) return;
+            
+            playerDestroyed.RaiseEvent((int)designation);
         }
         
         private void AlignBodyPart(int index, BodyPart bodyPart)

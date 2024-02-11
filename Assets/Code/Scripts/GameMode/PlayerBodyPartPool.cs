@@ -8,6 +8,8 @@ namespace Meyham.GameMode
     {
         private static readonly Dictionary<GameObject, BodyPart> BodyPartByItem = new(18);
 
+        private CollectiblePool collectiblePool;
+
         public BodyPart GetBodyPart()
         {
             pool.Get(out var part);
@@ -30,6 +32,14 @@ namespace Meyham.GameMode
 
         protected override void OnReturnedToPool(GameObject item)
         {
+            if (item.transform.childCount > 1)
+            {
+                collectiblePool ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectiblePool>();
+                var collectibleTransform = item.transform.GetChild(1);
+                collectibleTransform.parent = null;
+                collectiblePool.ReleaseCollectible(collectibleTransform.gameObject);
+            }
+            
             base.OnReturnedToPool(item);
             item.transform.parent = null;
         }
