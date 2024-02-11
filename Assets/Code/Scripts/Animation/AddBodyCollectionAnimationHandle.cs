@@ -5,9 +5,11 @@ namespace Meyham.Animation
 {
     public class AddBodyCollectionAnimationHandle : ATweenBasedAnimation
     {
-        public bool ReleaseAfterPlaying;
+        public bool ReleaseBodyAfterPlaying;
         
         private bool hasStartedPlaying;
+
+        private bool wasCanceled;
         
         private CustomYieldInstruction yieldInstruction;
 
@@ -34,7 +36,18 @@ namespace Meyham.Animation
 
         public override bool MoveNext()
         {
+            if (wasCanceled)
+            {
+                return false;
+            }
+            
             return !hasStartedPlaying || yieldInstruction.MoveNext();
+        }
+
+        public override void Cancel()
+        {
+            wasCanceled = true;
+            tween.StopAnimation();
         }
     }
 }

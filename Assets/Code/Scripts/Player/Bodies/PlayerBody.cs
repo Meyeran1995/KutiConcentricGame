@@ -87,50 +87,64 @@ namespace Meyham.Player.Bodies
         public void LoseBodyPartAnimated(ATweenBasedAnimation animationHandle)
         {
             var bodyPart = LoseBodySegment();
+            var destructionAnimation = (DestroyBodyCollectionHandle)animationHandle;
             
             if (collectionAnimationHandleByPart.TryGetValue(bodyPart, out var addBodyCollectionAnimationHandle))
             {
-                addBodyCollectionAnimationHandle.ReleaseAfterPlaying = true;
+                addBodyCollectionAnimationHandle.ReleaseBodyAfterPlaying = true;
+                StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
+                animationHandle.Cancel();
+                return;
             }
             
-            var destructionAnimation = (DestroyBodyCollectionHandle)animationHandle;
             var destructionOrigin = destructionAnimation.Origin;
-            var bodyPartIndex = bodyPart.transform.GetSiblingIndex();
 
             if (bodyPart == destructionOrigin)
             {
                 StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
                 return;
             }
-
-            var node = playerBodyParts.Find(destructionOrigin);
-            node = node.Next;
             
             if (headIsFront)
             {
-                for (int i = destructionOrigin.transform.GetSiblingIndex() + 1; i < bodyPartIndex; i++)
+                var originIndex = 0;
+                var node = playerBodyParts.First;
+                
+                for (; node != null; node = node.Next, originIndex++)
                 {
-                    destructionAnimation.AddBodyPartToAnimation(node.Value.GetTweenAnimation());
+                    if (destructionOrigin == node.Value) break;
+                }
+
+                for (int i = originIndex; i < playerBodyParts.Count; i++)
+                {
                     node = node.Next;
-                }
-            }
-            else
-            {
-                var buffer = new List<BodyPart>();
 
-                foreach (var part in playerBodyParts)
-                {
-                    buffer.Add(part);
+                    if (node == null)
+                    {
+                        break;
+                    }
                     
-                    if(part == destructionOrigin) break;
+                    destructionAnimation.AddBodyPartToAnimation(node.Value.GetTweenAnimation());
                 }
+                
+                StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
+                return;
+            }
+            
+            var buffer = new List<BodyPart>();
 
-                buffer.Reverse();
+            foreach (var part in playerBodyParts)
+            {
+                buffer.Add(part);
+                    
+                if(part == destructionOrigin) break;
+            }
 
-                foreach (var part in buffer)
-                {
-                    destructionAnimation.AddBodyPartToAnimation(part.GetTweenAnimation());
-                }
+            buffer.Reverse();
+
+            foreach (var part in buffer)
+            {
+                destructionAnimation.AddBodyPartToAnimation(part.GetTweenAnimation());
             }
             
             StartCoroutine(WaitForDestructionAnimation(destructionAnimation, bodyPart));
@@ -160,7 +174,7 @@ namespace Meyham.Player.Bodies
             collectionAnimationHandleByPart.Remove(incomingPart);
             incomingPart.Show();
             
-            if (!animationHandle.ReleaseAfterPlaying) yield break;
+            if (!animationHandle.ReleaseBodyAfterPlaying || playerBodyParts.Find(incomingPart) == null) yield break;
             
             bodyPartPool.ReleaseBodyPart(incomingPart.gameObject);
         }

@@ -7,6 +7,8 @@ namespace Meyham.Animation
     {
         public abstract bool MoveNext();
 
+        public abstract void Cancel();
+
         public void Reset()
         {
         }
