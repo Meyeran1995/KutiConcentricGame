@@ -11,9 +11,13 @@ namespace Meyham.Player
         
         public void OnItemCollected(ACollectibleData item, ATweenBasedAnimation collectionAnimationHandle)
         {
-            if (item is AddBodyPartCollectible && playerBody.CanAcquireBodyParts())
+            if (item is AddBodyPartCollectible)
             {
-                playerBody.AcquireBodyPartAnimated(collectionAnimationHandle);
+                if (playerBody.CanAcquireBodyParts())
+                {
+                    playerBody.AcquireBodyPartAnimated(collectionAnimationHandle);
+                }
+                
                 return;
             }
             
