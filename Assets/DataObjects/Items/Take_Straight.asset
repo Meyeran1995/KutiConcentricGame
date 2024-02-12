@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Take_Straight
   m_EditorClassIdentifier: 
   itemTemplate: {fileID: 1747961303976598721, guid: 73bc40650f8107b4a82b34f82468f926, type: 3}
-  movementTemplate: {fileID: 183184798827745455, guid: d39aa3fd167a88345b5426c81a3e0657, type: 3}
-  <SpeedCurve>k__BackingField: {fileID: 11400000, guid: e8c6e889dbacc8f45b041c1b77ec3b41, type: 2}
+  movementTemplate: {fileID: 6000960185640069762, guid: 4ee88e7ccc6e44749b967a14feb7e302, type: 3}
+  <SpeedCurve>k__BackingField: {fileID: 11400000, guid: 0963868d76c938944aa21da42df5e3e1, type: 2}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
   <ColliderPosition>k__BackingField: {x: 0, y: 0, z: 0}
   <ColliderRotation>k__BackingField: {x: 0, y: 1, z: 0, w: 0}
