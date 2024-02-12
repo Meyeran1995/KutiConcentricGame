@@ -212,7 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingCutscene: {fileID: 855478475}
-  lastItemVanished: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   setHoldInteractionEventChannel: {fileID: 11400000, guid: 3010c374e0269a744a570d8404f8e26e, type: 2}
   playerDestroyedEventChannel: {fileID: 11400000, guid: 50b1cc7a9b334bc4bb5e51ce3e89f98b, type: 2}
   alivePlayers: 0
@@ -6389,6 +6388,24 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 1
+      value: 1.25
+      inSlope: -0.6394023
+      outSlope: -0.6394023
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 0.33333334
+      inSlope: -0.28125
+      outSlope: -0.28125
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 5
       value: 0.125
       inSlope: 0
@@ -6518,7 +6535,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7d26c4ee3be1cb42af4ca893aca0ae1, type: 2}
   pool: {fileID: 1816520460}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
-  lastItemVanishedEvent: {fileID: 11400000, guid: 5b45f3b9a8550634f8b21bb117b491ec, type: 2}
   spawnTime: 0
   currentTimeInMinutes: 0
   spawnCount: 0
