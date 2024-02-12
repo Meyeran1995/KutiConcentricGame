@@ -142,12 +142,12 @@ namespace Meyham.Player
             {
                 case 1:
                 {
-                    velocityModifier = 1.1f;
+                    velocityModifier = 1.5f;
                     break;
                 }
                 case 2:
                 {
-                    velocityModifier = 1.05f;
+                    velocityModifier = 1.125f;
                     break;
                 }
                 case > 3:
