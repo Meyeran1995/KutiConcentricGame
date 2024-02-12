@@ -9,8 +9,12 @@ namespace Meyham.DataObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/DataObjects/ItemData")]
     public class ItemData : ScriptableObject
     {
-        [Header("Templates")]
-        [SerializeField] private GameObject itemTemplate, movementTemplate;
+        [Header("Serialized Data")]
+        [SerializeField] private GameObject itemTemplate;
+        [SerializeField] private GameObject movementTemplate;
+        
+        [field: SerializeField]
+        public CurveParameter SpeedCurve { get; private set; }
 
         [field: Header("Debug"), SerializeField, ReadOnly]
         public Sprite Sprite { get; private set; }
@@ -25,9 +29,7 @@ namespace Meyham.DataObjects
         public Vector3 ColliderScale { get; private set; }
         
         public SplineKnotData MovementData { get; private set; }
-
-        public SpeedPoint[] SpeedPoints { get; private set; }
-
+        
         public ACollectibleData CollectibleData { get; private set; }
 
         private void OnEnable()
@@ -56,7 +58,6 @@ namespace Meyham.DataObjects
             }
             
             MovementData = new SplineKnotData(spline.ToArray(), tangentModes);
-            SpeedPoints = movementTemplate.GetComponent<SpeedPointContainer>().GetSpeedPoints();
             
             var itemCollisionTransform = itemTemplate.GetComponentInChildren<ItemCollision>().transform;
 

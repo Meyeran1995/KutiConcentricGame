@@ -1,4 +1,5 @@
 ﻿using System;
+using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Player.Bodies;
 using UnityEngine;
@@ -15,8 +16,8 @@ namespace Meyham.Player
             max_velocity_loss_by_size / (max_upper_count - PlayerBody.MIN_NUMBER_OF_BODY_PARTS);
         
         [Header("Curves")] 
-        [SerializeField] private AnimationCurve acceleration;
-        [SerializeField] private AnimationCurve brake;
+        [SerializeField] private CurveParameter acceleration;
+        [SerializeField] private CurveParameter brake;
 
         [Header("Debug")] 
         [ReadOnly, SerializeField] private float velocityTime;
@@ -50,7 +51,7 @@ namespace Meyham.Player
         public void StartBrake()
         {
             velocityState = VelocityStates.Braking;
-            velocityTime = 1f - velocityTime * brake[brake.length - 1].time;
+            velocityTime = 1f - velocityTime * brake.GetKeyframe(brake.Length - 1).time;
         }
         
         public float GetVelocity()
@@ -91,8 +92,8 @@ namespace Meyham.Player
         
         private void Awake()
         {
-            timeToMaxVelocity = acceleration[1].time;
-            timeToMinVelocity = brake[1].time;
+            timeToMaxVelocity = acceleration.GetKeyframe(1).time;
+            timeToMinVelocity = brake.GetKeyframe(1).time;
 
             maxVelocity = acceleration.Evaluate(timeToMaxVelocity);
         }

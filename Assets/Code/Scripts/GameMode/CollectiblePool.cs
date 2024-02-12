@@ -47,7 +47,7 @@ namespace Meyham.GameMode
                 itemData.ColliderRotation, itemData.ColliderScale);
 
             var movement = cache.Movement;
-            movement.SetUpMovement(splineProvider.GetSpline(itemData.MovementData), itemData.SpeedPoints);
+            movement.SetUpMovement(splineProvider.GetSpline(itemData.MovementData), itemData.SpeedCurve);
             movement.RestartMovement();
 
             var collectible = itemData.CollectibleData;

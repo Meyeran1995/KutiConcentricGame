@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using UnityEngine;
@@ -9,27 +8,21 @@ namespace Meyham.Splines
 {
     public class SplineFollower : MonoBehaviour
     {
-        [Header("Parameters")]
-        [SerializeField] private FloatParameter speedPointEasingDuration;
-        
         [field: Header("Debug"), ReadOnly, SerializeField] public bool IsPlaying { get; private set; }
 
         [SerializeField, ReadOnly] private SplineContainer splineContainer;
-        [SerializeField, ReadOnly] private SpeedPointContainer speedContainer;
+        [SerializeField, ReadOnly] private CurveParameter speedCurve;
         [SerializeField, ReadOnly] private float progress;
         [SerializeField, ReadOnly] private float currentSpeed;
         
         private float baseSpeed;
 
-        private Tweener activeTween;
-        
         public event Action EndOfSplineReached;
 
-        public void SetUpSpline(SplineContainer spline, SpeedPoint[] speedPoints)
+        public void SetUpSpline(SplineContainer spline, CurveParameter speedChange)
         {
             splineContainer = spline;
-            speedContainer = splineContainer.GetComponent<SpeedPointContainer>();
-            speedContainer.SetSpeedPoints(speedPoints);
+            speedCurve = speedChange;
         }
 
         public SplineContainer GetTargetSpline()
@@ -42,19 +35,12 @@ namespace Meyham.Splines
             baseSpeed = speed;
         }
         
-        public void Restart(bool autoPlay)
+        public void Restart()
         {
             currentSpeed = baseSpeed;
             progress = 0f;
-            SetPosition(0f);
-            
-            if(!autoPlay) return;
-            
-            Play();
-        }
+            UpdatePosition();
 
-        public void Play()
-        {
             IsPlaying = true;
         }
 
@@ -66,16 +52,13 @@ namespace Meyham.Splines
         private void OnDisable()
         {
             EndOfSplineReached = null;
-            
-            if (!activeTween.IsActive()) return;
-            
-            activeTween.Kill(true);
         }
 
         private void Update() 
         {
             if(!IsPlaying) return;
-            
+
+            currentSpeed = speedCurve.Evaluate(progress) * baseSpeed;
             progress += currentSpeed * Time.deltaTime;
             
             if (progress >= 1f)
@@ -86,25 +69,11 @@ namespace Meyham.Splines
             }
             
             UpdatePosition();
-            
-            if(!speedContainer.WasNewSpeedPointReached(progress, out var speedModifier)) return;
-
-            if (activeTween.IsActive())
-            {
-                activeTween.Kill(true);
-            }
-            
-            activeTween = DOTween.To(() => currentSpeed, speed => currentSpeed = speed, baseSpeed * speedModifier, speedPointEasingDuration);
         }
 
         private void UpdatePosition()
         {
             transform.localPosition = splineContainer.EvaluatePosition(progress);
-        }
-        
-        private void SetPosition(float splineProgress)
-        {
-            transform.localPosition = splineContainer.EvaluatePosition(splineProgress);
         }
     }
 }

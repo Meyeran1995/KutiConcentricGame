@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6869339708918208850}
   - component: {fileID: 9188344382188448015}
-  - component: {fileID: 1388746067734281661}
   m_Layer: 0
   m_Name: Spline_Template
   m_TagString: Untagged
@@ -73,17 +72,3 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
---- !u!114 &1388746067734281661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6869339708918208851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cba4624c610a284598ae8c0a5054b4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  splineContainer: {fileID: 9188344382188448015}
-  speedPoints: []

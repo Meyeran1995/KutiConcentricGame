@@ -21,16 +21,16 @@ namespace Meyham.Items
             pool ??= GameObject.FindGameObjectWithTag("Respawn").GetComponent<CollectiblePool>();
         }
 
-        public void SetUpMovement(SplineContainer spline, SpeedPoint[] speedPoints)
+        public void SetUpMovement(SplineContainer spline, CurveParameter speedChange)
         {
-            splineFollower.SetUpSpline(spline, speedPoints);
+            splineFollower.SetUpSpline(spline, speedChange);
             splineFollower.SetBaseSpeed(speed);
             splineFollower.EndOfSplineReached += OnEndOfSplineReached;
         }
 
         public void RestartMovement()
         {
-            splineFollower.Restart(true);
+            splineFollower.Restart();
         }
 
         private void OnEndOfSplineReached()

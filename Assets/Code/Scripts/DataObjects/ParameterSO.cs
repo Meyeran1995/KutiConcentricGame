@@ -6,8 +6,6 @@ namespace Meyham.DataObjects
     {
         [SerializeField] private T baseValue;
         
-        public T BaseValue => baseValue;
-
         [field: SerializeField]
         public T RuntimeValue { get; set; }
 
