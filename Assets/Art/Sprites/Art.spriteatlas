@@ -46,21 +46,13 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: e2b2f64481d9d8646892efc76e122e95, type: 3}
-    - {fileID: 102900000, guid: 90db597abdecea0438f4e919ac7f9193, type: 3}
-    - {fileID: 102900000, guid: 6ecb95831c2605e4aa963ba4495f2119, type: 3}
-    - {fileID: 2800000, guid: c3fb8a31efe501b43ae4ee907f1f921e, type: 3}
-    - {fileID: 2800000, guid: 6c870d51ef8e73e40a67c1fe527420b5, type: 3}
+    - {fileID: 2800000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - c785b8108d9f0be47bad00deeb98bfd3: 21300000
     - 4a0ba480600a48f488489c9b9f8cfdb9: 21300000
-    - c3fb8a31efe501b43ae4ee907f1f921e: 7482667652216324306
-    - 6c870d51ef8e73e40a67c1fe527420b5: 21300000
-    - 879cf413326971d458dc32e0a6001817: 21300000
-    - ea568db32b136814badefa9b3279a563: 21300000
-    - 88d274f42eba86048ae24691425add84: 21300000
     - 2df05b258b2192249a52e360f5abeb5d: 21300000
     - 9ac8b3454d4e488439f940b7136f3ac0: 21300000
     - f5be5206eb83e63419ba608d50107ad0: 21300000
@@ -70,24 +62,12 @@ SpriteAtlas:
     - 6e20926767ccb7d40a78ca54054ed290: 21300000
     - db271c87710934942a92752876db09b2: 21300000
     - 2b281c7819924b14ca85d6d0150d4a33: 21300000
-    - 2030a1496937d0e48861443fafa7449b: 21300000
     - 0f7e94c994224f940a94ecec548cba77: 21300000
-    - 47969bd9daf46e94e9531f3bf9c4cb07: 21300000
-    - 95002d4a9855ef942bfa29d2103f4830: 21300000
-    - 79e4b67a3e2d2d543b06522c190e94f1: 21300000
-    - 0c80aaac926f0304d9730a4c2d6622e6: 21300000
     - 1e7fb20d5570fe14097ed0acd8a644cd: 21300000
-    - 8bacd21dca0ff2042aa36c3922c07e6a: 21300000
-    - cebb7e7ebc367e34b91efa6dca58b8f6: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: c785b8108d9f0be47bad00deeb98bfd3, type: 3}
   - {fileID: 21300000, guid: 4a0ba480600a48f488489c9b9f8cfdb9, type: 3}
-  - {fileID: 7482667652216324306, guid: c3fb8a31efe501b43ae4ee907f1f921e, type: 3}
-  - {fileID: 21300000, guid: 6c870d51ef8e73e40a67c1fe527420b5, type: 3}
-  - {fileID: 21300000, guid: 879cf413326971d458dc32e0a6001817, type: 3}
-  - {fileID: 21300000, guid: ea568db32b136814badefa9b3279a563, type: 3}
-  - {fileID: 21300000, guid: 88d274f42eba86048ae24691425add84, type: 3}
   - {fileID: 21300000, guid: 2df05b258b2192249a52e360f5abeb5d, type: 3}
   - {fileID: 21300000, guid: 9ac8b3454d4e488439f940b7136f3ac0, type: 3}
   - {fileID: 21300000, guid: f5be5206eb83e63419ba608d50107ad0, type: 3}
@@ -97,23 +77,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6e20926767ccb7d40a78ca54054ed290, type: 3}
   - {fileID: 21300000, guid: db271c87710934942a92752876db09b2, type: 3}
   - {fileID: 21300000, guid: 2b281c7819924b14ca85d6d0150d4a33, type: 3}
-  - {fileID: 21300000, guid: 2030a1496937d0e48861443fafa7449b, type: 3}
   - {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
-  - {fileID: 21300000, guid: 47969bd9daf46e94e9531f3bf9c4cb07, type: 3}
-  - {fileID: 21300000, guid: 95002d4a9855ef942bfa29d2103f4830, type: 3}
-  - {fileID: 21300000, guid: 79e4b67a3e2d2d543b06522c190e94f1, type: 3}
-  - {fileID: 21300000, guid: 0c80aaac926f0304d9730a4c2d6622e6, type: 3}
   - {fileID: 21300000, guid: 1e7fb20d5570fe14097ed0acd8a644cd, type: 3}
-  - {fileID: 21300000, guid: 8bacd21dca0ff2042aa36c3922c07e6a, type: 3}
-  - {fileID: 21300000, guid: cebb7e7ebc367e34b91efa6dca58b8f6, type: 3}
   m_PackedSpriteNamesToIndex:
   - button_yellowFilled@2x
   - button_redEmpty@2x
-  - Square
-  - timerHalfCircle@2x
-  - fourside_uniBlack@2x
-  - paddle3_white@2x
-  - paddle5_white@2x
   - button_orangeFilled@2x
   - button_blueEmpty@2x
   - button_blueFilled@2x
@@ -123,15 +91,8 @@ SpriteAtlas:
   - button_greenEmpty@2x
   - button_yellowEmpty@2x
   - button_orangeEmpty@2x
-  - paddle2_white@2x
   - triangle_uniBlack@2x
-  - paddle4_white@2x
-  - paddle6_white@2x
-  - circle_uniBlack@2x
-  - sixside_uniBlack@2x
   - button_redFilled@2x
-  - paddle1_white@2x
-  - fiveside_uniBlack@2x
   m_RenderDataMap: {}
   m_Tag: Art
   m_IsVariant: 0
