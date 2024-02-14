@@ -13,17 +13,9 @@ PrefabInstance:
       value: Add Bodypart
       objectReference: {fileID: 0}
     - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
-      propertyPath: m_Color.r
-      value: 0.04431629
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: e5b898c821d61d64a846656b030a5d09, type: 3}
     - target: {fileID: 7790199493809689662, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: <Collectible>k__BackingField
       value: 
