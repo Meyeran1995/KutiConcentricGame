@@ -336,10 +336,10 @@
     "m_Guid": {
         "m_GuidSerialized": "9052b13e-34f3-4ee4-9069-0dd18a73a34c"
     },
-    "m_Name": "Pulse Color",
+    "m_Name": "GradientColor0",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Pulse Color",
-    "m_DefaultReferenceName": "_Pulse_Color",
+    "m_RefNameGeneratedByDisplayName": "GradientColor0",
+    "m_DefaultReferenceName": "_GradientColor0",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -592,7 +592,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "7da2c08a83054d49940b8e551eb47225",
     "m_Id": 0,
-    "m_DisplayName": "Pulse Color",
+    "m_DisplayName": "GradientColor0",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

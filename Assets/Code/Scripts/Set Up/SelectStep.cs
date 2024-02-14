@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Meyham.Animation;
 using Meyham.Collision;
+using Meyham.DataObjects;
 using Meyham.EditorHelpers;
 using Meyham.Events;
 using Meyham.GameMode;
@@ -18,6 +19,7 @@ namespace Meyham.Set_Up
         [Header("References")]
         [SerializeField] private PlayerColors colors;
         [SerializeField] private GameObject frontEnd;
+        [SerializeField] private ItemMaterials itemMaterials;
         
         [Header("Events")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
@@ -63,6 +65,7 @@ namespace Meyham.Set_Up
         public override void Deactivate()
         {
             playerManager.UpdatePlayerCount();
+            itemMaterials.SetActivePlayers(playerManager.GetPlayers());
             
             StartCoroutine(WaitForViewToClose());
         }

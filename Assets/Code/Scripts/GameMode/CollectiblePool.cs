@@ -12,6 +12,10 @@ namespace Meyham.GameMode
         [Header("References")]
         [SerializeField] private VoidEventChannelSO onReleasedEvent;
         [SerializeField] private SplineProvider splineProvider;
+        [SerializeField] private Material takeBodyPartMaterial;
+        [SerializeField] private ItemMaterials itemMaterials;
+
+        private Material itemMaterial;
 
         private Dictionary<GameObject, CollectibleReferenceCache> referenceCaches;
 
@@ -38,10 +42,20 @@ namespace Meyham.GameMode
         
         public void GetCollectible(ItemData itemData)
         {
+            itemMaterial ??= itemMaterials.GetMaterial();
+            
             pool.Get(out var item);
+            
             var cache = referenceCaches[item];
-
-            cache.SpriteController.SetSprite(itemData.Sprite);
+            var collectible = itemData.CollectibleData;
+            var isTakeBodyPartCollectible = collectible is DestroyBodyPartCollectible;
+            
+            cache.CollectibleCarrier.SetCollectible(collectible);
+            cache.ItemRotator.enabled = isTakeBodyPartCollectible;
+            
+            var spriteController = cache.SpriteController;
+            spriteController.SetSprite(itemData.Sprite);
+            spriteController.SetMaterial(isTakeBodyPartCollectible ? takeBodyPartMaterial : itemMaterial);
             
             cache.ItemCollision.ReceiveColliderDimensions(itemData.ColliderPosition, 
                 itemData.ColliderRotation, itemData.ColliderScale);
@@ -49,10 +63,6 @@ namespace Meyham.GameMode
             var movement = cache.Movement;
             movement.SetUpMovement(splineProvider.GetSpline(itemData.MovementData), itemData.SpeedCurve);
             movement.RestartMovement();
-
-            var collectible = itemData.CollectibleData;
-            cache.CollectibleCarrier.SetCollectible(collectible);
-            cache.ItemRotator.enabled = collectible is DestroyBodyPartCollectible;
             
             item.SetActive(true);
         }
