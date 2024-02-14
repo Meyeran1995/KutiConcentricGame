@@ -6602,6 +6602,7 @@ MonoBehaviour:
   startDelay: 5
   colors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
   frontEnd: {fileID: 1912174591}
+  itemMaterials: {fileID: 11400000, guid: 6ac434e3b58cb3844aae342d5a4f0938, type: 2}
   inputEventChannel: {fileID: 11400000, guid: 203f07300189f294481c8bc6c95940bb, type: 2}
   setHoldInteractionEventChannel: {fileID: 11400000, guid: 3010c374e0269a744a570d8404f8e26e, type: 2}
   numberOfPlayers: 0
@@ -7226,6 +7227,8 @@ MonoBehaviour:
   poolTemplate: {fileID: 3034267622359027703, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
   splineProvider: {fileID: 1268009120}
+  takeBodyPartMaterial: {fileID: 0}
+  itemMaterials: {fileID: 11400000, guid: 6ac434e3b58cb3844aae342d5a4f0938, type: 2}
 --- !u!1001 &1857413835
 PrefabInstance:
   m_ObjectHideFlags: 0

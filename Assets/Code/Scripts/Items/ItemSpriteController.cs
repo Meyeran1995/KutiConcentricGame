@@ -13,6 +13,11 @@ namespace Meyham.Items
             spriteRenderer.transform.localScale = Vector3.zero;
         }
 
+        public void SetMaterial(Material itemMaterial)
+        {
+            spriteRenderer.sharedMaterial = itemMaterial;
+        }
+
         private void OnEnable()
         {
             tweeningAnimation.enabled = true;
