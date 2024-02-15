@@ -279,4 +279,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenAnimation: {fileID: 7353643439254260286}
+  spriteController: {fileID: 4497797170522856190}
   <Collectible>k__BackingField: {fileID: 0}

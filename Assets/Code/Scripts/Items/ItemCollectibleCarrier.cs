@@ -2,6 +2,7 @@
 using Meyham.Animation;
 using Meyham.DataObjects;
 using Meyham.GameMode;
+using Meyham.Player;
 using Meyham.Player.Bodies;
 using Unity.Collections;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Meyham.Items
     public class ItemCollectibleCarrier : MonoBehaviour
     {
         [SerializeField] private ItemTweeningAnimation tweenAnimation;
+        [SerializeField] private ItemSpriteController spriteController;
+        
         
         [field: ReadOnly, SerializeField] 
         public ACollectibleData Collectible { get; private set; }
@@ -30,6 +33,8 @@ namespace Meyham.Items
             ATweenBasedAnimation animationHandle;
             if (Collectible is AddBodyPartCollectible)
             {
+                playerBody.GetComponent<PlayerColor>().OnAddBodyPartItemCollected(spriteController);
+                
                 animationHandle = new AddBodyCollectionAnimationHandle(tweenAnimation);
                 Collectible.Collect(playerBody, animationHandle);
                 StartCoroutine(WaitForCollectionAnimation(animationHandle));
