@@ -1,4 +1,5 @@
-﻿using Meyham.Player.Bodies;
+﻿using Meyham.Items;
+using Meyham.Player.Bodies;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -19,6 +20,11 @@ namespace Meyham.Player
             {
                 bodyPart.SetColor(activeColor);
             }
+        }
+
+        public void OnAddBodyPartItemCollected(ItemSpriteController itemSpriteController)
+        {
+            itemSpriteController.SetColor(activeColor);
         }
 
         private void OnBodyPartAcquired(BodyPart bodyPart)
