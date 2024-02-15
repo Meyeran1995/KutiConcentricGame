@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 3927611934904360832, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: e5b898c821d61d64a846656b030a5d09, type: 3}
+      objectReference: {fileID: 2100000, guid: 02b6d19f68e12e74799dd7c9aea59519, type: 2}
     - target: {fileID: 7790199493809689662, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
       propertyPath: <Collectible>k__BackingField
       value: 

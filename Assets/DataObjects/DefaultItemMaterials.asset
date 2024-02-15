@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
   materials:
-  - {fileID: -876546973899608171, guid: e5b898c821d61d64a846656b030a5d09, type: 3}
-  - {fileID: -876546973899608171, guid: 719d5bb72d7c73a45b08a505aa6d48f4, type: 3}
-  - {fileID: -876546973899608171, guid: 892f3876d9b47e042b909470c26dd911, type: 3}
-  - {fileID: -876546973899608171, guid: 078fda369746ed7499a8facf6efb4b7f, type: 3}
-  - {fileID: -876546973899608171, guid: 84c780af25ed3c64e8363570d7adb506, type: 3}
-  - {fileID: -876546973899608171, guid: 8107d62242ba6804eb2891190afaba07, type: 3}
+  - {fileID: 2100000, guid: 02b6d19f68e12e74799dd7c9aea59519, type: 2}
+  - {fileID: 2100000, guid: 7687f166b4f894f4189a0cb5198169c6, type: 2}
+  - {fileID: 2100000, guid: 06f4e388bb974d04980f3f9a1270306f, type: 2}
+  - {fileID: 2100000, guid: 1b9a128e983e8a04f86df49d1a1fb5da, type: 2}
+  - {fileID: 2100000, guid: 52ed666f589c5ed42832e4bc57706631, type: 2}
+  - {fileID: 2100000, guid: 2c9410ec8b5843d42b21cbd4b37d0ed4, type: 2}
