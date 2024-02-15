@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 2048
+      m_MaxTextureSize: 512
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 2
@@ -45,54 +45,25 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: e2b2f64481d9d8646892efc76e122e95, type: 3}
+    - {fileID: 2800000, guid: d8e0856c88c95fa46a296ddf778d6793, type: 3}
+    - {fileID: 2800000, guid: c16859c81e0f81f4f9ed02495f0db92f, type: 3}
     - {fileID: 2800000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
-    - c785b8108d9f0be47bad00deeb98bfd3: 21300000
-    - 4a0ba480600a48f488489c9b9f8cfdb9: 21300000
-    - 2df05b258b2192249a52e360f5abeb5d: 21300000
-    - 9ac8b3454d4e488439f940b7136f3ac0: 21300000
-    - f5be5206eb83e63419ba608d50107ad0: 21300000
-    - 2a756626dfb90634cb0738af8137245f: 21300000
-    - 23fc7af638ae02247afb06e0e25af9c7: 21300000
-    - 989123578c877b74f92011acaaa04e15: 21300000
-    - 6e20926767ccb7d40a78ca54054ed290: 21300000
-    - db271c87710934942a92752876db09b2: 21300000
-    - 2b281c7819924b14ca85d6d0150d4a33: 21300000
+    - c16859c81e0f81f4f9ed02495f0db92f: 21300000
     - 0f7e94c994224f940a94ecec548cba77: 21300000
-    - 1e7fb20d5570fe14097ed0acd8a644cd: 21300000
+    - d8e0856c88c95fa46a296ddf778d6793: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: c785b8108d9f0be47bad00deeb98bfd3, type: 3}
-  - {fileID: 21300000, guid: 4a0ba480600a48f488489c9b9f8cfdb9, type: 3}
-  - {fileID: 21300000, guid: 2df05b258b2192249a52e360f5abeb5d, type: 3}
-  - {fileID: 21300000, guid: 9ac8b3454d4e488439f940b7136f3ac0, type: 3}
-  - {fileID: 21300000, guid: f5be5206eb83e63419ba608d50107ad0, type: 3}
-  - {fileID: 21300000, guid: 2a756626dfb90634cb0738af8137245f, type: 3}
-  - {fileID: 21300000, guid: 23fc7af638ae02247afb06e0e25af9c7, type: 3}
-  - {fileID: 21300000, guid: 989123578c877b74f92011acaaa04e15, type: 3}
-  - {fileID: 21300000, guid: 6e20926767ccb7d40a78ca54054ed290, type: 3}
-  - {fileID: 21300000, guid: db271c87710934942a92752876db09b2, type: 3}
-  - {fileID: 21300000, guid: 2b281c7819924b14ca85d6d0150d4a33, type: 3}
+  - {fileID: 21300000, guid: c16859c81e0f81f4f9ed02495f0db92f, type: 3}
   - {fileID: 21300000, guid: 0f7e94c994224f940a94ecec548cba77, type: 3}
-  - {fileID: 21300000, guid: 1e7fb20d5570fe14097ed0acd8a644cd, type: 3}
+  - {fileID: 21300000, guid: d8e0856c88c95fa46a296ddf778d6793, type: 3}
   m_PackedSpriteNamesToIndex:
-  - button_yellowFilled@2x
-  - button_redEmpty@2x
-  - button_orangeFilled@2x
-  - button_blueEmpty@2x
-  - button_blueFilled@2x
-  - button_greenFilled@2x
-  - button_violetFilled@2x
-  - button_violetEmpty@2x
-  - button_greenEmpty@2x
-  - button_yellowEmpty@2x
-  - button_orangeEmpty@2x
+  - button_toggled
   - triangle_uniBlack@2x
-  - button_redFilled@2x
+  - button
   m_RenderDataMap: {}
   m_Tag: Art
   m_IsVariant: 0

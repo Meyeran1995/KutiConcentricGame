@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageRenderer: {fileID: 6248575504315651327}
-  toggled: {fileID: 0}
+  toggled: {fileID: 21300000, guid: c16859c81e0f81f4f9ed02495f0db92f, type: 3}
 --- !u!95 &4501579329142291598
 Animator:
   serializedVersion: 5
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d8e0856c88c95fa46a296ddf778d6793, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
