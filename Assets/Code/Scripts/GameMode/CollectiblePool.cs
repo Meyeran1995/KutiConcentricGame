@@ -13,9 +13,8 @@ namespace Meyham.GameMode
         [SerializeField] private VoidEventChannelSO onReleasedEvent;
         [SerializeField] private SplineProvider splineProvider;
         [SerializeField] private Material takeBodyPartMaterial;
-        [SerializeField] private ItemMaterials itemMaterials;
 
-        private Material itemMaterial;
+        private Material addBodyPartMaterial;
 
         private Dictionary<GameObject, CollectibleReferenceCache> referenceCaches;
 
@@ -42,8 +41,6 @@ namespace Meyham.GameMode
         
         public void GetCollectible(ItemData itemData)
         {
-            itemMaterial ??= itemMaterials.GetMaterial();
-            
             pool.Get(out var item);
             
             var cache = referenceCaches[item];
@@ -55,7 +52,8 @@ namespace Meyham.GameMode
             
             var spriteController = cache.SpriteController;
             spriteController.SetSprite(itemData.Sprite);
-            spriteController.SetMaterial(isTakeBodyPartCollectible ? takeBodyPartMaterial : itemMaterial);
+            spriteController.SetMaterial(isTakeBodyPartCollectible ? takeBodyPartMaterial : addBodyPartMaterial);
+            spriteController.SetColor(itemData.Color);
             
             cache.ItemCollision.ReceiveColliderDimensions(itemData.ColliderPosition, 
                 itemData.ColliderRotation, itemData.ColliderScale);
@@ -72,6 +70,11 @@ namespace Meyham.GameMode
             splineProvider.ReleaseSpline(referenceCaches[collectible].SplineFollower.GetTargetSpline());
             pool.Release(collectible);
             onReleasedEvent.RaiseEvent();
+        }
+
+        public void SetPlayerCountSpecificMaterial(Material material)
+        {
+            addBodyPartMaterial = material;
         }
         
         protected override GameObject CreatePooledItem()

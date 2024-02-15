@@ -20,6 +20,7 @@ namespace Meyham.Set_Up
         [SerializeField] private PlayerColors colors;
         [SerializeField] private GameObject frontEnd;
         [SerializeField] private ItemMaterials itemMaterials;
+        [SerializeField] private CollectiblePool collectiblePool;
         
         [Header("Events")]
         [SerializeField] private GenericEventChannelSO<int> inputEventChannel;
@@ -66,6 +67,7 @@ namespace Meyham.Set_Up
         {
             playerManager.UpdatePlayerCount();
             itemMaterials.SetActivePlayers(playerManager.GetPlayers());
+            collectiblePool.SetPlayerCountSpecificMaterial(itemMaterials.GetMaterial());
             
             StartCoroutine(WaitForViewToClose());
         }

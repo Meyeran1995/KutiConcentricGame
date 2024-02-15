@@ -18,7 +18,10 @@ namespace Meyham.DataObjects
 
         [field: Header("Debug"), SerializeField, ReadOnly]
         public Sprite Sprite { get; private set; }
-        
+
+        [field: SerializeField, ReadOnly] 
+        public Color Color { get; private set; }
+
         [field: SerializeField, ReadOnly]
         public Vector3 ColliderPosition { get; private set; }
         
@@ -48,6 +51,7 @@ namespace Meyham.DataObjects
         {
             var renderer = itemTemplate.transform.GetComponentInChildren<SpriteRenderer>();
             Sprite = renderer.sprite;
+            Color = renderer.color;
 
             var spline = movementTemplate.GetComponent<SplineContainer>().Spline;
             var tangentModes = new TangentMode[spline.Count];

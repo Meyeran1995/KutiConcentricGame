@@ -18,6 +18,11 @@ namespace Meyham.Items
             spriteRenderer.sharedMaterial = itemMaterial;
         }
 
+        public void SetColor(Color color)
+        {
+            spriteRenderer.color = color;
+        }
+
         private void OnEnable()
         {
             tweeningAnimation.enabled = true;
