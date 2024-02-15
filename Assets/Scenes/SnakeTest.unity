@@ -7227,7 +7227,7 @@ MonoBehaviour:
   poolTemplate: {fileID: 3034267622359027703, guid: a830b164a2c85a0418411fa5f76b3030, type: 3}
   onReleasedEvent: {fileID: 11400000, guid: afa98c3f0c322c94dbb6906ea99d7907, type: 2}
   splineProvider: {fileID: 1268009120}
-  takeBodyPartMaterial: {fileID: 0}
+  takeBodyPartMaterial: {fileID: 2100000, guid: 6d1476bcaabef3747a5d26940dc87225, type: 2}
   itemMaterials: {fileID: 11400000, guid: 6ac434e3b58cb3844aae342d5a4f0938, type: 2}
 --- !u!1001 &1857413835
 PrefabInstance:
