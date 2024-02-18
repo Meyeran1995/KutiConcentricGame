@@ -40,6 +40,8 @@ namespace Meyham.UI
         
         public void SetUpPlacements()
         {
+            placements.Reverse();
+            
             for (var i = 0; i < placements.Count; i++)
             {
                 var color = playerColors[placements[i]];
