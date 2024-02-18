@@ -32,6 +32,7 @@ namespace Meyham.Player.Bodies
         [Header("References")]
         [SerializeField] private RadialPlayerMovement playerMovement;
         [SerializeField] private GenericEventChannelSO<int> playerDestroyed;
+        [SerializeField] private GenericEventChannelSO<int> bodyPartCollectedEventChannel;
 
         [ReadOnly, SerializeField] private bool headIsFront;
         [ReadOnly, SerializeField] private int hydraIndex;
@@ -80,6 +81,8 @@ namespace Meyham.Player.Bodies
         {
             var incomingPart = AcquireBodyPart();
             incomingPart.Hide();
+            
+            bodyPartCollectedEventChannel.RaiseEvent((int)designation);
 
             StartCoroutine(WaitForCollectionAnimation((AddBodyCollectionAnimationHandle)animationHandle, incomingPart));
         }

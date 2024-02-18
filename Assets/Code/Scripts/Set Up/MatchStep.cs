@@ -1,4 +1,5 @@
-﻿using Meyham.Animation;
+﻿using System.Collections.Generic;
+using Meyham.Animation;
 using Meyham.Collision;
 using Meyham.EditorHelpers;
 using Meyham.Events;
@@ -14,6 +15,7 @@ namespace Meyham.Set_Up
         [Header("Events")]
         [SerializeField] private GenericEventChannelSO<bool> setHoldInteractionEventChannel;
         [SerializeField] private GenericEventChannelSO<int> playerDestroyedEventChannel;
+        [SerializeField] private GenericEventChannelSO<int> bodyPartCollectedEventChannel;
         
         [Header("Debug")]
         [SerializeField, ReadOnly] private int alivePlayers;
@@ -24,11 +26,25 @@ namespace Meyham.Set_Up
 
         private WaveManager waveManager;
 
+        private readonly Dictionary<int, int> bodyPartsCollected = new();
+
         public override void Setup()
         {
             playerDestroyedEventChannel += OnPlayerDestroyed;
+            bodyPartCollectedEventChannel += OnBodyPartCollected;
 
             waveManager = FindAnyObjectByType<WaveManager>(FindObjectsInactive.Include);
+        }
+
+        private void OnBodyPartCollected(int playerDesignation)
+        {
+            if (bodyPartsCollected.TryGetValue(playerDesignation, out var count))
+            {
+                bodyPartsCollected[playerDesignation] = count + 1;
+                return;
+            }
+            
+            bodyPartsCollected[playerDesignation] = 1;
         }
 
         public override void Link(GameLoop loop)
@@ -78,6 +94,8 @@ namespace Meyham.Set_Up
             alivePlayers = playerManager.PlayerCount;
 
             setHoldInteractionEventChannel.RaiseEvent(true);
+            
+            bodyPartsCollected.Clear();
         }
 
         private void OnPlayerDestroyed(int playerDesignation)
