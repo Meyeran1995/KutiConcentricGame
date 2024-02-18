@@ -32,12 +32,6 @@ namespace Meyham.UI
 
         public void LockPlayerCount()
         {
-            for (var i = 0; i < playerCount; i++)
-            {
-                var particle = scoringParticles[i];
-                particle.SetWorldPosition(scoreBoardEntries[i].transform as RectTransform);
-            }
-            
             for (int i = playerCount; i < scoreBoardEntries.Length; i++)
             {
                 scoreBoardEntries[i].gameObject.SetActive(false);
