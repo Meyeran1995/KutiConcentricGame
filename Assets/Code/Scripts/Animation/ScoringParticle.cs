@@ -34,14 +34,10 @@ namespace Meyham.Animation
             transform.position = mainCamera.ScreenToWorldPoint(position);
         }
 
-        private void Awake()
-        {
-            gameObject.SetActive(false);
-        }
-
         private void Start()
         {
             mainCamera ??= Camera.main;
+            gameObject.SetActive(false);
         }
 
         private void OnEnable()
