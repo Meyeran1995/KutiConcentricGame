@@ -1063,6 +1063,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 8098331061952503950, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1077,6 +1081,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9208090162020530542}
   m_SourcePrefab: {fileID: 100100000, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+--- !u!223 &2267850989936508822 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 8098331061952503950, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+  m_PrefabInstance: {fileID: 8005723674820615960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2639979725819655198 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5456424132544080646, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
@@ -1088,11 +1097,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371f0b50deabebe4396206b0bbfca7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3122511946444848691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4922275334262104363, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
-  m_PrefabInstance: {fileID: 8005723674820615960}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4227077478752265959 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6175442062336014847, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
@@ -1115,7 +1119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd190c447f5436aa7c25cebc63e0ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: {fileID: 3122511946444848691}
+  canvas: {fileID: 2267850989936508822}
   effect: {fileID: 2639979725819655198}
   playerDestroyed: {fileID: 11400000, guid: 50b1cc7a9b334bc4bb5e51ce3e89f98b, type: 2}
   playerColors: {fileID: 11400000, guid: b0f9281cb9845f84da770c69d847d5fa, type: 2}
@@ -1126,6 +1130,7 @@ MonoBehaviour:
   - {fileID: 1691944953159280455}
   - {fileID: 3832469833332395022}
   - {fileID: 448283148297106746}
+  scoringParticles: []
 --- !u!1001 &8551743145185415519
 PrefabInstance:
   m_ObjectHideFlags: 0

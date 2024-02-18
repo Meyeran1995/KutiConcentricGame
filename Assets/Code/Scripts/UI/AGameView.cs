@@ -1,23 +1,22 @@
 ﻿using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Meyham.UI
 {
     public abstract class AGameView : MonoBehaviour
     {
-        [SerializeField] private GameObject content;
+        [SerializeField] private Canvas canvas;
         [Header("Animation")]
         [SerializeField] private TimelineEffect effect;
 
         protected virtual void Awake()
         {
-            content.SetActive(false);
+            canvas.enabled = false;
         }
 
         public virtual IEnumerator OpenView()
         {
-            content.SetActive(true);
+            canvas.enabled = true;
             return effect.ShowAsync();
         }
 
@@ -33,7 +32,7 @@ namespace Meyham.UI
         private IEnumerator CloseRoutine(IEnumerator waitForDirector)
         {
             yield return waitForDirector;
-            content.SetActive(false);
+            canvas.enabled = false;
         }
     }
 }

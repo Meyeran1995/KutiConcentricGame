@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Meyham.Animation;
 using Meyham.Events;
 using Meyham.Set_Up;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Meyham.UI
         [SerializeField] private PlayerColors playerColors;
         [Space]
         [SerializeField] private ScoreBoardEntry[] scoreBoardEntries;
+        [Space] 
+        [SerializeField] private ScoringParticle[] scoringParticles;
 
         private readonly List<int> placements = new();
 
@@ -19,28 +22,42 @@ namespace Meyham.UI
 
         public void OnPlayerJoined(int playerNumber)
         {
-            scoreBoardEntries[playerCount].gameObject.SetActive(true);
             playerCount++;
         }
 
         public void OnPlayerLeft(int playerNumber)
         {
             playerCount--;
-            scoreBoardEntries[playerCount].gameObject.SetActive(false);
         }
 
+        public void LockPlayerCount()
+        {
+            for (var i = 0; i < playerCount; i++)
+            {
+                var particle = scoringParticles[i];
+                particle.SetWorldPosition(scoreBoardEntries[i].transform as RectTransform);
+            }
+            
+            for (int i = playerCount; i < scoreBoardEntries.Length; i++)
+            {
+                scoreBoardEntries[i].gameObject.SetActive(false);
+            }
+        }
+        
         public void SetUpPlacements()
         {
             for (var i = 0; i < placements.Count; i++)
             {
-                scoreBoardEntries[i].SetEntryColor(playerColors[placements[i]]);
+                var color = playerColors[placements[i]];
+                
+                scoreBoardEntries[i].SetEntryColor(color);
+                scoringParticles[i].SetColor(i, color);
             }
         }
 
         public override void Clean()
         {
             placements.Clear();
-            //TODO: deactivate particles
         }
         
         protected override void Awake()
@@ -48,7 +65,6 @@ namespace Meyham.UI
             for (var i = 0; i < scoreBoardEntries.Length; i++)
             {
                 var entry = scoreBoardEntries[i];
-                entry.gameObject.SetActive(false);
                 entry.SetPlacement(i + 1);
             }
 

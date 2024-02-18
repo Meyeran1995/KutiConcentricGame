@@ -1116,6 +1116,10 @@ PrefabInstance:
       propertyPath: childEffects.Array.data[3]
       value: 
       objectReference: {fileID: 5323419583782363633}
+    - target: {fileID: 8098331061952503950, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1130,14 +1134,14 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1886553089}
   m_SourcePrefab: {fileID: 100100000, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+--- !u!223 &543110168986898787 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 8098331061952503950, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
+  m_PrefabInstance: {fileID: 8640875943179399661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2475041586604804114 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6175442062336014847, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
-  m_PrefabInstance: {fileID: 8640875943179399661}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3721628837888463046 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4922275334262104363, guid: b98c44281349ef141a2dc9b4897b0c8b, type: 3}
   m_PrefabInstance: {fileID: 8640875943179399661}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4346978822768663275 stripped
@@ -1168,7 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5281254eedf414d8b5f7b83a7426266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: {fileID: 3721628837888463046}
+  canvas: {fileID: 543110168986898787}
   effect: {fileID: 4346978822768663275}
   playerToggles:
   - {fileID: 7990337488832686825}
