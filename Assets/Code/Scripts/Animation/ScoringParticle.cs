@@ -24,16 +24,6 @@ namespace Meyham.Animation
             initialized = true;
         }
 
-        public void SetWorldPosition(RectTransform linkedEntry)
-        {
-            var worldCorners = new Vector3[4];
-            linkedEntry.GetWorldCorners(worldCorners);
-            
-            var position = new Vector3(Mathf.Lerp(worldCorners[0].x, worldCorners[3].x, 0.5f),Mathf.Lerp(worldCorners[0].y, worldCorners[1].y, 0.5f));
-            position.z = 4.8f;
-            transform.position = mainCamera.ScreenToWorldPoint(position);
-        }
-
         private void Start()
         {
             mainCamera ??= Camera.main;
