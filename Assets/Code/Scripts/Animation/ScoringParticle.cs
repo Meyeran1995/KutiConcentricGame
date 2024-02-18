@@ -1,3 +1,4 @@
+using Meyham.Player.Bodies;
 using Meyham.Set_Up;
 using UnityEngine;
 
@@ -13,13 +14,34 @@ namespace Meyham.Animation
 
         private static Camera mainCamera;
         
-        public void SetColor(int _, Color color)
+        public void SetColor(int burstCount, Color color)
         {
+            var clampedBurst = burstCount;
+
+            if (clampedBurst > PlayerBody.MAX_NUMBER_OF_BODY_PARTS)
+            {
+                clampedBurst = PlayerBody.MAX_NUMBER_OF_BODY_PARTS / 2;
+            }
+            else
+            {
+                clampedBurst /= 2;
+            }
+            
             var main = particleSystemUpper.main;
             main.startColor = color;
             
             main = particleSystemLower.main;
             main.startColor = color;
+
+            var emission = particleSystemUpper.emission;
+            var burst = emission.GetBurst(0);
+            burst.count = clampedBurst;
+            emission.SetBurst(0, burst);
+
+            emission = particleSystemLower.emission;
+            burst = emission.GetBurst(0);
+            burst.count = clampedBurst;
+            emission.SetBurst(0, burst);
             
             initialized = true;
         }

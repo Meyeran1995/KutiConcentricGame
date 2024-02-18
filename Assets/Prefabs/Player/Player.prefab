@@ -55,6 +55,7 @@ MonoBehaviour:
   padding: {fileID: 11400000, guid: 5a38e2e3657992943be5ef9720ae193f, type: 2}
   playerMovement: {fileID: 3343158596831003080}
   playerDestroyed: {fileID: 11400000, guid: 50b1cc7a9b334bc4bb5e51ce3e89f98b, type: 2}
+  bodyPartCollectedEventChannel: {fileID: 11400000, guid: af9b940dba7790548b173742ddede1cd, type: 2}
   headIsFront: 0
   hydraIndex: 0
   designation: 0
@@ -256,6 +257,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.x
+      value: 0.00082173944
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.y
+      value: -0.00055003166
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.x
+      value: 0.41057628
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.y
+      value: 0.16194807
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart (2)
@@ -322,6 +339,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.x
+      value: 0.00082173944
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.y
+      value: -0.00055003166
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.x
+      value: 0.41057628
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.y
+      value: 0.16194807
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart
@@ -388,6 +421,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343158595621873217}
     m_Modifications:
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.x
+      value: 0.00082173944
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Center.y
+      value: -0.00055003166
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.x
+      value: 0.41057628
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709812294342956011, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.y
+      value: 0.16194807
+      objectReference: {fileID: 0}
     - target: {fileID: 8941074436167938482, guid: c6a4446cb76ab8e4ab1808b203878fa7, type: 3}
       propertyPath: m_Name
       value: PlayerBodyPart (1)
