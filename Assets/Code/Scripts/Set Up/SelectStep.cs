@@ -34,6 +34,8 @@ namespace Meyham.Set_Up
 
         private MainMenuView mainMenu;
 
+        private ScoreboardView scoreboardView;
+
         private IPlayerColorReceiver[] coloredElements;
         private List<IPlayerNumberDependable> playerNumberDependables;
 
@@ -53,23 +55,15 @@ namespace Meyham.Set_Up
         public override void Link(GameLoop loop)
         {
             loop.LinkPlayerManager(LinkPlayerManager);
-            loop.LinkMainMenuView(LinkView);
+            loop.LinkMainMenuView(LinkMainMenuView);
             loop.LinkPlayerSelectionAnimation(LinkSelectionAnimation);
             loop.LinkPlayerCollisionResolver(LinkCollisionResolver);
+            loop.LinkScoreboardView(LinkScoreBoardView);
         }
 
         private void LinkCollisionResolver(PlayerCollisionResolver resolver)
         {
             playerNumberDependables.Add(resolver);
-        }
-
-        public override void Deactivate()
-        {
-            playerManager.UpdatePlayerCount();
-            itemMaterials.SetActivePlayers(playerManager.GetPlayers());
-            collectiblePool.SetPlayerCountSpecificMaterial(itemMaterials.GetMaterial());
-            
-            StartCoroutine(WaitForViewToClose());
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -78,15 +72,31 @@ namespace Meyham.Set_Up
             playerNumberDependables.Add(manager);
         }
         
-        private void LinkView(MainMenuView mainMenuView)
+        private void LinkMainMenuView(MainMenuView mainMenuView)
         {
             mainMenu = mainMenuView;
+        }
+        
+        private void LinkScoreBoardView(ScoreboardView view)
+        {
+            scoreboardView = view;
         }
 
         private void LinkSelectionAnimation(PlayerSelectionAnimator playerSelectionAnimation)
         {
             playerSelection = playerSelectionAnimation;
             playerNumberDependables.Add(playerSelectionAnimation);
+        }
+        
+        public override void Deactivate()
+        {
+            playerManager.UpdatePlayerCount();
+            scoreboardView.LockPlayerCount();
+            
+            itemMaterials.SetActivePlayers(playerManager.GetPlayers());
+            collectiblePool.SetPlayerCountSpecificMaterial(itemMaterials.GetMaterial());
+            
+            StartCoroutine(WaitForViewToClose());
         }
         
         private void OnEnable()
