@@ -6,19 +6,21 @@ namespace Meyham.UI
     public class ScoreBoardEntry : MonoBehaviour
     {
         [Header("Scores")]
-        [SerializeField] private TextMeshProUGUI scoreUp;
-        [SerializeField] private TextMeshProUGUI scoreDown;
+        [SerializeField] private TextMeshProUGUI placementUp;
+        [SerializeField] private TextMeshProUGUI placementDown;
+
+        private const string place = ". Platz";
         
-        public void SetScore(string scoreText)
+        public void SetPlacement(int placement)
         {
-            scoreUp.text = scoreText;
-            scoreDown.text = scoreText;
+            placementUp.text = $"{placement}{place}";
+            placementDown.text = $"{placement}{place}";
         }
         
         public void SetEntryColor(Color color)
         {
-            scoreUp.color = color;
-            scoreDown.color = color;
+            placementUp.color = color;
+            placementDown.color = color;
         }
     }
 }

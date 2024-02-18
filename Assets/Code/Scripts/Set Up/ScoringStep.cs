@@ -23,33 +23,10 @@ namespace Meyham.Set_Up
             loop.LinkPlayerManager(LinkPlayerManager);
             loop.LinkScoreboardView(LinkView);
         }
-
-        // public override void Activate()
-        // {
-        //     var numberOfPlayers = playerManager.PlayerCount;
-        //     
-        //     if (playerScores != null && playerScores.Length == numberOfPlayers)
-        //     {
-        //         base.Activate();
-        //         return;
-        //     }
-        //     
-        //     var players = playerManager.GetPlayers();
-        //     
-        //     playerScores = new PlayerScore[numberOfPlayers];
-        //     
-        //     for (int i = 0; i < numberOfPlayers; i++)
-        //     {
-        //         playerScores[i] = players[i].GetComponent<PlayerScore>();
-        //     }
-        //     
-        //     base.Activate();
-        // }
         
         private void LinkView(ScoreboardView view)
         {
             scoreboard = view;
-            scoreboard.Clean();
         }
 
         private void LinkPlayerManager(PlayerManager manager)
@@ -64,6 +41,10 @@ namespace Meyham.Set_Up
 
         private IEnumerator DisplayScoreboard()
         {
+            yield return new WaitForEndOfFrame();
+            
+            scoreboard.SetUpPlacements();
+            
             yield return scoreboard.OpenView();
 
             yield return new WaitForSeconds(endOfGameDelay);
