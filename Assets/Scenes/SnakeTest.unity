@@ -5385,14 +5385,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Green
       objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
       value: 
@@ -5496,14 +5488,6 @@ PrefabInstance:
     - target: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Name
       value: Player Yellow
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
@@ -5692,14 +5676,6 @@ PrefabInstance:
     - target: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Name
       value: Player Orange
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
@@ -6225,14 +6201,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Cyan
       objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
       value: 
@@ -6341,14 +6309,6 @@ PrefabInstance:
     - target: {fileID: 3343158596831003082, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Name
       value: Player Red
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
@@ -7079,14 +7039,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Purple
       objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: drawGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3594001768764848216, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: originTransform
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3974239216250523085, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: m_Creator
       value: 
@@ -7098,10 +7050,6 @@ PrefabInstance:
     - target: {fileID: 4649982748758523031, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
       propertyPath: originTransform
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8315685076446453107, guid: fbd945111fd96aa4a9fc0c7d9171b7ac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
