@@ -293,7 +293,7 @@ namespace Meyham.Player.Bodies
         {
             bodyPartPool.ReleaseBodyPart(bodyPart.gameObject);
             
-            if (transform.childCount > 0) return;
+            if (!enabled || playerBodyParts.Count > 0) return;
             
             playerDestroyed.RaiseEvent((int)designation);
         }
