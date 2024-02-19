@@ -75,6 +75,17 @@ namespace Meyham.Set_Up
             base.Deactivate();
         }
 
+        public Dictionary<int, int> GetCollectionStats()
+        {
+            foreach (var player in playerManager.GetPlayers())
+            {
+                var designationCode = (int)player.Designation;
+                bodyPartsCollected.TryAdd(designationCode, 0);
+            }
+            
+            return bodyPartsCollected;
+        }
+
         private void LinkPlayerManager(PlayerManager manager)
         {
             playerManager = manager;

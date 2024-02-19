@@ -38,7 +38,7 @@ namespace Meyham.UI
             }
         }
         
-        public void SetUpPlacements()
+        public void SetUpPlacements(Dictionary<int, int> collectionStats)
         {
             placements.Reverse();
             
@@ -47,7 +47,7 @@ namespace Meyham.UI
                 var color = playerColors[placements[i]];
                 
                 scoreBoardEntries[i].SetEntryColor(color);
-                scoringParticles[i].SetColor(i, color);
+                scoringParticles[i].SetColor(collectionStats[placements[i]], color);
             }
         }
 
