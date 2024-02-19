@@ -42,7 +42,15 @@ namespace Meyham.Set_Up
 
         public void DisablePlayer(int designation)
         {
-            players[designation].enabled = false;
+            foreach (var player in players)
+            {
+                if ((int)player.Designation != designation)
+                {
+                    continue;
+                }
+
+                player.enabled = false;
+            }
         }
 
         public void EnablePlayers()
