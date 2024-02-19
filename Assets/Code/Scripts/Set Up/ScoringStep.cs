@@ -11,26 +11,21 @@ namespace Meyham.Set_Up
 
         private ScoreboardView scoreboard;
 
-        private PlayerManager playerManager;
+        private MatchStep matchStep;
         
         public override void Setup()
         {
+            matchStep = FindAnyObjectByType<MatchStep>();
         }
 
         public override void Link(GameLoop loop)
         {
-            loop.LinkPlayerManager(LinkPlayerManager);
             loop.LinkScoreboardView(LinkView);
         }
         
         private void LinkView(ScoreboardView view)
         {
             scoreboard = view;
-        }
-
-        private void LinkPlayerManager(PlayerManager manager)
-        {
-            playerManager = manager;
         }
 
         private void OnEnable()
@@ -42,7 +37,7 @@ namespace Meyham.Set_Up
         {
             yield return new WaitForEndOfFrame();
             
-            scoreboard.SetUpPlacements();
+            scoreboard.SetUpPlacements(matchStep.GetCollectionStats());
             
             yield return scoreboard.OpenView();
 
